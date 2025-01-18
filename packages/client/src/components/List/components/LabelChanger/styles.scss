@@ -1,0 +1,40 @@
+.label-changer{
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  background-color: #30353D;
+  padding: 5px 5px;
+  border-radius: 5px;
+
+  span{
+    min-width: 20px;
+    outline: 0;
+    color: #87909E;
+    font-size: 13px;
+    gap: 9px;
+    white-space: nowrap;
+  }
+
+  &:focus-within{
+    background-color: #3C414B;
+
+    .icon-button{
+      svg{
+        color: #F0F1F3;
+      }
+    }
+
+    span{
+      color: #F0F1F3;
+    }
+  }
+
+  .icon-button{
+    margin-right: 3px;
+    cursor: grab;
+
+    svg{
+      color: #87909E;
+    }
+  }
+}

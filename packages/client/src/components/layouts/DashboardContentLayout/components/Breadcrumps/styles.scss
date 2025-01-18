@@ -1,0 +1,62 @@
+.dashboard-content-layout__breadcrumps{
+  display: flex;
+
+  &__section{
+    display: flex;
+    align-items: center;
+
+    &__item{
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    
+      svg{
+        height: 18px;
+        width: 18px;
+        color: #ACB1BB;
+      }
+
+      span{
+        color: #ACB1BB;
+      }
+
+
+
+    }
+
+    a{
+      &:hover{
+        svg{
+          path{
+            stroke: #F0F1F3;
+          }
+        }
+
+        span{
+          color: #F0F1F3;
+        }
+      }
+    }
+
+    &__separator{
+      padding: 0 8px;
+
+      svg{
+        height: 18px;
+        width: 18px;
+        color: #ACB1BB;
+      }
+    }
+
+    &:first-of-type{
+      .dashboard-content-layout__breadcrumps{
+        &__section{
+          &__separator{
+            display: none;
+          }
+        }
+      }
+    }
+
+  }
+}

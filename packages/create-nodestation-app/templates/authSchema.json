@@ -1,0 +1,73 @@
+{
+  "fields": [
+    {
+      "name": "id",
+      "slug": "id",
+      "type": "uuid",
+      "required": true,
+      "origin": "system",
+      "primary_key": true,
+      "read_only": true,
+      "default": "generate_uuid()"
+    },
+    {
+      "name": "Email",
+      "slug": "email",
+      "type": "short_text",
+      "required": true,
+      "origin": "system"
+    },
+    {
+      "name": "Password",
+      "slug": "password",
+      "type": "short_text",
+      "origin": "system",
+      "required": true
+    },
+    {
+      "name": "First name",
+      "slug": "first_name",
+      "type": "short_text",
+      "origin": "system",
+      "required": true
+    },
+    {
+      "name": "Last name",
+      "slug": "last_name",
+      "type": "short_text",
+      "origin": "system",
+      "required": true
+    },
+    {
+      "name": "Photo",
+      "slug": "photo",
+      "type": "media",
+      "origin": "system"
+    },
+    {
+      "name": "Type",
+      "slug": "type",
+      "type": "enumeration",
+      "origin": "system",
+      "required": true,
+      "options": "admin\nclient",
+      "default": "client"
+    },
+    {
+      "name": "Status",
+      "slug": "status",
+      "type": "enumeration",
+      "options": "active\ninactive",
+      "default": "inactive",
+      "origin": "system",
+      "required": true
+    },
+    {
+      "name": "Created at",
+      "slug": "created_at",
+      "type": "date",
+      "origin": "system",
+      "required": true
+    }
+  ]
+}

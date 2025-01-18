@@ -1,0 +1,11 @@
+.formik-switch-accordion{
+  display: flex;
+  flex-direction: column;
+
+  &__value{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

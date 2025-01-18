@@ -1,0 +1,25 @@
+.id-viewer{
+  padding-right: 15px;
+  display: flex;
+  justify-content: flex-end;
+  color: #F0F1F3;
+  border-right: 1px solid #3C414B;
+  
+
+  button{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+
+    &:hover{
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    svg{
+      height: 18px;
+      width: 18px;
+    }
+  }
+}

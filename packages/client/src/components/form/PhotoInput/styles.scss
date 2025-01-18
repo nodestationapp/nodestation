@@ -1,0 +1,151 @@
+@import "styles/variables.scss";
+
+.photo-input {
+  $self: &;
+  position: relative;
+
+  > label {
+    margin-left: -5px;
+    display: block;
+    padding: 0 5px;
+    color: #AEB3BD;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    left: 15px;
+    top: 0;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: #21252B;
+    transition: all ease 0.2s;
+    pointer-events: none;
+    font-size: 12px;
+
+    a{
+      font-size: 13px;
+      text-decoration: underline;
+    }
+  }
+
+  &__content {
+    height: 50px;
+    position: relative;
+
+    &__field{
+      padding: 0 15px;
+      border-radius: 8px;
+      height: 100%;
+      width: 100%;
+      background-color: transparent;
+      border: 1px solid #4B4F55;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      span{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-right: auto;
+        color: #F0F1F3;
+      }
+
+      img{
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        margin-right: 10px;
+        flex-shrink: 0;
+        object-fit: cover;
+      }
+
+      &__placeholder{
+        margin-right: 10px;
+        background-color: #30353D;
+        height: 26px;
+        width: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+
+        svg{
+          height: 17px;
+          width: 17px;
+          color: #647282;
+        }
+      }
+
+      .icon-button{
+        &__content{
+          svg{
+            path{
+              color: #4B4F55;
+            }
+          }
+        }
+
+        &:hover{
+          svg{
+            path{
+              color: #F0F1F3;
+            }
+          }
+        }
+      }
+
+
+      &:focus {
+        border-color: rgba(#7F78F1, 0.8);
+      }
+    }
+  }
+
+  &--active {
+    #{ $self }__content {
+      border-color: red;
+    }
+  }
+
+  &--empty{
+    .photo-input{
+      &__content{
+        &__field{
+          span{
+            color: #AEB3BD;
+          }
+        }
+      }
+    }
+  }
+
+  &--error {
+    #{ $self } {
+      &__content {
+        input {
+          border-color: rgba(#F93F3E, 0.8);
+        }
+      }
+
+      &__error {
+        display: block;
+        margin-top: 5px;
+        color: #F93F3E;
+        font-size: 13px;
+      }
+    }
+  }
+
+  &--light{
+    input{
+      background-color: #30353D;
+    }
+  }
+
+  &--uuid{
+    input{
+      background-color: #868F9D;
+    }
+  }
+}

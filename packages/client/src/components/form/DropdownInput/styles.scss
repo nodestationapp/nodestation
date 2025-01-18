@@ -1,0 +1,151 @@
+.dropdown-input {
+  font-size: 14px;
+  outline-width: 0;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: border-color ease 0.2s, fill ease 0.2s, filter ease 0.2s;
+  z-index: 12;
+
+  label {
+    display: block;
+    margin-left: -5px;
+    margin-bottom: 5px;
+    padding: 0 5px;
+    color: #AEB3BD;
+    font-size: 13px;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: #21252B;
+    transition: all ease 0.2s;
+    pointer-events: none;
+    font-size: 14px;
+  }
+
+  &--filled{
+    label{
+      left: 15px;
+      top: 0;
+      transform: translateY(-50%);
+      font-size: 12px;
+    }
+  }
+
+  &--error{
+    .dropdown-input{
+      &__content{
+        border: 1px solid rgba(#ff0000, 0.6);
+      }
+    }
+  }
+
+  > button {
+    padding: 0 15px;
+    border-radius: 8px;
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid #4B4F55;
+    color: #fff;
+
+    > svg{
+      height: 18px;
+      width: 18px;
+      color: #4B4F55;
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 14px;
+
+      > img {
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: #3C414B;
+    border-radius: 5px;
+    min-width: 100%;
+    max-height: 242px;
+    overflow: hidden;
+    box-shadow: 0px 4px 6px -3px rgba(51, 51, 51, 0.3);
+    z-index: -100;
+    padding: 5px;
+
+    input{
+      padding: 5px 0 10px;
+      background-color: #3C414B;
+      border: none;
+      font-size: 13px;
+      font-weight: 400;
+      color: #F0F1F3;
+    }
+    
+    .button{
+      width: 100%;
+    }
+  }
+
+  &--active {
+    z-index: 1000;
+
+    > button {
+      border-color: #757980;
+
+      > svg {
+        transform: rotate(-180deg);
+
+        path{
+          stroke: #757980;
+        }
+      }
+    }
+  }
+
+  &--selected {
+    > span {
+      color: #ececf1;
+    }
+  }
+
+  &--empty{
+    > button {
+      span{
+        color: #656F7D;
+      }
+    }
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &--light{
+    button{
+      background-color: #383E48;
+    }
+  }
+}

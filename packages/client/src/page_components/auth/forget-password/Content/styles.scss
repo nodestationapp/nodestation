@@ -1,0 +1,30 @@
+.login-content{
+    height: calc(100vh - 40px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__wrapper{
+        max-width: 380px;
+        width: 100%;
+
+        &__header{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+            gap: 2px;
+        }
+
+        &__bottom{
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+
+            a{
+                text-decoration: underline;
+                font-weight: 500;
+            }
+        }
+    }
+}

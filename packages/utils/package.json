@@ -1,0 +1,37 @@
+{
+  "name": "@nstation/utils",
+  "version": "1.3.2",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "description": "Nodestation's utils",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodestationapp/nodestation.git"
+  },
+  "author": {
+    "name": "Nodestation",
+    "email": "ceo@nodestation.app"
+  },
+  "files": [
+    "./modules",
+    "./index.js"
+  ],
+  "imports": {
+    "#root": "./",
+    "#modules/*": "./modules/*"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.717.0",
+    "@nstation/db": "^1.3.2",
+    "axios": "^1.7.9",
+    "boxen": "^8.0.1",
+    "chalk": "^5.3.0",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1",
+    "multer-s3": "^3.0.1",
+    "nodemailer": "^6.9.16",
+    "ora": "^8.1.1",
+    "socket.io": "^4.8.1"
+  }
+}

@@ -1,0 +1,23 @@
+.title-bar__searcher{
+  padding: 0 7px;
+  background-color: #50545D;
+  border-radius: 5px;
+  height: 28px;
+  width: 380px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 400;
+  -webkit-app-region: no-drag;
+
+  &:hover{
+    filter: brightness(1.1);
+  }
+
+
+  svg{
+    height: 17px;
+    width: 17px;
+    color: #F0F1F3;
+  }
+}

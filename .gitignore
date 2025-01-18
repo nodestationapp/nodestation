@@ -1,0 +1,24 @@
+# TEMP
+.nodestation
+/src/
+dist/
+
+# DATABASE
+.db
+
+# ENV
+.env
+
+# UPLOADS
+uploads
+
+# NODE_MODULES
+node_modules/
+
+# DOCKER
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+#SYSTEM FOLDER CONFIG
+.DS_Store

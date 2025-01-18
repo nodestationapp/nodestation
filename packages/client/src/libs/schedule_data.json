@@ -1,0 +1,6 @@
+[
+  {
+    "label": "At every minute",
+    "value": "* * * * *"
+  }
+]

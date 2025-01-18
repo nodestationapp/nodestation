@@ -1,0 +1,22 @@
+.forms__extra-settings{
+  &__items{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .alert{
+    margin-bottom: 5px;
+  }
+
+  &__auto-responder{
+    display: flex;
+    gap: 10px;
+
+    .select{
+      &:first-child{
+        max-width: 250px;
+      }
+    }
+  }
+}

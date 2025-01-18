@@ -1,0 +1,18 @@
+[
+  {
+    "label": "get",
+    "color": "#1191FF"
+  },
+  {
+    "label": "post",
+    "color": "#009E77"
+  },
+  {
+    "label": "put",
+    "color": "#E97500"
+  },
+  {
+    "label": "delete",
+    "color": "#F93F3E"
+  }
+]

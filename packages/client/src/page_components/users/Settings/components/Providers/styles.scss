@@ -1,0 +1,11 @@
+.authentication__providers{
+  &__items{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .table{
+    border-bottom: none;
+  }
+}

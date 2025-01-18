@@ -1,0 +1,115 @@
+@import "styles/variables.scss";
+
+.icon-button {
+  position: relative;
+  display: flex;
+
+  &__content {
+    display: flex;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    transform: translate(-50%, -50%);
+    background-color: #2F3841;
+    height: 32px;
+    width: 32px;
+    border-radius: 6px;
+    opacity: 0;
+  }
+
+  &:hover {
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  svg {
+    height: 18px;
+    width: 18px;
+    z-index: 10;
+  }
+
+  &__badge {
+    padding: 2px;
+    position: absolute;
+    top: -6px;
+    right: -7px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 16px;
+    min-width: 16px;
+    background-color: $color-purple;
+
+    span {
+      display: block;
+      font-weight: 600;
+      font-size: 11px;
+      color: #fff;
+    }
+  }
+
+  &--small {
+    svg {
+      height: 16px;
+      width: 16px;
+    }
+
+    &::before {
+      height: 25px;
+      width: 25px;
+    }
+  }
+
+  &--large {
+    svg {
+      height: 26px;
+      width: 26px;
+    }
+
+    &::before {
+      height: 46px;
+      width: 46px;
+    }
+  }
+
+  &--light{
+    &::before {
+      background-color: #555A64;
+    }
+  }
+
+  &--filled {
+    &::before {
+      opacity: 1;
+      background-color: #30353D;
+      border: 1px solid #3C414B;
+    }
+  }
+
+  &--error {
+    &::before {
+      background-color: rgba(#E30D0D, 0.1);
+    }
+
+    svg {
+      path{
+        fill: #E30D0D
+      }
+    }
+
+    &:hover{
+      svg{
+        path{
+          fill: #E30D0D
+        }
+      }
+    }
+  }
+}

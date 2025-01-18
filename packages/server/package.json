@@ -1,0 +1,51 @@
+{
+  "name": "@nstation/server",
+  "version": "1.3.2",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "description": "Nodestation's server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodestationapp/nodestation.git"
+  },
+  "author": {
+    "name": "Nodestation",
+    "email": "ceo@nodestation.app"
+  },
+  "files": [
+    "./libs",
+    "./routes",
+    "./cli.js",
+    "./index.js",
+    "./controllers",
+    "./package.json"
+  ],
+  "imports": {
+    "#libs/*": "./libs/*",
+    "#routes/*": "./routes/*",
+    "#models/*": "./models/*",
+    "#controllers/*": "./controllers/*",
+    "#middlewares/*": "./middlewares/*",
+    "#helpers/*": "./dist/files/*"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "@nstation/auth": "^1.3.2",
+    "@nstation/client": "^1.3.2",
+    "@nstation/db": "^1.3.2",
+    "@nstation/utils": "^1.3.2",
+    "axios": "^1.6.1",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "node-cron": "^3.0.3",
+    "nodemon": "^3.1.9",
+    "slugify": "^1.6.6",
+    "uuid": "^8.3.2",
+    "yup": "^1.6.1"
+  }
+}

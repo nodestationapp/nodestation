@@ -1,0 +1,27 @@
+.endpoints_table_section{
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+
+    &--dragging{
+        background-color: #3C414B;
+
+        .label-changer{
+            background-color: #3C414B;
+        }
+    }
+
+    &:last-child{
+        margin-bottom: 0;
+    }
+
+    .label-changer{
+        margin-bottom: 10px;
+    }
+
+    &__header{
+        margin-bottom: 9px;
+        padding-bottom: 0px;
+        border-bottom: 1px solid #3C414B;
+    }
+}

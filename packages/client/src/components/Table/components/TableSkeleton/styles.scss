@@ -1,0 +1,30 @@
+.table-skeleton{
+  display: flex;
+  flex-direction: column;
+
+  &__row{
+    height: 39px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #30353D;
+
+    .skeleton{
+      background: linear-gradient(to right, #30353D, #5E6067 50%, #30353D 80%),
+      #30353D;
+      height: 28px;
+      width: 100%;
+      background-repeat: repeat-y;
+      background-size: 150px 100%;
+      background-position: -50px 0;
+      animation: shimmer 1.5s infinite;
+      border-radius: 5px;
+    }
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: calc(100% + 50px) 0;
+  }
+}

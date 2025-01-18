@@ -1,0 +1,55 @@
+@import "styles/variables.scss";
+
+.dashboard-layout-status-bar {
+  padding: 0px;
+  $self: &;
+  height: 30px;
+  width: calc(100% - 270px);
+  background-color: #272D34;
+  border-top: 1px solid #3C414B;
+  position: fixed;
+  bottom: 0px;
+  left: 270px;
+  user-select: none;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__col{
+    display: flex;
+    align-items: center;
+
+    &__button{
+      padding: 0 8px;
+      font-weight: 500;
+      font-size: 13px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #ACB1BB;
+
+      &.active{
+        color: #88FC85;
+
+        svg{
+          color: #88FC85;
+        }
+      }
+  
+      svg{
+        color: #ACB1BB;
+        height: 16px;
+        width: 16px;
+      }
+  
+      &:hover{
+        background-color: #3C414B;
+      }
+    }
+
+  }
+
+
+}

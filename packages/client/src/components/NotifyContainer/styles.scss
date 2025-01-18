@@ -1,0 +1,18 @@
+.Toastify {
+  &__toast {
+    min-height: 50px;
+
+    &-body {
+      margin-right: 16px;
+    }
+
+    &-container--bottom-right {
+      bottom: 30px;
+      width: fit-content;
+
+      button {
+        align-self: unset;
+      }
+    }
+  }
+}

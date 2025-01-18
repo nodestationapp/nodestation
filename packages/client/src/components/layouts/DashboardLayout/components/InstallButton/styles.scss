@@ -1,0 +1,30 @@
+.install-button{
+    padding: 5px 10px;
+    background-color: red;
+    position: fixed;
+    bottom: 0;
+    left: 325px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    background-color: #30353D;
+    border: 1px solid #3C414B;
+    z-index: 900;
+
+    span{
+        font-size: 13px;
+    }
+
+    &:hover{
+        filter: brightness(1.1);
+    }
+
+    svg{
+        height: 20px;
+        width: 20px;
+        color: #fff;
+    }
+}

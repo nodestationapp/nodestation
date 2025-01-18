@@ -1,0 +1,63 @@
+import "./styles.scss";
+
+import { Fragment } from "react";
+
+import MediaProviders from "components/MediaProviders";
+import EmailProviders from "components/EmailProviders";
+import FormikInput from "components/formik/FormikInput";
+import ChangePasswordForm from "components/ChangePasswordForm";
+
+import Providers from "page_components/users/Settings/components/Providers";
+import ExtraSettings from "page_components/forms/Settings/components/ExtraSettings";
+import InputElementsEditor from "page_components/forms/Settings/components/InputElementsEditor";
+
+const mainClass = "settings-form";
+
+const input_type_render = (type, item) => {
+  switch (type) {
+    case "input_editor":
+      return <InputElementsEditor />;
+    case "form_extras":
+      return <ExtraSettings />;
+    case "auth_providers":
+      return <Providers />;
+    case "email_providers":
+      return <EmailProviders />;
+    case "media_providers":
+      return <MediaProviders />;
+    case "change_password":
+      return <ChangePasswordForm />;
+    default:
+      return (
+        <FormikInput
+          name={item?.name}
+          disabled={item?.disabled}
+          placeholder={item?.placeholder}
+          variant="light"
+        />
+      );
+  }
+};
+
+const SettingsForm = ({ data }) => {
+  return (
+    <div className={mainClass}>
+      {data?.map((item, index) => (
+        <div key={index} className={`${mainClass}__item`}>
+          <div className={`${mainClass}__item__label`}>
+            <span>{item?.label}</span>
+          </div>
+          <div className={`${mainClass}__item__value`}>
+            {item?.items?.map((item, index) => (
+              <Fragment key={index}>
+                {input_type_render(item?.type, item)}
+              </Fragment>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default SettingsForm;

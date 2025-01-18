@@ -1,0 +1,58 @@
+[
+  {
+    "value": "image/jpeg",
+    "type": "image"
+  },
+  {
+    "value": "image/png",
+    "type": "image"
+  },
+  {
+    "value": "image/gif",
+    "type": "image"
+  },
+  {
+    "value": "image/bmp",
+    "type": "image"
+  },
+  {
+    "value": "image/webp",
+    "type": "image"
+  },
+  {
+    "value": "image/tiff",
+    "type": "image"
+  },
+  {
+    "value": "image/svg+xml",
+    "type": "image"
+  },
+  {
+    "value": "video/mp4",
+    "type": "video"
+  },
+  {
+    "value": "video/webm",
+    "type": "video"
+  },
+  {
+    "value": "video/ogg",
+    "type": "video"
+  },
+  {
+    "value": "video/avi",
+    "type": "video"
+  },
+  {
+    "value": "video/mpeg",
+    "type": "video"
+  },
+  {
+    "value": "video/quicktime",
+    "type": "video"
+  },
+  {
+    "value": "video/x-ms-wmv",
+    "type": "video"
+  }
+]

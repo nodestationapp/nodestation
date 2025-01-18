@@ -1,0 +1,108 @@
+@import "styles/variables.scss";
+
+.editor-layout-sidebar {
+  $self: &;
+  height: 100vh;
+  width: 270px;
+  background-color: #272D34;
+  position: sticky;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: auto;
+  transition: transform ease 0.3s;
+  scrollbar-width: thin;
+  scrollbar-color: #BFBFBF #ebeef0;
+  border-right: 1px solid #3C414B;
+
+  /* Chrome, Edge and Safari */
+  &::-webkit-scrollbar {
+    width: 10px;
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #ebeef0;
+  }
+
+  &::-webkit-scrollbar-track:hover {
+    background-color: #ebeef0;
+  }
+
+  &::-webkit-scrollbar-track:active {
+    background-color: #ebeef0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #BFBFBF;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #BFBFBF;
+  }
+
+  &::-webkit-scrollbar-thumb:active {
+    background-color: #BFBFBF;
+  }
+
+  &__header{
+    padding: 0 10px;
+    height: 52px;
+    border-bottom: 1px solid #3C414B;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+
+    a{
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+
+  > svg {
+    flex-shrink: 0;
+    width: 173px;
+    height: 34px;
+
+    @media (max-width: 930px) {
+      width: 155px;
+      height: 30px;
+    }
+  }
+
+  &--mobile-open {
+    transform: translateX(0);
+  }
+}
+
+.dashboard-layout-sidebar__mobile-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba($text-color, 0.4);
+  z-index: 110;
+  display: none;
+  animation: backdropAnimation 0.3s ease normal forwards;
+
+  &--mobile-open {
+    @media (max-width: 1300px) {
+      display: block;
+    }
+  }
+}
+
+@keyframes backdropAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,92 @@
+@import "styles/variables.scss";
+
+.uuid-input {
+  $self: &;
+
+  label {
+    margin-left: 2px;
+    display: block;
+    margin-bottom: 5px;
+    color: #F0F1F3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    a{
+      font-size: 13px;
+      text-decoration: underline;
+    }
+  }
+
+  &__content {
+    height: 40px;
+    position: relative;
+
+    span{
+      padding: 0 5px;
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      background-color: #2A2E34;
+      height: 80%;
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      color: #AEB3BD;
+      font-weight: 500;
+    }
+
+    input {
+      padding: 0 15px;
+      padding-left: 60px;
+      border-radius: 8px;
+      height: 100%;
+      width: 100%;
+      background-color: #2A2E34;
+      border: 1px solid #3C414B;
+      color: #fff;
+      font-weight: 400;
+
+
+      &:focus {
+        border-color: rgba(#7F78F1, 0.8);
+      }
+    }
+  }
+
+  &--active {
+    #{ $self }__content {
+      border-color: red;
+    }
+  }
+
+  &--error {
+    #{ $self } {
+      &__content {
+        input {
+          border-color: rgba(#F93F3E, 0.8);
+        }
+      }
+
+      &__error {
+        display: block;
+        margin-top: 5px;
+        color: #F93F3E;
+        font-size: 13px;
+      }
+    }
+  }
+
+  &--light{
+    input{
+      background-color: #30353D;
+    }
+  }
+
+  &--uuid{
+    input{
+      background-color: #868F9D;
+    }
+  }
+}

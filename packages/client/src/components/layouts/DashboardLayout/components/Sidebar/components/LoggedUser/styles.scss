@@ -1,0 +1,67 @@
+.logged-user{
+    border-top: 1px solid #3C414B;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #8A6FF1; 
+    height: 30px;
+
+    &__left{
+        display: flex;
+        align-items: center;
+        gap: 3px;
+
+        .dashboard-layout__avatar{
+            gap: 6px;
+
+            span{
+                max-width: 170px;
+                white-space: nowrap;      
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            &__text{
+                flex: 1;
+            }
+            
+            &__image{
+                height: 22px;
+                width: 22px;
+
+                svg{
+                    rect{
+                       fill: rgba(255, 255, 255, 0.15) !important;
+                    }
+
+                    path{
+                        fill: #fff;
+                    }
+                }
+            }
+        }
+
+        span{
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        &__status{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+
+    &__right{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .icon-button{
+            &::before {
+                background-color: rgba(#fff, 0.15);
+            }
+        }
+    }
+}

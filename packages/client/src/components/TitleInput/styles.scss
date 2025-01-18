@@ -1,0 +1,42 @@
+.title-input{
+  display: flex;
+  align-items: center;
+  background-color: #262D35;
+  border: none;
+  height: 44px;
+  border-bottom: 1px solid #3C414B;
+
+  &--method{
+    height: 50px;
+  }
+
+  .method-select{
+    padding-right: 10px;
+    button{
+      height: 30px;
+    }
+  }
+
+  > span{
+    margin-left: 10px;
+  }
+
+  label{
+    margin-right: 5px;
+    color: #868F9D;
+  }
+
+  input{
+    background-color: #262D35;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    flex: 1;
+
+    &::placeholder{
+      font-weight: 400;
+    }
+  }
+
+}

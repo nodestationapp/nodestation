@@ -1,0 +1,5 @@
+# @nstation/utils
+
+A collection of utility functions that provide commonly needed operations and helpers to simplify development and improve code efficiency.
+
+> ⚠️ This package is specifically designed to be used within [Nodestation](https://github.com/nodestationapp/nodestation). It is not intended for standalone use or integration with other projects.

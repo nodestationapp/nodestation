@@ -1,0 +1,23 @@
+.card{
+  border-radius: 10px;
+  background-color: #30353D;
+  border: 1px solid #3C414B;
+
+  &__header{
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    height: 52px;
+    border-bottom: 1px solid #3C414B;
+
+    h2{
+      font-size: 14px;
+      color: #87909E;
+      font-weight: 500;
+    }
+  }
+
+  &__content{
+    padding: 15px;
+  }
+}

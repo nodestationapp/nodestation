@@ -1,0 +1,22 @@
+.settings-general{
+    &__header{
+        padding-bottom: 20px;
+        border-bottom: 1px solid #3C414B;
+    }
+
+    .form{
+        padding: 20px 0;
+        max-width: 670px;
+        width: 100%;
+
+        .input{
+            max-width: 440px;
+        }
+
+        .row{
+            > div{
+                flex: 1;
+            }
+        }
+    }
+}

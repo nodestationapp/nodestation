@@ -1,0 +1,204 @@
+@import "styles/variables.scss";
+
+.button {
+  $self: &;
+  padding: 0 12px;
+  background-color: #8A6FF1;
+  color: #fff;
+  height: 32px;
+  border-radius: 5px;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  font-weight: 500;
+
+  svg {
+    margin-right: 5px;
+    height: 18px;
+    width: 18px;
+
+    path {
+      fill: #fff;
+    }
+  }
+
+  &:hover {
+    filter: brightness(1.2);
+    text-decoration: none;
+  }
+
+  &--full-width {
+    width: 100%;
+  }
+
+  &--transparent-gray {
+    background-color: transparent;
+    border: 1px solid #4F5762;
+    color: #AEB3BD;
+
+    &:hover {
+      filter: brightness(1.2);
+    }
+  }
+
+  &--no-border {
+    background-color: transparent;
+    border: none;
+    color: #ACB1BB;
+
+    .loader__progress {
+      &::before {
+        border-color: $primary-color;
+      }
+    }
+
+    svg {
+      path {
+        stroke: #ACB1BB;
+        fill: transparent;
+      }
+    }
+
+    &:hover {
+      filter: brightness(1);
+      background-color: #2F3841;
+    }
+  }
+
+  &--transparent {
+    background-color: transparent;
+    border: none;
+    color: #d3d3d3;
+    filter: none !important;
+  }
+
+  &--no-border-grey {
+    background-color: transparent;
+    border: none;
+    color: #d3d3d3;
+
+    .loader__progress {
+      &::before {
+        border-color: $primary-color;
+      }
+    }
+
+    svg {
+      path {
+        fill: $primary-color;
+      }
+    }
+
+    &:hover {
+      color: #ff0000;
+    }
+  }
+
+  &--no-border-error {
+    background-color: transparent;
+    border: none;
+    color: #ff0000;
+    pointer-events: none;
+
+    .loader__progress {
+      &::before {
+        border-color: $primary-color;
+      }
+    }
+
+    svg {
+      path {
+        fill: $primary-color;
+      }
+    }
+  }
+
+  &--grey {
+    background-color: #e1e6eb;
+    color: $text-color;
+
+    &:hover {
+      filter: brightness(1.03);
+    }
+  }
+
+  &--active {
+    background-color: $primary-color;
+    color: #fff !important;
+
+    &:hover {
+      background-color: $primary-color;
+      color: #fff !important;
+    }
+  }
+
+  &--icon-button {
+    padding: 0;
+    width: 15px;
+    height: 15px;
+    position: relative;
+    background-color: transparent;
+
+    svg {
+      margin-right: 0;
+      height: 15px;
+      width: 15px;
+    }
+
+    &:hover {
+      &::before {
+        content: "";
+        background-color: #2b2b34;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        height: 32px;
+        width: 32px;
+        z-index: -1;
+        border-radius: 7px;
+      }
+    }
+  }
+
+  &--disabled {
+    cursor: auto;
+    background-color: #3a3a3e;
+    color: #6a6a74;
+
+    .key-viewer{
+      &__item{
+        background-color: #414146;
+        color: #6a6a74;
+      }
+
+      span{
+        color: #6a6a74;
+      }
+    }
+
+    &:hover {
+      filter: none;
+    }
+  }
+
+  &--small {
+    padding: 0 12px;
+    height: 28px;
+  }
+
+  &--large {
+    padding: 0 64px;
+    height: 38px;
+  }
+
+  &--success {
+    background-color: #00d621;
+  }
+
+  &--error {
+    background-color: #F93F3E;
+  }
+}
