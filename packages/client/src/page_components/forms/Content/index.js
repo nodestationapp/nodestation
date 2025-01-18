@@ -34,7 +34,6 @@ const FormsContent = () => {
     items: forms?.map((item) => ({
       href: `/forms/${item?.id}`,
       disabled: item?.status === "inactive",
-      // onclick: () => setContentEditorModal(item?.id),
       actions: (
         <>
           <IconButton
