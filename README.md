@@ -13,7 +13,7 @@ Endpoints, Crons, Forms, Authentication, Media, Logs, Tables — <strong>everyth
   <a href="https://github.com/nodestationapp/nodestation/blob/master/LICENSE">
     <img src="https://img.shields.io/npm/l/nodestation" alt="NPM License" />
   </a>
-  <a href="https://github.com/nodestationapp/nodestation/blob/master/LICENSE">
+  <a href="https://github.com/nodestationapp/nodestation/commits/master">
     <img src="https://img.shields.io/github/commit-activity/w/nodestationapp/nodestation?style=flat&color=green" alt="Commit activity" />
   </a>
 </p>
