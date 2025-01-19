@@ -14,9 +14,7 @@
   },
   "scripts": {
     "start": "PORT=1337 REACT_APP_API=http://localhost:3000 react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false BUILD_PATH='./dist' react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "GENERATE_SOURCEMAP=false BUILD_PATH='./dist' react-scripts build"
   },
   "files": [
     "./dist",
