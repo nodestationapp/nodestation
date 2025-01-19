@@ -3,10 +3,6 @@ import express from "express";
 import { fs, rootPath } from "@nstation/utils";
 import { authMiddleware } from "@nstation/auth";
 
-const middlewares = import(
-  path.join(rootPath, ".nodestation", "files", `middlewares.js`)
-);
-
 const loadRoutes = (server) => {
   const newRouter = new express.Router();
   const files = fs.getFiles(["endpoints"]);
@@ -23,6 +19,9 @@ const loadRoutes = (server) => {
         );
 
         const { default: handler } = await import(filePath);
+        const middlewares = await import(
+          path.join(rootPath, ".nodestation", "files", "middlewares.js")
+        );
 
         newRouter[item?.options?.method.toLowerCase()](
           `/api${item?.name}`,
