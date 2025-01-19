@@ -37,6 +37,7 @@ This open-source framework based on Express.js is designed to help you quickly b
 - 📊 **Logs** – Keep track of all incoming and outgoing requests.
 
 **Supported Databases:**
+
 - SQLite
 - PostgreSQL
 
@@ -58,7 +59,7 @@ npm start
 
 ## 🤝 Contributing
 
-We welcome contributions to make this package even better! If you have an idea or found a bug, feel free to fork the repository and submit a pull request.
+Want to contribute to this project? [Click here](https://github.com/nodestationapp/nodestation/blob/master/CONTRIBUTING.md) to learn how to get involved.
 
 ## 📝 License
 
