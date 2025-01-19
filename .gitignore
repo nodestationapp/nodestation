@@ -14,11 +14,12 @@ uploads
 
 # NODE_MODULES
 node_modules/
+package-lock.json
 
 # DOCKER
 Dockerfile
 docker-compose.yml
 .dockerignore
 
-#SYSTEM FOLDER CONFIG
+#SYSTEM CONFIG
 .DS_Store
