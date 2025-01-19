@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/1324e764-e25f-49e8-96be-2a6a940238a2" width="260px" alt="Nodestation logo" />
+  <img src="https://nodestation-assets.s3.ap-southeast-1.amazonaws.com/nodestation-logo.svg" width="260px" alt="Nodestation logo" />
 </p>
 
 <h3 align="center">Open-source GUI for creating and managing your Node.js backend.</h3>
@@ -21,7 +21,7 @@ Endpoints, Crons, Forms, Authentication, Media, Logs, Tables — <strong>everyth
 <br />
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/0d242ed8-1691-42fe-9d8b-70cb5954ae0e" alt="Authentication page" />
+  <img src="https://nodestation-assets.s3.ap-southeast-1.amazonaws.com/authentication-visual.png" alt="Authentication page" />
 </p>
 
 ---
