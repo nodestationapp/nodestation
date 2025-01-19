@@ -44,10 +44,7 @@ const UsersContent = () => {
   const host = getHost();
 
   let formatted_fields = settings?.fields?.filter(
-    (item) =>
-      item?.slug !== "created_at" &&
-      item?.slug !== "id" &&
-      item?.slug !== "status"
+    (item) => item?.slug !== "created_at" && item?.slug !== "id"
   );
 
   const requests_modal_data = [
@@ -73,7 +70,7 @@ const UsersContent = () => {
   ];
 
   const new_user_schema = formatted_fields?.reduce((obj, item) => {
-    obj[item.slug] = "";
+    obj[item.slug] = null;
     return obj;
   }, {});
 

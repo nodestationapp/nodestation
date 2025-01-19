@@ -47,7 +47,7 @@ const UserProfileModal = ({ data, onClose }) => {
   const formatted_data = Object.fromEntries(
     Object.entries(data).map(([key, value]) => [
       key,
-      value === undefined ? "" : value,
+      value === undefined ? null : value,
     ])
   );
 
