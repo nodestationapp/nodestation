@@ -16,8 +16,13 @@
     "packages/*"
   ],
   "scripts": {
+    "test": "vitest",
     "release": "release-it",
-    "test": "vitest"
+    "start": "node ./packages/nodestation/index.js",
+    "dev": "npm run dev:server & npm run dev:client",
+    "build": "npm --prefix ./packages/client run build",
+    "dev:client": "npm --prefix ./packages/client start",
+    "dev:server": "nodemon ./packages/nodestation/index.js --watch ../server"
   },
   "devDependencies": {
     "@release-it-plugins/workspaces": "^4.2.0",
