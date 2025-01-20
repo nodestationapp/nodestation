@@ -11,7 +11,7 @@ const emailBody = {
 
 let emailID;
 
-describe(`EMAILS`, () => {
+describe(`Emails`, () => {
   it("POST /emails", async () => {
     const response = await request(app)
       .post("/admin/api/emails")

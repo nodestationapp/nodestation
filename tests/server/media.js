@@ -28,7 +28,7 @@ const filePath = path.join(process.cwd(), "LICENSE");
 for await (const key of Object.keys(mediaBodyDataset)) {
   const body = mediaBodyDataset[key];
 
-  describe(`MEDIA - ${key}`, () => {
+  describe(`Media - ${key}`, () => {
     it("PUT /admin/api/media/settings", async () => {
       const response = await request(app)
         .put("/admin/api/media/settings")

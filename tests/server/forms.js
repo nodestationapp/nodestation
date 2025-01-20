@@ -38,7 +38,7 @@ const entryFormBody = {
 let fileID;
 let entryID;
 
-describe(`FORMS`, () => {
+describe(`Forms`, () => {
   it("POST /forms", async () => {
     const response = await request(app)
       .post("/admin/api/forms")

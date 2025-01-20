@@ -1,7 +1,7 @@
 import request from "supertest";
 import { expect, it, describe } from "vitest";
 
-import { app, user } from "../helpers";
+import { user, app } from "../helpers";
 
 const editorBodyDataset = [
   {
@@ -41,7 +41,7 @@ const editorBodyDataset = [
 for await (const body of editorBodyDataset) {
   let fileID;
 
-  describe(`EDITOR - ${body.type}`, () => {
+  describe(`Editor - ${body.type}`, () => {
     it("POST /editor", async () => {
       const response = await request(app)
         .post("/admin/api/editor")
@@ -65,8 +65,11 @@ for await (const body of editorBodyDataset) {
 
     if (body?.type === "ep") {
       it("GET /api/nodestation-test", async () => {
-        const response = await request(app).get("/api//nodestation-test");
+        const response = await request(app).get("/api/nodestation-test");
         expect(response.status).toBe(200);
+        expect(response.body).toMatchObject({
+          status: "ok",
+        });
       });
     }
 

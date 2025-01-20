@@ -7,7 +7,7 @@ beforeAll(async () => {
   await knex("nodestation_users").where({ email: user.email }).del();
 });
 
-describe(`AUTHENTICATION`, () => {
+describe(`Authentication`, () => {
   it("GET /user/check-admin - if not exist", async () => {
     const response = await request(app).get("/admin/api/user/check-admin");
 
