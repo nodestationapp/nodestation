@@ -1,17 +1,17 @@
 # TEMP
-.nodestation
+.nodestation/
 /src/
 dist/
 
 # DATABASE
-.db
-.db-test
+.db/
+.db-test/
 
 # ENV
 .env
 
 # UPLOADS
-uploads
+uploads/
 
 # NODE_MODULES
 node_modules/

@@ -14,15 +14,15 @@ import authSchema from "./templates/authSchema.json" assert { type: "json" };
   try {
     const choices = [
       {
+        name: "SQLite",
+        value: { provider: "sqlite", url: ".db/data.sqlite3" },
+      },
+      {
         name: "PostgreSQL",
         value: {
           provider: "postgresql",
           url: "postgresql://postgres:admin@127.0.0.1:5432/nstation",
         },
-      },
-      {
-        name: "SQLite",
-        value: { provider: "sqlite", url: ".db/data.sqlite3" },
       },
     ];
 
