@@ -1,15 +1,17 @@
 import path from "path";
 import http from "http";
+import fs_sys from "fs";
 import express from "express";
 import bodyParser from "body-parser";
 import { rootPath, cors, io } from "@nstation/utils";
 
 import apiRoutes from "#routes/api.js";
 import allRoutes from "#routes/index.js";
-import loadRoutes from "#libs/server/loadRoutes.js";
 import logListener from "#libs/logListener.js";
+import loadRoutes from "#libs/server/loadRoutes.js";
+import cronsImport from "#libs/server/cronsImport.js";
 
-import(path.join(rootPath, ".nodestation", "files", "crons.js"));
+cronsImport();
 
 class ExpressServer {
   constructor(config = {}) {
@@ -40,28 +42,32 @@ class ExpressServer {
 
     this.loadRoutes();
 
-    //FRONTEND
-    this.app.use(
-      express.static(
-        path.join(rootPath, "node_modules", "@nstation", "client", "dist")
-      )
+    const clientPath = path.join(
+      rootPath,
+      "node_modules",
+      "@nstation",
+      "client",
+      "dist"
     );
-    this.app.get("*", (_, res) => {
-      res.sendFile(
-        path.join(
-          rootPath,
-          "node_modules",
-          "@nstation",
-          "client",
-          "dist",
-          "index.html"
-        )
-      );
-    });
+
+    if (
+      fs_sys.existsSync(clientPath) &&
+      fs_sys.existsSync(path.join(clientPath, "index.html"))
+    ) {
+      //FRONTEND
+      this.app.use(express.static(clientPath));
+      this.app.get("*", (_, res) => {
+        res.sendFile(path.join(clientPath, "index.html"));
+      });
+    }
   }
 
   start() {
     this.server.listen(this.port);
+  }
+
+  close() {
+    this.server.close();
   }
 }
 

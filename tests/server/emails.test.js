@@ -1,7 +1,7 @@
 import request from "supertest";
-import { expect, it, describe } from "vitest";
+import { expect, it, describe, beforeAll, afterAll } from "vitest";
 
-import { app, user } from "../helpers";
+import { createApp, login } from "../utils/index.js";
 
 const emailBody = {
   name: "Email test",
@@ -11,12 +11,24 @@ const emailBody = {
 
 let emailID;
 
-describe(`EMAILS`, () => {
+describe(`Emails`, () => {
+  let app;
+  let token;
+
+  beforeAll(async () => {
+    app = await createApp();
+    token = await login(app);
+  });
+
+  afterAll(async () => {
+    app.close();
+  });
+
   it("POST /emails", async () => {
     const response = await request(app)
       .post("/admin/api/emails")
       .send(emailBody)
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(typeof response.body).toBe("string");
@@ -27,7 +39,7 @@ describe(`EMAILS`, () => {
   it("GET /emails", async () => {
     const response = await request(app)
       .get("/admin/api/emails")
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     const addedEmail = response.body.find((item) => item.id === emailID);
 
@@ -49,11 +61,11 @@ describe(`EMAILS`, () => {
         subject: `${emailBody.subject} edit`,
         content: `${emailBody.content} edit`,
       })
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     const response2 = await request(app)
       .get("/admin/api/emails")
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     const updatedEmail = response2.body.find((item) => item.id === emailID);
 
@@ -70,7 +82,7 @@ describe(`EMAILS`, () => {
   it("DELETE /emails/:id", async () => {
     const response = await request(app)
       .delete(`/admin/api/emails/${emailID}`)
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
   });

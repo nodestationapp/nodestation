@@ -8,6 +8,10 @@ class Nodestation {
   start() {
     this.server.start();
   }
+
+  close() {
+    this.server.close();
+  }
 }
 
 export default Nodestation;

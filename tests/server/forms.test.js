@@ -1,7 +1,7 @@
 import request from "supertest";
-import { expect, it, describe } from "vitest";
+import { expect, it, describe, beforeAll, afterAll } from "vitest";
 
-import { app, user } from "../helpers";
+import { createApp, login } from "../utils/index.js";
 
 const formBody = {
   name: "Form test",
@@ -38,12 +38,24 @@ const entryFormBody = {
 let fileID;
 let entryID;
 
-describe(`FORMS`, () => {
+describe(`Forms`, () => {
+  let app;
+  let token;
+
+  beforeAll(async () => {
+    app = await createApp();
+    token = await login(app);
+  });
+
+  afterAll(async () => {
+    app.close();
+  });
+
   it("POST /forms", async () => {
     const response = await request(app)
       .post("/admin/api/forms")
       .send(formBody)
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(typeof response.body).toBe("string");
@@ -54,7 +66,7 @@ describe(`FORMS`, () => {
   it("GET /forms", async () => {
     const response = await request(app)
       .get("/admin/api/forms")
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body) && response.body.length > 0).toBe(true);
@@ -64,7 +76,7 @@ describe(`FORMS`, () => {
     const response = await request(app)
       .put(`/admin/api/forms/${fileID}`)
       .send({ ...formBody, name: "Form test edit" })
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
@@ -86,7 +98,7 @@ describe(`FORMS`, () => {
   it("GET /forms/:id", async () => {
     const response = await request(app)
       .get(`/admin/api/forms/${fileID}`)
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
@@ -128,11 +140,11 @@ describe(`FORMS`, () => {
         is_read: true,
         archived: true,
       })
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     const response2 = await request(app)
       .get(`/admin/api/forms/${fileID}?archived=1`)
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({ status: "ok" });
@@ -158,11 +170,11 @@ describe(`FORMS`, () => {
   it("DELETE /forms/entry/:id", async () => {
     const response = await request(app)
       .delete(`/admin/api/forms/entry/${entryID}`)
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     const response2 = await request(app)
       .get(`/admin/api/forms/${fileID}?archived=1`)
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
@@ -178,7 +190,7 @@ describe(`FORMS`, () => {
   it("DELETE /forms/:id", async () => {
     const response = await request(app)
       .delete(`/admin/api/forms/${fileID}`)
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
