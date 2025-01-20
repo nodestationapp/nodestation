@@ -4,18 +4,29 @@ import { promises as fs_promise } from "fs";
 import rootPath from "#modules/rootPath.js";
 
 export default async ({ endpoints }) => {
-  const current_path = path.join(rootPath, ".nodestation", "files");
+  const currentPath = path.join(rootPath, ".nodestation", "files");
 
-  if (!!!fs_sys.existsSync(current_path)) {
-    await fs_promise.mkdir(current_path, {
+  if (!!!fs_sys.existsSync(currentPath)) {
+    await fs_promise.mkdir(currentPath, {
       recursive: true,
     });
   }
 
+  const allFiles = await fs_promise.readdir(currentPath);
+  const filesMap = new Set(allFiles);
+
   for await (const item of endpoints) {
-    await fs_promise.writeFile(
-      path.join(current_path, `${item?.id}.js`),
-      item?.content
-    );
+    const filePath = path.join(currentPath, `${item?.id}.js`);
+
+    await fs_promise.writeFile(filePath, item?.content);
+
+    filesMap.delete(`${item?.id}.js`);
+  }
+
+  for await (const file of filesMap) {
+    const filePath = path.join(currentPath, file);
+    if (fs_sys.existsSync(filePath)) {
+      await fs_promise.unlink(filePath);
+    }
   }
 };
