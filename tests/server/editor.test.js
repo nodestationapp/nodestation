@@ -1,7 +1,7 @@
 import request from "supertest";
-import { expect, it, describe } from "vitest";
+import { expect, it, describe, beforeEach, afterEach } from "vitest";
 
-import { user, app } from "../helpers";
+import { createApp, login } from "../utils/index.js";
 
 const editorBodyDataset = [
   {
@@ -42,11 +42,24 @@ for await (const body of editorBodyDataset) {
   let fileID;
 
   describe(`Editor - ${body.type}`, () => {
+    let app;
+    let token;
+
+    beforeEach(async () => {
+      app = await createApp();
+      token = await login(app);
+    });
+
+    afterEach(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      app.close();
+    });
+
     it("POST /editor", async () => {
       const response = await request(app)
         .post("/admin/api/editor")
         .send(body)
-        .set("Authorization", `Bearer ${user.access_token}`);
+        .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(200);
       expect(response.body).toMatchObject({
         id: expect.any(String),
@@ -59,7 +72,7 @@ for await (const body of editorBodyDataset) {
     it("GET /editor", async () => {
       const response = await request(app)
         .get("/admin/api/editor")
-        .set("Authorization", `Bearer ${user.access_token}`);
+        .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(200);
     });
 
@@ -76,7 +89,7 @@ for await (const body of editorBodyDataset) {
     it("DELETE /editor", async () => {
       const response = await request(app)
         .delete(`/admin/api/editor/${fileID}`)
-        .set("Authorization", `Bearer ${user.access_token}`);
+        .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(200);
     });
   });

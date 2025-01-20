@@ -63,9 +63,8 @@ const cleanup = async () => {
 
     for await (const file of files) {
       const filePath = path.join(files_path, file);
-      const stats = await fs_promise.stat(filePath);
 
-      if (stats.isFile()) {
+      if (fs.existsSync(filePath)) {
         await fs_promise.unlink(filePath);
       }
     }

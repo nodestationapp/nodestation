@@ -9,8 +9,9 @@ import apiRoutes from "#routes/api.js";
 import allRoutes from "#routes/index.js";
 import logListener from "#libs/logListener.js";
 import loadRoutes from "#libs/server/loadRoutes.js";
+import cronsImport from "#libs/server/cronsImport.js";
 
-import(path.join(rootPath, ".nodestation", "files", "crons.js"));
+cronsImport();
 
 class ExpressServer {
   constructor(config = {}) {

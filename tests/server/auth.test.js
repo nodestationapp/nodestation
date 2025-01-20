@@ -1,13 +1,28 @@
 import request from "supertest";
-import { expect, it, beforeAll, describe } from "vitest";
+import { expect, it, describe, beforeAll, afterAll } from "vitest";
 
-import { app, knex, user } from "../helpers";
+import { createApp, knex } from "../utils/index.js";
 
-beforeAll(async () => {
-  await knex("nodestation_users").where({ email: user.email }).del();
-});
+const user = {
+  first_name: "Nodestation",
+  last_name: "Test",
+  email: "test@nodestation.app",
+  password: "qwerty12345",
+};
 
 describe(`Authentication`, () => {
+  let app;
+  let token;
+
+  beforeAll(async () => {
+    app = await createApp();
+    await knex("nodestation_users").where({ email: user.email }).del();
+  });
+
+  afterAll(async () => {
+    app.close();
+  });
+
   it("GET /user/check-admin - if not exist", async () => {
     const response = await request(app).get("/admin/api/user/check-admin");
 
@@ -37,13 +52,13 @@ describe(`Authentication`, () => {
       access_token: expect.any(String),
     });
 
-    user["access_token"] = response.body.access_token;
+    token = response.body.access_token;
   });
 
   it("GET /user/me", async () => {
     const response = await request(app)
       .get("/admin/api/user/me")
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
@@ -78,11 +93,11 @@ describe(`Authentication`, () => {
         first_name: `${user.first_name} edit`,
         last_name: `${user.last_name} edit`,
       })
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     const response2 = await request(app)
       .get("/admin/api/user/me")
-      .set("Authorization", `Bearer ${user.access_token}`);
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({

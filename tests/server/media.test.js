@@ -1,9 +1,9 @@
 import path from "path";
 import axios from "axios";
 import request from "supertest";
-import { expect, it, describe } from "vitest";
+import { expect, it, describe, beforeAll, afterAll } from "vitest";
 
-import { app, user } from "../helpers";
+import { createApp, login } from "../utils/index.js";
 
 const mediaBodyDataset = {
   aws: {
@@ -29,11 +29,23 @@ for await (const key of Object.keys(mediaBodyDataset)) {
   const body = mediaBodyDataset[key];
 
   describe(`Media - ${key}`, () => {
+    let app;
+    let token;
+
+    beforeAll(async () => {
+      app = await createApp();
+      token = await login(app);
+    });
+
+    afterAll(async () => {
+      app.close();
+    });
+
     it("PUT /admin/api/media/settings", async () => {
       const response = await request(app)
         .put("/admin/api/media/settings")
         .send({ [key]: { ...body }, active: key })
-        .set("Authorization", `Bearer ${user.access_token}`);
+        .set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toBe(200);
       expect(response.body).toMatchObject({
@@ -44,7 +56,7 @@ for await (const key of Object.keys(mediaBodyDataset)) {
     it("POST /media", async () => {
       const response = await request(app)
         .post("/admin/api/media")
-        .set("Authorization", `Bearer ${user.access_token}`)
+        .set("Authorization", `Bearer ${token}`)
         .attach("files", filePath);
 
       expect(response.status).toBe(200);
@@ -56,7 +68,7 @@ for await (const key of Object.keys(mediaBodyDataset)) {
     it("GET /media", async () => {
       const response = await request(app)
         .get("/admin/api/media")
-        .set("Authorization", `Bearer ${user.access_token}`);
+        .set("Authorization", `Bearer ${token}`);
 
       const uploadedMedia = response.body[response.body.length - 1];
       mediaID = uploadedMedia.id;
@@ -80,11 +92,11 @@ for await (const key of Object.keys(mediaBodyDataset)) {
     it("DELETE /media/:id", async () => {
       const response = await request(app)
         .delete(`/admin/api/media/${mediaID}`)
-        .set("Authorization", `Bearer ${user.access_token}`);
+        .set("Authorization", `Bearer ${token}`);
 
       const response2 = await request(app)
         .get("/admin/api/media")
-        .set("Authorization", `Bearer ${user.access_token}`);
+        .set("Authorization", `Bearer ${token}`);
 
       const isFileRemoved = !response2.body.find((item) => item.id === mediaID);
 
