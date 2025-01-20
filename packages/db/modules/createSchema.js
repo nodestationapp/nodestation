@@ -8,13 +8,13 @@ import rootPath from "../../utils/modules/rootPath.js";
 import createAuthFileIfNotExist from "./createAuthFileIfNotExist.js";
 
 const createSqliteFileIfNotExist = async () => {
-  if (!!!fs_sys.existsSync(path.join(rootPath, ".db"))) {
-    await fs_promise.mkdir(path.join(rootPath, ".db"), {
+  if (!!!fs_sys.existsSync(path.join(rootPath, ".db-test"))) {
+    await fs_promise.mkdir(path.join(rootPath, ".db-test"), {
       recursive: true,
     });
   }
 
-  const dbPath = path.join(rootPath, ".db", "data.sqlite3");
+  const dbPath = path.join(rootPath, ".db-test", "data.sqlite3");
 
   if (!!!fs_sys.existsSync(dbPath)) {
     await Promise.all([fs_promise.writeFile(dbPath, "", "utf8")]);

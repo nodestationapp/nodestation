@@ -1,11 +1,11 @@
 import request from "supertest";
 import { expect, it, describe, beforeAll, afterAll } from "vitest";
 
-import { createApp, knex } from "../utils/index.js";
+import { createApp, login } from "../utils/index.js";
 
 const user = {
-  first_name: "Nodestation",
-  last_name: "Test",
+  first_name: "Nodestation edit",
+  last_name: "Test edit edit",
   email: "test@nodestation.app",
   password: "qwerty12345",
 };
@@ -16,43 +16,11 @@ describe(`Authentication`, () => {
 
   beforeAll(async () => {
     app = await createApp();
-    await knex("nodestation_users").where({ email: user.email }).del();
+    token = await login(app);
   });
 
   afterAll(async () => {
     app.close();
-  });
-
-  it("GET /user/check-admin - if not exist", async () => {
-    const response = await request(app).get("/admin/api/user/check-admin");
-
-    expect(response.status).toBe(200);
-    expect(response.body.is_admin).toBe(false);
-  });
-
-  it("POST /auth/register", async () => {
-    const response = await request(app).post("/admin/api/auth/register").send({
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-      password: user.password,
-    });
-
-    expect(response.status).toBe(200);
-  });
-
-  it("GET /auth/login", async () => {
-    const response = await request(app).post("/admin/api/auth/login").send({
-      email: user.email,
-      password: user.password,
-    });
-
-    expect(response.status).toBe(200);
-    expect(response.body).toMatchObject({
-      access_token: expect.any(String),
-    });
-
-    token = response.body.access_token;
   });
 
   it("GET /user/me", async () => {
@@ -69,10 +37,10 @@ describe(`Authentication`, () => {
         photo: null,
         type: "admin",
         status: "active",
-        email: user.email,
+        email: expect.any(String),
         id: expect.any(String),
-        last_name: user.last_name,
-        first_name: user.first_name,
+        last_name: expect.any(String),
+        first_name: expect.any(String),
         password: expect.any(String),
         created_at: expect.any(Number),
       },

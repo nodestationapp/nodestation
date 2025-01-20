@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import { promises as fs_promise } from "fs";
 import rootPath from "#modules/rootPath.js";
 
 import crons from "./crons.js";
@@ -51,33 +50,9 @@ const getEditorFiles = () => {
   return files;
 };
 
-const cleanup = async () => {
-  const files_path = path.join(rootPath, ".nodestation", "files");
-
-  try {
-    if (!!!fs.existsSync(files_path)) {
-      return;
-    }
-
-    let files = await fs_promise.readdir(files_path);
-
-    for await (const file of files) {
-      const filePath = path.join(files_path, file);
-
-      if (fs.existsSync(filePath)) {
-        await fs_promise.unlink(filePath);
-      }
-    }
-  } catch (err) {
-    console.error(err.message);
-  }
-};
-
 const serverGenerator = async () => {
   try {
     const editor = getEditorFiles();
-
-    await cleanup();
 
     const all_endpoints = editor?.filter(
       (item) =>

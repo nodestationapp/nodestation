@@ -5,6 +5,7 @@ dist/
 
 # DATABASE
 .db
+.db-test
 
 # ENV
 .env
