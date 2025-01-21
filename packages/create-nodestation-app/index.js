@@ -8,7 +8,9 @@ import inquirer from "inquirer";
 import { cli } from "@nstation/utils";
 import { promises as fs_promise } from "fs";
 
-import authSchema from "./templates/authSchema.json" assert { type: "json" };
+const authSchema = JSON.parse(
+  fs_sys.readFileSync("./templates/authSchema.json", "utf-8")
+);
 
 (async () => {
   try {
