@@ -1,7 +1,5 @@
-import fs from "fs";
-import path from "path";
 import { knex } from "@nstation/db";
-import { rootPath } from "@nstation/utils";
+import { fs } from "@nstation/utils";
 
 function extractUploadPath(fullPath) {
   const uploadIndex = fullPath.indexOf("/uploads/");
@@ -66,20 +64,13 @@ const removeMedia = async (req, res) => {
       .select("url")
       .first();
 
-    fs.rmSync(path.join(rootPath, media_query?.url), {
-      recursive: true,
-      force: true,
-    });
+    const deleteFile = await fs.removeUploadedFile(media_query?.url);
 
-    const folderPath = path.join(rootPath, path.dirname(media_query?.url));
-
-    if (fs.existsSync(folderPath) && fs.readdirSync(folderPath).length === 0) {
-      fs.rmdirSync(folderPath);
+    if (!!deleteFile) {
+      await knex("nodestation_media")
+        .where({ id: parseInt(id) })
+        .del();
     }
-
-    await knex("nodestation_media")
-      .where({ id: parseInt(id) })
-      .del();
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

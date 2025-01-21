@@ -6,6 +6,7 @@ import getFiles from "./helpers/getFiles.js";
 import createFile from "./helpers/createFile.js";
 import folderNameParser from "./helpers/folderNameParser.js";
 import generateServer from "./helpers/generateServer/index.js";
+import removeUploadedFile from "./helpers/removeUploadedFile/index.js";
 
 const updateFile = async (id, body) =>
   new Promise(async (resolve, reject) => {
@@ -33,4 +34,11 @@ const deleteFile = async (id) =>
     }
   });
 
-export default { getFiles, createFile, updateFile, deleteFile, generateServer };
+export default {
+  getFiles,
+  createFile,
+  updateFile,
+  deleteFile,
+  generateServer,
+  removeUploadedFile,
+};

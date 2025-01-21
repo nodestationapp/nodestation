@@ -2,7 +2,6 @@ import { knex } from "@nstation/db";
 
 import aws from "./aws.js";
 import local from "./local.js";
-import wasabi from "./wasabi.js";
 import digitalocean from "./digitalocean.js";
 
 const storageProvider = (data) => {
@@ -13,8 +12,6 @@ const storageProvider = (data) => {
       return () => aws(data);
     case "digitalocean":
       return () => digitalocean(data);
-    case "wasabi":
-      return () => wasabi(data);
     default:
       return null;
   }
