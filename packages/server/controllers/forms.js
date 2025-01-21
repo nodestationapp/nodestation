@@ -191,7 +191,7 @@ const deleteEntryForm = async (req, res) => {
       .del();
 
     return res.status(200).json({ status: "ok" });
-  } catch (error) {
+  } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
   }

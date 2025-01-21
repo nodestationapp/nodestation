@@ -1,7 +1,9 @@
 import "dotenv/config";
 import { defineConfig } from "vitest/config";
 
-process.env.DATABASE_FILENAME = ".db-test/data.sqlite3";
+if (process.env.DATABASE_CLIENT === "sqlite") {
+  process.env.DATABASE_PATH = ".db-test/data.sqlite3";
+}
 
 export default defineConfig({
   test: {

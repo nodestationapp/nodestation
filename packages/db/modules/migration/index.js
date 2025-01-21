@@ -6,11 +6,11 @@ const typesMap = {
   short_text: "string",
   long_text: "text",
   enumeration: "string",
-  media: "json",
+  media: "text",
   numeric: "integer",
   json: "json",
   boolean: "boolean",
-  date: "integer",
+  date: "bigInteger",
 };
 
 function createOrModifyColumn({ table, item, dbColumns }) {
@@ -52,11 +52,16 @@ export default async () => {
   let all_tables = [...tables, formatted_auth];
 
   for await (const item of all_tables) {
-    const fileColumns = item?.fields;
-    const dbColumns = await knex(item?.slug).columnInfo();
+    let fileColumns = item?.fields;
+    let dbColumns = await knex(item?.slug).columnInfo();
 
     //ADD OR MODIFY
     const hasTable = await knex.schema.hasTable(item?.slug);
+
+    if (!!hasTable) {
+      fileColumns = fileColumns.filter((item) => item?.primary_key !== true);
+      delete dbColumns["id"];
+    }
 
     await knex.schema?.[!!hasTable ? "alterTable" : "createTable"]?.(
       item?.slug,
