@@ -8,13 +8,16 @@ import rootPath from "../../utils/modules/rootPath.js";
 import createAuthFileIfNotExist from "./createAuthFileIfNotExist.js";
 
 const createSqliteFileIfNotExist = async () => {
-  if (!!!fs_sys.existsSync(path.join(rootPath, ".db-test"))) {
-    await fs_promise.mkdir(path.join(rootPath, ".db-test"), {
+  const filePath = process.env.DATABASE_PATH;
+  const dir = path.dirname(filePath);
+
+  if (!!!fs_sys.existsSync(path.join(rootPath, dir))) {
+    await fs_promise.mkdir(path.join(rootPath, dir), {
       recursive: true,
     });
   }
 
-  const dbPath = path.join(rootPath, ".db-test", "data.sqlite3");
+  const dbPath = path.join(rootPath, filePath);
 
   if (!!!fs_sys.existsSync(dbPath)) {
     await Promise.all([fs_promise.writeFile(dbPath, "", "utf8")]);
@@ -22,7 +25,9 @@ const createSqliteFileIfNotExist = async () => {
 };
 
 const createSchema = async () => {
-  await createSqliteFileIfNotExist();
+  if (process.env.DATABASE_CLIENT === "sqlite") {
+    await createSqliteFileIfNotExist();
+  }
 
   const formsTableExists = await knex.schema.hasTable("nodestation_forms");
   if (!formsTableExists) {
@@ -32,8 +37,8 @@ const createSchema = async () => {
       table.integer("is_read").defaultTo(0);
       table.integer("archived").defaultTo(0);
       table.string("form_id");
-      table.integer("updated_at").nullable();
-      table.integer("created_at").nullable();
+      table.bigInteger("updated_at").nullable();
+      table.bigInteger("created_at").nullable();
     });
   }
 
@@ -79,7 +84,7 @@ const createSchema = async () => {
       table.integer("size").nullable();
       table.string("type").nullable();
       table.string("url").nullable();
-      table.integer("created_at").nullable();
+      table.bigInteger("created_at").nullable();
     });
   }
 
@@ -89,12 +94,12 @@ const createSchema = async () => {
       table.increments("id").primary();
       table.string("level").nullable();
       table.string("source").nullable();
-      table.string("message").nullable();
-      table.string("req").nullable();
-      table.string("res").nullable();
-      table.integer("responseTime").nullable();
-      table.integer("created_at").nullable();
+      table.text("message").nullable();
+      table.text("req").nullable();
+      table.text("res").nullable();
       table.integer("is_read").defaultTo(0);
+      table.integer("responseTime").nullable();
+      table.bigInteger("created_at").nullable();
     });
   }
 
@@ -106,7 +111,7 @@ const createSchema = async () => {
       table.increments("id").primary();
       table.string("uid").nullable();
       table.string("token").nullable();
-      table.integer("created_at").nullable();
+      table.bigInteger("created_at").nullable();
     });
   }
 
@@ -118,7 +123,7 @@ const createSchema = async () => {
       table.increments("id").primary();
       table.string("uid").nullable();
       table.string("token").nullable();
-      table.integer("created_at").nullable();
+      table.bigInteger("created_at").nullable();
     });
   }
 

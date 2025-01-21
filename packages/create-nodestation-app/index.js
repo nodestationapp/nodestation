@@ -63,7 +63,7 @@ import authSchema from "./templates/authSchema.json" assert { type: "json" };
       PORT: 3000,
       DATABASE_CLIENT: "sqlite",
       PUBLIC_URL: "http://localhost:3000",
-      DATABASE_FILENAME: answers?.provider?.url,
+      DATABASE_PATH: answers?.provider?.url,
       TOKEN_SECRET: crypto.randomBytes(64).toString("hex"),
     };
 

@@ -14,7 +14,7 @@ In the root of the project, create a .env file with the following variables:
 PORT=3000
 DATABASE_CLIENT=sqlite
 PUBLIC_URL=http://localhost:3000
-DATABASE_FILENAME=.db/data.sqlite3
+DATABASE_PATH=.db/data.sqlite3
 TOKEN_SECRET=your-secret-key
 ```
 

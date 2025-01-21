@@ -65,13 +65,14 @@ const getUserMe = async (req, res) => {
 
 const checkIsAdmin = async (req, res) => {
   try {
-    const { count } = await knex("nodestation_users")
+    const count = await knex("nodestation_users")
       .where({
         type: "admin",
         status: "active",
       })
       .count("* as count")
-      .first();
+      .first()
+      .then((row) => row.count);
 
     return res.status(200).json({ is_admin: !!count });
   } catch (err) {
