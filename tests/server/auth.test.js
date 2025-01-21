@@ -1,3 +1,4 @@
+import path from "path";
 import request from "supertest";
 import { expect, it, describe, beforeAll, afterAll } from "vitest";
 
@@ -55,13 +56,20 @@ describe(`Authentication`, () => {
   });
 
   it("PUT /user/me", async () => {
+    const filePath = path.join(
+      process.cwd(),
+      "tests",
+      "server",
+      "assets",
+      "example-image.png"
+    );
+
     const response = await request(app)
       .put(`/admin/api/user/me`)
-      .send({
-        first_name: `${user.first_name} edit`,
-        last_name: `${user.last_name} edit`,
-      })
-      .set("Authorization", `Bearer ${token}`);
+      .set("Authorization", `Bearer ${token}`)
+      .field("first_name", `${user.first_name} edit`)
+      .field("last_name", `${user.last_name} edit`)
+      .attach("photo", filePath);
 
     const response2 = await request(app)
       .get("/admin/api/user/me")
@@ -77,5 +85,6 @@ describe(`Authentication`, () => {
       response2.body.user.first_name === `${user.first_name} edit` &&
         response2.body.user.last_name === `${user.last_name} edit`
     ).toBe(true);
+    expect(typeof response2.body.user.photo).toBe("object");
   });
 });

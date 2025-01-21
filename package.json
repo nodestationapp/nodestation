@@ -56,6 +56,10 @@
           {
             "type": "chore",
             "section": "Chores"
+          },
+          {
+            "type": "test",
+            "section": "Tests"
           }
         ]
       },

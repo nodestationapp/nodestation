@@ -45,7 +45,7 @@ const getUserMe = async (req, res) => {
               url:
                 settings?.active === "local"
                   ? `${process.env.PUBLIC_URL}${userPhoto?.url}`
-                  : user?.photo?.url,
+                  : userPhoto?.url,
             },
           }
         : {}),
