@@ -64,7 +64,7 @@ const authLogin = async (req, res) => {
     return res.status(200).json({ access_token });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "Something went wrong" });
+    return res.status(500).json(err);
   }
 };
 
