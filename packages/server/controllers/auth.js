@@ -229,7 +229,7 @@ const updateUserAuth = async (req, res) => {
     }
 
     let formatted_body = user_schema_fields.reduce((acc, curr) => {
-      acc[curr.slug] = body?.[curr.slug];
+      acc[curr.slug] = body?.[curr.slug] !== "null" ? body?.[curr.slug] : null;
       return acc;
     }, {});
 

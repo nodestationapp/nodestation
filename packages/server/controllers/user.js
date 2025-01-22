@@ -96,6 +96,7 @@ const updateUserMe = async (req, res) => {
     }
     if (!!files?.length) {
       updateData.photo = JSON.stringify({
+        name: files?.[0]?.originalname,
         url: !!files?.[0]?.path
           ? extractUploadPath(files?.[0]?.path)
           : files?.[0]?.location,
