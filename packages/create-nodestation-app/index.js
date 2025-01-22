@@ -4,9 +4,13 @@ import ora from "ora";
 import path from "path";
 import fs_sys from "fs";
 import crypto from "crypto";
+import figlet from "figlet";
 import inquirer from "inquirer";
 import { cli } from "@nstation/utils";
 import { promises as fs_promise } from "fs";
+import boxen from "boxen";
+
+import chalk from "chalk";
 
 const authSchema = JSON.parse(
   fs_sys.readFileSync("./templates/authSchema.json", "utf-8")
@@ -27,7 +31,6 @@ const authSchema = JSON.parse(
         },
       },
     ];
-
     const answers = await inquirer.prompt([
       {
         type: "input",
@@ -48,7 +51,6 @@ const authSchema = JSON.parse(
         when: (answers) => answers.provider !== undefined,
       },
     ]);
-
     const packageJson = {
       name: answers?.name,
       version: "0.1.0",
@@ -56,11 +58,7 @@ const authSchema = JSON.parse(
       scripts: {
         start: "nodestation start",
       },
-      dependencies: {
-        nodestation: "1.3.0",
-      },
     };
-
     const envJson = {
       PORT: 3000,
       DATABASE_CLIENT: "sqlite",
@@ -68,40 +66,55 @@ const authSchema = JSON.parse(
       DATABASE_PATH: answers?.provider?.url,
       TOKEN_SECRET: crypto.randomBytes(64).toString("hex"),
     };
-
     const envString = Object.entries(envJson)
       .map(([key, value]) => `${key}=${value}`)
       .join("\n");
-
     const projectPath = path.resolve(answers.name);
-
     if (!fs_sys.existsSync(projectPath)) {
       await fs_promise.mkdir(projectPath, { recursive: true });
     }
-
     await fs_promise.writeFile(path.join(projectPath, ".env"), envString);
-
     await fs_promise.writeFile(
       path.join(projectPath, "package.json"),
       JSON.stringify(packageJson, null, 2)
     );
-
     await fs_promise.mkdir(path.join(projectPath, "src"), { recursive: true });
     await fs_promise.writeFile(
       path.join(projectPath, "src", "auth.json"),
       JSON.stringify(authSchema, null, 2)
     );
-
     let spinner;
     spinner = ora(`Installing dependencies`).start();
-
     await cli.runCommand({
       cmd: "npm",
-      args: ["i"],
+      args: ["i", "nodestation@latest", "--loglevel", "error"],
       __dirname: projectPath,
     });
-
     spinner.succeed("Installing dependencies");
+
+    const nodestationText = await figlet("Nodestation");
+
+    console.info(nodestationText);
+
+    const message = `Success! Your project ${chalk.green(
+      answers?.name
+    )} is ready to go.
+
+To get started, run:
+
+${chalk.cyan("cd")} ${answers?.name}
+${chalk.cyan("npm start")}
+
+${chalk.magenta("Happy coding!")}`;
+
+    const boxedMessage = boxen(message, {
+      padding: 1,
+      margin: 0,
+      borderStyle: "round",
+      borderColor: "green",
+    });
+
+    console.info(boxedMessage);
   } catch (err) {
     console.error(err);
   }

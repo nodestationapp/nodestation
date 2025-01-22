@@ -1,13 +1,12 @@
 import fs from "fs";
 import path from "path";
 
+import chalk from "chalk";
+import boxen from "boxen";
 import cli from "#modules/cli/index.js";
 import rootPath from "#modules/rootPath.js";
 
 const welcomeBox = async ({ executionTime }) => {
-  const chalk = (await import("chalk")).default;
-  const boxen = (await import("boxen")).default;
-
   const packagePath = path.join(rootPath, "package.json");
   const fileContent = fs.readFileSync(packagePath, "utf-8");
   const packageJson = JSON.parse(fileContent);
