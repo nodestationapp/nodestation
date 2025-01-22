@@ -53,7 +53,7 @@ const CreateFieldModal = ({ index, form, onClose }) => {
     <Formik
       initialValues={{
         name: form?.name || "",
-        type: form?.type,
+        type: form?.type || null,
         default: form?.default,
         options: form?.options || "",
         required: form?.required || false,
