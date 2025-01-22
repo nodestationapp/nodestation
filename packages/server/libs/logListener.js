@@ -86,7 +86,7 @@ const logListener = async ({ app }) => {
     const originalSend = res.send;
 
     res.send = function (body) {
-      responseBody = body;
+      responseBody = JSON.parse(body);
       return originalSend.apply(this, arguments);
     };
 

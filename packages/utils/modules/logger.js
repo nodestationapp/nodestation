@@ -1,5 +1,19 @@
 import { knex } from "@nstation/db";
 
+const sanitizeSensitiveData = (body) => {
+  const sensitiveFields = ["password", "access_token"];
+
+  let sanitizedBody = body;
+
+  sensitiveFields.forEach((field) => {
+    if (sanitizedBody[field]) {
+      sanitizedBody[field] = "***";
+    }
+  });
+
+  return sanitizedBody;
+};
+
 const logger = async ({
   req,
   res,
@@ -19,12 +33,12 @@ const logger = async ({
       responseTime,
       source: JSON.stringify(source),
       req: {
-        body: req?.body,
+        body: sanitizeSensitiveData(req?.body),
         method: req?.method,
         headers: req?.headers,
       },
       res: {
-        body: responseBody,
+        body: sanitizeSensitiveData(responseBody),
         status: res?.statusCode,
       },
     });
