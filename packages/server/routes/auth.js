@@ -2,6 +2,8 @@ import express from "express";
 import { uploader } from "@nstation/utils";
 import { authMiddleware } from "@nstation/auth";
 
+import limiter from "#libs/rate-limit.js";
+
 import {
   authLogin,
   getAllAuth,
@@ -18,9 +20,9 @@ import {
 
 const router = express.Router();
 
-router.route("/login").post(authLogin);
-router.route("/register").post(authRegister);
-router.route("/activation").post(authActivation);
+router.route("/login").post(limiter, authLogin);
+router.route("/register").post(limiter, authRegister);
+router.route("/activation").post(limiter, authActivation);
 router
   .route("/")
   .get(authMiddleware(["admin"]), getAllAuth)
@@ -28,8 +30,8 @@ router
 router.route("/password-reset").post(authResetPassword);
 router
   .route("/change-password")
-  .put(authMiddleware(["admin"]), authChangePassword);
-router.route("/password-reset/confirm").post(authResetPasswordConfirm);
+  .put(limiter, authMiddleware(["admin"]), authChangePassword);
+router.route("/password-reset/confirm").post(limiter, authResetPasswordConfirm);
 router
   .route("/settings")
   .get(authMiddleware(["admin"]), getSettingsAuth)

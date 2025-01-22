@@ -1,5 +1,13 @@
 import { logger, fs } from "@nstation/utils";
 
+const safeJSONParse = (input) => {
+  try {
+    return JSON.parse(input);
+  } catch (error) {
+    return input;
+  }
+};
+
 const getFormName = (url) => {
   const id = url?.split("/")?.[url?.split("/")?.length - 1];
 
@@ -86,7 +94,7 @@ const logListener = async ({ app }) => {
     const originalSend = res.send;
 
     res.send = function (body) {
-      responseBody = JSON.parse(body);
+      responseBody = safeJSONParse(body);
       return originalSend.apply(this, arguments);
     };
 
