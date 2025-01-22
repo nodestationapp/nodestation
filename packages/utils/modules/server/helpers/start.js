@@ -1,15 +1,23 @@
+import fs from "fs";
 import path from "path";
-import rootPath from "#modules/rootPath.js";
+
 import cli from "#modules/cli/index.js";
+import rootPath from "#modules/rootPath.js";
 
 const welcomeBox = async ({ executionTime }) => {
   const chalk = (await import("chalk")).default;
   const boxen = (await import("boxen")).default;
 
+  const packagePath = path.join(rootPath, "package.json");
+  const fileContent = fs.readFileSync(packagePath, "utf-8");
+  const packageJson = JSON.parse(fileContent);
+
   const message = `${chalk.bold.green("🚀 Nodestation is live!")}
 
 ${chalk.underline("Server Information")}
 ${chalk.yellow("Startup Time:")}         ${executionTime} ms
+${chalk.yellow("Database:")}             ${process.env.DATABASE_CLIENT}
+${chalk.yellow("App Version:")}          ${packageJson?.version}
 
 ${chalk.underline("Access Link")}
 ${chalk.cyan("Server URL:")}           http://localhost:${process.env.PORT}`;
@@ -23,9 +31,6 @@ ${chalk.cyan("Server URL:")}           http://localhost:${process.env.PORT}`;
 
   console.info(boxedMessage);
 };
-
-// ${chalk.yellow("Database:")}             Postgresql
-// ${chalk.yellow("App Version:")}          1.0.0
 
 // ${chalk.underline("Documentation:")}
 // ${chalk.cyan("https://docs.example.com")}`;
