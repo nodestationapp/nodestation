@@ -5,26 +5,44 @@ import FormikTextarea from "components/formik/FormikTextarea";
 import FormikPhotoInput from "components/formik/FormikPhotoInput";
 
 const tableInputRender = (item) => {
-  let enum_data = null;
+  let select_data = null;
 
   if (item?.type === "enumeration") {
     const options = item?.options?.split("\n");
 
-    enum_data = options?.map((item) => ({
+    select_data = options?.map((item) => ({
       label: item,
       value: item,
     }));
   }
 
+  if (item?.type === "boolean") {
+    select_data = [
+      {
+        label: "NULL",
+        value: null,
+      },
+      {
+        label: "TRUE",
+        value: 1,
+      },
+      {
+        label: "FALSE",
+        value: 0,
+      },
+    ];
+  }
+
   switch (item?.type) {
     case "long_text":
       return <FormikTextarea name={item?.slug} label={item?.name} />;
+    case "boolean":
     case "enumeration":
       return (
         <FormikSelect
           name={item?.slug}
           label={item?.name}
-          options={enum_data}
+          options={select_data}
         />
       );
     case "media":

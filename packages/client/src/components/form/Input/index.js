@@ -48,7 +48,6 @@ const Input = ({
           value={value}
           name={name}
           onChange={onChange}
-          disabled={disabled}
           maxLength={maxLength}
         />
         {aside}

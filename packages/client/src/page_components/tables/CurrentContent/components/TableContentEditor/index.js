@@ -7,12 +7,28 @@ import tableInputRender from "libs/tableInputRender";
 
 import { useTable } from "context/client/table";
 
+const mapDefaults = (schema, value, is_update) => {
+  value = value === null ? null : value;
+
+  if (!!is_update) {
+    return value;
+  }
+
+  switch (schema?.type) {
+    case "boolean":
+      return !!schema?.default ? 1 : 0;
+    default:
+      return schema?.default || null;
+  }
+};
+
 const TableContentEditor = ({ data = {}, onClose }) => {
   const { data: table_data, addTableEntry, updateTableEntry } = useTable();
 
   const onSubmit = async (values, setSubmitting) => {
     try {
       const formData = new FormData();
+
       Object.keys(values)?.forEach((item) => {
         if (!!!values?.[item]?.size) {
           formData.append(item, values?.[item]?.file || values?.[item]);
@@ -25,7 +41,6 @@ const TableContentEditor = ({ data = {}, onClose }) => {
         await addTableEntry(formData);
       }
 
-      // await updateTableEntry(data?.id, values);
       onClose();
     } catch (err) {
       setSubmitting(false);
@@ -33,10 +48,14 @@ const TableContentEditor = ({ data = {}, onClose }) => {
     }
   };
 
-  const formatted_data = Object.fromEntries(
+  let formatted_data = Object.fromEntries(
     Object.entries(data).map(([key, value]) => [
       key,
-      value === undefined ? null : value,
+      mapDefaults(
+        table_data?.table?.fields?.find((item) => item?.slug === key),
+        value,
+        !!data?.id
+      ),
     ])
   );
 
@@ -47,7 +66,7 @@ const TableContentEditor = ({ data = {}, onClose }) => {
         onSubmit(values, setSubmitting);
       }}
     >
-      {({ submitForm, isSubmitting }) => (
+      {({ values, submitForm, isSubmitting }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
           <AsideModal
             header={data?.id || "Add entry"}

@@ -58,6 +58,17 @@ const extra_input_render = (type, locked) => {
           <FormikSwitch label="Required" name="required" disabled={locked} />
         </>
       );
+    case "long_text":
+      return (
+        <>
+          <FormikTextarea
+            label="Default value"
+            name="default"
+            variant="light"
+          />
+          <FormikSwitch label="Required" name="required" disabled={locked} />
+        </>
+      );
     default:
       return (
         <>

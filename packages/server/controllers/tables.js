@@ -5,6 +5,39 @@ import { knex, createSchema } from "@nstation/db";
 
 import upsertEntry from "#libs/upsertEntry.js";
 
+const safeJSONParse = (input) => {
+  try {
+    return JSON.parse(input);
+  } catch (error) {
+    return input;
+  }
+};
+
+const formatIfMediaObject = (value, settings) => {
+  if (value && typeof value === "object" && "size" in value) {
+    return {
+      ...value,
+      url:
+        settings?.active === "local"
+          ? `${process.env.PUBLIC_URL}${value?.url}`
+          : value?.url,
+    };
+  }
+  return value;
+};
+
+const parseJSONFields = (array, settings) => {
+  return array.map((item) => {
+    return Object.fromEntries(
+      Object.entries(item).map(([key, value]) => {
+        const parsedValue = safeJSONParse(value);
+        const formattedValue = formatIfMediaObject(parsedValue, settings);
+        return [key, formattedValue];
+      })
+    );
+  });
+};
+
 const getAllTables = async (_, res) => {
   try {
     const tables = fs.getFiles(["tables"]);
@@ -25,7 +58,10 @@ const getTable = async (req, res) => {
       (item) => item?.id?.toString() === id?.toString()
     );
 
-    const entries = await knex(table?.slug).orderBy("id", "desc");
+    const settings = await knex("nodestation_media_settings").first();
+
+    let entries = await knex(table?.slug).orderBy("id", "desc");
+    entries = parseJSONFields(entries, settings);
 
     return res.status(200).json({ table, entries });
   } catch (err) {

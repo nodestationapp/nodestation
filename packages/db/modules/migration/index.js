@@ -24,14 +24,6 @@ function createOrModifyColumn({ table, item, dbColumns }) {
     column.primary();
   }
 
-  if (item?.default !== undefined) {
-    if (item?.default === "generate_uuid()") {
-      column.defaultTo(knex.fn.uuid());
-    } else {
-      column.defaultTo(item?.default);
-    }
-  }
-
   if (!!dbColumns?.[item?.slug]) {
     column.alter();
   }

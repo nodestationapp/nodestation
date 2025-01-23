@@ -4,14 +4,27 @@
   gap: 10px;
 
   &__photo{
-    height: 28px;
-    width: 28px;
-    border-radius: 8px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
     overflow: hidden;
 
-    svg{
+    &__placeholder{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #30353E;
       height: 100%;
       width: 100%;
+
+      svg{
+        height: 18px;
+        width: 18px;
+
+        path{
+          stroke: #647282;
+        }
+      }
     }
 
     img{

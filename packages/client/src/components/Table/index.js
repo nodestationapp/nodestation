@@ -9,10 +9,12 @@ import Media from "./components/Media";
 import Level from "./components/Level";
 import Button from "components/Button";
 import Toolbar from "./components/ToolBar";
+import Boolean from "./components/Boolean";
 import LogSource from "./components/LogSource";
 import StatusChip from "components/StatusChip";
 import BadgeName from "./components/BadgeName";
 import Checkbox from "components/form/Checkbox";
+import LogMessage from "./components/LogMessage";
 import UserProfile from "./components/UserProfile";
 import EndpointCode from "./components/EndpointCode";
 import EndpointName from "./components/EndpointName";
@@ -26,7 +28,6 @@ import {
   ArrowDownIcon,
   ArrowsUpDownIcon,
 } from "@heroicons/react/24/outline";
-import LogMessage from "./components/LogMessage";
 
 const mainClass = "table";
 
@@ -109,8 +110,10 @@ const Table = ({
         return <EndpointCode data={value} />;
       case "log_message":
         return <LogMessage data={value} />;
+      case "boolean":
+        return <Boolean data={value} />;
       default:
-        return <p className="table__regular">{value}</p>;
+        return <p className="table__regular">{value || "-"}</p>;
     }
   };
 

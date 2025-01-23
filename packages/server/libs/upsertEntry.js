@@ -21,7 +21,7 @@ function extractUploadPath(fullPath) {
 }
 
 const mapDefaults = (schema, value, is_update) => {
-  value = value === "null" ? undefined : value;
+  value = value === "null" ? null : value;
 
   if (!!is_update) {
     return value;
@@ -33,7 +33,7 @@ const mapDefaults = (schema, value, is_update) => {
     case "now()":
       return Date.now();
     default:
-      return value || schema?.default;
+      return value;
   }
 };
 
