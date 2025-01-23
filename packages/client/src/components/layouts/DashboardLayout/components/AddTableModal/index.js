@@ -7,15 +7,15 @@ import FormikInput from "components/formik/FormikInput";
 
 import api from "libs/api";
 
-const AddCollectionModal = ({ onClose }) => {
+const AddTableModal = ({ onClose }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const onSubmit = async (values, setSubmitting) => {
     try {
-      const collection = await api.post("/tables", { ...values });
+      const table = await api.post("/tables", { ...values });
 
-      navigate(`/collections/${collection?.id}/settings`);
+      navigate(`/tables/${table?.id}/settings`);
 
       queryClient.refetchQueries("tables");
 
@@ -38,7 +38,7 @@ const AddCollectionModal = ({ onClose }) => {
       {({ submitForm, isSubmitting }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
           <Modal
-            header="Add collection"
+            header="Add table"
             onClose={onClose}
             onSubmit={submitForm}
             submit_label="Add"
@@ -54,4 +54,4 @@ const AddCollectionModal = ({ onClose }) => {
   );
 };
 
-export default AddCollectionModal;
+export default AddTableModal;

@@ -3,6 +3,8 @@ import slugify from "slugify";
 import { fs } from "@nstation/utils";
 import { knex, createSchema } from "@nstation/db";
 
+import upsertEntry from "#libs/upsertEntry.js";
+
 const getAllTables = async (_, res) => {
   try {
     const tables = fs.getFiles(["tables"]);
@@ -23,7 +25,9 @@ const getTable = async (req, res) => {
       (item) => item?.id?.toString() === id?.toString()
     );
 
-    return res.status(200).json({ collection: table });
+    const entries = await knex(table?.slug).orderBy("id", "desc");
+
+    return res.status(200).json({ table, entries });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
@@ -124,4 +128,42 @@ const deleteTable = async (req, res) => {
   }
 };
 
-export { getAllTables, getTable, createTable, updateTable, deleteTable };
+const addTableEntry = async (req, res) => {
+  const { id } = req?.params;
+  const body = req?.body;
+  const files = req?.files;
+
+  try {
+    await upsertEntry({ type: "tables", id, body, files });
+
+    return res.status(200).json({ status: "ok" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+const updateTableEntry = async (req, res) => {
+  const { id, entry_id } = req?.params;
+  const body = req?.body;
+  const files = req?.files;
+
+  try {
+    await upsertEntry({ type: "tables", id, body, files, entry_id });
+
+    return res.status(200).json({ status: "ok" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+export {
+  getAllTables,
+  getTable,
+  createTable,
+  updateTable,
+  deleteTable,
+  addTableEntry,
+  updateTableEntry,
+};

@@ -2,17 +2,17 @@ import { useState } from "react";
 
 import Modal from "components/Modal";
 
-import { useCollection } from "context/client/collection";
+import { useTable } from "context/client/table";
 
-const ArchiveCollectionModal = ({ data, onClose }) => {
+const ArchiveTableModal = ({ data, onClose }) => {
   const [loading, setLoading] = useState(false);
-  const { deleteCollection } = useCollection();
+  const { deleteTable } = useTable();
 
   const onSubmit = async () => {
     setLoading(true);
 
     try {
-      await deleteCollection();
+      await deleteTable();
 
       onClose();
     } catch (err) {
@@ -38,4 +38,4 @@ const ArchiveCollectionModal = ({ data, onClose }) => {
   );
 };
 
-export default ArchiveCollectionModal;
+export default ArchiveTableModal;

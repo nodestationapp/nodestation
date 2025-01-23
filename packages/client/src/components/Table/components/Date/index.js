@@ -5,7 +5,7 @@ const mainClass = "table__date";
 const Date = ({ data }) => {
   return (
     <div className={mainClass}>
-      <span>{moment(data)?.format("DD MMM YYYY, hh:mm A")}</span>
+      <span>{!!data ? moment(data)?.format("DD MMM YYYY, hh:mm A") : "-"}</span>
     </div>
   );
 };

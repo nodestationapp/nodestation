@@ -4,7 +4,7 @@ import FormikDateTime from "components/formik/FormikDateTime";
 import FormikTextarea from "components/formik/FormikTextarea";
 import FormikPhotoInput from "components/formik/FormikPhotoInput";
 
-const collectionInputRender = (item) => {
+const tableInputRender = (item) => {
   let enum_data = null;
 
   if (item?.type === "enumeration") {
@@ -58,4 +58,4 @@ const collectionInputRender = (item) => {
   }
 };
 
-export default collectionInputRender;
+export default tableInputRender;

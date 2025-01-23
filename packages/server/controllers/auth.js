@@ -8,26 +8,10 @@ import {
 } from "@nstation/auth";
 import slugify from "slugify";
 import bcrypt from "bcryptjs";
-import { v4 as uuidv4 } from "uuid";
 import { fs } from "@nstation/utils";
 import { knex, createSchema } from "@nstation/db";
 
-function removeUndefinedProperties(obj) {
-  for (const key in obj) {
-    if (obj[key] === undefined) {
-      delete obj[key];
-    }
-  }
-  return obj;
-}
-
-function extractUploadPath(fullPath) {
-  const uploadIndex = fullPath.indexOf("/uploads/");
-  if (uploadIndex !== -1) {
-    return fullPath.substring(uploadIndex);
-  }
-  return null;
-}
+import upsertEntry from "#libs/upsertEntry.js";
 
 const authRegister = async (req, res) => {
   let body = req?.body;
@@ -68,7 +52,7 @@ const authLogin = async (req, res) => {
   }
 };
 
-const getAllAuth = async (req, res) => {
+const getAllAuth = async (_, res) => {
   try {
     const data = await knex("nodestation_users").select();
 
@@ -144,52 +128,15 @@ const updateSettingsAuth = async (req, res) => {
 };
 
 const addUserAuth = async (req, res) => {
-  const body = req?.body;
-
-  const files = fs.getFiles();
-  const user_schema = files?.find((item) => item?.id?.toString() === "auth");
-  const user_schema_fields = user_schema?.fields;
+  let body = req?.body;
+  const files = req?.files;
 
   try {
-    if (req?.files?.length > 0) {
-      req?.files?.forEach((item) => {
-        const is_field = user_schema_fields?.find(
-          (element) => element?.slug === item?.fieldname
-        );
-
-        if (!!is_field) {
-          const upload_path = !!item?.path
-            ? extractUploadPath(item?.path)
-            : item?.location;
-
-          body[item?.fieldname] = JSON.stringify({
-            name: item?.originalname,
-            type: item?.mimetype,
-            url: upload_path,
-            size: item?.size,
-          });
-        }
-      });
-    }
-
-    let formatted_body = user_schema_fields.reduce((acc, curr) => {
-      acc[curr.slug] = body?.[curr.slug];
-      return acc;
-    }, {});
-
-    const uid = uuidv4();
-    const created_at = Date.now();
-
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(formatted_body?.password, salt);
+    const hashedPassword = await bcrypt.hash(body?.password, salt);
+    body.password = hashedPassword;
 
-    formatted_body["id"] = uid;
-    formatted_body["password"] = hashedPassword;
-    formatted_body["created_at"] = created_at;
-
-    const data = removeUndefinedProperties(formatted_body);
-
-    await knex("nodestation_users").insert(data);
+    await upsertEntry({ id: "auth", body, files });
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {
@@ -200,42 +147,11 @@ const addUserAuth = async (req, res) => {
 
 const updateUserAuth = async (req, res) => {
   const body = req?.body;
+  const files = req?.files;
   const { id } = req?.params;
 
-  const files = fs.getFiles();
-  const user_schema = files?.find((item) => item?.id?.toString() === "auth");
-  const user_schema_fields = user_schema?.fields;
-
   try {
-    if (req?.files?.length > 0) {
-      req?.files?.forEach((item) => {
-        const is_field = user_schema_fields?.find(
-          (element) => element?.slug === item?.fieldname
-        );
-
-        if (!!is_field) {
-          const upload_path = !!item?.path
-            ? extractUploadPath(item?.path)
-            : item?.location;
-
-          body[item?.fieldname] = JSON.stringify({
-            name: item?.originalname,
-            type: item?.mimetype,
-            url: upload_path,
-            size: item?.size,
-          });
-        }
-      });
-    }
-
-    let formatted_body = user_schema_fields.reduce((acc, curr) => {
-      acc[curr.slug] = body?.[curr.slug] !== "null" ? body?.[curr.slug] : null;
-      return acc;
-    }, {});
-
-    const data = removeUndefinedProperties(formatted_body);
-
-    await knex("nodestation_users").where({ id }).update(data);
+    await upsertEntry({ id: "auth", body, files, entry_id: id });
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

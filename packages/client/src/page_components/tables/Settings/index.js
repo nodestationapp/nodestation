@@ -6,36 +6,28 @@ import KeyViewer from "components/KeyViewer";
 import IconButton from "components/IconButton";
 import SettingsForm from "components/SettingsForm";
 import SectionHeader from "components/SectionHeader";
-import RequestsModal from "components/RequestsModal";
-import ArchiveFormModal from "../components/ArchiveCollectionModal";
+import ArchiveFormModal from "../components/ArchiveTableModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
-import getHost from "libs/helpers/getHost";
+import { useTable } from "context/client/table";
 
-import { useCollection } from "context/client/collection";
+import { CircleStackIcon, TrashIcon } from "@heroicons/react/24/outline";
 
-import {
-  CircleStackIcon,
-  CodeBracketIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
-
-const CollectionSettingsContent = () => {
-  const { data, id, loading, updateCollection } = useCollection();
+const TableSettingsContent = () => {
+  const { data, id, loading, updateTable } = useTable();
 
   const [archive_modal, setArchiveModal] = useState(false);
-  const [request_modal, setRequestModal] = useState(false);
 
-  const collection = data?.collection;
+  const table = data?.table;
 
   const submenu_data = [
     {
       label: "Entries",
-      href: `/collections/${id}`,
+      href: `/tables/${id}`,
     },
     {
       label: "Settings",
-      href: `/collections/${id}/settings`,
+      href: `/tables/${id}/settings`,
     },
   ];
 
@@ -45,8 +37,8 @@ const CollectionSettingsContent = () => {
       label: "Tables",
     },
     {
-      label: collection?.name,
-      href: `/collections/${collection?.id}`,
+      label: table?.name,
+      href: `/tables/${table?.id}`,
     },
     {
       label: "Settings",
@@ -55,7 +47,7 @@ const CollectionSettingsContent = () => {
 
   const onSubmit = async (values, setSubmitting, resetForm) => {
     try {
-      await updateCollection(values);
+      await updateTable(values);
 
       resetForm({ values });
     } catch (err) {
@@ -86,31 +78,21 @@ const CollectionSettingsContent = () => {
     },
   ];
 
-  const host = getHost();
-
-  const requests_modal_data = [
-    {
-      label: "Create form entry",
-      url: `${host}/api/system/forms/${collection?.id}`,
-      body: collection?.fields,
-    },
-  ];
-
   return (
     <>
       <Formik
         initialValues={{
-          name: collection?.name,
-          fields: collection?.fields || [],
-          status: collection?.status || "active",
+          name: table?.name,
+          fields: table?.fields || [],
+          status: table?.status || "active",
           settings: {
             send_email_admin: {
-              active: collection?.settings?.send_email_admin?.active || false,
-              value: collection?.settings?.send_email_admin?.value,
+              active: table?.settings?.send_email_admin?.active || false,
+              value: table?.settings?.send_email_admin?.value,
             },
             auto_responder: {
-              active: collection?.settings?.auto_responder?.active || false,
-              value: collection?.settings?.auto_responder?.value,
+              active: table?.settings?.auto_responder?.active || false,
+              value: table?.settings?.auto_responder?.value,
             },
           },
         }}
@@ -127,15 +109,10 @@ const CollectionSettingsContent = () => {
               loading={!!loading}
               action={
                 <>
-                  {!!collection?.id && (
+                  {!!table?.id && (
                     <>
                       <IconButton
-                        onClick={() => setRequestModal(true)}
-                        icon={<CodeBracketIcon color="#F0F1F3" />}
-                      />
-                      <span className="separetor" />
-                      <IconButton
-                        onClick={() => setArchiveModal(collection)}
+                        onClick={() => setArchiveModal(table)}
                         icon={<TrashIcon color="#FF3636" />}
                       />
                     </>
@@ -165,14 +142,8 @@ const CollectionSettingsContent = () => {
           onClose={() => setArchiveModal(false)}
         />
       )}
-      {request_modal && (
-        <RequestsModal
-          data={requests_modal_data}
-          onClose={() => setRequestModal(null)}
-        />
-      )}
     </>
   );
 };
 
-export default CollectionSettingsContent;
+export default TableSettingsContent;

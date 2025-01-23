@@ -1,17 +1,14 @@
 import { Formik, Form } from "formik";
-import { useQueryClient } from "@tanstack/react-query";
 
 import KeyViewer from "components/KeyViewer";
 import AsideModal from "components/AsideModal";
 
-import api from "libs/api";
 import tableInputRender from "libs/tableInputRender";
 
-import { useUsers } from "context/client/users";
+import { useTable } from "context/client/table";
 
-const UserProfileModal = ({ data, onClose }) => {
-  const queryClient = useQueryClient();
-  const { settings } = useUsers();
+const TableContentEditor = ({ data = {}, onClose }) => {
+  const { data: table_data, addTableEntry, updateTableEntry } = useTable();
 
   const onSubmit = async (values, setSubmitting) => {
     try {
@@ -23,20 +20,12 @@ const UserProfileModal = ({ data, onClose }) => {
       });
 
       if (data?.id) {
-        await api.put(`/auth/${data?.id}`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        await updateTableEntry(data?.id, formData);
       } else {
-        await api.post(`/auth`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        await addTableEntry(formData);
       }
 
-      queryClient.refetchQueries({ queryKey: ["users"] });
+      // await updateTableEntry(data?.id, values);
       onClose();
     } catch (err) {
       setSubmitting(false);
@@ -58,12 +47,10 @@ const UserProfileModal = ({ data, onClose }) => {
         onSubmit(values, setSubmitting);
       }}
     >
-      {({ isSubmitting, submitForm }) => (
+      {({ submitForm, isSubmitting }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
           <AsideModal
-            header={
-              !!data?.id ? `${data?.first_name} ${data?.last_name}` : "Add user"
-            }
+            header={data?.id || "Add entry"}
             onClose={onClose}
             onSubmit={submitForm}
             loading={isSubmitting}
@@ -73,15 +60,12 @@ const UserProfileModal = ({ data, onClose }) => {
                 <KeyViewer data={["⌘", "S"]} />
               </>
             }
-            size="full"
           >
             <div className="form form--wrap">
-              {settings?.fields?.map((item, index) => {
+              {table_data?.table?.fields?.map((item, index) => {
                 if (!!!data?.id) {
                   if (item?.slug === "id") return null;
-                  if (item?.slug === "created_at") return null;
                 }
-
                 return (
                   <div
                     key={index}
@@ -99,4 +83,4 @@ const UserProfileModal = ({ data, onClose }) => {
   );
 };
 
-export default UserProfileModal;
+export default TableContentEditor;
