@@ -1,14 +1,21 @@
 .table-stack{
-  overflow: auto;
-  height: 100%;
+flex: 1;
+display: flex;
+flex-direction: column;
+// padding-right: 20px;
+
+  &__scroll__wrapper{
+    margin-top: 15px;
+    height: 100%;
+  }
 
   &__wrapper{
-    padding: 25px;
+    padding: 0 25px;
   }
 
   &__header{
     border-top: 1px solid #33363D;
-    min-width: 100%;
+    min-width: fit-content;
 
     &__row{
       display: flex;
@@ -78,7 +85,7 @@
 
       &:hover{
         background-color: #262A30;
-        z-index: 1000;
+        // z-index: 1000;
         cursor: pointer;
 
         .table-stack{

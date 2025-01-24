@@ -1,20 +1,18 @@
 import { useState } from "react";
 
-import Button from "components/Button";
-import IconButton from "components/IconButton";
-import NoItemsFound from "components/List/components/NoItemsFound";
+import TableStack from "components/TableStack";
 import ArchiveTableModal from "../components/ArchiveTableModal";
 import TableContentEditor from "./components/TableContentEditor";
+import NoItemsFound from "components/List/components/NoItemsFound";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useTable } from "context/client/table";
 
 import {
-  CircleStackIcon,
   PlusIcon,
   TrashIcon,
+  CircleStackIcon,
 } from "@heroicons/react/24/outline";
-import TableStack from "components/TableStack";
 
 const FormContent = () => {
   const { data, id, loading } = useTable();
@@ -54,17 +52,17 @@ const FormContent = () => {
       slug: item?.slug,
     })) || [];
 
-  const rowAction = (row) => (
-    <>
-      {/* <IconButton
-        icon={<TrashIcon color="#FF3636" />}
-        onClick={(e) => {
+  const rowActions = (row) => {
+    return [
+      {
+        icon: <TrashIcon color="#FF3636" />,
+        onClick: (e) => {
           e.stopPropagation();
           setArchiveModal(row);
-        }}
-      /> */}
-    </>
-  );
+        },
+      },
+    ];
+  };
 
   let formatted_fields = columns?.filter((item) => item?.slug !== "id");
 
@@ -73,6 +71,15 @@ const FormContent = () => {
     return obj;
   }, {});
 
+  const asideMenu = [
+    {
+      type: "select",
+      icon: <TrashIcon />,
+      label: "Delete",
+      onClick: () => setArchiveModal(table),
+    },
+  ];
+
   return (
     <>
       <DashboardContentLayout
@@ -80,24 +87,6 @@ const FormContent = () => {
         noContentPadding
         breadcrumps={breadcrumps}
         submenu={!!table?.id ? submenu_data : []}
-        action={
-          <>
-            {!!table?.id && (
-              <>
-                <IconButton
-                  onClick={() => setArchiveModal(table)}
-                  icon={<TrashIcon color="#FF3636" />}
-                />
-                <Button
-                  onClick={() => setContentEditor(new_entry_schema)}
-                  icon={<PlusIcon />}
-                >
-                  Add Entry
-                </Button>
-              </>
-            )}
-          </>
-        }
       >
         {entries?.length === 0 ? (
           <NoItemsFound />
@@ -105,8 +94,15 @@ const FormContent = () => {
           <TableStack
             data={entries}
             columns={columns}
-            rowAction={rowAction}
+            onSearch={() => {}}
+            rowActions={rowActions}
             rowClick={(row) => setContentEditor(row)}
+            asideMenu={asideMenu}
+            addRowButton={{
+              label: "New",
+              icon: <PlusIcon />,
+              onClick: () => setContentEditor(new_entry_schema),
+            }}
           />
         )}
         {!!content_editor && (
@@ -116,12 +112,12 @@ const FormContent = () => {
           />
         )}
       </DashboardContentLayout>
-      {/* {!!archive_modal && (
+      {!!archive_modal && (
         <ArchiveTableModal
           data={archive_modal}
           onClose={() => setArchiveModal(false)}
         />
-      )} */}
+      )}
     </>
   );
 };

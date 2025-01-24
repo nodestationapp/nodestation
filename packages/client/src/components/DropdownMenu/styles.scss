@@ -4,15 +4,15 @@
   $self: &;
   display: flex;
   flex-direction: column;
-  padding: 5px;
+  padding: 3px;
   background-color: #3C414B;
   border: 1px solid #2b3441;
-  border-radius: 10px;
+  border-radius: 7px;
   overflow: hidden;
 
   &__item {
     padding: 0 10px;
-    height: 36px;
+    height: 30px;
     display: flex;
     align-items: center;
     color: #F0F1F3;
@@ -25,9 +25,9 @@
     }
 
     svg {
-      margin-right: 15px;
-      height: 18px;
-      width: 18px;
+      margin-right: 10px;
+      height: 16px;
+      width: 16px;
     }
 
     &:hover {

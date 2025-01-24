@@ -13,7 +13,7 @@ import Date from "./components/Date";
 import Media from "./components/Media";
 import Level from "./components/Level";
 // import Button from "components/Button";
-// import Toolbar from "./components/ToolBar";
+import Toolbar from "./components/ToolBar";
 import Boolean from "./components/Boolean";
 import LogSource from "./components/LogSource";
 import StatusChip from "components/StatusChip";
@@ -26,6 +26,7 @@ import EndpointName from "./components/EndpointName";
 // import TableSkeleton from "./components/TableSkeleton";
 import NewMessageName from "./components/NewMessageName";
 import EmailSparklines from "./components/EmailSparklines";
+import IconButton from "components/IconButton";
 // import NoItemsFound from "components/List/components/NoItemsFound";
 
 const mainClass = "table-stack";
@@ -65,7 +66,16 @@ const table_value_type = (type, value) => {
   }
 };
 
-const TableStack = ({ columns, data, rowClick, rowAction }) => {
+const TableStack = ({
+  columns,
+  data,
+  rowClick,
+  rowActions,
+  filters = true,
+  addRowButton,
+  asideMenu,
+  onSearch,
+}) => {
   const formatted_columns = columns?.map((item) => ({
     accessorFn: (row) => row?.[item?.slug],
     id: item?.slug,
@@ -77,6 +87,8 @@ const TableStack = ({ columns, data, rowClick, rowAction }) => {
     ),
   }));
 
+  console.log(rowActions);
+
   const table = useReactTable({
     data,
     columns: formatted_columns,
@@ -85,88 +97,129 @@ const TableStack = ({ columns, data, rowClick, rowAction }) => {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const checked = [];
+
   return (
-    <div className={mainClass}>
-      <PerfectScrollbar
-        options={{
-          wheelPropagation: true,
-        }}
-      >
-        <div
-          {...{
-            className: `${mainClass}__wrapper`,
-            style: {
-              width: table.getTotalSize(),
-              minWidth: "100%",
-            },
-          }}
-        >
-          <div className={`${mainClass}__header`}>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <div key={headerGroup.id} className={`${mainClass}__header__row`}>
-                {headerGroup.headers.map((header) => (
+    <>
+      <div className={mainClass}>
+        <Toolbar
+          asideMenu={asideMenu}
+          count={checked?.length}
+          addRowButton={addRowButton}
+          onSearch={onSearch}
+        />
+        <div className={`${mainClass}__scroll__wrapper`}>
+          <PerfectScrollbar
+            options={{
+              suppressScrollY: true,
+              wheelPropagation: true,
+            }}
+          >
+            <div
+              {...{
+                className: `${mainClass}__wrapper`,
+                style: {
+                  width: table.getTotalSize(),
+                  minWidth: "100%",
+                },
+              }}
+            >
+              {!!filters && (
+                <></>
+                // <Toolbar data={toolbar} count={checked?.length} />
+                // <div className={`${mainClass}__content__toolbar`}>
+                //   {!!checked?.length ? (
+                //     <Toolbar data={toolbar} count={checked?.length} />
+                //   ) : (
+                //     <>
+                //       <Button
+                //         icon={<AdjustmentsHorizontalIcon />}
+                //         variant="transparent-gray"
+                //       >
+                //         Filters
+                //       </Button>
+                //     </>
+                //   )}
+                // </div>
+              )}
+              <div className={`${mainClass}__header`}>
+                {table.getHeaderGroups().map((headerGroup) => (
                   <div
-                    key={header.id}
-                    className={`${mainClass}__header__col`}
-                    style={{
-                      width: header.getSize(),
-                    }}
+                    key={headerGroup.id}
+                    className={`${mainClass}__header__row`}
                   >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                    <div
-                      {...{
-                        onDoubleClick: () => header.column.resetSize(),
-                        onMouseDown: header.getResizeHandler(),
-                        onTouchStart: header.getResizeHandler(),
-                        className: `${`${mainClass}__header__col__resizer`} ${
-                          table.options.columnResizeDirection
-                        } ${header.column.getIsResizing() ? "isResizing" : ""}`,
-                      }}
-                    />
+                    {headerGroup.headers.map((header) => (
+                      <div
+                        key={header.id}
+                        className={`${mainClass}__header__col`}
+                        style={{
+                          width: header.getSize(),
+                        }}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                        <div
+                          {...{
+                            onDoubleClick: () => header.column.resetSize(),
+                            onMouseDown: header.getResizeHandler(),
+                            onTouchStart: header.getResizeHandler(),
+                            className: `${`${mainClass}__header__col__resizer`} ${
+                              table.options.columnResizeDirection
+                            } ${
+                              header.column.getIsResizing() ? "isResizing" : ""
+                            }`,
+                          }}
+                        />
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>
-            ))}
-          </div>
-          <div className={`${mainClass}__body`}>
-            {table.getRowModel().rows.map((row) => (
-              <div
-                key={row.id}
-                className={`${mainClass}__body__row`}
-                onClick={() => rowClick(row.original)}
-              >
-                {row.getVisibleCells().map((cell) => (
+              <div className={`${mainClass}__body`}>
+                {table.getRowModel().rows.map((row) => (
                   <div
-                    key={cell.id}
-                    className={`${mainClass}__body__col`}
-                    style={{
-                      width: cell.column.getSize(),
-                    }}
+                    key={row.id}
+                    className={`${mainClass}__body__row`}
+                    onClick={() => rowClick(row.original)}
                   >
-                    <span>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </span>
+                    {row.getVisibleCells().map((cell) => (
+                      <div
+                        key={cell.id}
+                        className={`${mainClass}__body__col`}
+                        style={{
+                          width: cell.column.getSize(),
+                        }}
+                      >
+                        <span>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </span>
+                      </div>
+                    ))}
+                    {!!rowActions && (
+                      <div className={`${mainClass}__body__row__actions`}>
+                        {rowActions(row.original)?.map((item) => (
+                          <IconButton
+                            icon={item?.icon}
+                            onClick={item?.onClick}
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))}
-                {!!rowAction && (
-                  <div className={`${mainClass}__body__row__actions`}>
-                    {rowAction(row.original)}
-                  </div>
-                )}
               </div>
-            ))}
-          </div>
+            </div>
+          </PerfectScrollbar>
         </div>
-      </PerfectScrollbar>
-    </div>
+      </div>
+    </>
   );
 };
 
