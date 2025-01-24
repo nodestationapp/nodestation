@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import Table from "components/Table";
 import Button from "components/Button";
 import IconButton from "components/IconButton";
 import NoItemsFound from "components/List/components/NoItemsFound";
@@ -15,6 +14,7 @@ import {
   PlusIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
+import TableStack from "components/TableStack";
 
 const FormContent = () => {
   const { data, id, loading } = useTable();
@@ -46,7 +46,7 @@ const FormContent = () => {
     },
   ];
 
-  const fields =
+  const columns =
     table?.fields?.map((item) => ({
       key: item?.type,
       value: item?.name,
@@ -54,21 +54,19 @@ const FormContent = () => {
       slug: item?.slug,
     })) || [];
 
-  let formatted_fields = fields?.filter((item) => item?.slug !== "id");
+  const rowAction = (row) => (
+    <>
+      {/* <IconButton
+        icon={<TrashIcon color="#FF3636" />}
+        onClick={(e) => {
+          e.stopPropagation();
+          setArchiveModal(row);
+        }}
+      /> */}
+    </>
+  );
 
-  const table_data = {
-    keys: [...fields],
-    items: entries?.map((item) => ({
-      onclick: () => setContentEditor(item),
-      data: fields?.map((element, index) => {
-        return {
-          key: fields?.[index]?.type,
-          type: element?.type,
-          value: item?.[element?.slug],
-        };
-      }),
-    })),
-  };
+  let formatted_fields = columns?.filter((item) => item?.slug !== "id");
 
   const new_entry_schema = formatted_fields?.reduce((obj, item) => {
     obj[item.slug] = null;
@@ -79,6 +77,7 @@ const FormContent = () => {
     <>
       <DashboardContentLayout
         loading={loading}
+        noContentPadding
         breadcrumps={breadcrumps}
         submenu={!!table?.id ? submenu_data : []}
         action={
@@ -100,7 +99,16 @@ const FormContent = () => {
           </>
         }
       >
-        {entries?.length === 0 ? <NoItemsFound /> : <Table data={table_data} />}
+        {entries?.length === 0 ? (
+          <NoItemsFound />
+        ) : (
+          <TableStack
+            data={entries}
+            columns={columns}
+            rowAction={rowAction}
+            rowClick={(row) => setContentEditor(row)}
+          />
+        )}
         {!!content_editor && (
           <TableContentEditor
             data={content_editor}
@@ -108,12 +116,12 @@ const FormContent = () => {
           />
         )}
       </DashboardContentLayout>
-      {!!archive_modal && (
+      {/* {!!archive_modal && (
         <ArchiveTableModal
           data={archive_modal}
           onClose={() => setArchiveModal(false)}
         />
-      )}
+      )} */}
     </>
   );
 };

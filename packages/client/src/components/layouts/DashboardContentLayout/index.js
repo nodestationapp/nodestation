@@ -1,5 +1,6 @@
 import "./styles.scss";
 
+import cx from "classnames";
 import Loader from "components/Loader";
 import Submenu from "./components/Submenu";
 import Breadcrumps from "./components/Breadcrumps";
@@ -12,6 +13,7 @@ const DashboardContentLayout = ({
   submenu,
   children,
   loading,
+  noContentPadding,
 }) => {
   return (
     <div className={mainClass}>
@@ -20,7 +22,11 @@ const DashboardContentLayout = ({
         <div className={`${mainClass}__header__actions`}>{action}</div>
       </div>
       {!!submenu && <Submenu data={submenu} />}
-      <div className={`${mainClass}__content`}>
+      <div
+        className={cx(`${mainClass}__content`, {
+          [`${mainClass}__content--no-padding`]: !!noContentPadding,
+        })}
+      >
         {!!loading ? (
           <div className={`${mainClass}__content__loader`}>
             <Loader />

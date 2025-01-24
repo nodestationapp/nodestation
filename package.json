@@ -22,7 +22,7 @@
     "dev": "npm run dev:server & npm run dev:client",
     "build": "npm --prefix ./packages/client run build",
     "dev:client": "npm --prefix ./packages/client start",
-    "dev:server": "nodemon ./packages/nodestation/index.js --watch ../../"
+    "dev:server": "nodemon ./packages/nodestation/index.js --watch ../../ --ignore ../../packages/client"
   },
   "devDependencies": {
     "@release-it-plugins/workspaces": "^4.2.0",
@@ -69,5 +69,8 @@
         ]
       }
     }
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1"
   }
 }
