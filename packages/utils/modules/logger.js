@@ -6,7 +6,7 @@ const sanitizeSensitiveData = (body) => {
   let sanitizedBody = body;
 
   sensitiveFields.forEach((field) => {
-    if (sanitizedBody[field]) {
+    if (sanitizedBody?.[field]) {
       sanitizedBody[field] = "***";
     }
   });

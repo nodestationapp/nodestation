@@ -23,6 +23,7 @@ const register = async (body) =>
       const created_at = Date.now();
 
       await knex("nodestation_users").insert({
+        id: uid,
         created_at,
         type: body?.type,
         email: body?.email,
