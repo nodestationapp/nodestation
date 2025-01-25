@@ -7,7 +7,6 @@ import DropdownMenu from "components/DropdownMenu";
 const mainClass = "icon-button-menu";
 
 const IconButtonMenu = ({ icon, data }) => {
-  console.log(data);
   return (
     <div className={mainClass}>
       <Dropdown

@@ -194,6 +194,25 @@ const updateTableEntry = async (req, res) => {
   }
 };
 
+const deleteTableEntries = async (req, res) => {
+  const { id } = req?.params;
+  const { entry_ids } = req?.body;
+
+  try {
+    const tables = fs.getFiles(["tables"]);
+    const table = tables?.find(
+      (item) => item?.id?.toString() === id?.toString()
+    );
+
+    await knex(table?.slug).whereIn("id", entry_ids).del();
+
+    return res.status(200).json({ status: "ok" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 export {
   getAllTables,
   getTable,
@@ -202,4 +221,5 @@ export {
   deleteTable,
   addTableEntry,
   updateTableEntry,
+  deleteTableEntries,
 };

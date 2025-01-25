@@ -8,7 +8,6 @@ import Date from "./components/Date";
 import Media from "./components/Media";
 import Level from "./components/Level";
 import Button from "components/Button";
-import Toolbar from "./components/ToolBar";
 import Boolean from "./components/Boolean";
 import LogSource from "./components/LogSource";
 import StatusChip from "components/StatusChip";
@@ -135,7 +134,7 @@ const Table = ({
       <div className={`${mainClass}__content`}>
         {!!filters && (
           <div className={`${mainClass}__content__toolbar`}>
-            {!!checked?.length ? (
+            {/* {!!checked?.length ? (
               <Toolbar data={toolbar} count={checked?.length} />
             ) : (
               <>
@@ -147,7 +146,7 @@ const Table = ({
                 </Button>
                 {action}
               </>
-            )}
+            )} */}
           </div>
         )}
         <div className={`${mainClass}__content__wrapper`}>

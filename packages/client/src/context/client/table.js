@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { createContext, useContext, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { createContext, useContext, useMemo } from "react";
 
 import api from "libs/api";
 
@@ -82,6 +82,23 @@ const TableProvider = ({ children }) => {
       }
     });
 
+  const deleteTableEntries = (entry_ids) =>
+    new Promise(async (resolve, reject) => {
+      try {
+        await api.delete(`/tables/${id}/entry`, {
+          data: {
+            entry_ids,
+          },
+        });
+
+        tableRefetch();
+
+        resolve();
+      } catch (err) {
+        reject(err);
+      }
+    });
+
   const value = useMemo(() => {
     return {
       data,
@@ -91,6 +108,7 @@ const TableProvider = ({ children }) => {
       updateTableEntry,
       deleteTable,
       addTableEntry,
+      deleteTableEntries,
     };
     // eslint-disable-next-line
   }, [data, id, loading]);

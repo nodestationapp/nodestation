@@ -11,6 +11,7 @@ import {
   deleteTable,
   addTableEntry,
   updateTableEntry,
+  deleteTableEntries,
 } from "#controllers/tables.js";
 
 const router = express.Router();
@@ -27,7 +28,8 @@ router
 
 router
   .route("/:id/entry")
-  .post(authMiddleware(["admin"]), uploader, addTableEntry);
+  .post(authMiddleware(["admin"]), uploader, addTableEntry)
+  .delete(authMiddleware(["admin"]), deleteTableEntries);
 
 router
   .route("/:id/entry/:entry_id")

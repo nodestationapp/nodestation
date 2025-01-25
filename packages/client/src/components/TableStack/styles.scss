@@ -2,7 +2,6 @@
 flex: 1;
 display: flex;
 flex-direction: column;
-// padding-right: 20px;
 
   &__scroll__wrapper{
     margin-top: 15px;
@@ -33,6 +32,10 @@ flex-direction: column;
       border-right: 1px solid #33363D;
       height: 40px;
       min-width: 150px;
+
+      &:first-child{
+        min-width: 40px;
+      }
 
       &:last-child{
         border-radius: none;
@@ -85,7 +88,6 @@ flex-direction: column;
 
       &:hover{
         background-color: #262A30;
-        // z-index: 1000;
         cursor: pointer;
 
         .table-stack{
@@ -120,6 +122,10 @@ flex-direction: column;
       overflow: hidden;        
       text-overflow: ellipsis;
       min-width: 150px;
+
+      &:first-child{
+        min-width: 40px;
+      }
     }
   }
 }

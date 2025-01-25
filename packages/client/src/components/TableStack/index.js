@@ -1,7 +1,7 @@
 import "./styles.scss";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
-import React from "react";
+import React, { useMemo, useState } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -12,21 +12,20 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import Date from "./components/Date";
 import Media from "./components/Media";
 import Level from "./components/Level";
-// import Button from "components/Button";
 import Toolbar from "./components/ToolBar";
 import Boolean from "./components/Boolean";
 import LogSource from "./components/LogSource";
 import StatusChip from "components/StatusChip";
 import BadgeName from "./components/BadgeName";
-// import Checkbox from "components/form/Checkbox";
+import Checkbox from "components/form/Checkbox";
 import LogMessage from "./components/LogMessage";
 import UserProfile from "./components/UserProfile";
 import EndpointCode from "./components/EndpointCode";
 import EndpointName from "./components/EndpointName";
-// import TableSkeleton from "./components/TableSkeleton";
 import NewMessageName from "./components/NewMessageName";
 import EmailSparklines from "./components/EmailSparklines";
-import IconButton from "components/IconButton";
+
+// import TableSkeleton from "./components/TableSkeleton";
 // import NoItemsFound from "components/List/components/NoItemsFound";
 
 const mainClass = "table-stack";
@@ -67,46 +66,74 @@ const table_value_type = (type, value) => {
 };
 
 const TableStack = ({
-  columns,
   data,
+  columns,
   rowClick,
-  rowActions,
-  filters = true,
-  addRowButton,
-  asideMenu,
   onSearch,
+  asideMenu,
+  selectAction,
+  addRowButton,
 }) => {
-  const formatted_columns = columns?.map((item) => ({
-    accessorFn: (row) => row?.[item?.slug],
-    id: item?.slug,
-    header: () => <span className="light">{item?.value}</span>,
-    cell: (cell) => (
-      <span className="light">
-        {table_value_type(item?.type, cell?.getValue())}
-      </span>
-    ),
-  }));
+  const [checkedRows, setCheckedRows] = useState({});
 
-  console.log(rowActions);
+  const formatted_columns = useMemo(
+    () => [
+      {
+        id: "select",
+        size: 40,
+        header: ({ table }) => (
+          <Checkbox
+            onClick={(e) => e.stopPropagation()}
+            checked={table.getIsAllRowsSelected()}
+            onChange={table.getToggleAllRowsSelectedHandler()}
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            checked={row.getIsSelected()}
+            onClick={(e) => e.stopPropagation()}
+            onChange={row.getToggleSelectedHandler()}
+          />
+        ),
+      },
+      ...columns.map((item) => ({
+        id: item?.slug,
+        accessorFn: (row) => row?.[item?.slug],
+        header: () => <span className="light">{item?.value}</span>,
+        cell: (cell) => (
+          <span className="light">
+            {table_value_type(item?.type, cell?.getValue())}
+          </span>
+        ),
+      })),
+    ],
+    // eslint-disable-next-line
+    []
+  );
 
   const table = useReactTable({
     data,
+    state: {
+      rowSelection: checkedRows,
+    },
+    enableRowSelection: true,
     columns: formatted_columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
     getCoreRowModel: getCoreRowModel(),
+    onRowSelectionChange: setCheckedRows,
   });
-
-  const checked = [];
 
   return (
     <>
       <div className={mainClass}>
         <Toolbar
-          asideMenu={asideMenu}
-          count={checked?.length}
-          addRowButton={addRowButton}
           onSearch={onSearch}
+          asideMenu={asideMenu}
+          clearSelection={() => table.setRowSelection({})}
+          selectAction={selectAction}
+          addRowButton={addRowButton}
+          selectedRows={table.getSelectedRowModel()?.rows}
         />
         <div className={`${mainClass}__scroll__wrapper`}>
           <PerfectScrollbar
@@ -118,30 +145,8 @@ const TableStack = ({
             <div
               {...{
                 className: `${mainClass}__wrapper`,
-                style: {
-                  width: table.getTotalSize(),
-                  minWidth: "100%",
-                },
               }}
             >
-              {!!filters && (
-                <></>
-                // <Toolbar data={toolbar} count={checked?.length} />
-                // <div className={`${mainClass}__content__toolbar`}>
-                //   {!!checked?.length ? (
-                //     <Toolbar data={toolbar} count={checked?.length} />
-                //   ) : (
-                //     <>
-                //       <Button
-                //         icon={<AdjustmentsHorizontalIcon />}
-                //         variant="transparent-gray"
-                //       >
-                //         Filters
-                //       </Button>
-                //     </>
-                //   )}
-                // </div>
-              )}
               <div className={`${mainClass}__header`}>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <div
@@ -202,16 +207,6 @@ const TableStack = ({
                         </span>
                       </div>
                     ))}
-                    {!!rowActions && (
-                      <div className={`${mainClass}__body__row__actions`}>
-                        {rowActions(row.original)?.map((item) => (
-                          <IconButton
-                            icon={item?.icon}
-                            onClick={item?.onClick}
-                          />
-                        ))}
-                      </div>
-                    )}
                   </div>
                 ))}
               </div>
