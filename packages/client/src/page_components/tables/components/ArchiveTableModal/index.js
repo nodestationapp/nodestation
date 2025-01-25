@@ -3,18 +3,29 @@ import { useState } from "react";
 import Modal from "components/Modal";
 
 import { useTable } from "context/client/table";
+import { useOrganization } from "context/organization";
+import { useNavigate } from "react-router-dom";
 
 const ArchiveTableModal = ({ data, onClose }) => {
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const { deleteTable } = useTable();
+  const { tables = [], refetchTables } = useOrganization();
+
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
     setLoading(true);
 
+    const next = tables?.filter((item) => item?.id !== data?.id)?.[0];
+
+    const redirect = !!next ? `/tables/${next?.id}` : "/";
+
     try {
       await deleteTable();
+      refetchTables();
 
       onClose();
+      navigate(redirect);
     } catch (err) {
       setLoading(false);
       console.error(err);

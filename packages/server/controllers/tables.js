@@ -60,8 +60,11 @@ const getTable = async (req, res) => {
 
     const settings = await knex("nodestation_media_settings").first();
 
-    let entries = await knex(table?.slug).orderBy("id", "asc");
-    entries = parseJSONFields(entries, settings);
+    let entries = [];
+    if (!!table?.slug) {
+      entries = await knex(table?.slug).orderBy("id", "asc");
+      entries = parseJSONFields(entries, settings);
+    }
 
     return res.status(200).json({ table, entries });
   } catch (err) {
@@ -154,7 +157,6 @@ const deleteTable = async (req, res) => {
     );
 
     await fs.deleteFile(id);
-
     await knex.schema.dropTable(table?.slug);
 
     return res.status(200).json({ status: "ok" });

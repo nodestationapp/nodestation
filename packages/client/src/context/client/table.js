@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useContext, useMemo } from "react";
 
@@ -9,7 +8,6 @@ const TableContext = createContext();
 
 const TableProvider = ({ children }) => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const {
     isLoading: loading,
@@ -37,10 +35,6 @@ const TableProvider = ({ children }) => {
     new Promise(async (resolve, reject) => {
       try {
         await api.delete(`/tables/${id}`);
-
-        navigate("/");
-
-        tableRefetch();
 
         resolve();
       } catch (err) {

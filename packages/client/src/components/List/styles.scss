@@ -1,46 +1,24 @@
 .list{
-  > div{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
 
-  &__section{
-    display: flex;
-    flex-direction: column;
-
-    &__items{
-      display: flex;
-      flex-direction: column;
-      transition: all ease 0.3s;
-
-      > a, > button, > div{
-        cursor: pointer;
-
-        &:hover{
-          z-index: 1000;
-        }
-        &:first-child{
+  &__content{
+    &__row{
+      
+      &:first-child{
+        .list__form-field-item{
           border-top-left-radius: 5px;
           border-top-right-radius: 5px;
         }
+      }
 
-        &:last-child{
+      &:last-child{
+        .list__form-field-item{
           border-bottom-left-radius: 5px;
           border-bottom-right-radius: 5px;
+          border-bottom: 0;
         }
-      }
-    }
-
-    &--dragging{
-
-      .list__form-field-item{
-        border-radius: 0 !important;
-        border-color: #2A2E34;
-      }
-
-      .list__section__items{
-        border-color: #30353D;
       }
     }
   }

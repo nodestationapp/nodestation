@@ -2,20 +2,21 @@ import "./styles.scss";
 
 import { useState } from "react";
 import classnames from "classnames";
+import { CSS } from "@dnd-kit/utilities";
+import { useSortable } from "@dnd-kit/sortable";
 
 import IconButton from "components/IconButton";
 import ArchiveEmailModal from "page_components/emails/components/ArchiveEmailModal";
 
 import field_type_data from "libs/field_type_data";
 
-import { TrashIcon, LockClosedIcon } from "@heroicons/react/24/outline";
+import {
+  TrashIcon,
+  LockClosedIcon,
+  EllipsisVerticalIcon,
+} from "@heroicons/react/24/outline";
 
 const mainClass = "list__form-field-item";
-
-const getItemStyle = (draggableStyle) => ({
-  userSelect: "none",
-  ...draggableStyle,
-});
 
 const FormFieldItem = ({
   name,
@@ -24,29 +25,52 @@ const FormFieldItem = ({
   type,
   onclick,
   onRemoveClick,
-  provided,
-  snapshot,
   primary_key,
   origin,
 }) => {
+  const {
+    attributes,
+    isDragging,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+  } = useSortable({ id: slug });
   const [archive_modal, setArchiveModal] = useState(false);
+  const [is_grabbing, setIsGrabbing] = useState(false);
+
+  const style = {
+    opacity: isDragging && !!slug ? 0.4 : undefined,
+    transform: CSS.Translate.toString(transform),
+    transition,
+  };
 
   const current_type = field_type_data?.find((item) => item?.value === type);
 
   return (
     <>
       <div
+        key={slug}
+        ref={setNodeRef}
+        style={style}
         className={classnames(mainClass, {
           [`${mainClass}--inactive`]: status === "inactive",
-          [`${mainClass}--dragging`]: !!snapshot?.isDragging,
+          [`${mainClass}--is-grabbing`]: !!is_grabbing,
         })}
-        ref={provided.innerRef}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-        style={getItemStyle(provided.draggableProps.style)}
         type="button"
         onClick={onclick}
       >
+        <div className={`${mainClass}__handle`}>
+          <IconButton
+            {...attributes}
+            {...listeners}
+            onMouseDown={() => setIsGrabbing(true)}
+            onMouseLeave={() => setIsGrabbing(false)}
+            size="small"
+            variant="light"
+            icon={<EllipsisVerticalIcon />}
+          />
+        </div>
         <div className={`${mainClass}__label`}>
           {current_type?.icon}
           <div className={`${mainClass}__label__text`}>

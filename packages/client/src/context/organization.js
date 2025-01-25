@@ -23,7 +23,7 @@ const OrganizationProvider = ({ children }) => {
     queryFn: () => api.get("/server"),
   });
 
-  const { data: tables = [] } = useQuery({
+  const { data: tables = [], refetch: refetchTables } = useQuery({
     queryKey: ["tables"],
     queryFn: () => api.get("/tables"),
   });
@@ -89,6 +89,7 @@ const OrganizationProvider = ({ children }) => {
       setTerminal,
       terminal_content,
       setTerminalContent,
+      refetchTables,
     };
     // eslint-disable-next-line
   }, [
