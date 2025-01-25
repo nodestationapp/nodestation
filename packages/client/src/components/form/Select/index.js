@@ -100,8 +100,12 @@ const Select = ({
         >
           <span>
             {current_value?.icon}
-            {current_value?.map((item) => item?.label)?.join(", ") ||
-              placeholder}
+            {value !== null && (
+              <>
+                {current_value?.map((item) => item?.label)?.join(", ") ||
+                  placeholder}
+              </>
+            )}
           </span>
           {!!!noArrow && <ChevronDownIcon />}
         </button>

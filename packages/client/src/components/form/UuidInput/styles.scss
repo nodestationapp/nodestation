@@ -1,6 +1,6 @@
 @import "styles/variables.scss";
 
-.uuid-input {
+.id-input {
   $self: &;
 
   label {
@@ -84,7 +84,7 @@
     }
   }
 
-  &--uuid{
+  &--id{
     input{
       background-color: #868F9D;
     }

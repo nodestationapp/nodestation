@@ -5,7 +5,7 @@ import KeyViewer from "components/KeyViewer";
 import AsideModal from "components/AsideModal";
 
 import api from "libs/api";
-import collectionInputRender from "libs/collectionInputRender";
+import tableInputRender from "libs/tableInputRender";
 
 import { useUsers } from "context/client/users";
 
@@ -58,7 +58,7 @@ const UserProfileModal = ({ data, onClose }) => {
         onSubmit(values, setSubmitting);
       }}
     >
-      {({ values, isSubmitting, submitForm }) => (
+      {({ isSubmitting, submitForm }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
           <AsideModal
             header={
@@ -87,7 +87,7 @@ const UserProfileModal = ({ data, onClose }) => {
                     key={index}
                     style={item?.type === "long_text" ? { width: "100%" } : {}}
                   >
-                    {collectionInputRender(item)}
+                    {tableInputRender(item)}
                   </div>
                 );
               })}

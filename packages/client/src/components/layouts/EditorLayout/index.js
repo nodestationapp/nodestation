@@ -5,14 +5,14 @@ import { Outlet } from "react-router-dom";
 
 import Sidebar from "./components/Sidebar";
 import ToolBar from "../DashboardLayout/components/ToolBar";
-import AddCollectionModal from "./components/AddCollectionModal";
+import AddTableModal from "./components/AddTableModal";
 
 import { useOrganization } from "context/organization";
 
 const mainClass = "editor-layout";
 
 const EditorLayout = () => {
-  const { add_collection_modal, setAddCollectionModal } = useOrganization();
+  const { add_table_modal, setAddTableModal } = useOrganization();
   const [mobile_sidebar_open, setMobileSidebarOpen] = useState(false);
 
   return (
@@ -29,8 +29,8 @@ const EditorLayout = () => {
         </div>
         <ToolBar />
       </div>
-      {add_collection_modal && (
-        <AddCollectionModal onClose={() => setAddCollectionModal(false)} />
+      {add_table_modal && (
+        <AddTableModal onClose={() => setAddTableModal(false)} />
       )}
     </>
   );

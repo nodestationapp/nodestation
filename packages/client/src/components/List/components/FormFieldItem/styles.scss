@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 15px;
+  cursor: pointer;
 
   &:hover {
     filter: brightness(1.1);
@@ -17,8 +18,12 @@
     }
   }
 
-  &:last-child{
-    border-bottom: none;
+  &__handle{
+    margin-right: 20px;
+
+    .icon-button{
+      cursor: grab;
+    }
   }
 
   &__label{
@@ -117,6 +122,18 @@
 
     #{ $self }__actions {
       display: flex;
+    }
+  }
+
+  &--is-grabbing{
+    border-radius: 0 !important;
+
+    .list__form-field-item{
+      &__handle{
+        .icon-button{
+          cursor: grabbing;
+        }
+      }
     }
   }
 }

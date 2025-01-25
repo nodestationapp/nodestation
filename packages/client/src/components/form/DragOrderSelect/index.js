@@ -1,8 +1,21 @@
 import "./styles.scss";
 
+import {
+  useSensor,
+  DndContext,
+  useSensors,
+  KeyboardSensor,
+  PointerSensor,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  useSortable,
+  SortableContext,
+  sortableKeyboardCoordinates,
+} from "@dnd-kit/sortable";
 import classnames from "classnames";
+import { CSS } from "@dnd-kit/utilities";
 import { useState, useRef } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import Select from "../Select";
 import IconButton from "components/IconButton";
@@ -18,19 +31,6 @@ import {
 } from "@heroicons/react/24/outline";
 
 const mainClass = "drag-order-select";
-
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
-const getItemStyle = (draggableStyle) => ({
-  userSelect: "none",
-  ...draggableStyle,
-});
 
 const DragOrderSelect = ({
   label,
@@ -77,16 +77,6 @@ const DragOrderSelect = ({
     onChange({ target: { value: temp } });
   };
 
-  const onDragEnd = (result) => {
-    if (!result.destination) {
-      return;
-    }
-
-    const items = reorder(value, result.source.index, result.destination.index);
-
-    onChange({ target: { value: items } });
-  };
-
   const formatted_value = value?.map((item) => ({
     label: options?.find((element) => element?.value === item)?.label,
     value: item,
@@ -94,6 +84,13 @@ const DragOrderSelect = ({
 
   const formatted_options = options?.filter(
     (item) => !value?.includes(item?.value)
+  );
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
   );
 
   return (
@@ -138,55 +135,32 @@ const DragOrderSelect = ({
           })}
         >
           <div className={`${mainClass}__options__wrapper`}>
-            <DragDropContext onDragEnd={onDragEnd}>
-              <Droppable droppableId="droppable">
-                {(provided) => (
-                  <div {...provided.droppableProps} ref={provided.innerRef}>
-                    {formatted_value?.map((item, index) => (
-                      <Draggable
-                        key={index}
-                        draggableId={index.toString()}
-                        index={index}
-                      >
-                        {(provided, snapshot) => (
-                          <div
-                            className={classnames(
-                              `${mainClass}__options__item`,
-                              {
-                                [`endpoints_table_section--dragging`]:
-                                  !!snapshot?.isDragging,
-                              }
-                            )}
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            style={getItemStyle(provided.draggableProps.style)}
-                          >
-                            <div
-                              className={`${mainClass}__options__item__label`}
-                            >
-                              <IconButton
-                                size="small"
-                                variant="light"
-                                {...provided.dragHandleProps}
-                                icon={<EllipsisVerticalIcon />}
-                              />
-                              <p>{item?.label}</p>
-                            </div>
-                            <IconButton
-                              onClick={() => removeMiddleware(item?.value)}
-                              variant="light"
-                              size="small"
-                              icon={<XMarkIcon />}
-                            />
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+            <DndContext
+              sensors={sensors}
+              onDragEnd={({ active, over }) => {
+                if (over && active.id !== over?.id) {
+                  const oldIndex = value.findIndex((v) => v === active.id);
+                  const newIndex = value.findIndex((v) => v === over.id);
+
+                  const reorder = arrayMove(value, oldIndex, newIndex);
+
+                  onChange({ target: { value: reorder } });
+                }
+              }}
+            >
+              <SortableContext
+                items={formatted_value?.map((item) => item?.value)}
+              >
+                {formatted_value?.map((item) => (
+                  <DragOrderSelectItem
+                    id={item?.value}
+                    key={item?.value}
+                    data={item}
+                    removeMiddleware={removeMiddleware}
+                  />
+                ))}
+              </SortableContext>
+            </DndContext>
           </div>
           {value?.length !== options?.length && (
             <div className={`${mainClass}__options__bottom`}>
@@ -208,6 +182,48 @@ const DragOrderSelect = ({
           )}
         </div>
       )}
+    </div>
+  );
+};
+
+const DragOrderSelectItem = ({ id, data, removeMiddleware }) => {
+  const {
+    attributes,
+    isDragging,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+  } = useSortable({ id });
+
+  const style = {
+    opacity: isDragging ? 0.4 : undefined,
+    transform: CSS.Translate.toString(transform),
+    transition,
+  };
+
+  return (
+    <div
+      className={`${mainClass}__options__item`}
+      style={style}
+      ref={setNodeRef}
+    >
+      <div className={`${mainClass}__options__item__label`}>
+        <IconButton
+          {...attributes}
+          {...listeners}
+          size="small"
+          variant="light"
+          icon={<EllipsisVerticalIcon />}
+        />
+        <p>{data?.label}</p>
+      </div>
+      <IconButton
+        onClick={() => removeMiddleware(data?.value)}
+        variant="light"
+        size="small"
+        icon={<XMarkIcon />}
+      />
     </div>
   );
 };

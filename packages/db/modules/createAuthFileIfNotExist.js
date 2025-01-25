@@ -5,16 +5,17 @@ import { fs, rootPath } from "../../utils/index.js";
 export default async () => {
   try {
     const body = {
+      slug: "nodestation_users",
       fields: [
         {
           name: "id",
           slug: "id",
-          type: "uuid",
+          type: "id",
           required: true,
           origin: "system",
           primary_key: true,
           read_only: true,
-          default: "generate_uuid()",
+          default: "generate_id()",
         },
         {
           name: "Email",
@@ -73,6 +74,7 @@ export default async () => {
           type: "short_text",
           origin: "system",
           required: true,
+          default: "now()",
         },
       ],
     };

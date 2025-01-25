@@ -1,0 +1,131 @@
+.table-stack{
+flex: 1;
+display: flex;
+flex-direction: column;
+
+  &__scroll__wrapper{
+    margin-top: 15px;
+    height: 100%;
+  }
+
+  &__wrapper{
+    padding: 0 25px;
+  }
+
+  &__header{
+    border-top: 1px solid #33363D;
+    min-width: fit-content;
+
+    &__row{
+      display: flex;
+      border-bottom: 1px solid #33363D;
+      width: fit-content;
+      height: 40px;
+      min-width: 100%;
+    }
+
+    &__col{
+      display: flex;
+      padding: 0 10px;
+      position: relative;
+      align-items: center;
+      border-right: 1px solid #33363D;
+      height: 40px;
+      min-width: 150px;
+
+      &:first-child{
+        min-width: 40px;
+      }
+
+      &:last-child{
+        border-radius: none;
+      }
+    
+      span{
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        color: #647082;
+        font-size: 13px;
+      }
+
+      &__resizer{
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 5px;
+        background-color: rgba(#8A6FF1, 0.4);
+        cursor: col-resize;
+        user-select: none;
+        touch-action: none;
+        opacity: 0;
+      
+        &.ltr{
+        right: 0;
+        }
+      
+        &.isResizing{
+          background-color: rgba(#8A6FF1, 0.4);
+          opacity: 1;
+        }
+      
+        &:hover{
+          opacity: 1;
+      
+        }
+      }
+    }
+  }
+
+  &__body{
+    &__row{
+      display: flex;
+      border-bottom: 1px solid #33363D;
+      width: fit-content;
+      height: 40px;
+      min-width: 100%;
+      position: relative;
+
+      &:hover{
+        background-color: #262A30;
+        cursor: pointer;
+
+        .table-stack{
+          &__body{
+            &__row{
+              &__actions{
+                display: flex;
+              }
+            }
+          }
+        }
+      }
+
+      &__actions{
+        padding: 0 15px;
+        display: none;
+        align-items: center;
+        position: absolute;
+        right: 0px;
+        top: 0;
+        bottom: 0;
+        gap: 15px;
+      }
+    }
+
+    &__col{
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid #33363D;
+      white-space: nowrap;
+      overflow: hidden;        
+      text-overflow: ellipsis;
+      min-width: 150px;
+
+      &:first-child{
+        min-width: 40px;
+      }
+    }
+  }
+}

@@ -7,12 +7,13 @@ import { Fragment, useState } from "react";
 import Date from "./components/Date";
 import Media from "./components/Media";
 import Level from "./components/Level";
-import Button from "components/Button";
-import Toolbar from "./components/ToolBar";
+// import Button from "components/Button";
+import Boolean from "./components/Boolean";
 import LogSource from "./components/LogSource";
 import StatusChip from "components/StatusChip";
 import BadgeName from "./components/BadgeName";
 import Checkbox from "components/form/Checkbox";
+import LogMessage from "./components/LogMessage";
 import UserProfile from "./components/UserProfile";
 import EndpointCode from "./components/EndpointCode";
 import EndpointName from "./components/EndpointName";
@@ -22,11 +23,10 @@ import EmailSparklines from "./components/EmailSparklines";
 import NoItemsFound from "components/List/components/NoItemsFound";
 
 import {
-  AdjustmentsHorizontalIcon,
+  // AdjustmentsHorizontalIcon,
   ArrowDownIcon,
   ArrowsUpDownIcon,
 } from "@heroicons/react/24/outline";
-import LogMessage from "./components/LogMessage";
 
 const mainClass = "table";
 
@@ -109,8 +109,10 @@ const Table = ({
         return <EndpointCode data={value} />;
       case "log_message":
         return <LogMessage data={value} />;
+      case "boolean":
+        return <Boolean data={value} />;
       default:
-        return <p className="table__regular">{value}</p>;
+        return <p className="table__regular">{value || "-"}</p>;
     }
   };
 
@@ -132,7 +134,7 @@ const Table = ({
       <div className={`${mainClass}__content`}>
         {!!filters && (
           <div className={`${mainClass}__content__toolbar`}>
-            {!!checked?.length ? (
+            {/* {!!checked?.length ? (
               <Toolbar data={toolbar} count={checked?.length} />
             ) : (
               <>
@@ -144,7 +146,7 @@ const Table = ({
                 </Button>
                 {action}
               </>
-            )}
+            )} */}
           </div>
         )}
         <div className={`${mainClass}__content__wrapper`}>

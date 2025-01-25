@@ -39,22 +39,12 @@ const InputElementsEditor = () => {
     setFieldValue("fields", temp);
   };
 
-  const formatted_fields =
-    values?.fields?.length > 0
-      ? [
-          {
-            items: [
-              ...values?.fields?.map((item, index) => ({
-                ...item,
-                name: item?.name,
-                onclick: () => setAddFieldModal({ data: item, index }),
-                onRemoveClick: () => onRemove(index),
-              })),
-            ],
-            draggable: true,
-          },
-        ]
-      : [];
+  const formatted_fields = values?.fields?.map((item, index) => ({
+    ...item,
+    name: item?.name,
+    onclick: () => setAddFieldModal({ data: item, index }),
+    onRemoveClick: () => onRemove(index),
+  }));
 
   return (
     <>

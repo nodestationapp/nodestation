@@ -20,8 +20,8 @@ import Media from "pages/client/media";
 import Users from "pages/client/users";
 import UsersSettings from "pages/client/users/settings";
 
-import Collection from "pages/client/collections";
-import CollectionSettings from "pages/client/collections/settings";
+import Table from "pages/client/tables";
+import TableSettings from "pages/client/tables/settings";
 
 import SettingsGeneral from "pages/client/settings";
 import SettingsSecurity from "pages/client/settings/security";
@@ -54,9 +54,9 @@ const clientRoutes = () => {
           <Route index element={<Users />} />
           <Route path="settings" element={<UsersSettings />} />
         </Route>
-        <Route path="/collections">
-          <Route path=":id" element={<Collection />} />
-          <Route path=":id/settings" element={<CollectionSettings />} />
+        <Route path="/tables">
+          <Route path=":id" element={<Table />} />
+          <Route path=":id/settings" element={<TableSettings />} />
         </Route>
         <Route element={<AccountSettingsLayout />} path="/settings">
           <Route index element={<SettingsGeneral />} />

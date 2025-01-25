@@ -1,0 +1,46 @@
+.table__toolbar{
+    padding: 0 25px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    height: 32px;
+
+    &__main{
+        &__select-action{
+            padding: 8px;
+            display: flex;
+            border-radius: 5px;
+            align-items: center;
+            background-color: #3C414B;
+
+            span{
+                font-size: 13px;
+            }
+
+            &__options{
+                margin-left: 8px;
+                padding-left: 8px;
+                border-left: 1px solid #8999AD;
+            }
+        }
+    }
+
+    &__aside{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+}
+
+@keyframes popup-show {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }

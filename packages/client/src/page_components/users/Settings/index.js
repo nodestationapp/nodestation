@@ -21,7 +21,7 @@ const submenu_data = [
   },
 ];
 
-const CollectionSettingsContent = () => {
+const TableSettingsContent = () => {
   const { settings, loading, updateAuth } = useUsers();
 
   const breadcrumps = [
@@ -101,4 +101,4 @@ const CollectionSettingsContent = () => {
   );
 };
 
-export default CollectionSettingsContent;
+export default TableSettingsContent;

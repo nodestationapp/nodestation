@@ -1,14 +1,15 @@
 {
+  "slug": "nodestation_users",
   "fields": [
     {
       "name": "id",
       "slug": "id",
-      "type": "uuid",
+      "type": "id",
       "required": true,
       "origin": "system",
       "primary_key": true,
       "read_only": true,
-      "default": "generate_uuid()"
+      "default": "generate_id()"
     },
     {
       "name": "Email",
@@ -67,7 +68,8 @@
       "slug": "created_at",
       "type": "date",
       "origin": "system",
-      "required": true
+      "required": true,
+      "default": "now()"
     }
   ]
 }

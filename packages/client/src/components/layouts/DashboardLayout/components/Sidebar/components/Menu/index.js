@@ -24,7 +24,7 @@ const mainClass = "dashboard-layout-sidebar";
 
 const Menu = () => {
   const { forms_count } = useApp();
-  const { tables = [], setAddCollectionModal } = useOrganization();
+  const { tables = [], setAddTableModal } = useOrganization();
 
   const menu_items = [
     {
@@ -61,11 +61,11 @@ const Menu = () => {
     },
   ];
 
-  const collections_menu_items = [
+  const tables_menu_items = [
     ...tables?.map((item) => ({
       icon: <CircleStackIcon />,
       label: item?.name,
-      href: `/collections/${item?.id}`,
+      href: `/tables/${item?.id}`,
     })),
   ];
 
@@ -101,12 +101,12 @@ const Menu = () => {
           <div className={`${mainClass}__menu__items__header`}>
             <span>Tables</span>
             <IconButton
-              onClick={() => setAddCollectionModal(true)}
+              onClick={() => setAddTableModal(true)}
               size="small"
               icon={<PlusIcon />}
             />
           </div>
-          {collections_menu_items?.map(({ icon, label, href }, index) => (
+          {tables_menu_items?.map(({ icon, label, href }, index) => (
             <NavLink
               key={index}
               to={href}

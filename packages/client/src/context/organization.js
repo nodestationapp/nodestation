@@ -9,7 +9,7 @@ const OrganizationContext = createContext();
 const OrganizationProvider = ({ children }) => {
   const { socket } = useApp();
 
-  const [add_collection_modal, setAddCollectionModal] = useState(false);
+  const [add_table_modal, setAddTableModal] = useState(false);
   const [terminal, setTerminal] = useState(null);
   const [terminal_content, setTerminalContent] = useState("");
   const [minimizeItems, setMinimizeItems] = useState(
@@ -23,7 +23,7 @@ const OrganizationProvider = ({ children }) => {
     queryFn: () => api.get("/server"),
   });
 
-  const { data: tables = [] } = useQuery({
+  const { data: tables = [], refetch: refetchTables } = useQuery({
     queryKey: ["tables"],
     queryFn: () => api.get("/tables"),
   });
@@ -77,8 +77,8 @@ const OrganizationProvider = ({ children }) => {
   const value = useMemo(() => {
     return {
       tables,
-      add_collection_modal,
-      setAddCollectionModal,
+      add_table_modal,
+      setAddTableModal,
       minimizeItems,
       setMinimizeItems,
       setMinimizeHandler,
@@ -89,11 +89,12 @@ const OrganizationProvider = ({ children }) => {
       setTerminal,
       terminal_content,
       setTerminalContent,
+      refetchTables,
     };
     // eslint-disable-next-line
   }, [
     tables,
-    add_collection_modal,
+    add_table_modal,
     minimizeItems,
     server,
     terminal,

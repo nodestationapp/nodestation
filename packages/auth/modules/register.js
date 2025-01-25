@@ -1,3 +1,4 @@
+import { ulid } from "ulid";
 import { v4 as uuidv4 } from "uuid";
 
 import bcrypt from "bcryptjs";
@@ -18,11 +19,12 @@ const register = async (body) =>
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(body?.password, salt);
 
-      const uid = uuidv4();
+      const uid = ulid();
       const token = uuidv4();
       const created_at = Date.now();
 
       await knex("nodestation_users").insert({
+        id: uid,
         created_at,
         type: body?.type,
         email: body?.email,

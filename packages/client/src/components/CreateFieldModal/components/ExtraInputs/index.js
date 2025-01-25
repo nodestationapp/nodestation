@@ -16,16 +16,16 @@ const boolean_default_options = [
   },
 ];
 
-const uuid_default_options = [
+const id_default_options = [
   {
-    label: "generate_uuid()",
-    value: "generate_uuid()",
+    label: "generate_id()",
+    value: "generate_id()",
   },
 ];
 
 const extra_input_render = (type, locked) => {
   switch (type) {
-    case "uuid":
+    case "id":
       return (
         <>
           <FormikSelect
@@ -33,7 +33,7 @@ const extra_input_render = (type, locked) => {
             name="default"
             disabled={locked}
             removeActiveLabel={true}
-            options={uuid_default_options}
+            options={id_default_options}
           />
           <FormikSwitch label="Required" name="required" disabled={locked} />
         </>
@@ -55,6 +55,17 @@ const extra_input_render = (type, locked) => {
         <>
           <FormikTextarea label="Options" name="options" variant="light" />
           <FormikInput label="Default value" name="default" />
+          <FormikSwitch label="Required" name="required" disabled={locked} />
+        </>
+      );
+    case "long_text":
+      return (
+        <>
+          <FormikTextarea
+            label="Default value"
+            name="default"
+            variant="light"
+          />
           <FormikSwitch label="Required" name="required" disabled={locked} />
         </>
       );
