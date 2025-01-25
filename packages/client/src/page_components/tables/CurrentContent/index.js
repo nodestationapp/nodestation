@@ -3,7 +3,6 @@ import { useState } from "react";
 import TableStack from "components/TableStack";
 import ArchiveTableModal from "../components/ArchiveTableModal";
 import TableContentEditor from "./components/TableContentEditor";
-import NoItemsFound from "components/List/components/NoItemsFound";
 import ArchiveTableEntryModal from "../components/ArchiveTableEntryModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 

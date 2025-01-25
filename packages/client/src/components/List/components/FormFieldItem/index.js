@@ -36,16 +36,16 @@ const FormFieldItem = ({
   return (
     <>
       <div
+        className={classnames(mainClass, {
+          [`${mainClass}--inactive`]: status === "inactive",
+          [`${mainClass}--dragging`]: !!snapshot?.isDragging,
+        })}
         ref={provided.innerRef}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
         style={getItemStyle(provided.draggableProps.style)}
         type="button"
         onClick={onclick}
-        className={classnames(mainClass, {
-          [`${mainClass}--inactive`]: status === "inactive",
-          [`${mainClass}--dragging`]: !!snapshot?.isDragging,
-        })}
       >
         <div className={`${mainClass}__label`}>
           {current_type?.icon}

@@ -124,6 +124,10 @@ const TableStack = ({
     onRowSelectionChange: setCheckedRows,
   });
 
+  const saveTransaction = () => {
+    // console.log(table.getState().columnSizing);
+  };
+
   return (
     <>
       <div className={mainClass}>
@@ -169,6 +173,7 @@ const TableStack = ({
                             )}
                         <div
                           {...{
+                            onMouseUp: saveTransaction,
                             onDoubleClick: () => header.column.resetSize(),
                             onMouseDown: header.getResizeHandler(),
                             onTouchStart: header.getResizeHandler(),

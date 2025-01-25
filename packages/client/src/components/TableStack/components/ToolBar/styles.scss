@@ -9,11 +9,11 @@
 
     &__main{
         &__select-action{
+            padding: 8px;
             display: flex;
+            border-radius: 5px;
             align-items: center;
             background-color: #3C414B;
-            padding: 8px;
-            border-radius: 5px;
 
             span{
                 font-size: 13px;
@@ -33,3 +33,14 @@
         gap: 15px;
     }
 }
+
+@keyframes popup-show {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
