@@ -1,7 +1,7 @@
+import { ulid } from "ulid";
+
 import { knex } from "@nstation/db";
 import { fs } from "@nstation/utils";
-
-import { v1 as uuidv1 } from "uuid";
 
 function removeUndefinedProperties(obj) {
   for (const key in obj) {
@@ -28,8 +28,8 @@ const mapDefaults = (schema, value, is_update) => {
   }
 
   switch (schema?.default) {
-    case "generate_uuid()":
-      return uuidv1();
+    case "generate_id()":
+      return ulid();
     case "now()":
       return Date.now();
     default:

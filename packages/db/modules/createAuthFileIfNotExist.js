@@ -10,12 +10,12 @@ export default async () => {
         {
           name: "id",
           slug: "id",
-          type: "uuid",
+          type: "id",
           required: true,
           origin: "system",
           primary_key: true,
           read_only: true,
-          default: "generate_uuid()",
+          default: "generate_id()",
         },
         {
           name: "Email",

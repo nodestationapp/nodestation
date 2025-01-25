@@ -1,9 +1,9 @@
 import { useField } from "formik";
-import UuidInput from "components/form/UuidInput";
+import IdInput from "components/form/IdInput";
 
-const FormikUuidInput = ({ type, name, ...rest }) => {
+const FormikIdInput = ({ type, name, ...rest }) => {
   const [field, meta] = useField({ name, type });
-  return <UuidInput type={type} {...rest} {...field} {...meta} />;
+  return <IdInput type={type} {...rest} {...field} {...meta} />;
 };
 
-export default FormikUuidInput;
+export default FormikIdInput;

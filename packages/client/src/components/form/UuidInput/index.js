@@ -2,9 +2,9 @@ import "./styles.scss";
 
 import classnames from "classnames";
 
-const mainClass = "uuid-input";
+const mainClass = "id-input";
 
-const UuidInput = ({
+const IdInput = ({
   type = "text",
   label,
   placeholder,
@@ -38,7 +38,7 @@ const UuidInput = ({
         </label>
       )}
       <div className={`${mainClass}__content`}>
-        <span>UUID</span>
+        <span>ID</span>
         <input
           className={`${mainClass}__field`}
           type={type}
@@ -55,4 +55,4 @@ const UuidInput = ({
   );
 };
 
-export default UuidInput;
+export default IdInput;

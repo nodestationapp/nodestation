@@ -86,23 +86,19 @@ const FormContent = () => {
         breadcrumps={breadcrumps}
         submenu={!!table?.id ? submenu_data : []}
       >
-        {entries?.length === 0 ? (
-          <NoItemsFound />
-        ) : (
-          <TableStack
-            data={entries}
-            columns={columns}
-            onSearch={() => {}}
-            selectAction={selectAction}
-            rowClick={(row) => setContentEditor(row)}
-            asideMenu={asideMenu}
-            addRowButton={{
-              label: "New",
-              icon: <PlusIcon />,
-              onClick: () => setContentEditor(new_entry_schema),
-            }}
-          />
-        )}
+        <TableStack
+          data={entries}
+          columns={columns}
+          onSearch={() => {}}
+          selectAction={selectAction}
+          rowClick={(row) => setContentEditor(row)}
+          asideMenu={asideMenu}
+          addRowButton={{
+            label: "New",
+            icon: <PlusIcon />,
+            onClick: () => setContentEditor(new_entry_schema),
+          }}
+        />
         {!!content_editor && (
           <TableContentEditor
             data={content_editor}

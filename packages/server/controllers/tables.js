@@ -60,7 +60,7 @@ const getTable = async (req, res) => {
 
     const settings = await knex("nodestation_media_settings").first();
 
-    let entries = await knex(table?.slug).orderBy("id", "desc");
+    let entries = await knex(table?.slug).orderBy("id", "asc");
     entries = parseJSONFields(entries, settings);
 
     return res.status(200).json({ table, entries });
@@ -87,12 +87,12 @@ const createTable = async (req, res) => {
         {
           name: "id",
           slug: "id",
-          type: "uuid",
+          type: "id",
           required: true,
           read_only: true,
           origin: "system",
           primary_key: true,
-          default: "generate_uuid()",
+          default: "generate_id()",
         },
       ],
     };

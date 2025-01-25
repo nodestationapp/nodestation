@@ -2,7 +2,7 @@ import knex from "../knex.js";
 import { fs } from "../../../utils/index.js";
 
 const typesMap = {
-  uuid: "uuid",
+  id: "string",
   short_text: "string",
   long_text: "text",
   enumeration: "string",
@@ -13,18 +13,18 @@ const typesMap = {
   date: "bigInteger",
 };
 
-function createOrModifyColumn({ table, item, dbColumns }) {
+function createOrModifyColumn({ table, schema, dbColumns }) {
   let column;
 
-  const type = typesMap[item?.type];
+  const type = typesMap[schema?.type];
 
-  column = table?.[type]?.(item?.slug);
+  column = table?.[type]?.(schema?.slug);
 
-  if (!!item?.primary_key) {
+  if (!!schema?.primary_key) {
     column.primary();
   }
 
-  if (!!dbColumns?.[item?.slug]) {
+  if (!!dbColumns?.[schema?.slug]) {
     column.alter();
   }
 
@@ -58,8 +58,8 @@ export default async () => {
     await knex.schema?.[!!hasTable ? "alterTable" : "createTable"]?.(
       item?.slug,
       (table) => {
-        for (const item of fileColumns) {
-          createOrModifyColumn({ table, item, dbColumns });
+        for (const schema of fileColumns) {
+          createOrModifyColumn({ table, schema, dbColumns });
         }
       }
     );
