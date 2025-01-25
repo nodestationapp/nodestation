@@ -69,8 +69,5 @@
         ]
       }
     }
-  },
-  "dependencies": {
-    "better-sqlite3": "^11.8.1"
   }
 }
