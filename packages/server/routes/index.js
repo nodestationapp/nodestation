@@ -8,6 +8,7 @@ import mediaRoute from "./media.js";
 import editorRoute from "./editor.js";
 import emailsRoute from "./emails.js";
 import tablesRoute from "./tables.js";
+import preferencesRoute from "./preferences.js";
 
 const router = express.Router();
 
@@ -19,5 +20,6 @@ router.use("/media", express.json(), mediaRoute);
 router.use("/editor", express.json(), editorRoute);
 router.use("/emails", express.json(), emailsRoute);
 router.use("/tables", express.json(), tablesRoute);
+router.use("/preferences", express.json(), preferencesRoute);
 
 export default router;

@@ -127,6 +127,20 @@ const createSchema = async () => {
     });
   }
 
+  const savedPreferencesTableExists = await knex.schema.hasTable(
+    "nodestation_preferences"
+  );
+  if (!savedPreferencesTableExists) {
+    await knex.schema.createTable("nodestation_preferences", (table) => {
+      table.increments("id").primary();
+      table.string("uid").nullable();
+      table.string("type").nullable();
+      table.string("content").nullable();
+      table.bigInteger("updated_at").nullable();
+      table.bigInteger("created_at").nullable();
+    });
+  }
+
   await createAuthFileIfNotExist();
   await migration();
 };

@@ -24,6 +24,8 @@ import EndpointCode from "./components/EndpointCode";
 import EndpointName from "./components/EndpointName";
 import NewMessageName from "./components/NewMessageName";
 import EmailSparklines from "./components/EmailSparklines";
+import api from "libs/api";
+import { useOrganization } from "context/organization";
 
 // import TableSkeleton from "./components/TableSkeleton";
 // import NoItemsFound from "components/List/components/NoItemsFound";
@@ -71,10 +73,16 @@ const TableStack = ({
   rowClick,
   onSearch,
   asideMenu,
+  tableName,
   selectAction,
   addRowButton,
 }) => {
+  const { preferences } = useOrganization();
   const [checkedRows, setCheckedRows] = useState({});
+
+  const table_preferences = preferences?.find(
+    (item) => item?.type === `tables_${tableName}`
+  );
 
   const formatted_columns = useMemo(
     () => [
@@ -98,6 +106,7 @@ const TableStack = ({
       },
       ...columns.map((item) => ({
         id: item?.slug,
+        size: table_preferences?.content?.[item?.slug] || undefined,
         accessorFn: (row) => row?.[item?.slug],
         header: () => <span className="light">{item?.value}</span>,
         cell: (cell) => (
@@ -124,8 +133,11 @@ const TableStack = ({
     onRowSelectionChange: setCheckedRows,
   });
 
-  const saveTransaction = () => {
-    // console.log(table.getState().columnSizing);
+  const saveTransaction = async () => {
+    await api.post("/preferences", {
+      type: `tables_${tableName}`,
+      content: table.getState().columnSizing,
+    });
   };
 
   return (

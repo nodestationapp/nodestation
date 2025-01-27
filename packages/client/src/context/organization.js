@@ -28,6 +28,11 @@ const OrganizationProvider = ({ children }) => {
     queryFn: () => api.get("/tables"),
   });
 
+  const { data: preferences = [] } = useQuery({
+    queryKey: ["preferences"],
+    queryFn: () => api.get("/preferences"),
+  });
+
   useEffect(() => {
     if (!!!server?.terminal) return;
     const text = `${server?.terminal?.trim()}\n\r`;
@@ -90,6 +95,7 @@ const OrganizationProvider = ({ children }) => {
       terminal_content,
       setTerminalContent,
       refetchTables,
+      preferences,
     };
     // eslint-disable-next-line
   }, [
@@ -99,6 +105,7 @@ const OrganizationProvider = ({ children }) => {
     server,
     terminal,
     terminal_content,
+    preferences,
   ]);
 
   return (
