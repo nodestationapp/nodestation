@@ -6,7 +6,6 @@ import {
   emailActivation,
   resetPasswordConfirm,
 } from "@nstation/auth";
-import slugify from "slugify";
 import bcrypt from "bcryptjs";
 import { fs } from "@nstation/utils";
 import { knex, createSchema } from "@nstation/db";
@@ -99,17 +98,7 @@ const updateSettingsAuth = async (req, res) => {
   const body = req?.body;
 
   try {
-    let formatted_fields = body?.fields?.map((item) =>
-      Object.fromEntries(
-        Object.entries({
-          ...item,
-          slug: slugify(item?.name, {
-            replacement: "_",
-            lower: true,
-          }),
-        }).filter(([_, value]) => value !== "")
-      )
-    );
+    let formatted_fields = body?.fields?.filter(([_, value]) => value !== "");
 
     const formatted_body = {
       ...body,

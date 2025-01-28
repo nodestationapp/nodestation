@@ -121,19 +121,10 @@ const updateTable = async (req, res) => {
       lower: true,
     });
 
-    let formatted_fields = body?.fields?.map((item) => ({
-      ...item,
-      slug: slugify(item?.name, {
-        replacement: "_",
-        lower: true,
-      }),
-    }));
-
     const formatted_body = {
       ...body,
       slug,
       type: "tbl",
-      fields: formatted_fields,
     };
 
     await fs.createFile(formatted_body, id);

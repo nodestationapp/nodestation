@@ -1,3 +1,4 @@
+import slugify from "slugify";
 import { Form, Formik, useFormikContext } from "formik";
 
 import Modal from "components/Modal";
@@ -35,7 +36,13 @@ const CreateFieldModal = ({ index, form, onClose }) => {
         primary_key: formik_values?.primary_key,
       };
     } else {
+      const slug = slugify(formik_values?.name, {
+        replacement: "_",
+        lower: true,
+      });
+
       temp.push({
+        slug,
         name: formik_values?.name,
         type: formik_values?.type,
         default: formik_values?.default,

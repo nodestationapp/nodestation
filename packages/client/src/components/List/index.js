@@ -61,7 +61,7 @@ const List = ({ type, data: value, onOrderChange }) => {
         <SortableContext items={value?.map((item) => item?.slug)}>
           <div className={`${mainClass}__content`}>
             {value?.map((item, index) => (
-              <div className={`${mainClass}__content__row`}>
+              <div key={index} className={`${mainClass}__content__row`}>
                 {list_item_render(type, item, value?.length + index)}
               </div>
             ))}

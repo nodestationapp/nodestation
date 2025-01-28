@@ -1,6 +1,5 @@
-import slugify from "slugify";
-import { fs } from "@nstation/utils";
 import { knex } from "@nstation/db";
+import { fs } from "@nstation/utils";
 
 const getAllForms = async (_, res) => {
   try {
@@ -87,18 +86,9 @@ const createForm = async (req, res) => {
   const body = req?.body;
 
   try {
-    let formatted_fields = body?.fields?.map((item) => ({
-      ...item,
-      slug: slugify(item?.name, {
-        replacement: "_",
-        lower: true,
-      }),
-    }));
-
     const formatted_body = {
       ...body,
       type: "form",
-      fields: formatted_fields,
     };
 
     const id = await fs.createFile(formatted_body);
@@ -114,18 +104,9 @@ const updateForm = async (req, res) => {
   const body = req?.body;
 
   try {
-    let formatted_fields = body?.fields?.map((item) => ({
-      ...item,
-      slug: slugify(item?.name, {
-        replacement: "_",
-        lower: true,
-      }),
-    }));
-
     const formatted_body = {
       ...body,
       type: "form",
-      fields: formatted_fields,
     };
 
     await fs.updateFile(req?.params?.id, formatted_body);
