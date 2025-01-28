@@ -113,7 +113,11 @@ const TableStack = ({
         header: () => <span className="light">{item?.value}</span>,
         cell: (cell) => (
           <span className="light">
-            {table_value_type(item?.type, cell?.getValue())}
+            {console.log(cell)}
+            {table_value_type(
+              item?.type,
+              cell?.getValue() || cell?.row?.original
+            )}
           </span>
         ),
       })),
