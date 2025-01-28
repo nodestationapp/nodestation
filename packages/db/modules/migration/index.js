@@ -9,7 +9,7 @@ const typesMap = {
   media: "text",
   numeric: "integer",
   json: "json",
-  boolean: "boolean",
+  boolean: "integer",
   date: "bigInteger",
 };
 
