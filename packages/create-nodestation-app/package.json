@@ -1,6 +1,6 @@
 {
   "name": "create-nodestation-app",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "main": "index.js",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,7 @@
   ],
   "bin": "./index.js",
   "dependencies": {
-    "@nstation/utils": "^1.6.1",
+    "@nstation/utils": "^1.7.0",
     "chalk": "^5.4.1",
     "figlet": "^1.8.0",
     "inquirer": "^12.3.2",

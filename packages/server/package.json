@@ -1,6 +1,6 @@
 {
   "name": "@nstation/server",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "main": "index.js",
   "type": "module",
   "license": "MIT",
@@ -33,10 +33,10 @@
     "start": "nodemon index.js"
   },
   "dependencies": {
-    "@nstation/auth": "^1.6.1",
-    "@nstation/client": "^1.6.1",
-    "@nstation/db": "^1.6.1",
-    "@nstation/utils": "^1.6.1",
+    "@nstation/auth": "^1.7.0",
+    "@nstation/client": "^1.7.0",
+    "@nstation/db": "^1.7.0",
+    "@nstation/utils": "^1.7.0",
     "axios": "^1.6.1",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
