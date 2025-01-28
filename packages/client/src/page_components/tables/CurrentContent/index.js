@@ -89,6 +89,7 @@ const FormContent = () => {
           data={entries}
           columns={columns}
           onSearch={() => {}}
+          tableName={table?.slug}
           selectAction={selectAction}
           rowClick={(row) => setContentEditor(row)}
           asideMenu={asideMenu}

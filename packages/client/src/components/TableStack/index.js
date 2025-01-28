@@ -1,7 +1,7 @@
 import "./styles.scss";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -24,6 +24,9 @@ import EndpointCode from "./components/EndpointCode";
 import EndpointName from "./components/EndpointName";
 import NewMessageName from "./components/NewMessageName";
 import EmailSparklines from "./components/EmailSparklines";
+
+import api from "libs/api";
+import { useOrganization } from "context/organization";
 
 // import TableSkeleton from "./components/TableSkeleton";
 // import NoItemsFound from "components/List/components/NoItemsFound";
@@ -71,10 +74,17 @@ const TableStack = ({
   rowClick,
   onSearch,
   asideMenu,
+  tableName,
   selectAction,
   addRowButton,
 }) => {
+  const { preferences } = useOrganization();
   const [checkedRows, setCheckedRows] = useState({});
+  const [isResizing, setIsResizing] = useState(false);
+
+  const table_preferences = preferences?.find(
+    (item) => item?.type === `tables_${tableName}`
+  );
 
   const formatted_columns = useMemo(
     () => [
@@ -98,6 +108,7 @@ const TableStack = ({
       },
       ...columns.map((item) => ({
         id: item?.slug,
+        size: table_preferences?.content?.[item?.slug] || undefined,
         accessorFn: (row) => row?.[item?.slug],
         header: () => <span className="light">{item?.value}</span>,
         cell: (cell) => (
@@ -124,8 +135,32 @@ const TableStack = ({
     onRowSelectionChange: setCheckedRows,
   });
 
-  const saveTransaction = () => {
-    // console.log(table.getState().columnSizing);
+  const saveTransaction = async () => {
+    await api.post("/preferences", {
+      type: `tables_${tableName}`,
+      content: table.getState().columnSizing,
+    });
+  };
+
+  useEffect(() => {
+    const handleMouseUp = () => {
+      if (!!isResizing) {
+        saveTransaction();
+        setIsResizing(false);
+      }
+    };
+
+    document.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+    // eslint-disable-next-line
+  }, [isResizing]);
+
+  const handleMouseDown = (e, header) => {
+    setIsResizing(true);
+    header.getResizeHandler()(e);
   };
 
   return (
@@ -173,10 +208,9 @@ const TableStack = ({
                             )}
                         <div
                           {...{
-                            onMouseUp: saveTransaction,
                             onDoubleClick: () => header.column.resetSize(),
-                            onMouseDown: header.getResizeHandler(),
-                            onTouchStart: header.getResizeHandler(),
+                            onMouseDown: (e) => handleMouseDown(e, header),
+                            onTouchStart: (e) => handleMouseDown(e, header),
                             className: `${`${mainClass}__header__col__resizer`} ${
                               table.options.columnResizeDirection
                             } ${
