@@ -3,17 +3,21 @@
 import ora from "ora";
 import path from "path";
 import fs_sys from "fs";
+import boxen from "boxen";
+import chalk from "chalk";
 import crypto from "crypto";
 import figlet from "figlet";
 import inquirer from "inquirer";
 import { cli } from "@nstation/utils";
 import { promises as fs_promise } from "fs";
-import boxen from "boxen";
 
-import chalk from "chalk";
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const authSchema = JSON.parse(
-  fs_sys.readFileSync("./templates/authSchema.json", "utf-8")
+  fs_sys.readFileSync(
+    path.join(__dirname, "/templates/authSchema.json"),
+    "utf-8"
+  )
 );
 
 (async () => {
