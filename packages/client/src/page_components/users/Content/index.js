@@ -109,8 +109,6 @@ const UsersContent = () => {
     },
   ];
 
-  if (!!loading) return;
-
   return (
     <>
       <DashboardContentLayout
@@ -121,6 +119,7 @@ const UsersContent = () => {
         <TableStack
           data={users}
           columns={columns}
+          loading={loading}
           onSearch={() => {}}
           tableName={"nodestation_users"}
           selectAction={selectAction}
