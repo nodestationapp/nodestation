@@ -19,6 +19,7 @@ import {
   // CodeBracketIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
+import ArchiveUserModal from "../components/ArchiveUserModal";
 
 const submenu_data = [
   {
@@ -41,6 +42,7 @@ const breadcrumps = [
 const UsersContent = () => {
   const { users, settings, loading } = useUsers();
   const [edit_modal, setEditModal] = useState(false);
+  const [archive_user_modal, setArchiveUserModal] = useState(false);
 
   // const host = getHost();
 
@@ -102,8 +104,8 @@ const UsersContent = () => {
   const selectAction = [
     {
       icon: <TrashIcon color="#FF3636" />,
-      // onClick: (rows, clearSelection) =>
-      //   setArchiveEntryModal({ rows, clearSelection }),
+      onClick: (rows, clearSelection) =>
+        setArchiveUserModal({ rows, clearSelection }),
     },
   ];
 
@@ -137,6 +139,12 @@ const UsersContent = () => {
           />
         )}
       </DashboardContentLayout>
+      {!!archive_user_modal && (
+        <ArchiveUserModal
+          data={archive_user_modal}
+          onClose={() => setArchiveUserModal(false)}
+        />
+      )}
       {/* {request_modal && (
         <RequestsModal
           data={requests_modal_data}

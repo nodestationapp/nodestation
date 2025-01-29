@@ -206,6 +206,22 @@ const authChangePassword = async (req, res) => {
   }
 };
 
+const deleteUserAuth = async (req, res) => {
+  const { entry_ids } = req?.body;
+
+  try {
+    const files = fs.getFiles();
+    const auth = files?.find((item) => item?.id?.toString() === "auth");
+
+    await knex(auth?.slug).whereIn("id", entry_ids).del();
+
+    return res.status(200).json({ status: "ok" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 export {
   getAllAuth,
   getSettingsAuth,
@@ -218,4 +234,5 @@ export {
   authResetPassword,
   authResetPasswordConfirm,
   authChangePassword,
+  deleteUserAuth,
 };

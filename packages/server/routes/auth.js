@@ -11,6 +11,7 @@ import {
   authRegister,
   authActivation,
   updateUserAuth,
+  deleteUserAuth,
   getSettingsAuth,
   authResetPassword,
   updateSettingsAuth,
@@ -26,7 +27,8 @@ router.route("/activation").post(limiter, authActivation);
 router
   .route("/")
   .get(authMiddleware(["admin"]), getAllAuth)
-  .post(authMiddleware(["admin"]), uploader, addUserAuth);
+  .post(authMiddleware(["admin"]), uploader, addUserAuth)
+  .delete(authMiddleware(["admin"]), uploader, deleteUserAuth);
 router.route("/password-reset").post(authResetPassword);
 router
   .route("/change-password")
