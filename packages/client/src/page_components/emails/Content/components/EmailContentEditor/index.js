@@ -3,6 +3,7 @@ import "./styles.scss";
 import { Formik, Form } from "formik";
 
 import Modal from "components/Modal";
+import IdViewer from "components/IdViewer";
 import KeyViewer from "components/KeyViewer";
 import CodeEditor from "components/CodeEditor";
 import FormikInput from "components/formik/FormikInput";
@@ -35,6 +36,8 @@ const EmailContentEditor = ({ id, onClose, setId }) => {
     }
   };
 
+  console.log(selected_email);
+
   return (
     <Formik
       initialValues={{
@@ -56,6 +59,7 @@ const EmailContentEditor = ({ id, onClose, setId }) => {
             onClose={onClose}
             loading={isSubmitting}
             submit_disabled={!!!dirty}
+            header_aside={<IdViewer id={selected_email?.id} />}
             submit_label={
               <>
                 Save

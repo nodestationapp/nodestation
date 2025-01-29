@@ -37,6 +37,12 @@
       padding: 0 10px;
       flex-shrink: 0;
 
+      &__aside{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
       .icon-button{
         &::before {
             background-color: rgba(#fff, 0.15);

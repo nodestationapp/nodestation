@@ -22,6 +22,7 @@ const Modal = ({
   submit_label,
   submit_disabled,
   custom_actions,
+  header_aside,
   size,
   noPadding,
   action_cancel_hide,
@@ -61,9 +62,14 @@ const Modal = ({
       <div className={`${mainClass}__dialog`}>
         <div className={`${mainClass}__dialog__header`}>
           <span>{title}</span>
-          <Tooltip text={<KeyViewer variant="dark" no_margin data={["Esc"]} />}>
-            <IconButton icon={<XMarkIcon />} onClick={onClose} />
-          </Tooltip>
+          <div className={`${mainClass}__dialog__header__aside`}>
+            {header_aside}
+            <Tooltip
+              text={<KeyViewer variant="dark" no_margin data={["Esc"]} />}
+            >
+              <IconButton icon={<XMarkIcon />} onClick={onClose} />
+            </Tooltip>
+          </div>
         </div>
         <div className={`${mainClass}__dialog__wrapper`}>
           {!!withScroll ? (
