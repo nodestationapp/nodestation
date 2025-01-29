@@ -80,13 +80,14 @@ const FormContent = () => {
   return (
     <>
       <DashboardContentLayout
-        loading={loading}
         noContentPadding
         breadcrumps={breadcrumps}
         submenu={!!table?.id ? submenu_data : []}
       >
         <TableStack
+          key={id}
           data={entries}
+          loading={loading}
           columns={columns}
           onSearch={() => {}}
           tableName={table?.slug}

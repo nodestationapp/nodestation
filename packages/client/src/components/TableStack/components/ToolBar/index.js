@@ -43,7 +43,9 @@ const Toolbar = ({
         {/* {!!onSearch && (
           <IconButton size="small" icon={<MagnifyingGlassIcon />} />
         )} */}
-        <IconButtonMenu icon={<EllipsisHorizontalIcon />} data={asideMenu} />
+        {!!asideMenu && (
+          <IconButtonMenu icon={<EllipsisHorizontalIcon />} data={asideMenu} />
+        )}
         {!!addRowButton && (
           <Button onClick={addRowButton?.onClick} icon={addRowButton?.icon}>
             {addRowButton?.label || "New"}

@@ -44,6 +44,7 @@ const Input = ({
         <input
           className={`${mainClass}__field`}
           type={type}
+          disabled={!!disabled}
           placeholder={placeholder}
           value={value}
           name={name}
