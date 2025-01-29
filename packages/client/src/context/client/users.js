@@ -8,7 +8,11 @@ const UsersContext = createContext();
 const UsersProvider = ({ children }) => {
   const queryClient = useQueryClient();
 
-  const { isLoading: users_loading, data: users } = useQuery({
+  const {
+    isLoading: users_loading,
+    data: users,
+    refetch: usersRefetch,
+  } = useQuery({
     queryKey: ["users"],
     queryFn: () => api.get("/auth"),
   });
@@ -41,10 +45,27 @@ const UsersProvider = ({ children }) => {
       }
     });
 
+  const deleteUsers = (entry_ids) =>
+    new Promise(async (resolve, reject) => {
+      try {
+        await api.delete(`/auth`, {
+          data: {
+            entry_ids,
+          },
+        });
+
+        usersRefetch();
+
+        resolve();
+      } catch (err) {
+        reject(err);
+      }
+    });
+
   const loading = !!users_loading;
 
   const value = useMemo(() => {
-    return { users, settings, emails, loading, updateAuth };
+    return { users, settings, emails, loading, updateAuth, deleteUsers };
     // eslint-disable-next-line
   }, [users, settings, emails, loading]);
 

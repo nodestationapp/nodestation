@@ -98,10 +98,13 @@ const updateSettingsAuth = async (req, res) => {
   const body = req?.body;
 
   try {
-    let formatted_fields = body?.fields?.filter(([_, value]) => value !== "");
+    let formatted_fields = body?.fields?.filter((field) => {
+      return Object.values(field).some((value) => value !== "");
+    });
 
     const formatted_body = {
       ...body,
+      slug: "nodestation_users",
       fields: formatted_fields,
     };
 
@@ -203,6 +206,22 @@ const authChangePassword = async (req, res) => {
   }
 };
 
+const deleteUserAuth = async (req, res) => {
+  const { entry_ids } = req?.body;
+
+  try {
+    const files = fs.getFiles();
+    const auth = files?.find((item) => item?.id?.toString() === "auth");
+
+    await knex(auth?.slug).whereIn("id", entry_ids).del();
+
+    return res.status(200).json({ status: "ok" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 export {
   getAllAuth,
   getSettingsAuth,
@@ -215,4 +234,5 @@ export {
   authResetPassword,
   authResetPasswordConfirm,
   authChangePassword,
+  deleteUserAuth,
 };

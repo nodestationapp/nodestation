@@ -14,7 +14,7 @@ const UserProfile = ({ data }) => {
           <ProfilePlaceholder />
         )}
       </div>
-      <span>{data?.name}</span>
+      <span>{`${data?.first_name} ${data?.last_name}`}</span>
     </div>
   );
 };
