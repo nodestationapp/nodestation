@@ -1,0 +1,11 @@
+.table__no-items-found{
+  padding: 0 10px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #33363D;
+
+  span{
+    color: #647082;
+  }
+}

@@ -22,14 +22,13 @@ import LogMessage from "./components/LogMessage";
 import UserProfile from "./components/UserProfile";
 import EndpointCode from "./components/EndpointCode";
 import EndpointName from "./components/EndpointName";
+import NoItemsFound from "./components/NoItemsFound";
 import TableSkeleton from "./components/TableSkeleton";
 import NewMessageName from "./components/NewMessageName";
 import EmailSparklines from "./components/EmailSparklines";
 
 import api from "libs/api";
 import { useOrganization } from "context/organization";
-
-// import NoItemsFound from "components/List/components/NoItemsFound";
 
 const mainClass = "table-stack";
 
@@ -231,32 +230,36 @@ const TableStack = ({
                     </div>
                   ))}
                 </div>
-                <div className={`${mainClass}__body`}>
-                  {table.getRowModel().rows.map((row) => (
-                    <div
-                      key={row.id}
-                      className={`${mainClass}__body__row`}
-                      onClick={() => rowClick(row.original)}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <div
-                          key={cell.id}
-                          className={`${mainClass}__body__col`}
-                          style={{
-                            width: cell.column.getSize(),
-                          }}
-                        >
-                          <span>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
+                {data?.length === 0 ? (
+                  <NoItemsFound />
+                ) : (
+                  <div className={`${mainClass}__body`}>
+                    {table.getRowModel().rows.map((row) => (
+                      <div
+                        key={row.id}
+                        className={`${mainClass}__body__row`}
+                        onClick={() => rowClick(row.original)}
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <div
+                            key={cell.id}
+                            className={`${mainClass}__body__col`}
+                            style={{
+                              width: cell.column.getSize(),
+                            }}
+                          >
+                            <span>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </PerfectScrollbar>
           </div>
