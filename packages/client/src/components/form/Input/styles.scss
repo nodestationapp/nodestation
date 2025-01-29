@@ -20,6 +20,10 @@
     pointer-events: none;
     font-size: 14px;
 
+    span{
+      color: #AEB3BD;
+    }
+
     a{
       font-size: 13px;
       text-decoration: underline;
@@ -48,7 +52,6 @@
       border: 1px solid #4B4F55;
       color: #F0F1F3;
       font-weight: 400;
-      transition: all ease 0.2s;
 
       &:focus {
         border-color: #757980;
@@ -114,18 +117,18 @@
 
     .input {
       &__content{
-      flex: 1;
+        flex: 1;
 
-          input{
-              padding: 0;
-              border-radius: 0;
-              background-color: transparent;
-              
-  
-              &:focus {
-                  box-shadow: none;
-              }
-          }
+        input{
+            padding: 0;
+            border-radius: 0;
+            background-color: transparent;
+            
+
+            &:focus {
+                box-shadow: none;
+            }
+        }
       }
     }
   }

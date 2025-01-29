@@ -78,67 +78,69 @@ const Select = ({
         [`${mainClass}--${variant}`]: !!variant,
       })}
     >
-      {!!label && (
-        <label>
-          {label}
-          {!!required && <span>*</span>}
-        </label>
-      )}
-      {!!CustomButton ? (
-        <div
-          ref={button_ref}
-          className={`${mainClass}__custom-button`}
-          onClick={() => setSelectOpen((prev) => !prev)}
-        >
-          <CustomButton ref={button_ref} />
-        </div>
-      ) : (
-        <button
-          ref={button_ref}
-          type="button"
-          onClick={() => setSelectOpen((prev) => !prev)}
-        >
-          <span>
-            {current_value?.icon}
-            {value !== null && (
-              <>
-                {current_value?.map((item) => item?.label)?.join(", ") ||
-                  placeholder}
-              </>
-            )}
-          </span>
-          {!!!noArrow && <ChevronDownIcon />}
-        </button>
-      )}
-      {/* {customButton()} */}
-
-      {select_open && (
-        <div className={`${mainClass}__options`}>
-          <div className={`${mainClass}__options__wrapper`}>
-            {options?.map((item, index) => (
-              <button
-                type="button"
-                key={index}
-                className={classnames(`${mainClass}__options__item`, {
-                  [`${mainClass}__options__item--selected`]:
-                    selected?.value === item?.value,
-                })}
-                onClick={() => onChangeHandler({ name, value: item?.value })}
-              >
-                {item?.icon}
-                {item?.label}
-                {current_value?.find(
-                  (element) => element?.value === item?.value
-                ) && (
-                  <div className={`${mainClass}__options__item__selected-icon`}>
-                    <CheckIcon />
-                  </div>
-                )}
-              </button>
-            ))}
+      <div className={`${mainClass}__content`}>
+        {!!label && (
+          <label>
+            {label}
+            {!!required && <span>*</span>}
+          </label>
+        )}
+        {!!CustomButton ? (
+          <div
+            ref={button_ref}
+            className={`${mainClass}__custom-button`}
+            onClick={() => setSelectOpen((prev) => !prev)}
+          >
+            <CustomButton ref={button_ref} />
           </div>
-        </div>
-      )}
+        ) : (
+          <button
+            ref={button_ref}
+            type="button"
+            onClick={() => setSelectOpen((prev) => !prev)}
+          >
+            <span>
+              {current_value?.[0]?.icon}
+              {value !== null && (
+                <>
+                  {current_value?.map((item) => item?.label)?.join(", ") ||
+                    placeholder}
+                </>
+              )}
+            </span>
+            {!!!noArrow && <ChevronDownIcon />}
+          </button>
+        )}
+        {select_open && (
+          <div className={`${mainClass}__options`}>
+            <div className={`${mainClass}__options__wrapper`}>
+              {options?.map((item, index) => (
+                <button
+                  type="button"
+                  key={index}
+                  className={classnames(`${mainClass}__options__item`, {
+                    [`${mainClass}__options__item--selected`]:
+                      selected?.value === item?.value,
+                  })}
+                  onClick={() => onChangeHandler({ name, value: item?.value })}
+                >
+                  {item?.icon}
+                  {item?.label}
+                  {current_value?.find(
+                    (element) => element?.value === item?.value
+                  ) && (
+                    <div
+                      className={`${mainClass}__options__item__selected-icon`}
+                    >
+                      <CheckIcon />
+                    </div>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
       {!!is_error && <small className={`${mainClass}__error`}>{error}</small>}
     </div>
   );

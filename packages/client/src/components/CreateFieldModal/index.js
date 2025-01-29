@@ -61,7 +61,7 @@ const CreateFieldModal = ({ index, form, onClose }) => {
       initialValues={{
         name: form?.name || "",
         type: form?.type || null,
-        default: form?.default,
+        default: form?.default || null,
         options: form?.options || "",
         required: form?.required || false,
         primary_key: form?.primary_key || "",

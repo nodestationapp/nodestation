@@ -36,8 +36,6 @@ const EmailContentEditor = ({ id, onClose, setId }) => {
     }
   };
 
-  console.log(selected_email);
-
   return (
     <Formik
       initialValues={{

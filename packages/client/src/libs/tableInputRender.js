@@ -40,6 +40,7 @@ const tableInputRender = (item) => {
     case "enumeration":
       return (
         <FormikSelect
+          required={item?.required}
           name={item?.slug}
           label={item?.name}
           options={select_data}
@@ -69,6 +70,7 @@ const tableInputRender = (item) => {
           name={item?.slug}
           label={item?.name}
           variant="light"
+          required={!!item?.required}
           type={item?.type === "password" ? "password" : "text"}
           disabled={!!item?.read_only}
         />

@@ -7,6 +7,10 @@ import FormikTextarea from "components/formik/FormikTextarea";
 
 const boolean_default_options = [
   {
+    label: "NULL",
+    value: null,
+  },
+  {
     label: "TRUE",
     value: true,
   },
