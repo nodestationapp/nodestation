@@ -103,8 +103,6 @@ describe(`Forms`, () => {
       .get(`/admin/api/forms/${fileID}`)
       .set("Authorization", `Bearer ${token}`);
 
-    console.log(response.body);
-
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
       form: {

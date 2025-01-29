@@ -1,10 +1,12 @@
-import { ReactComponent as FileIcon } from "assets/icons/file.svg";
-import { ReactComponent as IdIcon } from "assets/icons/uuid.svg";
-import { ReactComponent as JsonIcon } from "assets/icons/json.svg";
-import { ReactComponent as NumericIcon } from "assets/icons/numeric.svg";
-import { ReactComponent as BooleanIcon } from "assets/icons/boolean.svg";
-import { ReactComponent as LongTextIcon } from "assets/icons/long-text.svg";
-import { ReactComponent as ShortTextIcon } from "assets/icons/short-text.svg";
+import { ReactComponent as IdIcon } from "assets/icons/content-types/id.svg";
+import { ReactComponent as JsonIcon } from "assets/icons/content-types/json.svg";
+import { ReactComponent as DateIcon } from "assets/icons/content-types/date.svg";
+import { ReactComponent as MediaIcon } from "assets/icons/content-types/media.svg";
+import { ReactComponent as NumericIcon } from "assets/icons/content-types/number.svg";
+import { ReactComponent as BooleanIcon } from "assets/icons/content-types/boolean.svg";
+import { ReactComponent as LongTextIcon } from "assets/icons/content-types/long-text.svg";
+import { ReactComponent as ShortTextIcon } from "assets/icons/content-types/short-text.svg";
+import { ReactComponent as EnumerationIcon } from "assets/icons/content-types/enumeration.svg";
 
 const field_type_data = [
   {
@@ -28,7 +30,7 @@ const field_type_data = [
     value: "boolean",
   },
   {
-    icon: <LongTextIcon />,
+    icon: <EnumerationIcon />,
     label: "Enumeration",
     value: "enumeration",
   },
@@ -38,7 +40,7 @@ const field_type_data = [
     value: "numeric",
   },
   {
-    icon: <FileIcon />,
+    icon: <MediaIcon />,
     label: "Media",
     value: "media",
   },
@@ -48,7 +50,7 @@ const field_type_data = [
     value: "json",
   },
   {
-    icon: <JsonIcon />,
+    icon: <DateIcon />,
     label: "Date",
     value: "date",
   },
