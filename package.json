@@ -22,7 +22,7 @@
     "dev": "npm run dev:server & npm run dev:client",
     "build": "npm --prefix ./packages/client run build",
     "dev:client": "npm --prefix ./packages/client start",
-    "dev:server": "nodemon ./packages/nodestation/index.js --watch ../../ --ignore ../../packages/client"
+    "dev:server": "nodemon ./packages/nodestation/index.js --watch ./packages/server"
   },
   "devDependencies": {
     "@release-it-plugins/workspaces": "^4.2.0",
