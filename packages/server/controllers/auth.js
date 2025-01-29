@@ -98,10 +98,13 @@ const updateSettingsAuth = async (req, res) => {
   const body = req?.body;
 
   try {
-    let formatted_fields = body?.fields?.filter(([_, value]) => value !== "");
+    let formatted_fields = body?.fields?.filter((field) => {
+      return Object.values(field).some((value) => value !== "");
+    });
 
     const formatted_body = {
       ...body,
+      slug: "nodestation_users",
       fields: formatted_fields,
     };
 

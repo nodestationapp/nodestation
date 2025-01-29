@@ -33,8 +33,12 @@ import { useOrganization } from "context/organization";
 
 const mainClass = "table-stack";
 
-const table_value_type = (type, value) => {
-  switch (type) {
+const table_value_type = (item, cell) => {
+  const value = !!cell?.row?.original?.hasOwnProperty(item?.slug)
+    ? cell?.getValue()
+    : cell?.row?.original;
+
+  switch (item?.type) {
     case "user_profile":
       return <UserProfile data={value} />;
     case "media":
@@ -112,13 +116,7 @@ const TableStack = ({
         accessorFn: (row) => row?.[item?.slug],
         header: () => <span className="light">{item?.value}</span>,
         cell: (cell) => (
-          <span className="light">
-            {console.log(cell)}
-            {table_value_type(
-              item?.type,
-              cell?.getValue() || cell?.row?.original
-            )}
-          </span>
+          <span className="light">{table_value_type(item, cell)}</span>
         ),
       })),
     ],

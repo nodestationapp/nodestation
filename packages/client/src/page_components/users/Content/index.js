@@ -75,6 +75,15 @@ const UsersContent = () => {
     return obj;
   }, {});
 
+  let table_fields = settings?.fields?.filter(
+    (item) =>
+      item?.slug !== "id" &&
+      item?.slug !== "first_name" &&
+      item?.slug !== "last_name" &&
+      item?.slug !== "photo" &&
+      item?.slug !== "password"
+  );
+
   const columns = [
     {
       key: "user_profile",
@@ -82,30 +91,12 @@ const UsersContent = () => {
       type: "user_profile",
       slug: "user_profile",
     },
-    {
-      key: "status",
-      value: "Status",
-      type: "status",
-      slug: "status",
-    },
-    {
-      key: "email",
-      value: "Email",
-      type: "email",
-      slug: "email",
-    },
-    {
-      key: "type",
-      value: "Type",
-      type: "type",
-      slug: "type",
-    },
-    {
-      key: "created_at",
-      value: "Created at",
-      type: "date",
-      slug: "created_at",
-    },
+    ...(table_fields?.map((item) => ({
+      key: item?.type,
+      value: item?.name,
+      type: item?.type,
+      slug: item?.slug,
+    })) || []),
   ];
 
   const selectAction = [

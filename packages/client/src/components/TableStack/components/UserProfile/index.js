@@ -5,7 +5,6 @@ import { ReactComponent as ProfilePlaceholder } from "assets/icons/profile-place
 const mainClass = "table__user-profile";
 
 const UserProfile = ({ data }) => {
-  console.log(data);
   return (
     <div className={mainClass}>
       <div className={`${mainClass}__photo`}>
