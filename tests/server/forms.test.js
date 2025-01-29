@@ -9,16 +9,19 @@ const formBody = {
   fields: [
     {
       name: "Email",
+      slug: "email",
       type: "short_text",
       required: false,
     },
     {
       name: "First name",
+      slug: "first_name",
       type: "short_text",
       required: false,
     },
     {
       name: "Last name",
+      slug: "last_name",
       type: "short_text",
       required: false,
     },
@@ -99,6 +102,8 @@ describe(`Forms`, () => {
     const response = await request(app)
       .get(`/admin/api/forms/${fileID}`)
       .set("Authorization", `Bearer ${token}`);
+
+    console.log(response.body);
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
