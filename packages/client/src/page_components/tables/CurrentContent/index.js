@@ -39,10 +39,6 @@ const FormContent = () => {
       label: "Entries",
       href: `/tables/${id}`,
     },
-    {
-      label: "Settings",
-      href: `/tables/${id}/settings`,
-    },
   ];
 
   const columns =
@@ -79,13 +75,10 @@ const FormContent = () => {
 
   return (
     <>
-      <DashboardContentLayout
-        noContentPadding
-        breadcrumps={breadcrumps}
-        submenu={!!table?.id ? submenu_data : []}
-      >
+      <DashboardContentLayout noContentPadding breadcrumps={breadcrumps}>
         <TableStack
           key={id}
+          menu={!!id ? submenu_data : []}
           data={entries}
           loading={loading}
           columns={columns}
@@ -93,6 +86,7 @@ const FormContent = () => {
           tableName={table?.slug}
           selectAction={selectAction}
           rowClick={(row) => setContentEditor(row)}
+          tableSettings={`/tables/${id}/settings`}
           asideMenu={asideMenu}
           addRowButton={{
             label: "New",

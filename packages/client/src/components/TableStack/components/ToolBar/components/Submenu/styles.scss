@@ -1,0 +1,51 @@
+.table__toolbar__menu{
+  padding-left: 7.5px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  &__item{
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: #ACB1BB;
+    font-weight: 500;
+    gap: 5px;
+
+    svg{
+      height: 19px;
+      width: 19px;
+    }
+
+    &::before{
+      content: "";
+      background-color: rgba(#fff, 0.05);
+      height: 30px;
+      width: calc(100% + 15px);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: -1;
+      border-radius: 5px;
+      display: none;
+    }
+
+    &:hover{
+      color: #F0F1F3;
+
+      &::before{
+        display: flex;
+      }
+    }
+
+    &--active{
+      color: #F0F1F3;
+
+      &::before{
+        display: flex;
+      }
+    }
+
+
+  }
+}

@@ -74,6 +74,7 @@ const table_value_type = (item, cell) => {
 
 const TableStack = ({
   data,
+  menu,
   columns,
   rowClick,
   onSearch,
@@ -81,6 +82,7 @@ const TableStack = ({
   tableName,
   selectAction,
   addRowButton,
+  tableSettings,
   loading = false,
   fullWidth = false,
 }) => {
@@ -175,8 +177,10 @@ const TableStack = ({
         })}
       >
         <Toolbar
+          menu={menu}
           onSearch={onSearch}
           asideMenu={asideMenu}
+          tableSettings={tableSettings}
           clearSelection={() => table.setRowSelection({})}
           selectAction={selectAction}
           addRowButton={addRowButton}
