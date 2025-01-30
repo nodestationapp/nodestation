@@ -43,14 +43,12 @@ const FormsContent = () => {
   return (
     <DashboardContentLayout noContentPadding breadcrumps={breadcrumps}>
       <TableStack
+        fullWidth
         data={forms}
         columns={columns}
-        fullWidth
         loading={loading}
-        // tableName={"nodestation_users"}
         selectAction={selectAction}
-        rowClick={(row) => navigate(`/forms/${row?.id}`)}
-        // asideMenu={asideMenu}
+        rowClick={(row) => navigate(`/forms/${row?.row?.id}`)}
         addRowButton={{
           label: "New",
           icon: <PlusIcon />,

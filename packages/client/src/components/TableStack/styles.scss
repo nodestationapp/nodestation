@@ -89,6 +89,24 @@ flex-direction: column;
       min-width: 100%;
       position: relative;
 
+      &--disabled{
+        .table-stack{
+          &__body{
+            &__col{
+              &:first-child{
+                span{
+                  opacity: 1;
+                }
+              }
+            
+              span{
+                opacity: 0.8;
+              }
+            }
+          }
+        }
+      }
+
 
       &:hover{
         cursor: pointer;

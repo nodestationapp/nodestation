@@ -74,6 +74,7 @@ const table_value_type = (item, cell) => {
 
 const TableStack = ({
   data,
+  meta,
   columns,
   rowClick,
   onSearch,
@@ -188,7 +189,6 @@ const TableStack = ({
           <div className={`${mainClass}__scroll__wrapper`}>
             <PerfectScrollbar
               options={{
-                // suppressScrollX: true,
                 suppressScrollY: true,
                 wheelPropagation: true,
               }}
@@ -241,11 +241,16 @@ const TableStack = ({
                   <NoItemsFound />
                 ) : (
                   <div className={`${mainClass}__body`}>
-                    {table.getRowModel().rows.map((row) => (
+                    {table.getRowModel().rows.map((row, index) => (
                       <div
                         key={row.id}
-                        className={`${mainClass}__body__row`}
-                        onClick={() => rowClick(row.original)}
+                        className={cx(`${mainClass}__body__row`, {
+                          [`${mainClass}__body__row--disabled`]:
+                            !!meta?.[index]?.disabled,
+                        })}
+                        onClick={() =>
+                          rowClick({ row: row.original, meta: meta?.[index] })
+                        }
                       >
                         {row.getVisibleCells().map((cell) => (
                           <div
