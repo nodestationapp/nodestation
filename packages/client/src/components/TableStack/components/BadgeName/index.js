@@ -3,7 +3,7 @@ import "./styles.scss";
 const mainClass = "table__user-badge-name";
 
 const BadgeName = ({ data }) => {
-  const count = parseInt(data?.count);
+  const count = parseInt(data?.unread_count);
 
   return (
     <div className={mainClass}>

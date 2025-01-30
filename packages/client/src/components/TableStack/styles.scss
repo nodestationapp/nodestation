@@ -33,12 +33,15 @@ flex-direction: column;
       height: 40px;
       min-width: 100px;
 
-      &:first-child{
-        min-width: 40px;
-      }
-
       &:last-child{
         border-radius: none;
+      }
+
+      &:first-child{
+        min-width: unset;
+        flex: 0 !important;
+        width: 40px !important;
+        border-right: 1px solid #33363D !important;
       }
     
       span{
@@ -86,9 +89,10 @@ flex-direction: column;
       min-width: 100%;
       position: relative;
 
+
       &:hover{
-        background-color: #262A30;
         cursor: pointer;
+        background-color: #262A30;
 
         .table-stack{
           &__body{
@@ -124,7 +128,33 @@ flex-direction: column;
       min-width: 100px;
 
       &:first-child{
-        min-width: 40px;
+        min-width: unset;
+        flex: 0 !important;
+        width: 40px !important;
+        overflow: unset;
+        border-right: 1px solid #33363D !important;
+      }
+    }
+  }
+
+  &--full-width{
+    .table-stack{
+      &__header{
+        &__col{
+          flex: 1;
+          border-right: none;
+
+          &__resizer{
+            display: none;
+          }
+        }
+      }
+
+      &__body{
+        &__col{
+          flex: 1;
+          border-right: none;
+        }
       }
     }
   }

@@ -1,6 +1,7 @@
 import "./styles.scss";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
+import cx from "classnames";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   useReactTable,
@@ -81,6 +82,7 @@ const TableStack = ({
   selectAction,
   addRowButton,
   loading = false,
+  fullWidth = false,
 }) => {
   const { preferences } = useOrganization();
   const [checkedRows, setCheckedRows] = useState({});
@@ -94,7 +96,6 @@ const TableStack = ({
     () => [
       {
         id: "select",
-        size: 40,
         header: ({ table }) => (
           <Checkbox
             onClick={(e) => e.stopPropagation()}
@@ -130,6 +131,7 @@ const TableStack = ({
       rowSelection: checkedRows,
     },
     enableRowSelection: true,
+    enableColumnResizing: !!!fullWidth,
     columns: formatted_columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -167,7 +169,11 @@ const TableStack = ({
 
   return (
     <>
-      <div className={mainClass}>
+      <div
+        className={cx(mainClass, {
+          [`${mainClass}--full-width`]: !!fullWidth,
+        })}
+      >
         <Toolbar
           onSearch={onSearch}
           asideMenu={asideMenu}
@@ -182,6 +188,7 @@ const TableStack = ({
           <div className={`${mainClass}__scroll__wrapper`}>
             <PerfectScrollbar
               options={{
+                // suppressScrollX: true,
                 suppressScrollY: true,
                 wheelPropagation: true,
               }}
