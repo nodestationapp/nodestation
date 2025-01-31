@@ -57,7 +57,9 @@ const EmailContentEditor = ({ id, onClose, setId }) => {
             onClose={onClose}
             loading={isSubmitting}
             submit_disabled={!!!dirty}
-            header_aside={<IdViewer id={selected_email?.id} />}
+            header_aside={
+              !!selected_email?.id ? <IdViewer id={selected_email?.id} /> : null
+            }
             submit_label={
               <>
                 Save
