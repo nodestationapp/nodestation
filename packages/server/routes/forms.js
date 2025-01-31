@@ -18,10 +18,10 @@ router
   .get(authMiddleware(["admin"]), getAllForms)
   .post(authMiddleware(["admin"]), createForm)
   .delete(authMiddleware(["admin"]), deleteForm);
-router
-  .route("/entry/:id")
-  .put(authMiddleware(["admin"]), entryUpdateForm)
-  .delete(authMiddleware(["admin"]), deleteEntryForm);
+
+router.route("/entries").delete(authMiddleware(["admin"]), deleteEntryForm);
+
+router.route("/entry/:id").put(authMiddleware(["admin"]), entryUpdateForm);
 router
   .route("/:id")
   .get(authMiddleware(["admin"]), getForm)

@@ -7,34 +7,28 @@ import RequestsModal from "components/RequestsModal";
 import IconButtonMenu from "components/IconButtonMenu";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
-import ArchiveFormModal from "page_components/forms/components/ArchiveFormModal";
 import DeleteIncomeFormModal from "page_components/forms/components/DeleteIncomeFormModal";
 
 import { useForm } from "context/client/form";
+import { useTableWrapper } from "context/client/table-wrapper";
 
 import getHost from "libs/helpers/getHost";
 
 import {
-  PaperAirplaneIcon,
   TrashIcon,
-  ArchiveBoxIcon,
+  EnvelopeIcon,
   Cog6ToothIcon,
+  ArchiveBoxIcon,
+  EnvelopeOpenIcon,
+  PaperAirplaneIcon,
   EllipsisHorizontalIcon,
+  ArchiveBoxArrowDownIcon,
 } from "@heroicons/react/24/outline";
 
 const FormContentWrapper = () => {
-  // const { setFormsCount } = useApp();
-  const {
-    data,
-    // updateIncomeForm,
-    loading,
-    readHandler,
-    archived,
-    // setChecked
-  } = useForm();
+  const { data, loading, readHandler, archived } = useForm();
 
   const [preview_modal, setPreviewModal] = useState(false);
-  const [archive_modal, setArchiveModal] = useState(false);
 
   const form = data?.form;
   const incoming = data?.incoming;
@@ -82,52 +76,6 @@ const FormContentWrapper = () => {
     },
   ];
 
-  // const Actions = ({ item }) => (
-  //   <>
-  //     <Tooltip text={!!item?.is_read ? "Mark as unread" : "Mark as read"}>
-  //       <IconButton
-  //         onClick={(e) => {
-  //           e.stopPropagation();
-  //           readHandler(item?.id, item?.is_read);
-  //         }}
-  //         icon={
-  //           !!item?.is_read ? (
-  //             <EnvelopeIcon color="#F0F1F3" />
-  //           ) : (
-  //             <EnvelopeOpenIcon color="#F0F1F3" />
-  //           )
-  //         }
-  //       />
-  //     </Tooltip>
-  //     <Tooltip text={!!item?.archived ? "Move to incoming" : "Move to archive"}>
-  //       <IconButton
-  //         icon={
-  //           !!item?.archived ? (
-  //             <ArchiveBoxIcon color="#F0F1F3" />
-  //           ) : (
-  //             <ArchiveBoxArrowDownIcon color="#F0F1F3" />
-  //           )
-  //         }
-  //         onClick={(e) => {
-  //           e.stopPropagation();
-  //           updateIncomeForm(item?.id, {
-  //             archived: !!item?.archived ? false : true,
-  //           });
-  //         }}
-  //       />
-  //     </Tooltip>
-  //     <Tooltip text={"Delete"}>
-  //       <IconButton
-  //         icon={<TrashIcon color="#FF3636" />}
-  //         onClick={(e) => {
-  //           e.stopPropagation();
-  //           setArchiveModal(item);
-  //         }}
-  //       />
-  //     </Tooltip>
-  //   </>
-  // );
-
   return (
     <>
       <TableStack
@@ -137,15 +85,13 @@ const FormContentWrapper = () => {
         loading={loading}
         menu={table_menu}
         rowClick={(row) => setPreviewModal(row)}
-        data={incoming?.map((item) => item?.data)}
+        data={incoming?.map((item) => ({
+          id: item?.id,
+          archived: item?.archived,
+          is_read: item?.is_read,
+          ...item?.data,
+        }))}
       />
-      {!!archive_modal && (
-        <DeleteIncomeFormModal
-          type="list"
-          data={archive_modal}
-          onClose={() => setArchiveModal(false)}
-        />
-      )}
       {!!preview_modal && (
         <PreviewModal
           // name={preview_modal?.name}
@@ -159,13 +105,28 @@ const FormContentWrapper = () => {
   );
 };
 
+const checkIsReadValue = (rows) => {
+  let currentIsRead = null;
+  const firstValue = rows[0]?.original?.is_read;
+  const allSame = rows?.every((item) => item.original?.is_read === firstValue);
+
+  if (!!allSame) {
+    currentIsRead = !!firstValue;
+  }
+
+  return currentIsRead;
+};
+
 const FormContent = () => {
-  const { data, id, loading, archived } = useForm();
+  const { table, selectedRows } = useTableWrapper();
+  const { data, id, loading, archived, updateIncomeForm } = useForm();
 
   const [archive_modal, setArchiveModal] = useState(false);
   const [request_modal, setRequestModal] = useState(false);
 
   const form = data?.form;
+
+  const isReadSelected = checkIsReadValue(selectedRows || []);
 
   const breadcrumps = [
     {
@@ -226,13 +187,69 @@ const FormContent = () => {
     ],
     selectAction: [
       {
-        icon: <ArchiveBoxIcon color="#F0F1F3" />,
+        icon: !!isReadSelected ? (
+          <EnvelopeIcon color="#F0F1F3" />
+        ) : isReadSelected === null ? null : (
+          <EnvelopeOpenIcon color="#F0F1F3" />
+        ),
+        // icon: !!is_read ? (
+        //   <EnvelopeIcon color="#F0F1F3" />
+        // ) : (
+        //   <EnvelopeOpenIcon color="#F0F1F3" />
+        // ),
+        onClick: (row) => onReadHandler(row),
+      },
+      {
+        icon: !!archived ? (
+          <ArchiveBoxIcon color="#F0F1F3" />
+        ) : (
+          <ArchiveBoxArrowDownIcon color="#F0F1F3" />
+        ),
+        onClick: (row) => onArchiveHandler(row),
       },
       {
         icon: <TrashIcon color="#FF3636" />,
         onClick: (row) => setArchiveModal(row),
       },
     ],
+  };
+
+  const onArchiveHandler = async (rows) => {
+    try {
+      let nextArchived;
+      const firstValue = rows[0].original?.archived;
+      const allSame = rows.every(
+        (item) => item.original?.archived === firstValue
+      );
+
+      if (!!allSame) {
+        nextArchived = !!!firstValue;
+      }
+
+      for await (const row of rows) {
+        updateIncomeForm(row?.original?.id, {
+          archived: nextArchived,
+        });
+      }
+
+      table.setRowSelection({});
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const onReadHandler = async (rows) => {
+    try {
+      for await (const row of rows) {
+        updateIncomeForm(row?.original?.id, {
+          is_read: !!!isReadSelected,
+        });
+      }
+
+      table.setRowSelection({});
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -248,7 +265,8 @@ const FormContent = () => {
         />
       </DashboardContentLayout>
       {!!archive_modal && (
-        <ArchiveFormModal
+        <DeleteIncomeFormModal
+          type="list"
           data={archive_modal}
           onClose={() => setArchiveModal(false)}
         />

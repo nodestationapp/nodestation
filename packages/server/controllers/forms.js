@@ -166,14 +166,10 @@ const entryUpdateForm = async (req, res) => {
 };
 
 const deleteEntryForm = async (req, res) => {
-  const { entry_ids } = req?.params;
-
-  console.log(entry_ids);
+  const { entry_ids } = req?.body;
 
   try {
-    // await knex("nodestation_forms")
-    //   .where({ id: parseInt(id) })
-    //   .del();
+    await knex("nodestation_forms").whereIn("id", entry_ids).del();
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

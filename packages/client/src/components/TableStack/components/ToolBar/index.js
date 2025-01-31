@@ -18,14 +18,17 @@ const Toolbar = ({ data }) => {
             <div className={`${mainClass}__main__select-action`}>
               <span className="small">Selected {selectedRows?.length}</span>
               <div className={`${mainClass}__main__select-action__options`}>
-                {data?.selectAction?.map((item, index) => (
-                  <IconButton
-                    key={index}
-                    size="small"
-                    icon={item?.icon}
-                    onClick={() => item?.onClick(selectedRows)}
-                  />
-                ))}
+                {data?.selectAction?.map((item, index) => {
+                  if (!!!item?.icon) return null;
+                  return (
+                    <IconButton
+                      key={index}
+                      size="small"
+                      icon={item?.icon}
+                      onClick={() => item?.onClick(selectedRows)}
+                    />
+                  );
+                })}
               </div>
             </div>
           ) : (

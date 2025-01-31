@@ -5,15 +5,11 @@ import Modal from "components/Modal";
 
 import api from "libs/api";
 import { useForm } from "context/client/form";
+import { useTableWrapper } from "context/client/table-wrapper";
 
-const DeleteIncomeFormModal = ({
-  data,
-  type,
-  name,
-  onClose,
-  previewModalClose,
-}) => {
-  const { archived } = useForm();
+const DeleteIncomeFormModal = ({ data, type, onClose, previewModalClose }) => {
+  const { id, archived } = useForm();
+  const { table } = useTableWrapper();
   const queryClient = useQueryClient();
 
   const [loading, setLoading] = useState(false);
@@ -22,15 +18,21 @@ const DeleteIncomeFormModal = ({
     setLoading(true);
 
     try {
-      await api.delete(`/forms/entry/${data?.id}`);
+      const entry_ids = data?.map((item) => item?.original?.id);
+      await api.delete(`/forms/entries`, {
+        data: {
+          entry_ids,
+        },
+      });
 
       queryClient.refetchQueries({
-        queryKey: ["forms", data?.form_id, archived],
+        queryKey: ["forms", id, archived],
       });
 
       if (type !== "list") {
         previewModalClose();
       } else {
+        table.setRowSelection({});
         onClose();
       }
     } catch (err) {
@@ -49,7 +51,8 @@ const DeleteIncomeFormModal = ({
       submit_label="Delete item"
     >
       <span>
-        Are you sure you want to delete the <strong>{name}</strong> item?
+        Are you sure you want to delete <strong>{data?.length} selected</strong>{" "}
+        items?
       </span>
     </Modal>
   );
