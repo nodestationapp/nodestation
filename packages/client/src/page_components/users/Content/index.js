@@ -81,7 +81,10 @@ const UsersContent = () => {
         icon={<Cog6ToothIcon />}
         href={`/authentication/settings`}
       />,
-      <Button icon={<PlusIcon />} onClick={() => setEditModal(new_user_schema)}>
+      <Button
+        icon={<PlusIcon />}
+        onClick={() => setEditModal({ row: new_user_schema })}
+      >
         New
       </Button>,
     ],
@@ -106,7 +109,7 @@ const UsersContent = () => {
         />
         {!!edit_modal && (
           <UserProfileModal
-            data={edit_modal}
+            data={edit_modal?.row}
             onClose={() => setEditModal(false)}
           />
         )}
