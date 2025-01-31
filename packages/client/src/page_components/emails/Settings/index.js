@@ -35,22 +35,24 @@ const settings_data = [
 const EmailContentSettings = () => {
   const { email_settings } = useEmails();
 
-  const submenu_data = [
-    {
-      label: "Templates",
-      href: "/emails",
-    },
-    {
-      label: "Settings",
-      href: "/emails/settings",
-      icon: !!!email_settings?.active ? (
-        <ExclamationCircleIcon color="#FFD00D" />
-      ) : null,
-    },
-  ];
+  const toolbar = {
+    menu: [
+      {
+        label: "Templates",
+        href: "/emails",
+      },
+      {
+        label: "Settings",
+        href: "/emails/settings",
+        icon: !!!email_settings?.active ? (
+          <ExclamationCircleIcon color="#FFD00D" />
+        ) : null,
+      },
+    ],
+  };
 
   return (
-    <DashboardContentLayout breadcrumps={breadcrumps} submenu={submenu_data}>
+    <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
       <div className="email-content__settings">
         <SectionHeader title="Settings" subtitle="Manage your email settings" />
         <SettingsForm data={settings_data} />

@@ -6,7 +6,7 @@ import AsideModal from "components/AsideModal";
 import tableInputRender from "libs/tableInputRender";
 
 import { useTable } from "context/client/table";
-import validationSchema from "libs/validationSchema";
+// import validationSchema from "libs/validationSchema";
 
 const mapDefaults = (schema, value, is_update) => {
   value = value === null ? null : value;
@@ -60,12 +60,12 @@ const TableContentEditor = ({ data = {}, onClose }) => {
     ])
   );
 
-  const validation = validationSchema(table_data?.table?.fields);
+  // const validation = validationSchema(table_data?.table?.fields);
 
   return (
     <Formik
       initialValues={formatted_data}
-      validationSchema={validation}
+      // validationSchema={validation}
       onSubmit={(values, { setSubmitting }) => {
         onSubmit(values, setSubmitting);
       }}

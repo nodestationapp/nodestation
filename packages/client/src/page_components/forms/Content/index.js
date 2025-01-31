@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+import Button from "components/Button";
 import TableStack from "components/TableStack";
 import ArchiveFormModal from "../components/ArchiveFormModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
@@ -32,30 +33,35 @@ const FormsContent = () => {
     },
   ];
 
-  const selectAction = [
-    {
-      icon: <TrashIcon color="#FF3636" />,
-      // onClick: (rows, clearSelection) =>
-      //   setArchiveUserModal({ rows, clearSelection }),
-    },
-  ];
+  const toolbar = {
+    action: [
+      <Button
+        icon={<PlusIcon />}
+        onClick={() => navigate(`/forms/new/settings`)}
+      >
+        New
+      </Button>,
+    ],
+    selectAction: [
+      {
+        icon: <TrashIcon color="#FF3636" />,
+        onClick: (rows) => setArchiveModal(rows),
+      },
+    ],
+  };
 
   return (
-    <DashboardContentLayout noContentPadding breadcrumps={breadcrumps}>
+    <DashboardContentLayout
+      noContentPadding
+      toolbar={toolbar}
+      breadcrumps={breadcrumps}
+    >
       <TableStack
+        fullWidth
         data={forms}
         columns={columns}
-        fullWidth
         loading={loading}
-        // tableName={"nodestation_users"}
-        selectAction={selectAction}
-        rowClick={(row) => navigate(`/forms/${row?.id}`)}
-        // asideMenu={asideMenu}
-        addRowButton={{
-          label: "New",
-          icon: <PlusIcon />,
-          onClick: () => navigate(`/forms/new/settings`),
-        }}
+        rowClick={(row) => navigate(`/forms/${row?.row?.id}`)}
       />
       {!!archive_modal && (
         <ArchiveFormModal

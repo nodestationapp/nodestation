@@ -1,6 +1,9 @@
 import { useState } from "react";
 
+import Button from "components/Button";
+import IconButton from "components/IconButton";
 import TableStack from "components/TableStack";
+import IconButtonMenu from "components/IconButtonMenu";
 import ArchiveTableModal from "../components/ArchiveTableModal";
 import TableContentEditor from "./components/TableContentEditor";
 import ArchiveTableEntryModal from "../components/ArchiveTableEntryModal";
@@ -12,6 +15,8 @@ import {
   PlusIcon,
   TrashIcon,
   CircleStackIcon,
+  Cog6ToothIcon,
+  EllipsisHorizontalIcon,
 } from "@heroicons/react/24/outline";
 
 const FormContent = () => {
@@ -34,13 +39,6 @@ const FormContent = () => {
     },
   ];
 
-  const submenu_data = [
-    {
-      label: "Entries",
-      href: `/tables/${id}`,
-    },
-  ];
-
   const columns =
     table?.fields?.map((item) => ({
       key: item?.type,
@@ -48,14 +46,6 @@ const FormContent = () => {
       type: item?.type,
       slug: item?.slug,
     })) || [];
-
-  const selectAction = [
-    {
-      icon: <TrashIcon color="#FF3636" />,
-      onClick: (rows, clearSelection) =>
-        setArchiveEntryModal({ rows, clearSelection }),
-    },
-  ];
 
   let formatted_fields = columns?.filter((item) => item?.slug !== "id");
 
@@ -73,26 +63,49 @@ const FormContent = () => {
     },
   ];
 
+  const toolbar = {
+    menu: [
+      {
+        label: "Entries",
+        href: `/tables/${id}`,
+      },
+    ],
+    action: [
+      <IconButton
+        size="small"
+        icon={<Cog6ToothIcon />}
+        href={`/tables/${id}/settings`}
+      />,
+      <IconButtonMenu icon={<EllipsisHorizontalIcon />} data={asideMenu} />,
+      <Button
+        icon={<PlusIcon />}
+        onClick={() => setContentEditor(new_entry_schema)}
+      >
+        New
+      </Button>,
+    ],
+    selectAction: [
+      {
+        icon: <TrashIcon color="#FF3636" />,
+        onClick: (rows) => setArchiveEntryModal(rows),
+      },
+    ],
+  };
+
   return (
     <>
-      <DashboardContentLayout noContentPadding breadcrumps={breadcrumps}>
+      <DashboardContentLayout
+        noContentPadding
+        toolbar={toolbar}
+        breadcrumps={breadcrumps}
+      >
         <TableStack
           key={id}
-          menu={!!id ? submenu_data : []}
           data={entries}
           loading={loading}
           columns={columns}
-          onSearch={() => {}}
           tableName={table?.slug}
-          selectAction={selectAction}
           rowClick={(row) => setContentEditor(row)}
-          tableSettings={`/tables/${id}/settings`}
-          asideMenu={asideMenu}
-          addRowButton={{
-            label: "New",
-            icon: <PlusIcon />,
-            onClick: () => setContentEditor(new_entry_schema),
-          }}
         />
         {!!content_editor && (
           <TableContentEditor

@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import Table from "components/Table";
-import Tooltip from "components/Tooltip";
 import IconButton from "components/IconButton";
+import TableStack from "components/TableStack";
 import PreviewModal from "./components/PreviewModal";
 import RequestsModal from "components/RequestsModal";
+import IconButtonMenu from "components/IconButtonMenu";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import ArchiveFormModal from "page_components/forms/components/ArchiveFormModal";
@@ -17,20 +17,19 @@ import getHost from "libs/helpers/getHost";
 import {
   PaperAirplaneIcon,
   TrashIcon,
-  ArchiveBoxArrowDownIcon,
   ArchiveBoxIcon,
-  EnvelopeOpenIcon,
-  EnvelopeIcon,
+  Cog6ToothIcon,
+  EllipsisHorizontalIcon,
 } from "@heroicons/react/24/outline";
-import { CodeBracketIcon } from "@heroicons/react/24/solid";
 
 const FormContentWrapper = () => {
   // const { setFormsCount } = useApp();
   const {
     data,
-    updateIncomeForm,
+    // updateIncomeForm,
     loading,
     readHandler,
+    archived,
     // setChecked
   } = useForm();
 
@@ -58,86 +57,87 @@ const FormContentWrapper = () => {
     },
   ];
 
-  const Actions = ({ item }) => (
-    <>
-      <Tooltip text={!!item?.is_read ? "Mark as unread" : "Mark as read"}>
-        <IconButton
-          onClick={(e) => {
-            e.stopPropagation();
-            readHandler(item?.id, item?.is_read);
-          }}
-          icon={
-            !!item?.is_read ? (
-              <EnvelopeIcon color="#F0F1F3" />
-            ) : (
-              <EnvelopeOpenIcon color="#F0F1F3" />
-            )
-          }
-        />
-      </Tooltip>
-      <Tooltip text={!!item?.archived ? "Move to incoming" : "Move to archive"}>
-        <IconButton
-          icon={
-            !!item?.archived ? (
-              <ArchiveBoxIcon color="#F0F1F3" />
-            ) : (
-              <ArchiveBoxArrowDownIcon color="#F0F1F3" />
-            )
-          }
-          onClick={(e) => {
-            e.stopPropagation();
-            updateIncomeForm(item?.id, {
-              archived: !!item?.archived ? false : true,
-            });
-          }}
-        />
-      </Tooltip>
-      <Tooltip text={"Delete"}>
-        <IconButton
-          icon={<TrashIcon color="#FF3636" />}
-          onClick={(e) => {
-            e.stopPropagation();
-            setArchiveModal(item);
-          }}
-        />
-      </Tooltip>
-    </>
-  );
+  const columns =
+    fields?.map((item) => ({
+      key: item?.type,
+      value: item?.value,
+      type: item?.type,
+      slug: item?.slug,
+    })) || [];
 
-  const table_data = {
-    keys: !!fields ? [...fields] : null,
-    items: incoming?.map((item) => ({
-      id: item?.id,
-      onclick: () => setPreviewModal(item),
-      actions: <Actions item={item} />,
-      disabled: !!item?.is_read,
-      data: fields?.map((element, index) => {
-        return {
-          key: fields?.[index]?.type,
-          type: index === 0 ? "new_message_name" : element?.type,
-          value:
-            index === 0
-              ? {
-                  value: item?.data?.[element?.slug] || "-",
-                  is_read: !!item?.is_read,
-                }
-              : item?.[element?.slug] || item?.data?.[element?.slug] || "-",
-        };
-      }),
-    })),
-  };
+  const meta = incoming?.map((item) => ({
+    id: item?.id,
+    disabled: item?.is_read,
+    created_at: item?.created_at,
+  }));
 
-  //TODO
+  const table_menu = [
+    {
+      label: "Incoming",
+      href: `/forms/${form?.id}`,
+    },
+    {
+      label: "Archived",
+      href: `/forms/${form?.id}/archived`,
+    },
+  ];
+
+  // const Actions = ({ item }) => (
+  //   <>
+  //     <Tooltip text={!!item?.is_read ? "Mark as unread" : "Mark as read"}>
+  //       <IconButton
+  //         onClick={(e) => {
+  //           e.stopPropagation();
+  //           readHandler(item?.id, item?.is_read);
+  //         }}
+  //         icon={
+  //           !!item?.is_read ? (
+  //             <EnvelopeIcon color="#F0F1F3" />
+  //           ) : (
+  //             <EnvelopeOpenIcon color="#F0F1F3" />
+  //           )
+  //         }
+  //       />
+  //     </Tooltip>
+  //     <Tooltip text={!!item?.archived ? "Move to incoming" : "Move to archive"}>
+  //       <IconButton
+  //         icon={
+  //           !!item?.archived ? (
+  //             <ArchiveBoxIcon color="#F0F1F3" />
+  //           ) : (
+  //             <ArchiveBoxArrowDownIcon color="#F0F1F3" />
+  //           )
+  //         }
+  //         onClick={(e) => {
+  //           e.stopPropagation();
+  //           updateIncomeForm(item?.id, {
+  //             archived: !!item?.archived ? false : true,
+  //           });
+  //         }}
+  //       />
+  //     </Tooltip>
+  //     <Tooltip text={"Delete"}>
+  //       <IconButton
+  //         icon={<TrashIcon color="#FF3636" />}
+  //         onClick={(e) => {
+  //           e.stopPropagation();
+  //           setArchiveModal(item);
+  //         }}
+  //       />
+  //     </Tooltip>
+  //   </>
+  // );
 
   return (
     <>
-      <Table
-        // filters={true}
-        data={table_data}
+      <TableStack
+        key={archived}
+        meta={meta}
+        columns={columns}
         loading={loading}
-        toolbar={Actions}
-        hide_header={loading}
-        // checkChange={(e) => setChecked(e)}
+        menu={table_menu}
+        rowClick={(row) => setPreviewModal(row)}
+        data={incoming?.map((item) => item?.data)}
       />
       {!!archive_modal && (
         <DeleteIncomeFormModal
@@ -148,7 +148,7 @@ const FormContentWrapper = () => {
       )}
       {!!preview_modal && (
         <PreviewModal
-          name={preview_modal?.name}
+          // name={preview_modal?.name}
           data={preview_modal}
           fields={form?.fields}
           readHandler={readHandler}
@@ -166,21 +166,6 @@ const FormContent = () => {
   const [request_modal, setRequestModal] = useState(false);
 
   const form = data?.form;
-
-  const submenu_data = [
-    {
-      label: "Incoming",
-      href: `/forms/${id}`,
-    },
-    {
-      label: "Archived",
-      href: `/forms/${id}/archived`,
-    },
-    {
-      label: "Settings",
-      href: `/forms/${id}/settings`,
-    },
-  ];
 
   const breadcrumps = [
     {
@@ -211,28 +196,50 @@ const FormContent = () => {
     },
   ];
 
+  const asideMenu = [
+    {
+      type: "select",
+      icon: <TrashIcon />,
+      label: "Delete",
+      onClick: () => setArchiveModal(form),
+    },
+  ];
+
+  const toolbar = {
+    menu: [
+      {
+        label: "Incoming",
+        href: `/forms/${id}`,
+      },
+      {
+        label: "Archived",
+        href: `/forms/${id}/archived`,
+      },
+    ],
+    action: [
+      <IconButton
+        size="small"
+        icon={<Cog6ToothIcon />}
+        href={`/forms/${id}/settings`}
+      />,
+      <IconButtonMenu icon={<EllipsisHorizontalIcon />} data={asideMenu} />,
+    ],
+    selectAction: [
+      {
+        icon: <ArchiveBoxIcon color="#F0F1F3" />,
+      },
+      {
+        icon: <TrashIcon color="#FF3636" />,
+      },
+    ],
+  };
+
   return (
     <>
       <DashboardContentLayout
+        noContentPadding
+        toolbar={toolbar}
         breadcrumps={breadcrumps}
-        submenu={!!id ? submenu_data : []}
-        action={
-          <>
-            {!!form?.id && (
-              <>
-                <IconButton
-                  onClick={() => setRequestModal(true)}
-                  icon={<CodeBracketIcon color="#F0F1F3" />}
-                />
-                <span className="separetor" />
-                <IconButton
-                  onClick={() => setArchiveModal(form)}
-                  icon={<TrashIcon color="#FF3636" />}
-                />
-              </>
-            )}
-          </>
-        }
       >
         <FormContentWrapper
           archive_modal={archive_modal}

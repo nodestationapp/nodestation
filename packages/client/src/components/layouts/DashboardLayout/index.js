@@ -8,6 +8,7 @@ import ToolBar from "./components/ToolBar";
 import AddTableModal from "./components/AddTableModal";
 
 import { useOrganization } from "context/organization";
+import TableWrapperProvider from "context/client/table-wrapper";
 
 const mainClass = "dashboard-layout";
 
@@ -16,7 +17,7 @@ const DashboardLayout = () => {
   const [mobile_sidebar_open, setMobileSidebarOpen] = useState(false);
 
   return (
-    <>
+    <TableWrapperProvider>
       <div className={mainClass}>
         <div className={`${mainClass}__wrapper`}>
           <Sidebar
@@ -32,7 +33,7 @@ const DashboardLayout = () => {
       {add_table_modal && (
         <AddTableModal onClose={() => setAddTableModal(false)} />
       )}
-    </>
+    </TableWrapperProvider>
   );
 };
 

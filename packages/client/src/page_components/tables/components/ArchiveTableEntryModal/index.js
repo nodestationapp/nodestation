@@ -3,19 +3,21 @@ import { useState } from "react";
 import Modal from "components/Modal";
 
 import { useTable } from "context/client/table";
+import { useTableWrapper } from "context/client/table-wrapper";
 
 const ArchiveTableEntryModal = ({ data, onClose }) => {
-  const [loading, setLoading] = useState(false);
+  const { table } = useTableWrapper();
   const { deleteTableEntries } = useTable();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
     setLoading(true);
 
-    const items = data?.rows?.map((item) => item?.original?.id);
+    const items = data?.map((item) => item?.original?.id);
 
     try {
       await deleteTableEntries(items);
-      data?.clearSelection();
+      table.setRowSelection({});
 
       onClose();
     } catch (err) {
@@ -34,8 +36,8 @@ const ArchiveTableEntryModal = ({ data, onClose }) => {
       submit_label="Delete"
     >
       <span>
-        Are you sure you want to delete{" "}
-        <strong>{data?.rows?.length} selected</strong> items?
+        Are you sure you want to delete <strong>{data?.length} selected</strong>{" "}
+        items?
       </span>
     </Modal>
   );

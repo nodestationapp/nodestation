@@ -1,34 +1,25 @@
-// import moment from "moment";
-
 import { useState } from "react";
 
-// import Table from "components/Table";
-// import Button from "components/Button";
-// import IconButton from "components/IconButton";
-// import RequestsModal from "components/RequestsModal";
+import Button from "components/Button";
 import TableStack from "components/TableStack";
+import IconButton from "components/IconButton";
 import UserProfileModal from "../components/UserProfileModal";
+import ArchiveUserModal from "../components/ArchiveUserModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
-// import getHost from "libs/helpers/getHost";
 import { useUsers } from "context/client/users";
 
 import {
   PlusIcon,
   UsersIcon,
-  // CodeBracketIcon,
   TrashIcon,
+  Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
-import ArchiveUserModal from "../components/ArchiveUserModal";
 
-const submenu_data = [
+const table_menu = [
   {
     label: "Users",
     href: "/authentication",
-  },
-  {
-    label: "Settings",
-    href: "/authentication/settings",
   },
 ];
 
@@ -44,33 +35,9 @@ const UsersContent = () => {
   const [edit_modal, setEditModal] = useState(false);
   const [archive_user_modal, setArchiveUserModal] = useState(false);
 
-  // const host = getHost();
-
   let formatted_fields = settings?.fields?.filter(
     (item) => item?.slug !== "created_at" && item?.slug !== "id"
   );
-
-  // const requests_modal_data = [
-  //   {
-  //     label: "Register user",
-  //     url: `${host}/api/system/auth/register`,
-  //     body: formatted_fields,
-  //   },
-  //   {
-  //     label: "Login user",
-  //     url: `${host}/api/system/auth/login`,
-  //     body: [
-  //       {
-  //         slug: "email",
-  //         type: "email",
-  //       },
-  //       {
-  //         slug: "password",
-  //         type: "password",
-  //       },
-  //     ],
-  //   },
-  // ];
 
   const new_user_schema = formatted_fields?.reduce((obj, item) => {
     obj[item.slug] = null;
@@ -101,35 +68,45 @@ const UsersContent = () => {
     })) || []),
   ];
 
-  const selectAction = [
-    {
-      icon: <TrashIcon color="#FF3636" />,
-      onClick: (rows, clearSelection) =>
-        setArchiveUserModal({ rows, clearSelection }),
-    },
-  ];
+  const toolbar = {
+    menu: [
+      {
+        label: "Users",
+        href: "/authentication",
+      },
+    ],
+    action: [
+      <IconButton
+        size="small"
+        icon={<Cog6ToothIcon />}
+        href={`/authentication/settings`}
+      />,
+      <Button icon={<PlusIcon />} onClick={() => setEditModal(new_user_schema)}>
+        New
+      </Button>,
+    ],
+    selectAction: [
+      {
+        icon: <TrashIcon color="#FF3636" />,
+        onClick: (rows) => setArchiveUserModal(rows),
+      },
+    ],
+  };
 
   return (
     <>
       <DashboardContentLayout
         noContentPadding
+        toolbar={toolbar}
         breadcrumps={breadcrumps}
-        submenu={submenu_data}
       >
         <TableStack
           data={users}
+          menu={table_menu}
           columns={columns}
           loading={loading}
-          onSearch={() => {}}
           tableName={"nodestation_users"}
-          selectAction={selectAction}
           rowClick={(row) => setEditModal(row)}
-          // asideMenu={asideMenu}
-          addRowButton={{
-            label: "New",
-            icon: <PlusIcon />,
-            onClick: () => setEditModal(new_user_schema),
-          }}
         />
         {!!edit_modal && (
           <UserProfileModal
@@ -144,12 +121,6 @@ const UsersContent = () => {
           onClose={() => setArchiveUserModal(false)}
         />
       )}
-      {/* {request_modal && (
-        <RequestsModal
-          data={requests_modal_data}
-          onClose={() => setRequestModal(null)}
-        />
-      )} */}
     </>
   );
 };

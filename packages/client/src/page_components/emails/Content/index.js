@@ -31,20 +31,6 @@ const EmailsContent = () => {
 
   const [email_editor, setEmailEditor] = useState(null);
 
-  const submenu_data = [
-    {
-      label: "Templates",
-      href: "/emails",
-    },
-    {
-      label: "Settings",
-      href: "/emails/settings",
-      icon: !!!email_settings?.active ? (
-        <ExclamationCircleIcon color="#FFD00D" />
-      ) : null,
-    },
-  ];
-
   const fields = [
     {
       key: "name",
@@ -85,16 +71,29 @@ const EmailsContent = () => {
     }),
   };
 
+  const toolbar = {
+    menu: [
+      {
+        label: "Templates",
+        href: "/emails",
+      },
+      {
+        label: "Settings",
+        href: "/emails/settings",
+        icon: !!!email_settings?.active ? (
+          <ExclamationCircleIcon color="#FFD00D" />
+        ) : null,
+      },
+    ],
+    action: [
+      <Button onClick={() => setEmailEditor("new")} icon={<PlusIcon />}>
+        New
+      </Button>,
+    ],
+  };
+
   return (
-    <DashboardContentLayout
-      breadcrumps={breadcrumps}
-      action={
-        <Button onClick={() => setEmailEditor("new")} icon={<PlusIcon />}>
-          Add template
-        </Button>
-      }
-      submenu={submenu_data}
-    >
+    <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
       {!!!email_settings?.active && (
         <Alert
           text="To send email messages, you must first configure your settings."

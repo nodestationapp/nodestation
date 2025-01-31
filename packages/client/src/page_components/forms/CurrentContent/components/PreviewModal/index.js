@@ -71,8 +71,8 @@ const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
 
   useEffect(() => {
     (async function () {
-      if (!!data?.is_read) return;
-      readHandler(data?.id, 0);
+      if (!!data?.meta?.disabled) return;
+      readHandler(data?.meta?.id, 0);
     })();
     // eslint-disable-next-line
   }, []);
@@ -81,7 +81,7 @@ const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
     setLoading(true);
 
     try {
-      await api.delete(`/forms/${data?.id}`);
+      await api.delete(`/forms/${data?.meta?.id}`);
       if (type === "list") {
         queryClient.refetchQueries({ queryKey: ["client_forms"] });
 
@@ -97,8 +97,8 @@ const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
 
   const moveToArchiveHandler = async () => {
     try {
-      await updateIncomeForm(data?.id, {
-        archived: !!data?.archived ? false : true,
+      await updateIncomeForm(data?.meta?.id, {
+        archived: !!data?.meta?.disabled ? false : true,
       });
       onClose();
     } catch (err) {
@@ -139,7 +139,7 @@ const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
       >
         <div className={mainClass}>
           {fields?.map((item, index) => {
-            if (!!!data?.data?.[item?.slug]) return null;
+            if (!!!data?.row?.[item?.slug]) return null;
 
             return (
               <div
@@ -150,13 +150,13 @@ const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
                 })}
               >
                 <span>{item?.name}:</span>
-                {value_render(item?.type, data?.data?.[item?.slug])}
+                {value_render(item?.type, data?.row?.[item?.slug])}
               </div>
             );
           })}
           <div className={`${mainClass}__item`}>
             <span>Created at:</span>
-            <span>{moment(data?.created_at).format("lll")}</span>
+            <span>{moment(data?.meta?.created_at).format("lll")}</span>
           </div>
         </div>
       </AsideModal>

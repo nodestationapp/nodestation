@@ -1,19 +1,18 @@
 import "./styles.scss";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
-import cx from "classnames";
-import React, { useEffect, useMemo, useState } from "react";
 import {
   useReactTable,
   getCoreRowModel,
   flexRender,
 } from "@tanstack/react-table";
+import cx from "classnames";
 import PerfectScrollbar from "react-perfect-scrollbar";
+import React, { useEffect, useMemo, useState } from "react";
 
 import Date from "./components/Date";
 import Media from "./components/Media";
 import Level from "./components/Level";
-import Toolbar from "./components/ToolBar";
 import Boolean from "./components/Boolean";
 import LogSource from "./components/LogSource";
 import StatusChip from "components/StatusChip";
@@ -29,7 +28,9 @@ import NewMessageName from "./components/NewMessageName";
 import EmailSparklines from "./components/EmailSparklines";
 
 import api from "libs/api";
+
 import { useOrganization } from "context/organization";
+import { useTableWrapper } from "context/client/table-wrapper";
 
 const mainClass = "table-stack";
 
@@ -74,21 +75,17 @@ const table_value_type = (item, cell) => {
 
 const TableStack = ({
   data,
-  menu,
+  meta,
   columns,
   rowClick,
-  onSearch,
-  asideMenu,
   tableName,
-  selectAction,
-  addRowButton,
-  tableSettings,
   loading = false,
   fullWidth = false,
 }) => {
   const { preferences } = useOrganization();
-  const [checkedRows, setCheckedRows] = useState({});
   const [isResizing, setIsResizing] = useState(false);
+  const [tempSelectedRows, setTempSelectedRows] = useState(false);
+  const { setTable, setSelectedRows } = useTableWrapper();
 
   const table_preferences = preferences?.find(
     (item) => item?.type === `tables_${tableName}`
@@ -130,7 +127,7 @@ const TableStack = ({
   const table = useReactTable({
     data: data || [],
     state: {
-      rowSelection: checkedRows,
+      rowSelection: tempSelectedRows,
     },
     enableRowSelection: true,
     enableColumnResizing: !!!fullWidth,
@@ -138,7 +135,7 @@ const TableStack = ({
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
     getCoreRowModel: getCoreRowModel(),
-    onRowSelectionChange: setCheckedRows,
+    onRowSelectionChange: setTempSelectedRows,
   });
 
   const saveTransaction = async () => {
@@ -164,6 +161,16 @@ const TableStack = ({
     // eslint-disable-next-line
   }, [isResizing]);
 
+  useEffect(() => {
+    setTable(table);
+    // eslint-disable-next-line
+  }, [table]);
+
+  useEffect(() => {
+    setSelectedRows(table?.getSelectedRowModel()?.rows);
+    // eslint-disable-next-line
+  }, [tempSelectedRows]);
+
   const handleMouseDown = (e, header) => {
     setIsResizing(true);
     header.getResizeHandler()(e);
@@ -176,23 +183,12 @@ const TableStack = ({
           [`${mainClass}--full-width`]: !!fullWidth,
         })}
       >
-        <Toolbar
-          menu={menu}
-          onSearch={onSearch}
-          asideMenu={asideMenu}
-          tableSettings={tableSettings}
-          clearSelection={() => table.setRowSelection({})}
-          selectAction={selectAction}
-          addRowButton={addRowButton}
-          selectedRows={table.getSelectedRowModel()?.rows}
-        />
         {!!loading ? (
           <TableSkeleton />
         ) : (
           <div className={`${mainClass}__scroll__wrapper`}>
             <PerfectScrollbar
               options={{
-                // suppressScrollX: true,
                 suppressScrollY: true,
                 wheelPropagation: true,
               }}
@@ -245,11 +241,16 @@ const TableStack = ({
                   <NoItemsFound />
                 ) : (
                   <div className={`${mainClass}__body`}>
-                    {table.getRowModel().rows.map((row) => (
+                    {table.getRowModel().rows.map((row, index) => (
                       <div
                         key={row.id}
-                        className={`${mainClass}__body__row`}
-                        onClick={() => rowClick(row.original)}
+                        className={cx(`${mainClass}__body__row`, {
+                          [`${mainClass}__body__row--disabled`]:
+                            !!meta?.[index]?.disabled,
+                        })}
+                        onClick={() =>
+                          rowClick({ row: row.original, meta: meta?.[index] })
+                        }
                       >
                         {row.getVisibleCells().map((cell) => (
                           <div
