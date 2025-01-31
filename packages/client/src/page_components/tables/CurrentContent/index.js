@@ -94,11 +94,7 @@ const FormContent = () => {
 
   return (
     <>
-      <DashboardContentLayout
-        noContentPadding
-        toolbar={toolbar}
-        breadcrumps={breadcrumps}
-      >
+      <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
         <TableStack
           key={id}
           data={entries}

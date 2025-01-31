@@ -254,11 +254,7 @@ const FormContent = () => {
 
   return (
     <>
-      <DashboardContentLayout
-        noContentPadding
-        toolbar={toolbar}
-        breadcrumps={breadcrumps}
-      >
+      <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
         <FormContentWrapper
           archive_modal={archive_modal}
           setArchiveModal={setArchiveModal}

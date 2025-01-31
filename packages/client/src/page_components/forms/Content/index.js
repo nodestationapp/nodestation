@@ -51,11 +51,7 @@ const FormsContent = () => {
   };
 
   return (
-    <DashboardContentLayout
-      noContentPadding
-      toolbar={toolbar}
-      breadcrumps={breadcrumps}
-    >
+    <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
       <TableStack
         fullWidth
         data={forms}

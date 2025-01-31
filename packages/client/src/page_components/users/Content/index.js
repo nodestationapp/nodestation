@@ -95,11 +95,7 @@ const UsersContent = () => {
 
   return (
     <>
-      <DashboardContentLayout
-        noContentPadding
-        toolbar={toolbar}
-        breadcrumps={breadcrumps}
-      >
+      <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
         <TableStack
           data={users}
           menu={table_menu}

@@ -42,8 +42,24 @@ const EmailCurrentSetting = () => {
     },
   ];
 
+  const toolbar = {
+    menu: [
+      {
+        label: "Templates",
+        href: "/emails",
+      },
+      // {
+      //   label: "Settings",
+      //   href: "/emails/settings",
+      //   icon: !!!email_settings?.active ? (
+      //     <ExclamationCircleIcon color="#FFD00D" />
+      //   ) : null,
+      // },
+    ],
+  };
+
   return (
-    <DashboardContentLayout breadcrumps={breadcrumps} submenu={submenu_data}>
+    <DashboardContentLayout breadcrumps={breadcrumps} toolbar={toolbar}>
       <div className="email-current__settings">
         <Card title="SMTP settings">
           <SmtpSettings />

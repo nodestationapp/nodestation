@@ -4,10 +4,7 @@ import SettingsForm from "components/SettingsForm";
 import SectionHeader from "components/SectionHeader";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
-import { useEmails } from "context/client/emails";
-
 import { AtSymbolIcon } from "@heroicons/react/24/outline";
-import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 
 const breadcrumps = [
   {
@@ -33,20 +30,11 @@ const settings_data = [
 ];
 
 const EmailContentSettings = () => {
-  const { email_settings } = useEmails();
-
   const toolbar = {
     menu: [
       {
         label: "Templates",
         href: "/emails",
-      },
-      {
-        label: "Settings",
-        href: "/emails/settings",
-        icon: !!!email_settings?.active ? (
-          <ExclamationCircleIcon color="#FFD00D" />
-        ) : null,
       },
     ],
   };
