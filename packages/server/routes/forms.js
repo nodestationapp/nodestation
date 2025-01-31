@@ -16,7 +16,8 @@ const router = express.Router();
 router
   .route("/")
   .get(authMiddleware(["admin"]), getAllForms)
-  .post(authMiddleware(["admin"]), createForm);
+  .post(authMiddleware(["admin"]), createForm)
+  .delete(authMiddleware(["admin"]), deleteForm);
 router
   .route("/entry/:id")
   .put(authMiddleware(["admin"]), entryUpdateForm)
@@ -24,7 +25,6 @@ router
 router
   .route("/:id")
   .get(authMiddleware(["admin"]), getForm)
-  .put(authMiddleware(["admin"]), updateForm)
-  .delete(authMiddleware(["admin"]), deleteForm);
+  .put(authMiddleware(["admin"]), updateForm);
 
 export default router;

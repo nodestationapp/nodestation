@@ -230,6 +230,7 @@ const FormContent = () => {
       },
       {
         icon: <TrashIcon color="#FF3636" />,
+        onClick: (row) => setArchiveModal(row),
       },
     ],
   };

@@ -119,10 +119,12 @@ const updateForm = async (req, res) => {
 };
 
 const deleteForm = async (req, res) => {
-  const { id } = req?.params;
+  const { entry_ids } = req?.body;
 
   try {
-    await fs.deleteFile(id);
+    for await (const id of entry_ids) {
+      await fs.deleteFile(id);
+    }
 
     return res.status(200).json({ status: "ok" });
   } catch (error) {
@@ -164,12 +166,14 @@ const entryUpdateForm = async (req, res) => {
 };
 
 const deleteEntryForm = async (req, res) => {
-  const { id } = req?.params;
+  const { entry_ids } = req?.params;
+
+  console.log(entry_ids);
 
   try {
-    await knex("nodestation_forms")
-      .where({ id: parseInt(id) })
-      .del();
+    // await knex("nodestation_forms")
+    //   .where({ id: parseInt(id) })
+    //   .del();
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {
