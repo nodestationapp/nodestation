@@ -28,8 +28,6 @@ let addUserEntrySchema = () => {
     (item) => item?.id?.toString() === "auth"
   );
 
-  console.log(schemaFields?.fields);
-
   const formattedSchema = schemaFields?.fields?.filter(
     (item) => item?.slug !== "id" && item?.slug !== "created_at"
   );

@@ -67,30 +67,33 @@ const FormSettingsContent = () => {
 
   const toolbar = ({ isSubmitting, dirty, submitForm }) => ({
     menu: [
-      {
-        label: "Incoming",
-        href: `/forms/${id}`,
-      },
-      {
-        label: "Archived",
-        href: `/forms/${id}/archived`,
-      },
+      ...(id !== "new"
+        ? [
+            {
+              label: "Incoming",
+              href: `/forms/${id}`,
+            },
+            {
+              label: "Archived",
+              href: `/forms/${id}/archived`,
+            },
+          ]
+        : []),
     ],
     action: [
-      <IconButton
-        size="small"
-        onClick={() => setArchiveModal(form)}
-        icon={<TrashIcon color="#FF3636" />}
-      />,
+      ...(id !== "new"
+        ? [
+            <IconButton
+              size="small"
+              onClick={() => setArchiveModal(form)}
+              icon={<TrashIcon color="#FF3636" />}
+            />,
+          ]
+        : []),
+
       <Button disabled={!!!dirty} loading={!!isSubmitting} onClick={submitForm}>
         Save <KeyViewer data={["⌘", "S"]} />
       </Button>,
-    ],
-    selectAction: [
-      {
-        icon: <TrashIcon color="#FF3636" />,
-        onClick: (rows) => setArchiveModal(rows),
-      },
     ],
   });
 
@@ -141,10 +144,12 @@ const FormSettingsContent = () => {
               breadcrumps={breadcrumps}
               toolbar={toolbar({ submitForm, isSubmitting, dirty })}
             >
-              <SectionHeader
-                title="Settings"
-                subtitle="Manage your form settings"
-              />
+              {id !== "new" && (
+                <SectionHeader
+                  title="Settings"
+                  subtitle="Manage your form settings"
+                />
+              )}
               <SettingsForm data={settings_data} />
             </DashboardContentLayout>
           </Form>

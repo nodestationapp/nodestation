@@ -96,8 +96,6 @@ const UsersContent = () => {
     ],
   };
 
-  console.log(columns);
-
   return (
     <>
       <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
