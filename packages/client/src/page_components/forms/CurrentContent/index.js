@@ -79,7 +79,7 @@ const FormContentWrapper = () => {
   return (
     <>
       <TableStack
-        key={archived}
+        key={[form?.id, archived]}
         meta={meta}
         columns={columns}
         loading={loading}

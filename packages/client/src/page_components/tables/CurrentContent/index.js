@@ -105,7 +105,7 @@ const FormContent = () => {
         />
         {!!content_editor && (
           <TableContentEditor
-            data={content_editor}
+            data={content_editor?.row || content_editor}
             onClose={() => setContentEditor(null)}
           />
         )}

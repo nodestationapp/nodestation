@@ -13,7 +13,7 @@ const ChangeProviderModal = ({ data, onClose }) => {
     setLoading(true);
 
     try {
-      updateMediaSettings({ type: "active", active: data?.value });
+      updateMediaSettings({ active: data?.value });
       onClose();
     } catch (err) {
       setLoading(false);

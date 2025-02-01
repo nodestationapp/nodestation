@@ -11,7 +11,7 @@ const AddTableModal = ({ onClose }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const onSubmit = async (values, setSubmitting) => {
+  const onSubmit = async (values, setSubmitting, setErrors) => {
     try {
       const table = await api.post("/tables", { ...values });
 
@@ -21,7 +21,7 @@ const AddTableModal = ({ onClose }) => {
 
       onClose();
     } catch (err) {
-      console.error(err);
+      setErrors(err?.response?.data?.errors);
       setSubmitting(false);
     }
   };
@@ -31,8 +31,8 @@ const AddTableModal = ({ onClose }) => {
       initialValues={{
         name: "",
       }}
-      onSubmit={(values, { setSubmitting }) => {
-        onSubmit(values, setSubmitting);
+      onSubmit={(values, { setSubmitting, setErrors }) => {
+        onSubmit(values, setSubmitting, setErrors);
       }}
     >
       {({ submitForm, isSubmitting }) => (

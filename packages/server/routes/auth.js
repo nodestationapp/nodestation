@@ -19,6 +19,9 @@ import {
   authResetPasswordConfirm,
 } from "#controllers/auth.js";
 
+import validate from "#libs/validation/validate.js";
+import addUserEntrySchema from "#libs/validation/auth/addUserEntrySchema.js";
+
 const router = express.Router();
 
 router.route("/login").post(limiter, authLogin);
@@ -27,7 +30,12 @@ router.route("/activation").post(limiter, authActivation);
 router
   .route("/")
   .get(authMiddleware(["admin"]), getAllAuth)
-  .post(authMiddleware(["admin"]), uploader, addUserAuth)
+  .post(
+    authMiddleware(["admin"]),
+    uploader,
+    validate({ getValidationSchema: addUserEntrySchema }),
+    addUserAuth
+  )
   .delete(authMiddleware(["admin"]), uploader, deleteUserAuth);
 router.route("/password-reset").post(authResetPassword);
 router

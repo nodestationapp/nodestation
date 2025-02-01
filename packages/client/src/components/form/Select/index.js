@@ -73,8 +73,8 @@ const Select = ({
         [`${mainClass}--top`]: !!!can_bottom,
         [`${mainClass}--disabled`]: !!disabled,
         [`${mainClass}--error`]: !!is_error,
-        [`${mainClass}--empty`]: value === null,
-        [`${mainClass}--filled`]: value !== null,
+        [`${mainClass}--empty`]: value === "",
+        [`${mainClass}--filled`]: value !== "",
         [`${mainClass}--${variant}`]: !!variant,
       })}
     >

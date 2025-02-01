@@ -13,7 +13,7 @@ const UserProfileModal = ({ data, onClose }) => {
   const queryClient = useQueryClient();
   const { settings } = useUsers();
 
-  const onSubmit = async (values, setSubmitting) => {
+  const onSubmit = async (values, setSubmitting, setErrors) => {
     try {
       const formData = new FormData();
       Object.keys(values)?.forEach((item) => {
@@ -39,6 +39,7 @@ const UserProfileModal = ({ data, onClose }) => {
       queryClient.refetchQueries({ queryKey: ["users"] });
       onClose();
     } catch (err) {
+      setErrors(err?.response?.data?.errors);
       setSubmitting(false);
       console.error(err);
     }
@@ -54,8 +55,8 @@ const UserProfileModal = ({ data, onClose }) => {
   return (
     <Formik
       initialValues={formatted_data}
-      onSubmit={(values, { setSubmitting }) => {
-        onSubmit(values, setSubmitting);
+      onSubmit={(values, { setSubmitting, setErrors }) => {
+        onSubmit(values, setSubmitting, setErrors);
       }}
     >
       {({ isSubmitting, submitForm }) => (

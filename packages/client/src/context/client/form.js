@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, useMemo, useState } from "react";
 
@@ -9,9 +9,8 @@ const FormContext = createContext();
 
 const FormProvider = ({ archived, children }) => {
   const { id } = useParams();
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
   const { setFormsCount } = useApp();
+  const queryClient = useQueryClient();
 
   const [checked, setChecked] = useState([]);
 
@@ -34,9 +33,7 @@ const FormProvider = ({ archived, children }) => {
   const createForm = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        const create = await api.post("/forms", { ...values });
-
-        navigate(`/forms/${create}`);
+        await api.post("/forms", { ...values });
 
         resolve();
       } catch (err) {

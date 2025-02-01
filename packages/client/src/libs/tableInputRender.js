@@ -20,7 +20,7 @@ const tableInputRender = (item) => {
     select_data = [
       {
         label: "NULL",
-        value: null,
+        value: "",
       },
       {
         label: "TRUE",
@@ -52,6 +52,7 @@ const tableInputRender = (item) => {
           variant="light"
           name={item?.slug}
           label={item?.name}
+          required={item?.required}
         />
       );
     case "date":

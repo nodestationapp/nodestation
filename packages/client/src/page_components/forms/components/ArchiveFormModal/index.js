@@ -17,7 +17,9 @@ const ArchiveFormModal = ({ data, type, onClose }) => {
     setLoading(true);
 
     try {
-      const entry_ids = data?.map((item) => item?.original?.id);
+      const entry_ids = !!data?.id
+        ? [data?.id]
+        : data?.map((item) => item?.original?.id);
       await api.delete(`/forms`, {
         data: {
           entry_ids,

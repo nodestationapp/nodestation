@@ -40,7 +40,7 @@ const UsersContent = () => {
   );
 
   const new_user_schema = formatted_fields?.reduce((obj, item) => {
-    obj[item.slug] = null;
+    obj[item.slug] = "";
     return obj;
   }, {});
 
@@ -63,7 +63,7 @@ const UsersContent = () => {
     ...(table_fields?.map((item) => ({
       key: item?.type,
       value: item?.name,
-      type: item?.type,
+      type: item?.slug === "status" ? "status" : item?.type,
       slug: item?.slug,
     })) || []),
   ];
@@ -95,6 +95,8 @@ const UsersContent = () => {
       },
     ],
   };
+
+  console.log(columns);
 
   return (
     <>
