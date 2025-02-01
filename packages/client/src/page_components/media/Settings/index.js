@@ -41,8 +41,21 @@ const MediaContentSettings = () => {
     },
   ];
 
+  const toolbar = {
+    menu: [
+      {
+        label: "Uploads",
+        href: `/media`,
+      },
+    ],
+  };
+
   return (
-    <DashboardContentLayout breadcrumps={breadcrumps} submenu={submenu_data}>
+    <DashboardContentLayout
+      toolbar={toolbar}
+      breadcrumps={breadcrumps}
+      submenu={submenu_data}
+    >
       <div className="email-content__settings">
         <SectionHeader title="Settings" subtitle="Manage your media settings" />
         <SettingsForm data={settings_data} />

@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import Table from "components/Table";
 import Alert from "components/Alert";
 import Button from "components/Button";
+import TableStack from "components/TableStack";
 import IconButton from "components/IconButton";
 import ArchiveEmailModal from "../components/ArchiveEmailModal";
 import EmailContentEditor from "./components/EmailContentEditor";
@@ -13,10 +13,11 @@ import { useEmails } from "context/client/emails";
 import {
   PlusIcon,
   AtSymbolIcon,
+  // TrashIcon,
+  // LockClosedIcon,
+  Cog6ToothIcon,
   TrashIcon,
-  LockClosedIcon,
 } from "@heroicons/react/24/outline";
-import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 
 const breadcrumps = [
   {
@@ -31,70 +32,78 @@ const EmailsContent = () => {
 
   const [email_editor, setEmailEditor] = useState(null);
 
-  const submenu_data = [
-    {
-      label: "Templates",
-      href: "/emails",
-    },
-    {
-      label: "Settings",
-      href: "/emails/settings",
-      icon: !!!email_settings?.active ? (
-        <ExclamationCircleIcon color="#FFD00D" />
-      ) : null,
-    },
-  ];
+  // const table_data = {
+  //   keys: [...fields],
+  //   items: emails?.map((item) => {
+  //     return {
+  //       data: [
+  //         {
+  //           key: "name",
+  //           value: (
+  //             <>
+  //               {item?.name}
+  //               {!!item?.locked && (
+  //                 <LockClosedIcon color="#647082" height={18} width={18} />
+  //               )}
+  //             </>
+  //           ),
+  //         },
+  //       ],
+  //       onclick: () => setEmailEditor(item?.id),
+  //       actions: !!!item?.locked ? (
+  //         <>
+  //           <IconButton
+  //             icon={<TrashIcon color="#FF3636" />}
+  //             onClick={(e) => {
+  //               e.stopPropagation();
+  //               setArchiveModal(item);
+  //             }}
+  //           />
+  //         </>
+  //       ) : null,
+  //     };
+  //   }),
+  // };
 
-  const fields = [
+  const columns = [
     {
       key: "name",
       value: "Name",
+      slug: "name",
     },
   ];
 
-  const table_data = {
-    keys: [...fields],
-    items: emails?.map((item) => {
-      return {
-        data: [
-          {
-            key: "name",
-            value: (
-              <>
-                {item?.name}
-                {!!item?.locked && (
-                  <LockClosedIcon color="#647082" height={18} width={18} />
-                )}
-              </>
-            ),
-          },
-        ],
-        onclick: () => setEmailEditor(item?.id),
-        actions: !!!item?.locked ? (
-          <>
-            <IconButton
-              icon={<TrashIcon color="#FF3636" />}
-              onClick={(e) => {
-                e.stopPropagation();
-                setArchiveModal(item);
-              }}
-            />
-          </>
-        ) : null,
-      };
-    }),
+  const toolbar = {
+    menu: [
+      {
+        label: "Templates",
+        href: "/emails",
+      },
+    ],
+    action: [
+      <IconButton
+        size="small"
+        icon={<Cog6ToothIcon />}
+        href={`/emails/settings`}
+      />,
+      <Button onClick={() => setEmailEditor("new")} icon={<PlusIcon />}>
+        New
+      </Button>,
+    ],
+    selectAction: [
+      {
+        icon: <TrashIcon color="#FF3636" />,
+        onClick: (rows) => setArchiveModal(rows),
+      },
+    ],
   };
 
+  const meta = emails?.map((item) => ({
+    locked: item?.locked,
+  }));
+
   return (
-    <DashboardContentLayout
-      breadcrumps={breadcrumps}
-      action={
-        <Button onClick={() => setEmailEditor("new")} icon={<PlusIcon />}>
-          Add template
-        </Button>
-      }
-      submenu={submenu_data}
-    >
+    <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
       {!!!email_settings?.active && (
         <Alert
           text="To send email messages, you must first configure your settings."
@@ -105,7 +114,14 @@ const EmailsContent = () => {
           }
         />
       )}
-      <Table data={table_data} loading={loading} />
+      <TableStack
+        fullWidth
+        meta={meta}
+        data={emails}
+        columns={columns}
+        loading={loading}
+        rowClick={(row) => setEmailEditor(row?.row?.id)}
+      />
       {!!archive_modal && (
         <ArchiveEmailModal
           data={archive_modal}

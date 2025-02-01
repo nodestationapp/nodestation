@@ -7,7 +7,6 @@ import Button from "components/Button";
 import FormikInput from "components/formik/FormikInput";
 
 import api from "libs/api";
-import changePasswordSchema from "libs/validations/changePasswordSchema";
 
 const mainClass = "change-password-form";
 
@@ -18,9 +17,7 @@ const ChangePasswordForm = () => {
       toast.success("Password has been changed");
       resetForm({ current_password: "", new_password: "", new_password2: "" });
     } catch (err) {
-      if (err?.response?.data?.type === "wrong_password") {
-        setErrors({ current_password: err?.response?.data?.error });
-      }
+      setErrors(err?.response?.data?.errors);
 
       console.error(err);
     }
@@ -36,7 +33,6 @@ const ChangePasswordForm = () => {
           new_password: "",
           new_password2: "",
         }}
-        validationSchema={changePasswordSchema}
         onSubmit={(values, { setSubmitting, resetForm, setErrors }) => {
           onSubmit(values, setSubmitting, resetForm, setErrors);
         }}

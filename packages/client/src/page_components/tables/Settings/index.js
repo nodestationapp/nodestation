@@ -20,17 +20,6 @@ const TableSettingsContent = () => {
 
   const table = data?.table;
 
-  const submenu_data = [
-    {
-      label: "Entries",
-      href: `/tables/${id}`,
-    },
-    {
-      label: "Settings",
-      href: `/tables/${id}/settings`,
-    },
-  ];
-
   const breadcrumps = [
     {
       icon: <CircleStackIcon />,
@@ -44,17 +33,6 @@ const TableSettingsContent = () => {
       label: "Settings",
     },
   ];
-
-  const onSubmit = async (values, setSubmitting, resetForm) => {
-    try {
-      await updateTable(values);
-
-      resetForm({ values });
-    } catch (err) {
-      setSubmitting(false);
-      console.error(err);
-    }
-  };
 
   const settings_data = [
     {
@@ -77,6 +55,36 @@ const TableSettingsContent = () => {
       ],
     },
   ];
+
+  const onSubmit = async (values, setSubmitting, resetForm) => {
+    try {
+      await updateTable(values);
+
+      resetForm({ values });
+    } catch (err) {
+      setSubmitting(false);
+      console.error(err);
+    }
+  };
+
+  const toolbar = ({ dirty, isSubmitting, submitForm }) => ({
+    menu: [
+      {
+        label: "Entries",
+        href: `/tables/${id}`,
+      },
+    ],
+    action: [
+      <IconButton
+        size="small"
+        onClick={() => setArchiveModal(table)}
+        icon={<TrashIcon color="#FF3636" />}
+      />,
+      <Button disabled={!!!dirty} loading={!!isSubmitting} onClick={submitForm}>
+        Save <KeyViewer data={["⌘", "S"]} />
+      </Button>,
+    ],
+  });
 
   return (
     <>
@@ -104,28 +112,9 @@ const TableSettingsContent = () => {
         {({ submitForm, isSubmitting, dirty }) => (
           <Form autoComplete="off" style={{ width: "100%" }}>
             <DashboardContentLayout
-              breadcrumps={breadcrumps}
-              submenu={!!id ? submenu_data : null}
               loading={!!loading}
-              action={
-                <>
-                  {!!table?.id && (
-                    <>
-                      <IconButton
-                        onClick={() => setArchiveModal(table)}
-                        icon={<TrashIcon color="#FF3636" />}
-                      />
-                    </>
-                  )}
-                  <Button
-                    disabled={!!!dirty}
-                    loading={!!isSubmitting}
-                    onClick={submitForm}
-                  >
-                    Save <KeyViewer data={["⌘", "S"]} />
-                  </Button>
-                </>
-              }
+              breadcrumps={breadcrumps}
+              toolbar={toolbar({ submitForm, isSubmitting, dirty })}
             >
               <SectionHeader
                 title="Settings"

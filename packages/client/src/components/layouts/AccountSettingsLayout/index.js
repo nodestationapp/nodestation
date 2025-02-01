@@ -17,6 +17,19 @@ const submenu_data = [
   },
 ];
 
+const toolbar = {
+  menu: [
+    {
+      label: "General",
+      href: `/settings`,
+    },
+    {
+      label: "Security",
+      href: `/settings/security`,
+    },
+  ],
+};
+
 const AccountSettingsLayout = () => {
   const { pathname } = useLocation();
   const current_view = pathname?.split("/")?.[2];
@@ -37,7 +50,11 @@ const AccountSettingsLayout = () => {
 
   return (
     <div className={mainClass}>
-      <DashboardContentLayout breadcrumps={breadcrumps} submenu={submenu_data}>
+      <DashboardContentLayout
+        toolbar={toolbar}
+        breadcrumps={breadcrumps}
+        submenu={submenu_data}
+      >
         <Outlet />
       </DashboardContentLayout>
     </div>

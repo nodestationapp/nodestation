@@ -1,22 +1,25 @@
-.dashboard-content-layout__submenu{
-  padding: 0 25px;
-  height: 52px;
-  border-bottom: 1px solid #3C414B;
+.table__toolbar__menu{
+  padding-left: 7.5px;
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 25px;
 
   &__item{
-    height: 100%;
     display: flex;
     align-items: center;
     position: relative;
     color: #ACB1BB;
     font-weight: 500;
+    gap: 5px;
+
+    svg{
+      height: 19px;
+      width: 19px;
+    }
 
     &::before{
       content: "";
-      background-color: #2F3841;
+      background-color: rgba(#fff, 0.05);
       height: 30px;
       width: calc(100% + 15px);
       position: absolute;
@@ -38,22 +41,11 @@
     &--active{
       color: #F0F1F3;
 
-      &::after{
-        content: "";
-        height: 2px;
-        background-color: #9A92F5;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        transform: translateY(50%);
+      &::before{
+        display: flex;
       }
     }
 
 
-  }
-
-  &--no-padding{
-    padding: 0 2px;
   }
 }

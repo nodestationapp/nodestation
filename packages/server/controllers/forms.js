@@ -167,9 +167,7 @@ const deleteEntryForm = async (req, res) => {
   const { id } = req?.params;
 
   try {
-    await knex("nodestation_forms")
-      .where({ id: parseInt(id) })
-      .del();
+    await knex("nodestation_forms").where({ id }).del();
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

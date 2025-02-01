@@ -207,13 +207,13 @@ const authChangePassword = async (req, res) => {
 };
 
 const deleteUserAuth = async (req, res) => {
-  const { entry_ids } = req?.body;
+  const { id } = req?.params;
 
   try {
     const files = fs.getFiles();
     const auth = files?.find((item) => item?.id?.toString() === "auth");
 
-    await knex(auth?.slug).whereIn("id", entry_ids).del();
+    await knex(auth?.slug).where({ id }).del();
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

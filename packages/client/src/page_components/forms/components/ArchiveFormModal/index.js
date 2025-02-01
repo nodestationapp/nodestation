@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
 import Modal from "components/Modal";
+
 import api from "libs/api";
+import { useTableWrapper } from "context/client/table-wrapper";
 
 const ArchiveFormModal = ({ data, type, onClose }) => {
   const navigate = useNavigate();
+  const { table } = useTableWrapper();
   const queryClient = useQueryClient();
 
   const [loading, setLoading] = useState(false);
@@ -15,9 +18,16 @@ const ArchiveFormModal = ({ data, type, onClose }) => {
     setLoading(true);
 
     try {
-      await api.delete(`/forms/${data?.id}`);
+      const entry_ids = !!data?.id
+        ? [data?.id]
+        : data?.map((item) => item?.original?.id);
+
+      for await (const item of entry_ids) {
+        await api.delete(`/forms/${item}`);
+      }
 
       if (type === "list") {
+        table.setRowSelection({});
         queryClient.refetchQueries({ queryKey: ["forms"] });
 
         onClose();
@@ -56,8 +66,8 @@ const ArchiveFormModal = ({ data, type, onClose }) => {
       submit_keys={["↵"]}
     >
       <span>
-        Are you sure you want to delete the{" "}
-        <strong>{data?.label || data?.name}</strong> form?
+        Are you sure you want to delete <strong>{data?.length} selected</strong>{" "}
+        items?
       </span>
     </Modal>
   );

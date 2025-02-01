@@ -76,14 +76,10 @@ const TableProvider = ({ children }) => {
       }
     });
 
-  const deleteTableEntries = (entry_ids) =>
+  const deleteTableEntries = (entry_id) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.delete(`/tables/${id}/entry`, {
-          data: {
-            entry_ids,
-          },
-        });
+        await api.delete(`/tables/${id}/entry/${entry_id}`);
 
         tableRefetch();
 

@@ -1,11 +1,15 @@
 .table__toolbar{
-    padding: 0 25px;
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    height: 32px;
+    padding: 0 20px;
+    flex-shrink: 0;
+
+    &__content{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        height: 60px;
+        border-bottom: 1px solid #33363D;
+    }
 
     &__main{
         &__select-action{

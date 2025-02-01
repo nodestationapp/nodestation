@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import Button from "components/Button";
 import MediaItem from "components/MediaItem";
+import IconButton from "components/IconButton";
 import AddAssetsModal from "../components/AddAssetsModal";
 import RemoveMediaModal from "../components/RemoveMediaModal";
 import NoItemsFound from "components/List/components/NoItemsFound";
@@ -11,7 +12,11 @@ import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useMedia } from "context/client/media";
 
-import { PhotoIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+  Cog6ToothIcon,
+  PhotoIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 
 const mainClass = "media-content";
 
@@ -39,9 +44,29 @@ const MediaContent = () => {
   const [add_media_modal, setAddMediaModal] = useState(false);
   const [remove_media_modal, setRemoveMediaModal] = useState(false);
 
+  const toolbar = {
+    menu: [
+      {
+        label: "Uploads",
+        href: `/media`,
+      },
+    ],
+    action: [
+      <IconButton
+        size="small"
+        icon={<Cog6ToothIcon />}
+        href={`/media/settings`}
+      />,
+      <Button icon={<PlusIcon />} onClick={() => setAddMediaModal(true)}>
+        New
+      </Button>,
+    ],
+  };
+
   return (
     <>
       <DashboardContentLayout
+        toolbar={toolbar}
         loading={loading}
         breadcrumps={breadcrumps}
         action={

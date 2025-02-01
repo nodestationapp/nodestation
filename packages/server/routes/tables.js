@@ -14,12 +14,20 @@ import {
   deleteTableEntries,
 } from "#controllers/tables.js";
 
+import validate from "#libs/validation/validate.js";
+import createTableSchema from "#libs/validation/tables/createTableSchema.js";
+import addTableEntrySchema from "#libs/validation/tables/addTableEntrySchema.js";
+
 const router = express.Router();
 
 router
   .route("/")
   .get(authMiddleware(["admin"]), getAllTables)
-  .post(authMiddleware(["admin"]), createTable);
+  .post(
+    authMiddleware(["admin"]),
+    validate({ schema: createTableSchema }),
+    createTable
+  );
 router
   .route("/:id")
   .get(authMiddleware(["admin"]), getTable)
@@ -28,11 +36,21 @@ router
 
 router
   .route("/:id/entry")
-  .post(authMiddleware(["admin"]), uploader, addTableEntry)
-  .delete(authMiddleware(["admin"]), deleteTableEntries);
+  .post(
+    authMiddleware(["admin"]),
+    uploader,
+    validate({ getValidationSchema: addTableEntrySchema }),
+    addTableEntry
+  );
 
 router
   .route("/:id/entry/:entry_id")
-  .put(authMiddleware(["admin"]), uploader, updateTableEntry);
+  .put(
+    authMiddleware(["admin"]),
+    uploader,
+    validate({ getValidationSchema: addTableEntrySchema }),
+    updateTableEntry
+  )
+  .delete(authMiddleware(["admin"]), deleteTableEntries);
 
 export default router;

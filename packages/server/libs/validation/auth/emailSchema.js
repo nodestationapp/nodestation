@@ -1,9 +1,9 @@
 import { object, string } from "yup";
 
-let resetPasswordSchema = object({
+let emailSchema = object({
   email: string()
-    .required("Email cannot be empty.")
+    .required("Field is required.")
     .email("The email is not a valid email address."),
 });
 
-export default resetPasswordSchema;
+export default emailSchema;

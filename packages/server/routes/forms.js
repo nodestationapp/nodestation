@@ -21,6 +21,7 @@ router
   .route("/entry/:id")
   .put(authMiddleware(["admin"]), entryUpdateForm)
   .delete(authMiddleware(["admin"]), deleteEntryForm);
+
 router
   .route("/:id")
   .get(authMiddleware(["admin"]), getForm)

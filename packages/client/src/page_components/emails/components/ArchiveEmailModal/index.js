@@ -13,7 +13,9 @@ const ArchiveEmailModal = ({ data, onClose }) => {
     setLoading(true);
 
     try {
-      await api.delete(`/emails/${data?.id}`);
+      for await (const row of data) {
+        await api.delete(`/emails/${row?.original?.id}`);
+      }
 
       queryClient.refetchQueries({ queryKey: ["emails"] });
 
@@ -26,7 +28,6 @@ const ArchiveEmailModal = ({ data, onClose }) => {
 
   return (
     <Modal
-      header="Move to archive"
       onClose={onClose}
       onSubmit={onSubmit}
       loading={loading}
@@ -34,8 +35,8 @@ const ArchiveEmailModal = ({ data, onClose }) => {
       submit_label="Remove item"
     >
       <span>
-        Are you sure you want to move the{" "}
-        <strong>{data?.label || data?.name}</strong> template to the archive?
+        Are you sure you want to delete <strong>{data?.length} selected</strong>{" "}
+        items?
       </span>
     </Modal>
   );

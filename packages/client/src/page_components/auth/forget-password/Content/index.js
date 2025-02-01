@@ -1,17 +1,15 @@
 import "./styles.scss";
 
+import { useState } from "react";
 import { Form, Formik } from "formik";
 import { Link } from "react-router-dom";
 
 import Button from "components/Button";
 import FormikInput from "components/formik/FormikInput";
-
-import resetPasswordSchema from "libs/validations/resetPasswordSchema";
-import { useState } from "react";
 import PlaceholderPage from "components/PlaceholderPage";
 
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import api from "libs/api";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 const mainClass = "login-content";
 
@@ -23,9 +21,7 @@ const ForgetPasswordContent = () => {
       await api.post("/auth/password-reset", values);
       setResetSent(values?.email);
     } catch (err) {
-      setErrors({
-        email: "Incorrect e-mail address",
-      });
+      setErrors(err?.response?.data?.errors);
       setSubmitting(false);
     }
   };
@@ -51,7 +47,6 @@ const ForgetPasswordContent = () => {
           initialValues={{
             email: "",
           }}
-          validationSchema={resetPasswordSchema}
           onSubmit={(values, { setSubmitting, setErrors }) => {
             onSubmit(values, setSubmitting, setErrors);
           }}

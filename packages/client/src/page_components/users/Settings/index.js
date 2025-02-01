@@ -10,17 +10,6 @@ import { useUsers } from "context/client/users";
 
 import { UsersIcon } from "@heroicons/react/24/outline";
 
-const submenu_data = [
-  {
-    label: "Users",
-    href: `/authentication`,
-  },
-  {
-    label: "Settings",
-    href: `/authentication/settings`,
-  },
-];
-
 const TableSettingsContent = () => {
   const { settings, loading, updateAuth } = useUsers();
 
@@ -59,6 +48,20 @@ const TableSettingsContent = () => {
     },
   ];
 
+  const toolbar = ({ dirty, isSubmitting, submitForm }) => ({
+    menu: [
+      {
+        label: "Users",
+        href: `/authentication`,
+      },
+    ],
+    action: [
+      <Button disabled={!!!dirty} loading={!!isSubmitting} onClick={submitForm}>
+        Save <KeyViewer data={["⌘", "S"]} />
+      </Button>,
+    ],
+  });
+
   return (
     <>
       <Formik
@@ -73,20 +76,9 @@ const TableSettingsContent = () => {
         {({ submitForm, isSubmitting, dirty }) => (
           <Form autoComplete="off" style={{ width: "100%" }}>
             <DashboardContentLayout
+              toolbar={toolbar({ submitForm, isSubmitting, dirty })}
               breadcrumps={breadcrumps}
-              submenu={submenu_data}
               loading={!!loading}
-              action={
-                <>
-                  <Button
-                    disabled={!!!dirty}
-                    loading={!!isSubmitting}
-                    onClick={submitForm}
-                  >
-                    Save <KeyViewer data={["⌘", "S"]} />
-                  </Button>
-                </>
-              }
             >
               <SectionHeader
                 title="Settings"

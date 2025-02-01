@@ -4,7 +4,6 @@ import CronsList from "../components/CronsList";
 import HelpersList from "../components/HelpersList";
 import ContentEditor from "./components/ContentEditor";
 import EndpointsList from "../components/EndpointsList";
-import ContentHistory from "./components/ContentHistory";
 import MiddlewaresList from "../components/MiddlewaresList";
 import ContentPackageManager from "./components/ContentPackageManager";
 
@@ -50,8 +49,6 @@ const EditorContent = () => {
             loading={editor_entry_loading}
           />
         );
-      case "history":
-        return <ContentHistory />;
       case "package-manager":
         return <ContentPackageManager />;
       case "endpoints":

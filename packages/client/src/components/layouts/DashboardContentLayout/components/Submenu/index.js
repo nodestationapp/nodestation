@@ -1,29 +1,30 @@
 import "./styles.scss";
 
 import classnames from "classnames";
+import Toolbar from "components/TableStack/components/ToolBar";
 import { Link, useLocation } from "react-router-dom";
 
 const mainClass = "dashboard-content-layout__submenu";
 
-const Submenu = ({ data }) => {
+const Submenu = ({ data, action }) => {
   const { pathname } = useLocation();
 
   return (
     <div className={mainClass}>
-      {data?.map(({ label, href, icon }, index) => (
-        <Link
-          to={href}
-          key={index}
-          className={classnames(`${mainClass}__item`, {
-            [`${mainClass}__item--active`]: pathname === href,
-          })}
-        >
-          {label}
-          {icon}
-        </Link>
-      ))}
-
-      <div className={`${mainClass}__active-bar`}></div>
+      <div className={`${mainClass}__content`}>
+        <Toolbar
+          menu={data?.menu}
+          action={action}
+          tableSettings={data?.tableSettings}
+          // onSearch={onSearch}
+          // asideMenu={asideMenu}
+          // tableSettings={tableSettings}
+          // clearSelection={() => table.setRowSelection({})}
+          // selectAction={selectAction}
+          addRowButton={data?.addRowButton}
+          // selectedRows={table.getSelectedRowModel()?.rows}
+        />
+      </div>
     </div>
   );
 };

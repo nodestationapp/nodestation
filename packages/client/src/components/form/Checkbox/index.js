@@ -16,13 +16,13 @@ const Checkbox = ({
   error,
 }) => {
   const is_error = touched && !!error;
-
   return (
     <div
       onClick={onClick}
       className={classnames(mainClass, {
         [`${mainClass}--error`]: is_error,
         [`${mainClass}--no-label`]: !!!label,
+        [`${mainClass}--disabled`]: !!disabled,
       })}
     >
       <label>

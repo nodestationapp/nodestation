@@ -22,6 +22,10 @@
     pointer-events: none;
     font-size: 12px;
 
+    span{
+      color: #AEB3BD;
+    }
+
     a{
       font-size: 13px;
       text-decoration: underline;
@@ -123,7 +127,7 @@
   &--error {
     #{ $self } {
       &__content {
-        input {
+        &__field {
           border-color: rgba(#F93F3E, 0.8);
         }
       }

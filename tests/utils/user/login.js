@@ -3,7 +3,7 @@ import register from "./register";
 
 const user = {
   email: "test@nodestation.app",
-  password: "qwerty12345",
+  password: "@Qwerty12345",
 };
 
 const login = async (server) => {

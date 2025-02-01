@@ -6,10 +6,9 @@ import AsideModal from "components/AsideModal";
 import tableInputRender from "libs/tableInputRender";
 
 import { useTable } from "context/client/table";
-import validationSchema from "libs/validationSchema";
 
 const mapDefaults = (schema, value, is_update) => {
-  value = value === null ? null : value;
+  value = value === null ? "" : value;
 
   if (!!is_update) {
     return value;
@@ -17,16 +16,16 @@ const mapDefaults = (schema, value, is_update) => {
 
   switch (schema?.type) {
     case "boolean":
-      return !!schema?.default ? 1 : 0;
+      return schema?.default !== undefined ? schema?.default : "";
     default:
-      return schema?.default || null;
+      return schema?.default || "";
   }
 };
 
 const TableContentEditor = ({ data = {}, onClose }) => {
   const { data: table_data, addTableEntry, updateTableEntry } = useTable();
 
-  const onSubmit = async (values, setSubmitting) => {
+  const onSubmit = async (values, setSubmitting, setErrors) => {
     try {
       const formData = new FormData();
 
@@ -45,7 +44,7 @@ const TableContentEditor = ({ data = {}, onClose }) => {
       onClose();
     } catch (err) {
       setSubmitting(false);
-      console.error(err);
+      setErrors(err?.response?.data?.errors);
     }
   };
 
@@ -60,17 +59,14 @@ const TableContentEditor = ({ data = {}, onClose }) => {
     ])
   );
 
-  const validation = validationSchema(table_data?.table?.fields);
-
   return (
     <Formik
       initialValues={formatted_data}
-      validationSchema={validation}
-      onSubmit={(values, { setSubmitting }) => {
-        onSubmit(values, setSubmitting);
+      onSubmit={(values, { setSubmitting, setErrors }) => {
+        onSubmit(values, setSubmitting, setErrors);
       }}
     >
-      {({ values, submitForm, isSubmitting }) => (
+      {({ submitForm, isSubmitting }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
           <AsideModal
             header={data?.id || "Add entry"}

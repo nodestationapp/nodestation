@@ -15,16 +15,18 @@ const login = async ({ email, password }) =>
 
       if (!!!result) {
         return reject({
-          type: "email_exist",
-          error: "The email address or password is incorrect",
+          errors: {
+            email: "The email address or password is incorrect",
+          },
         });
       }
 
       const validPass = await bcrypt.compare(password, result?.password);
       if (!!!validPass) {
         return reject({
-          type: "email_exist",
-          error: "The email address or password is incorrect",
+          errors: {
+            email: "The email address or password is incorrect",
+          },
         });
       }
 

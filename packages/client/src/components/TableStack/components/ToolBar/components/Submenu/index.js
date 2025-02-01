@@ -1,19 +1,16 @@
 import "./styles.scss";
+
 import classnames from "classnames";
 import { Link, useLocation } from "react-router-dom";
 
-const mainClass = "dashboard-content-layout__submenu";
+const mainClass = "table__toolbar__menu";
 
-const Submenu = ({ data, no_padding }) => {
+const Submenu = ({ data }) => {
   const { pathname } = useLocation();
 
   return (
-    <div
-      className={classnames(mainClass, {
-        [`${mainClass}--no-padding`]: !!no_padding,
-      })}
-    >
-      {data?.map(({ label, href }, index) => (
+    <div className={mainClass}>
+      {data?.map(({ label, href, icon }, index) => (
         <Link
           to={href}
           key={index}
@@ -22,8 +19,10 @@ const Submenu = ({ data, no_padding }) => {
           })}
         >
           {label}
+          {icon}
         </Link>
       ))}
+
       <div className={`${mainClass}__active-bar`}></div>
     </div>
   );
