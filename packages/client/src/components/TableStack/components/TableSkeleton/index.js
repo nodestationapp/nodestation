@@ -24,9 +24,9 @@ const TableSkeleton = () => {
       <div className={`${mainClass}__row`}>
         <div className={`skeleton`}></div>
       </div>
-      <div className={`${mainClass}__row`}>
+      {/* <div className={`${mainClass}__row`}>
         <div className={`skeleton`}></div>
-      </div>
+      </div> */}
     </div>
   );
 };
