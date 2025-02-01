@@ -7,7 +7,6 @@ import Button from "components/Button";
 import FormikInput from "components/formik/FormikInput";
 
 import { useApp } from "context/app";
-import loginSchema from "libs/validations/loginSchema";
 
 import { ReactComponent as LogoIcon } from "assets/icons/logo-sygnet.svg";
 
@@ -20,7 +19,8 @@ const LoginContent = () => {
     try {
       await login(values);
     } catch (err) {
-      setErrors({ email: "", password: err?.response?.data?.error });
+      setErrors(err?.response?.data?.errors);
+      // setErrors({ email: "", password: err?.response?.data?.error });
       setSubmitting(false);
     }
   };
@@ -37,7 +37,6 @@ const LoginContent = () => {
             email: "",
             password: "",
           }}
-          validationSchema={loginSchema}
           onSubmit={(values, { setSubmitting, setErrors }) => {
             onSubmit(values, setSubmitting, setErrors);
           }}

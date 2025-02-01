@@ -7,7 +7,6 @@ import Button from "components/Button";
 import FormikInput from "components/formik/FormikInput";
 
 import api from "libs/api";
-import registerSchema from "libs/validations/registerSchema";
 
 import { useApp } from "context/app";
 
@@ -26,6 +25,7 @@ const RegisterContent = () => {
       navigate("/login");
     } catch (err) {
       setSubmitting(false);
+      setErrors(err?.response?.data?.errors);
     }
   };
 
@@ -43,7 +43,7 @@ const RegisterContent = () => {
             email: "",
             password: "",
           }}
-          validationSchema={registerSchema}
+          // validationSchema={registerSchema}
           onSubmit={(values, { setSubmitting, setErrors }) => {
             onSubmit(values, setSubmitting, setErrors);
           }}

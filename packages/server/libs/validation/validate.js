@@ -18,7 +18,7 @@ const validate =
       return next();
     } catch (err) {
       const validateErrors = err?.inner?.reduce((acc, curr) => {
-        const key = curr?.path?.split(".")?.[1];
+        const key = curr?.path?.split(".")?.[1] || curr?.path;
 
         acc[key] = curr?.errors?.[0];
         return acc;

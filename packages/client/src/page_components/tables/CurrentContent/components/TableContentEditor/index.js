@@ -45,7 +45,6 @@ const TableContentEditor = ({ data = {}, onClose }) => {
     } catch (err) {
       setSubmitting(false);
       setErrors(err?.response?.data?.errors);
-      console.error(err?.response?.data?.errors);
     }
   };
 
