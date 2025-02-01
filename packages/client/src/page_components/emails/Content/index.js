@@ -98,6 +98,10 @@ const EmailsContent = () => {
     ],
   };
 
+  const meta = emails?.map((item) => ({
+    locked: item?.locked,
+  }));
+
   return (
     <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
       {!!!email_settings?.active && (
@@ -112,6 +116,7 @@ const EmailsContent = () => {
       )}
       <TableStack
         fullWidth
+        meta={meta}
         data={emails}
         columns={columns}
         loading={loading}

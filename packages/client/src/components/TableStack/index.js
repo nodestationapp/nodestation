@@ -31,10 +31,11 @@ import api from "libs/api";
 
 import { useOrganization } from "context/organization";
 import { useTableWrapper } from "context/client/table-wrapper";
+import { LockClosedIcon } from "@heroicons/react/24/outline";
 
 const mainClass = "table-stack";
 
-const table_value_type = (item, cell) => {
+const table_value_type = (item, cell, meta) => {
   const value = !!cell?.row?.original?.hasOwnProperty(item?.slug)
     ? cell?.getValue()
     : cell?.row?.original;
@@ -69,7 +70,11 @@ const table_value_type = (item, cell) => {
     case "boolean":
       return <Boolean data={value} />;
     default:
-      return <p className="table__regular">{value || "-"}</p>;
+      return (
+        <p className={`${mainClass}__regular`}>
+          {value || "-"} {!!meta?.locked && <LockClosedIcon />}
+        </p>
+      );
   }
 };
 
@@ -97,6 +102,7 @@ const TableStack = ({
         id: "select",
         header: ({ table }) => (
           <Checkbox
+            disabled={!!meta?.some((item) => item?.locked)}
             onClick={(e) => e.stopPropagation()}
             checked={table.getIsAllRowsSelected()}
             onChange={table.getToggleAllRowsSelectedHandler()}
@@ -104,6 +110,7 @@ const TableStack = ({
         ),
         cell: ({ row }) => (
           <Checkbox
+            disabled={!!meta?.[row?.index]?.locked}
             checked={row.getIsSelected()}
             onClick={(e) => e.stopPropagation()}
             onChange={row.getToggleSelectedHandler()}
@@ -116,7 +123,9 @@ const TableStack = ({
         accessorFn: (row) => row?.[item?.slug],
         header: () => <span className="light">{item?.value}</span>,
         cell: (cell) => (
-          <span className="light">{table_value_type(item, cell)}</span>
+          <span className="light">
+            {table_value_type(item, cell, meta?.[cell?.row?.index])}
+          </span>
         ),
       })),
     ],
