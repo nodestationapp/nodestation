@@ -16,6 +16,7 @@ import {
   // TrashIcon,
   // LockClosedIcon,
   Cog6ToothIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 
 const breadcrumps = [
@@ -88,6 +89,12 @@ const EmailsContent = () => {
       <Button onClick={() => setEmailEditor("new")} icon={<PlusIcon />}>
         New
       </Button>,
+    ],
+    selectAction: [
+      {
+        icon: <TrashIcon color="#FF3636" />,
+        onClick: (rows) => setArchiveModal(rows),
+      },
     ],
   };
 
