@@ -41,8 +41,7 @@ router
     uploader,
     validate({ getValidationSchema: addTableEntrySchema }),
     addTableEntry
-  )
-  .delete(authMiddleware(["admin"]), deleteTableEntries);
+  );
 
 router
   .route("/:id/entry/:entry_id")
@@ -51,6 +50,7 @@ router
     uploader,
     validate({ getValidationSchema: addTableEntrySchema }),
     updateTableEntry
-  );
+  )
+  .delete(authMiddleware(["admin"]), deleteTableEntries);
 
 export default router;

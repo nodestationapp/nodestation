@@ -13,10 +13,10 @@ const ArchiveUserModal = ({ data, onClose }) => {
   const onSubmit = async () => {
     setLoading(true);
 
-    const items = data?.map((item) => item?.original?.id);
-
     try {
-      await deleteUsers(items);
+      for await (const item of data) {
+        await deleteUsers(item?.original?.id);
+      }
       table.setRowSelection({});
 
       onClose();

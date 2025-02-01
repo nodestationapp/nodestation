@@ -188,8 +188,7 @@ const updateTableEntry = async (req, res) => {
 };
 
 const deleteTableEntries = async (req, res) => {
-  const { id } = req?.params;
-  const { entry_ids } = req?.body;
+  const { id, entry_id } = req?.params;
 
   try {
     const tables = fs.getFiles(["tables"]);
@@ -197,7 +196,7 @@ const deleteTableEntries = async (req, res) => {
       (item) => item?.id?.toString() === id?.toString()
     );
 
-    await knex(table?.slug).whereIn("id", entry_ids).del();
+    await knex(table?.slug).where({ id: entry_id }).del();
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

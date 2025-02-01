@@ -13,10 +13,11 @@ const ArchiveTableEntryModal = ({ data, onClose }) => {
   const onSubmit = async () => {
     setLoading(true);
 
-    const items = data?.map((item) => item?.original?.id);
-
     try {
-      await deleteTableEntries(items);
+      for await (const item of data) {
+        await deleteTableEntries(item?.original?.id);
+      }
+
       table.setRowSelection({});
 
       onClose();

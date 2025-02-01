@@ -18,12 +18,9 @@ const DeleteIncomeFormModal = ({ data, type, onClose, previewModalClose }) => {
     setLoading(true);
 
     try {
-      const entry_ids = data?.map((item) => item?.original?.id);
-      await api.delete(`/forms/entries`, {
-        data: {
-          entry_ids,
-        },
-      });
+      for await (const item of data) {
+        await api.delete(`/forms/entry/${item?.original?.id}`);
+      }
 
       queryClient.refetchQueries({
         queryKey: ["forms", id, archived],

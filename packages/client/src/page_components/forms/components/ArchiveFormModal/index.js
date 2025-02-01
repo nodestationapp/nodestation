@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
 import Modal from "components/Modal";
+
 import api from "libs/api";
 import { useTableWrapper } from "context/client/table-wrapper";
 
@@ -20,11 +21,10 @@ const ArchiveFormModal = ({ data, type, onClose }) => {
       const entry_ids = !!data?.id
         ? [data?.id]
         : data?.map((item) => item?.original?.id);
-      await api.delete(`/forms`, {
-        data: {
-          entry_ids,
-        },
-      });
+
+      for await (const item of entry_ids) {
+        await api.delete(`/forms/${item}`);
+      }
 
       if (type === "list") {
         table.setRowSelection({});

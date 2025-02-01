@@ -16,15 +16,16 @@ const router = express.Router();
 router
   .route("/")
   .get(authMiddleware(["admin"]), getAllForms)
-  .post(authMiddleware(["admin"]), createForm)
-  .delete(authMiddleware(["admin"]), deleteForm);
+  .post(authMiddleware(["admin"]), createForm);
+router
+  .route("/entry/:id")
+  .put(authMiddleware(["admin"]), entryUpdateForm)
+  .delete(authMiddleware(["admin"]), deleteEntryForm);
 
-router.route("/entries").delete(authMiddleware(["admin"]), deleteEntryForm);
-
-router.route("/entry/:id").put(authMiddleware(["admin"]), entryUpdateForm);
 router
   .route("/:id")
   .get(authMiddleware(["admin"]), getForm)
-  .put(authMiddleware(["admin"]), updateForm);
+  .put(authMiddleware(["admin"]), updateForm)
+  .delete(authMiddleware(["admin"]), deleteForm);
 
 export default router;

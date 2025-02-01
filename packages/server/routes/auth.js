@@ -35,8 +35,7 @@ router
     uploader,
     validate({ getValidationSchema: addUserEntrySchema }),
     addUserAuth
-  )
-  .delete(authMiddleware(["admin"]), uploader, deleteUserAuth);
+  );
 router.route("/password-reset").post(authResetPassword);
 router
   .route("/change-password")
@@ -47,6 +46,9 @@ router
   .get(authMiddleware(["admin"]), getSettingsAuth)
   .put(authMiddleware(["admin"]), updateSettingsAuth);
 
-router.route("/:id").put(authMiddleware(["admin"]), uploader, updateUserAuth);
+router
+  .route("/:id")
+  .put(authMiddleware(["admin"]), uploader, updateUserAuth)
+  .delete(authMiddleware(["admin"]), uploader, deleteUserAuth);
 
 export default router;

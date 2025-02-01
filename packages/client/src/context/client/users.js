@@ -45,14 +45,10 @@ const UsersProvider = ({ children }) => {
       }
     });
 
-  const deleteUsers = (entry_ids) =>
+  const deleteUsers = (id) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.delete(`/auth`, {
-          data: {
-            entry_ids,
-          },
-        });
+        await api.delete(`/auth/${id}`);
 
         usersRefetch();
 

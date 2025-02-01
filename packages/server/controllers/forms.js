@@ -119,12 +119,10 @@ const updateForm = async (req, res) => {
 };
 
 const deleteForm = async (req, res) => {
-  const { entry_ids } = req?.body;
+  const { id } = req?.params;
 
   try {
-    for await (const id of entry_ids) {
-      await fs.deleteFile(id);
-    }
+    await fs.deleteFile(id);
 
     return res.status(200).json({ status: "ok" });
   } catch (error) {
@@ -166,10 +164,10 @@ const entryUpdateForm = async (req, res) => {
 };
 
 const deleteEntryForm = async (req, res) => {
-  const { entry_ids } = req?.body;
+  const { id } = req?.params;
 
   try {
-    await knex("nodestation_forms").whereIn("id", entry_ids).del();
+    await knex("nodestation_forms").where({ id }).del();
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {
