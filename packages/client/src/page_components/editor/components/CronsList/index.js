@@ -3,8 +3,8 @@ import "./styles.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Table from "components/Table";
 import Button from "components/Button";
+import TableStack from "components/TableStack";
 import IconButton from "components/IconButton";
 import ArchiveCronModal from "./components/ArchiveCronModal";
 import EditorContentLayout from "components/layouts/EditorContentLayout";
@@ -21,62 +21,35 @@ const CronsList = () => {
 
   const [archive_modal, setArchiveModal] = useState(false);
 
-  const fields = [
+  const formatted_crons = crons?.map((item) => ({
+    ...item,
+    ...item?.options,
+  }));
+
+  const columns = [
     {
       key: "name",
       value: "Name",
+      slug: "name",
+      type: "name",
     },
     {
       key: "status",
       value: "Status",
+      slug: "status",
+      type: "status",
     },
     {
       key: "schedule",
       value: "Schedule",
+      slug: "schedule",
     },
     {
       key: "timezone",
       value: "Timezone",
+      slug: "timezone",
     },
   ];
-
-  const table_data = {
-    keys: [...fields],
-    items: crons?.map((item) => ({
-      disabled: item?.status === "inactive",
-      onclick: () => navigate(`/editor/crons/${item?.id}`),
-      actions: (
-        <>
-          <IconButton
-            icon={<TrashIcon color="#FF3636" />}
-            onClick={(e) => {
-              e.stopPropagation();
-              setArchiveModal(item);
-            }}
-          />
-        </>
-      ),
-      data: [
-        {
-          key: "name",
-          value: item?.name,
-        },
-        {
-          key: "status",
-          type: "status",
-          value: item?.status,
-        },
-        {
-          key: "schedule",
-          value: item?.schedule,
-        },
-        {
-          key: "timezone",
-          value: item?.timezone,
-        },
-      ],
-    })),
-  };
 
   return (
     <>
@@ -84,11 +57,28 @@ const CronsList = () => {
         with_padding
         action={
           <Button href="/editor/new?type=cron" icon={<PlusIcon />}>
-            Add cron
+            New
           </Button>
         }
       >
-        <Table data={table_data} />
+        <TableStack
+          fullWidth
+          data={formatted_crons}
+          columns={columns}
+          disabledSelect={true}
+          rowClick={({ row }) =>
+            navigate(`/editor/crons${row?.slug}/${row?.id}`)
+          }
+          rowAction={({ row }) => (
+            <IconButton
+              onClick={(e) => {
+                e.stopPropagation();
+                setArchiveModal(row);
+              }}
+              icon={<TrashIcon color="#FF3636" />}
+            />
+          )}
+        />
       </EditorContentLayout>
       {!!archive_modal && (
         <ArchiveCronModal

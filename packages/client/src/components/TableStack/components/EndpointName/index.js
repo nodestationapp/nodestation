@@ -7,7 +7,7 @@ const mainClass = "table__user-endpoint-name";
 const EndpointName = ({ data }) => {
   return (
     <div className={mainClass}>
-      <MethodSelect method={data?.method} read_only />
+      <MethodSelect method={data?.options?.method} read_only />
       <span>
         {data?.name}
         {data?.error && <ExclamationCircleIcon />}

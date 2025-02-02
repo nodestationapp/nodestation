@@ -24,8 +24,6 @@ const validate =
         return acc;
       }, {});
 
-      console.log(validateErrors);
-
       return res.status(500).json({ errors: validateErrors });
     }
   };

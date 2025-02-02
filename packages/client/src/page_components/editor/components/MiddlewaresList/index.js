@@ -3,14 +3,14 @@ import "./styles.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Table from "components/Table";
 import Button from "components/Button";
-import IconButton from "components/IconButton";
+import TableStack from "components/TableStack";
 import EditorContentLayout from "components/layouts/EditorContentLayout";
 import ArchiveMiddlewareModal from "./components/ArchiveMiddlewareModal";
 
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useEditor } from "context/client/editor";
+import IconButton from "components/IconButton";
 
 const MiddlewaresList = () => {
   const navigate = useNavigate();
@@ -20,36 +20,38 @@ const MiddlewaresList = () => {
 
   const [archive_modal, setArchiveModal] = useState();
 
-  const fields = [
+  // const table_data = {
+  //   keys: [...fields],
+  //   items: middlewares?.map((item) => ({
+  //     onclick: () => navigate(`/editor/middlewares/${item?.id}`),
+  //     actions: (
+  //       <>
+  //         <IconButton
+  //           icon={<TrashIcon color="#FF3636" />}
+  //           onClick={(e) => {
+  //             e.stopPropagation();
+  //             setArchiveModal(item);
+  //           }}
+  //         />
+  //       </>
+  //     ),
+  //     data: [
+  //       {
+  //         key: "name",
+  //         value: item?.name,
+  //       },
+  //     ],
+  //   })),
+  // };
+
+  const columns = [
     {
       key: "name",
       value: "Name",
+      slug: "name",
+      type: "name",
     },
   ];
-
-  const table_data = {
-    keys: [...fields],
-    items: middlewares?.map((item) => ({
-      onclick: () => navigate(`/editor/middlewares/${item?.id}`),
-      actions: (
-        <>
-          <IconButton
-            icon={<TrashIcon color="#FF3636" />}
-            onClick={(e) => {
-              e.stopPropagation();
-              setArchiveModal(item);
-            }}
-          />
-        </>
-      ),
-      data: [
-        {
-          key: "name",
-          value: item?.name,
-        },
-      ],
-    })),
-  };
 
   return (
     <>
@@ -61,7 +63,24 @@ const MiddlewaresList = () => {
           </Button>
         }
       >
-        <Table data={table_data} />
+        <TableStack
+          fullWidth
+          data={middlewares}
+          columns={columns}
+          disabledSelect={true}
+          rowClick={({ row }) =>
+            navigate(`/editor/middlewares${row?.slug}/${row?.id}`)
+          }
+          rowAction={({ row }) => (
+            <IconButton
+              onClick={(e) => {
+                e.stopPropagation();
+                setArchiveModal(row);
+              }}
+              icon={<TrashIcon color="#FF3636" />}
+            />
+          )}
+        />
       </EditorContentLayout>
       {!!archive_modal && (
         <ArchiveMiddlewareModal

@@ -35,11 +35,10 @@ const ArchiveHelperModal = ({ data, onClose }) => {
       onSubmit={onSubmit}
       loading={loading}
       variant="error"
-      submit_label="Remove item"
+      submit_label="Remove"
     >
       <span>
-        Are you sure you want to move the{" "}
-        <strong>{data?.label || data?.name}</strong> function to the archive?
+        Are you sure you want to delete <strong>selected</strong> item?
       </span>
     </Modal>
   );

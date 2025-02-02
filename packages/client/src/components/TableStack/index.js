@@ -11,6 +11,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import React, { useEffect, useMemo, useState } from "react";
 
 import Date from "./components/Date";
+import Icon from "./components/Icon";
 import Media from "./components/Media";
 import Level from "./components/Level";
 import Boolean from "./components/Boolean";
@@ -31,6 +32,7 @@ import api from "libs/api";
 
 import { useOrganization } from "context/organization";
 import { useTableWrapper } from "context/client/table-wrapper";
+
 import { LockClosedIcon } from "@heroicons/react/24/outline";
 
 const mainClass = "table-stack";
@@ -69,6 +71,8 @@ const table_value_type = (item, cell, meta) => {
       return <LogMessage data={value} />;
     case "boolean":
       return <Boolean data={value} />;
+    case "icon":
+      return <Icon data={value} meta={item} />;
     default:
       return (
         <p className={`${mainClass}__regular`}>
@@ -84,6 +88,8 @@ const TableStack = ({
   columns,
   rowClick,
   tableName,
+  rowAction,
+  disabledSelect,
   loading = false,
   fullWidth = false,
 }) => {
@@ -98,25 +104,29 @@ const TableStack = ({
 
   const formatted_columns = useMemo(
     () => [
-      {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            disabled={!!meta?.some((item) => item?.locked)}
-            onClick={(e) => e.stopPropagation()}
-            checked={table.getIsAllRowsSelected()}
-            onChange={table.getToggleAllRowsSelectedHandler()}
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            disabled={!!meta?.[row?.index]?.locked}
-            checked={row.getIsSelected()}
-            onClick={(e) => e.stopPropagation()}
-            onChange={row.getToggleSelectedHandler()}
-          />
-        ),
-      },
+      ...(!!!disabledSelect
+        ? [
+            {
+              id: "select",
+              header: ({ table }) => (
+                <Checkbox
+                  disabled={!!meta?.some((item) => item?.locked)}
+                  onClick={(e) => e.stopPropagation()}
+                  checked={table.getIsAllRowsSelected()}
+                  onChange={table.getToggleAllRowsSelectedHandler()}
+                />
+              ),
+              cell: ({ row }) => (
+                <Checkbox
+                  disabled={!!meta?.[row?.index]?.locked}
+                  checked={row.getIsSelected()}
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={row.getToggleSelectedHandler()}
+                />
+              ),
+            },
+          ]
+        : []),
       ...columns.map((item) => ({
         id: item?.slug,
         size: table_preferences?.content?.[item?.slug] || undefined,
@@ -190,6 +200,7 @@ const TableStack = ({
       <div
         className={cx(mainClass, {
           [`${mainClass}--full-width`]: !!fullWidth,
+          [`${mainClass}--disabled-select`]: !!disabledSelect,
         })}
       >
         {!!loading ? (
@@ -277,6 +288,14 @@ const TableStack = ({
                             </span>
                           </div>
                         ))}
+                        <div className={`${mainClass}__body__row__action`}>
+                          {!!rowAction
+                            ? rowAction({
+                                row: row?.original,
+                                meta: meta?.[index],
+                              })
+                            : null}
+                        </div>
                       </div>
                     ))}
                   </div>
