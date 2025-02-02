@@ -20,7 +20,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 const FormContent = () => {
-  const { data, id, loading } = useTable();
+  const { data, id, loading, sort, setSort } = useTable();
 
   const [archive_modal, setArchiveModal] = useState(false);
   const [content_editor, setContentEditor] = useState(null);
@@ -96,11 +96,13 @@ const FormContent = () => {
     <>
       <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
         <TableStack
-          key={id}
+          key={[id, sort]}
+          sort={sort}
+          setSort={setSort}
           data={entries}
           loading={loading}
           columns={columns}
-          tableName={table?.slug}
+          tableId={table?.id}
           rowClick={(row) => setContentEditor(row)}
         />
         {!!content_editor && (

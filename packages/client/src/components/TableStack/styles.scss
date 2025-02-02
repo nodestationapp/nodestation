@@ -37,9 +37,24 @@ flex-direction: column;
       padding: 0 10px;
       position: relative;
       align-items: center;
+      gap: 5px;
       border-right: 1px solid #3C414B;
       height: 40px;
       min-width: 100px;
+      cursor: pointer;
+
+      .table__sort{
+        display: none;
+      }
+
+      &:hover{
+        background-color: #262A30;
+        border-bottom: 1px solid #3C414B;
+
+        .table__sort{
+          display: flex;
+        }
+      }
 
       &:last-child{
         border-radius: none;
@@ -53,9 +68,9 @@ flex-direction: column;
       }
     
       span{
+        gap: 16px;
         display: flex;
         align-items: center;
-        gap: 16px;
         color: #647082;
         font-size: 13px;
       }

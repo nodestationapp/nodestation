@@ -1,4 +1,3 @@
-import { fs } from "@nstation/utils";
 import { knex } from "@nstation/db";
 
 const safeJSONStringify = (input) => {
@@ -43,11 +42,15 @@ const getPreferences = async (req, res) => {
 const upsertPreferences = async (req, res) => {
   const body = req?.body;
 
+  if (!!!body?.table_id) {
+    return res.status(200).json({ status: "ok" });
+  }
+
   try {
     const currentDate = Date.now();
 
     let preference = await knex("nodestation_preferences")
-      .where({ type: body?.type })
+      .where({ table_id: body?.table_id })
       .first();
 
     if (!!preference) {
@@ -57,18 +60,29 @@ const upsertPreferences = async (req, res) => {
 
       await knex("nodestation_preferences")
         .where({
-          type: body?.type,
+          table_id: body?.table_id,
         })
+
         .update({
           uid: req?.user?.id,
+          ...(!!body?.hasOwnProperty("sort")
+            ? {
+                sort: safeJSONStringify(body?.sort),
+              }
+            : {}),
           content: safeJSONStringify(content),
           updated_at: currentDate,
         });
     } else {
       await knex("nodestation_preferences").insert({
         uid: req?.user?.id,
-        type: body?.type,
+        table_id: body?.table_id,
         content: safeJSONStringify(body?.content),
+        ...(!!body?.hasOwnProperty("sort")
+          ? {
+              sort: safeJSONStringify(body?.sort),
+            }
+          : {}),
         created_at: currentDate,
       });
     }

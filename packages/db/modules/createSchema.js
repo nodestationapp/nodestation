@@ -134,8 +134,9 @@ const createSchema = async () => {
     await knex.schema.createTable("nodestation_preferences", (table) => {
       table.increments("id").primary();
       table.string("uid").nullable();
-      table.string("type").nullable();
+      table.string("sort").nullable();
       table.string("content").nullable();
+      table.string("table_id").nullable();
       table.bigInteger("updated_at").nullable();
       table.bigInteger("created_at").nullable();
     });

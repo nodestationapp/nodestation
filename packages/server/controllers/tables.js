@@ -51,6 +51,9 @@ const getAllTables = async (_, res) => {
 
 const getTable = async (req, res) => {
   const { id } = req?.params;
+  let { sort } = req?.query;
+
+  sort = !!sort ? sort?.split(":") : ["id", "asc"];
 
   try {
     const tables = fs.getFiles(["tables"]);
@@ -62,7 +65,7 @@ const getTable = async (req, res) => {
 
     let entries = [];
     if (!!table?.slug) {
-      entries = await knex(table?.slug).orderBy("id", "asc");
+      entries = await knex(table?.slug).orderBy(sort?.[0], sort?.[1]);
       entries = parseJSONFields(entries, settings);
     }
 

@@ -11,6 +11,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import React, { useEffect, useMemo, useState } from "react";
 
 import Date from "./components/Date";
+import Sort from "./components/Sort";
 import Icon from "./components/Icon";
 import Media from "./components/Media";
 import Level from "./components/Level";
@@ -38,7 +39,9 @@ import { LockClosedIcon } from "@heroicons/react/24/outline";
 const mainClass = "table-stack";
 
 const table_value_type = (item, cell, meta) => {
-  const value = !!cell?.row?.original?.hasOwnProperty(item?.slug)
+  const value = !!item?.sort
+    ? cell?.row?.original
+    : !!cell?.row?.original?.hasOwnProperty(item?.slug)
     ? cell?.getValue()
     : cell?.row?.original;
 
@@ -86,8 +89,10 @@ const TableStack = ({
   data,
   meta,
   columns,
+  sort,
+  setSort,
   rowClick,
-  tableName,
+  tableId,
   rowAction,
   disabledSelect,
   loading = false,
@@ -99,7 +104,7 @@ const TableStack = ({
   const { setTable, setSelectedRows } = useTableWrapper();
 
   const table_preferences = preferences?.find(
-    (item) => item?.type === `tables_${tableName}`
+    (item) => item?.table_id === tableId
   );
 
   const formatted_columns = useMemo(
@@ -146,8 +151,10 @@ const TableStack = ({
   const table = useReactTable({
     data: data || [],
     state: {
+      sorting: sort,
       rowSelection: tempSelectedRows,
     },
+    onSortingChange: setSort,
     enableRowSelection: true,
     enableColumnResizing: !!!fullWidth,
     columns: formatted_columns,
@@ -157,17 +164,19 @@ const TableStack = ({
     onRowSelectionChange: setTempSelectedRows,
   });
 
-  const saveTransaction = async () => {
+  const saveTransaction = async (values) => {
     await api.post("/preferences", {
-      type: `tables_${tableName}`,
-      content: table.getState().columnSizing,
+      table_id: tableId,
+      ...values,
     });
   };
 
   useEffect(() => {
-    const handleMouseUp = () => {
+    const handleMouseUp = (e) => {
+      e.preventDefault();
+
       if (!!isResizing) {
-        saveTransaction();
+        saveTransaction({ content: table.getState().columnSizing });
         setIsResizing(false);
       }
     };
@@ -179,6 +188,13 @@ const TableStack = ({
     };
     // eslint-disable-next-line
   }, [isResizing]);
+
+  useEffect(() => {
+    if (!!sort?.length) {
+      saveTransaction({ sort });
+    }
+    // eslint-disable-next-line
+  }, [tableId, sort]);
 
   useEffect(() => {
     setTable(table);
@@ -224,10 +240,11 @@ const TableStack = ({
                       key={headerGroup.id}
                       className={`${mainClass}__header__row`}
                     >
-                      {headerGroup.headers.map((header) => (
+                      {headerGroup.headers.map((header, index) => (
                         <div
                           key={header.id}
                           className={`${mainClass}__header__col`}
+                          onClick={header.column.getToggleSortingHandler()}
                           style={{
                             width: header.getSize(),
                           }}
@@ -238,6 +255,7 @@ const TableStack = ({
                                 header.column.columnDef.header,
                                 header.getContext()
                               )}
+                          {index !== 0 && <Sort id={header?.id} data={sort} />}
                           <div
                             {...{
                               onDoubleClick: () => header.column.resetSize(),
