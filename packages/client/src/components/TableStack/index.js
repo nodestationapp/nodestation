@@ -134,6 +134,7 @@ const TableStack = ({
         : []),
       ...columns.map((item) => ({
         id: item?.slug,
+        enableSorting: !!setSort,
         size: table_preferences?.content?.[item?.slug] || undefined,
         accessorFn: (row) => row?.[item?.slug],
         header: () => <span className="light">{item?.value}</span>,
@@ -157,6 +158,7 @@ const TableStack = ({
     onSortingChange: setSort,
     enableRowSelection: true,
     enableColumnResizing: !!!fullWidth,
+    manualSorting: true,
     columns: formatted_columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -217,6 +219,7 @@ const TableStack = ({
         className={cx(mainClass, {
           [`${mainClass}--full-width`]: !!fullWidth,
           [`${mainClass}--disabled-select`]: !!disabledSelect,
+          [`${mainClass}--sortable`]: !!setSort,
         })}
       >
         {!!loading ? (
@@ -255,7 +258,9 @@ const TableStack = ({
                                 header.column.columnDef.header,
                                 header.getContext()
                               )}
-                          {index !== 0 && <Sort id={header?.id} data={sort} />}
+                          {index !== 0 && header?.column?.getCanSort() && (
+                            <Sort id={header?.id} data={sort} />
+                          )}
                           <div
                             {...{
                               onDoubleClick: () => header.column.resetSize(),

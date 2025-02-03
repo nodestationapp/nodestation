@@ -4,6 +4,8 @@ import { createContext, useContext, useMemo, useState } from "react";
 
 import api from "libs/api";
 import { useApp } from "context/app";
+import { useOrganization } from "context/organization";
+import sortParser from "libs/sortParser";
 
 const FormContext = createContext();
 
@@ -11,18 +13,26 @@ const FormProvider = ({ archived, children }) => {
   const { id } = useParams();
   const { setFormsCount } = useApp();
   const queryClient = useQueryClient();
+  const { preferences, loading: preferencesLoading } = useOrganization();
+
+  const table_preferences = preferences?.find((item) => item?.table_id === id);
 
   const [checked, setChecked] = useState([]);
+  const [sort, setSort] = useState(table_preferences?.sort || []);
+
+  const sort_query = sortParser(sort);
 
   const {
     data,
     isLoading: loading,
     refetch: refetchForms,
   } = useQuery({
-    queryKey: ["forms", id, archived],
+    queryKey: ["forms", id, archived, sort_query],
     queryFn: () =>
-      api.get(`/forms/${id}?archived=${archived === true ? 1 : 0}`),
-    enabled: id !== "new",
+      api.get(
+        `/forms/${id}?archived=${archived === true ? 1 : 0}&sort=${sort_query}`
+      ),
+    enabled: id !== "new" && !!!preferencesLoading,
   });
 
   const { data: emails } = useQuery({
@@ -95,9 +105,11 @@ const FormProvider = ({ archived, children }) => {
       readHandler,
       checked,
       setChecked,
+      sort,
+      setSort,
     };
     // eslint-disable-next-line
-  }, [data, id, loading, archived, emails, checked]);
+  }, [data, id, loading, archived, emails, checked, sort]);
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
 };

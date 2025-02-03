@@ -26,7 +26,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 const FormContentWrapper = () => {
-  const { data, loading, readHandler, archived } = useForm();
+  const { data, loading, readHandler, archived, sort, setSort } = useForm();
 
   const [preview_modal, setPreviewModal] = useState(false);
 
@@ -79,11 +79,14 @@ const FormContentWrapper = () => {
   return (
     <>
       <TableStack
-        key={[form?.id, archived]}
+        key={[form?.id, archived, sort]}
         meta={meta}
+        sort={sort}
+        setSort={setSort}
         columns={columns}
         loading={loading}
         menu={table_menu}
+        tableId={form?.id}
         rowClick={(row) => setPreviewModal(row)}
         data={incoming?.map((item) => ({
           id: item?.id,

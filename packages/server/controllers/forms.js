@@ -37,6 +37,10 @@ const getAllForms = async (_, res) => {
 };
 
 const getForm = async (req, res) => {
+  let { sort } = req?.query;
+
+  sort = !!sort ? sort?.split(":") : ["id", "asc"];
+
   try {
     const forms = fs.getFiles(["forms"]);
     const form = forms?.find(
@@ -55,7 +59,7 @@ const getForm = async (req, res) => {
       data: JSON.parse(item?.data),
     }));
 
-    const formatted_incoming = formatted_entries_query?.map((item) => ({
+    let formatted_incoming = formatted_entries_query?.map((item) => ({
       ...item,
       data: Object.keys(item?.data).reduce((acc, curr) => {
         if (item?.data?.[curr]?.size) {
