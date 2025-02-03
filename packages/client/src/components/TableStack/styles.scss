@@ -42,6 +42,14 @@ flex-direction: column;
       height: 40px;
       min-width: 100px;
 
+      &__wrapper{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        height: 100%;
+        width: 100%;
+      }
+
       .table__sort{
         display: none;
       }

@@ -92,7 +92,7 @@ const FormContentWrapper = () => {
           id: item?.id,
           archived: item?.archived,
           is_read: item?.is_read,
-          ...item?.data,
+          ...item,
         }))}
       />
       {!!preview_modal && (

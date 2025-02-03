@@ -1,7 +1,7 @@
 import path from "path";
 import fs_sys from "fs";
 import { knex } from "@nstation/db";
-import { rootPath } from "@nstation/utils";
+import { fs, rootPath } from "@nstation/utils";
 
 function extractUploadPath(fullPath) {
   const uploadIndex = fullPath.indexOf("/uploads/");
@@ -15,14 +15,21 @@ const getUserMe = async (req, res) => {
   const user = req?.user;
 
   try {
-    const forms_count = await knex("nodestation_forms")
-      .where({
-        is_read: 0,
-        archived: 0,
-      })
-      .count("* as count")
-      .first()
-      .then((row) => row.count);
+    let forms_count = 0;
+    const forms = fs.getFiles(["forms"]);
+
+    for await (const item of forms) {
+      const unread_count = await knex(item?.id)
+        .where({
+          is_read: 0,
+          archived: 0,
+        })
+        .count("* as count")
+        .first()
+        .then((row) => row.count);
+
+      forms_count += unread_count;
+    }
 
     const logs_count = await knex("nodestation_logs")
       .where({ is_read: 0 })

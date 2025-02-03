@@ -43,7 +43,9 @@ const table_value_type = (item, cell, meta) => {
     ? cell?.row?.original
     : !!cell?.row?.original?.hasOwnProperty(item?.slug)
     ? cell?.getValue()
-    : cell?.row?.original;
+    : !!item?.type
+    ? cell?.row?.original
+    : null;
 
   switch (item?.type) {
     case "user_profile":
@@ -209,6 +211,8 @@ const TableStack = ({
   }, [tempSelectedRows]);
 
   const handleMouseDown = (e, header) => {
+    e.stopPropagation();
+
     setIsResizing(true);
     header.getResizeHandler()(e);
   };
@@ -247,20 +251,25 @@ const TableStack = ({
                         <div
                           key={header.id}
                           className={`${mainClass}__header__col`}
-                          onClick={header.column.getToggleSortingHandler()}
+                          // header.column.getIsResizing()
                           style={{
                             width: header.getSize(),
                           }}
                         >
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                          {index !== 0 && header?.column?.getCanSort() && (
-                            <Sort id={header?.id} data={sort} />
-                          )}
+                          <div
+                            className={`${mainClass}__header__col__wrapper`}
+                            onClick={header.column.getToggleSortingHandler()}
+                          >
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )}
+                            {index !== 0 && header?.column?.getCanSort() && (
+                              <Sort id={header?.id} data={sort} />
+                            )}
+                          </div>
                           <div
                             {...{
                               onDoubleClick: () => header.column.resetSize(),

@@ -33,15 +33,44 @@ function createOrModifyColumn({ table, schema, dbColumns }) {
 
 export default async () => {
   const files = fs.getFiles();
+  let forms = fs.getFiles(["forms"]);
   const tables = fs.getFiles(["tables"]);
-  const auth = files?.find((item) => item?.id?.toString() === "auth");
+  let auth = files?.find((item) => item?.id?.toString() === "auth");
 
-  let formatted_auth = {
-    ...auth,
-    slug: "nodestation_users",
-  };
+  auth = { ...auth, slug: "nodestation_users" };
+  forms = forms
+    ?.map((item) => ({ ...item, slug: item?.id }))
+    ?.map((item) => ({
+      ...item,
+      fields: [
+        ...item?.fields,
+        {
+          name: "id",
+          type: "id",
+          slug: "id",
+          primary_key: true,
+          default: "generate_id()",
+        },
+        {
+          name: "Is read",
+          type: "boolean",
+          slug: "is_read",
+        },
+        {
+          name: "Archived",
+          type: "boolean",
+          slug: "archived",
+        },
+        {
+          name: "Created at",
+          type: "boolean",
+          default: "now()",
+          slug: "created_at",
+        },
+      ],
+    }));
 
-  let all_tables = [...tables, formatted_auth];
+  let all_tables = [...tables, auth, ...forms];
 
   for await (const item of all_tables) {
     let fileColumns = item?.fields;

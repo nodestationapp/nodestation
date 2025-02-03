@@ -66,10 +66,10 @@ const FormProvider = ({ archived, children }) => {
       }
     });
 
-  const updateIncomeForm = (id, values) =>
+  const updateIncomeForm = (entry_id, values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.put(`/forms/entry/${id}`, { ...values });
+        await api.put(`/forms/${id}/entry/${entry_id}`, { ...values });
 
         refetchForms();
 
