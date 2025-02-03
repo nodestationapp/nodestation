@@ -1,4 +1,4 @@
-import { knex } from "@nstation/db";
+import { createSchema, knex } from "@nstation/db";
 import { fs } from "@nstation/utils";
 
 const getAllForms = async (_, res) => {
@@ -91,6 +91,8 @@ const createForm = async (req, res) => {
 
     const id = await fs.createFile(formatted_body);
 
+    await createSchema();
+
     return res.status(200).json(id);
   } catch (error) {
     console.error(error);
@@ -109,6 +111,8 @@ const updateForm = async (req, res) => {
 
     await fs.updateFile(req?.params?.id, formatted_body);
 
+    await createSchema();
+
     return res.status(200).json({ status: "ok" });
   } catch (err) {
     console.error(err);
@@ -121,6 +125,7 @@ const deleteForm = async (req, res) => {
 
   try {
     await fs.deleteFile(id);
+    await knex.schema.dropTable(id);
 
     return res.status(200).json({ status: "ok" });
   } catch (error) {
