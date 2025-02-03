@@ -37,11 +37,13 @@ const mapDefaults = (schema, value, is_update) => {
   }
 };
 
-const upsertEntry = async ({ type, id, body, files, entry_id }) =>
+const upsertEntry = async ({ type, id, body, files, entry_id, extraFields }) =>
   new Promise(async (resolve, reject) => {
     const allSchemas = !!type ? fs.getFiles([type]) : fs.getFiles();
     const schema = allSchemas?.find((item) => item?.id?.toString() === id);
-    const schemaFields = schema?.fields;
+    let schemaFields = schema?.fields;
+
+    schemaFields = [...schemaFields, ...extraFields];
 
     try {
       if (files?.length > 0) {
@@ -73,9 +75,11 @@ const upsertEntry = async ({ type, id, body, files, entry_id }) =>
       const data = removeUndefinedProperties(formatted_body);
 
       if (entry_id) {
-        await knex(schema?.slug).where({ id: entry_id }).update(data);
+        await knex(schema?.slug || schema?.id)
+          .where({ id: entry_id })
+          .update(data);
       } else {
-        await knex(schema?.slug).insert(data);
+        await knex(schema?.slug || schema?.id).insert(data);
       }
 
       resolve(true);

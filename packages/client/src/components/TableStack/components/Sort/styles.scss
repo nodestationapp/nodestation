@@ -1,0 +1,20 @@
+.table__sort{
+  svg{
+    height: 12px;
+    width: 12px;
+
+    path{
+      stroke: #647082;
+    }
+  }
+
+  &--is-sorting{
+    display: flex !important;
+
+    svg{
+      path{
+        stroke: #F0F1F3;
+      }
+    }
+  }
+}

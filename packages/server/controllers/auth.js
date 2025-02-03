@@ -51,9 +51,15 @@ const authLogin = async (req, res) => {
   }
 };
 
-const getAllAuth = async (_, res) => {
+const getAllAuth = async (req, res) => {
+  let { sort } = req?.query;
+
+  sort = !!sort ? sort?.split(":") : ["id", "asc"];
+
   try {
-    const data = await knex("nodestation_users").select();
+    const data = await knex("nodestation_users")
+      .select()
+      .orderBy(sort?.[0], sort?.[1]);
 
     const settings = await knex("nodestation_media_settings").first();
     const formatted_data = data?.map((item) => {

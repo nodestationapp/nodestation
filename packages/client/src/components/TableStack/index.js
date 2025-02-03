@@ -11,6 +11,8 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import React, { useEffect, useMemo, useState } from "react";
 
 import Date from "./components/Date";
+import Sort from "./components/Sort";
+import Icon from "./components/Icon";
 import Media from "./components/Media";
 import Level from "./components/Level";
 import Boolean from "./components/Boolean";
@@ -31,14 +33,19 @@ import api from "libs/api";
 
 import { useOrganization } from "context/organization";
 import { useTableWrapper } from "context/client/table-wrapper";
+
 import { LockClosedIcon } from "@heroicons/react/24/outline";
 
 const mainClass = "table-stack";
 
 const table_value_type = (item, cell, meta) => {
-  const value = !!cell?.row?.original?.hasOwnProperty(item?.slug)
+  const value = !!item?.sort
+    ? cell?.row?.original
+    : !!cell?.row?.original?.hasOwnProperty(item?.slug)
     ? cell?.getValue()
-    : cell?.row?.original;
+    : !!item?.type
+    ? cell?.row?.original
+    : null;
 
   switch (item?.type) {
     case "user_profile":
@@ -69,6 +76,8 @@ const table_value_type = (item, cell, meta) => {
       return <LogMessage data={value} />;
     case "boolean":
       return <Boolean data={value} />;
+    case "icon":
+      return <Icon data={value} meta={item} />;
     default:
       return (
         <p className={`${mainClass}__regular`}>
@@ -82,8 +91,12 @@ const TableStack = ({
   data,
   meta,
   columns,
+  sort,
+  setSort,
   rowClick,
-  tableName,
+  tableId,
+  rowAction,
+  disabledSelect,
   loading = false,
   fullWidth = false,
 }) => {
@@ -93,32 +106,37 @@ const TableStack = ({
   const { setTable, setSelectedRows } = useTableWrapper();
 
   const table_preferences = preferences?.find(
-    (item) => item?.type === `tables_${tableName}`
+    (item) => item?.table_id === tableId
   );
 
   const formatted_columns = useMemo(
     () => [
-      {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            disabled={!!meta?.some((item) => item?.locked)}
-            onClick={(e) => e.stopPropagation()}
-            checked={table.getIsAllRowsSelected()}
-            onChange={table.getToggleAllRowsSelectedHandler()}
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            disabled={!!meta?.[row?.index]?.locked}
-            checked={row.getIsSelected()}
-            onClick={(e) => e.stopPropagation()}
-            onChange={row.getToggleSelectedHandler()}
-          />
-        ),
-      },
+      ...(!!!disabledSelect
+        ? [
+            {
+              id: "select",
+              header: ({ table }) => (
+                <Checkbox
+                  disabled={!!meta?.some((item) => item?.locked)}
+                  onClick={(e) => e.stopPropagation()}
+                  checked={table.getIsAllRowsSelected()}
+                  onChange={table.getToggleAllRowsSelectedHandler()}
+                />
+              ),
+              cell: ({ row }) => (
+                <Checkbox
+                  disabled={!!meta?.[row?.index]?.locked}
+                  checked={row.getIsSelected()}
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={row.getToggleSelectedHandler()}
+                />
+              ),
+            },
+          ]
+        : []),
       ...columns.map((item) => ({
         id: item?.slug,
+        enableSorting: !!setSort,
         size: table_preferences?.content?.[item?.slug] || undefined,
         accessorFn: (row) => row?.[item?.slug],
         header: () => <span className="light">{item?.value}</span>,
@@ -136,10 +154,13 @@ const TableStack = ({
   const table = useReactTable({
     data: data || [],
     state: {
+      sorting: sort,
       rowSelection: tempSelectedRows,
     },
+    onSortingChange: setSort,
     enableRowSelection: true,
     enableColumnResizing: !!!fullWidth,
+    manualSorting: true,
     columns: formatted_columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -147,17 +168,19 @@ const TableStack = ({
     onRowSelectionChange: setTempSelectedRows,
   });
 
-  const saveTransaction = async () => {
+  const saveTransaction = async (values) => {
     await api.post("/preferences", {
-      type: `tables_${tableName}`,
-      content: table.getState().columnSizing,
+      table_id: tableId,
+      ...values,
     });
   };
 
   useEffect(() => {
-    const handleMouseUp = () => {
+    const handleMouseUp = (e) => {
+      e.preventDefault();
+
       if (!!isResizing) {
-        saveTransaction();
+        saveTransaction({ content: table.getState().columnSizing });
         setIsResizing(false);
       }
     };
@@ -171,6 +194,13 @@ const TableStack = ({
   }, [isResizing]);
 
   useEffect(() => {
+    if (!!sort?.length) {
+      saveTransaction({ sort });
+    }
+    // eslint-disable-next-line
+  }, [tableId, sort]);
+
+  useEffect(() => {
     setTable(table);
     // eslint-disable-next-line
   }, [table]);
@@ -181,6 +211,8 @@ const TableStack = ({
   }, [tempSelectedRows]);
 
   const handleMouseDown = (e, header) => {
+    e.stopPropagation();
+
     setIsResizing(true);
     header.getResizeHandler()(e);
   };
@@ -190,6 +222,8 @@ const TableStack = ({
       <div
         className={cx(mainClass, {
           [`${mainClass}--full-width`]: !!fullWidth,
+          [`${mainClass}--disabled-select`]: !!disabledSelect,
+          [`${mainClass}--sortable`]: !!setSort,
         })}
       >
         {!!loading ? (
@@ -213,20 +247,29 @@ const TableStack = ({
                       key={headerGroup.id}
                       className={`${mainClass}__header__row`}
                     >
-                      {headerGroup.headers.map((header) => (
+                      {headerGroup.headers.map((header, index) => (
                         <div
                           key={header.id}
                           className={`${mainClass}__header__col`}
+                          // header.column.getIsResizing()
                           style={{
                             width: header.getSize(),
                           }}
                         >
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                          <div
+                            className={`${mainClass}__header__col__wrapper`}
+                            onClick={header.column.getToggleSortingHandler()}
+                          >
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )}
+                            {index !== 0 && header?.column?.getCanSort() && (
+                              <Sort id={header?.id} data={sort} />
+                            )}
+                          </div>
                           <div
                             {...{
                               onDoubleClick: () => header.column.resetSize(),
@@ -277,6 +320,14 @@ const TableStack = ({
                             </span>
                           </div>
                         ))}
+                        <div className={`${mainClass}__body__row__action`}>
+                          {!!rowAction
+                            ? rowAction({
+                                row: row?.original,
+                                meta: meta?.[index],
+                              })
+                            : null}
+                        </div>
                       </div>
                     ))}
                   </div>

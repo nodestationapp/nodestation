@@ -31,7 +31,7 @@ const breadcrumps = [
 ];
 
 const UsersContent = () => {
-  const { users, settings, loading } = useUsers();
+  const { users, settings, loading, sort, setSort } = useUsers();
   const [edit_modal, setEditModal] = useState(false);
   const [archive_user_modal, setArchiveUserModal] = useState(false);
 
@@ -55,10 +55,11 @@ const UsersContent = () => {
 
   const columns = [
     {
-      key: "user_profile",
+      sort: "first_name",
+      key: "first_name",
       value: "User",
       type: "user_profile",
-      slug: "user_profile",
+      slug: "first_name",
     },
     ...(table_fields?.map((item) => ({
       key: item?.type,
@@ -102,9 +103,11 @@ const UsersContent = () => {
         <TableStack
           data={users}
           menu={table_menu}
+          sort={sort}
+          setSort={setSort}
           columns={columns}
           loading={loading}
-          tableName={"nodestation_users"}
+          tableId={"users"}
           rowClick={(row) => setEditModal(row)}
         />
         {!!edit_modal && (

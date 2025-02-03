@@ -1,12 +1,10 @@
 import "./styles.scss";
 
 import { useState } from "react";
-import classnames from "classnames";
 import { useNavigate } from "react-router-dom";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-import Table from "components/Table";
 import Button from "components/Button";
+import TableStack from "components/TableStack";
 import IconButton from "components/IconButton";
 import NoItemsFound from "components/List/components/NoItemsFound";
 import LabelChanger from "components/List/components/LabelChanger";
@@ -16,29 +14,14 @@ import EditorContentLayout from "components/layouts/EditorContentLayout";
 import { useEditor } from "context/client/editor";
 
 import {
-  LockClosedIcon,
   PlusIcon,
-  ShieldCheckIcon,
   Square3Stack3DIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
-const getItemStyle = (draggableStyle) => ({
-  userSelect: "none",
-  ...draggableStyle,
-});
-
 const EndpointsList = () => {
   const navigate = useNavigate();
-  const { editor, orderHandler } = useEditor();
+  const { editor } = useEditor();
 
   const [archive_modal, setArchiveModal] = useState(false);
 
@@ -101,72 +84,35 @@ const EndpointsList = () => {
   const all_sections = groups?.map((item) => ({
     keys: [...fields],
     group: item?.group,
-    items: item?.items?.map((item) => ({
-      onclick: () => navigate(`/editor/endpoints${item?.name}/${item?.id}`),
-      disabled: item?.status === "inactive",
-      actions: (
-        <>
-          <IconButton
-            icon={<TrashIcon color="#FF3636" />}
-            onClick={(e) => {
-              e.stopPropagation();
-              setArchiveModal(item);
-            }}
-          />
-        </>
-      ),
-      data: [
-        {
-          key: "name",
-          type: "endpoint_name",
-          value: {
-            name: item?.name,
-            method: item?.options?.method,
-            error: item?.error,
-          },
-        },
-        {
-          key: "icon",
-          type: "status",
-          value: item?.status,
-        },
-        {
-          key: "icon",
-          value: (
-            <LockClosedIcon
-              color={!!item?.options?.auth?.length ? "#fff" : "#696A73"}
-            />
-          ),
-        },
-        {
-          key: "icon",
-          value: (
-            <ShieldCheckIcon
-              color={!!item?.options?.middlewares?.length ? "#fff" : "#696A73"}
-            />
-          ),
-        },
-        {
-          key: "icon",
-          value: item?.options?.parser?.toUpperCase(),
-        },
-      ],
-    })),
+    items: item?.items,
   }));
 
-  const onDragEnd = (result) => {
-    if (!result.destination) {
-      return;
-    }
-
-    const items = reorder(
-      all_sections,
-      result.source.index,
-      result.destination.index
-    );
-
-    orderHandler(items);
-  };
+  const columns = [
+    {
+      key: "name",
+      value: "Name",
+      slug: "endpoint_name",
+      type: "endpoint_name",
+    },
+    {
+      key: "status",
+      value: "Status",
+      slug: "status",
+      type: "status",
+    },
+    {
+      key: "authentication",
+      type: "icon",
+      slug: "authentication",
+      value: "Authentication",
+    },
+    {
+      key: "middlewares",
+      type: "icon",
+      slug: "middlewares",
+      value: "Middlewares",
+    },
+  ];
 
   return (
     <>
@@ -175,53 +121,45 @@ const EndpointsList = () => {
         with_padding
         action={
           <Button href="/editor/new?type=ep" icon={<PlusIcon />}>
-            Add endpoint
+            New
           </Button>
         }
       >
         {all_sections?.length === 0 ? (
           <NoItemsFound />
         ) : (
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="droppable">
-              {(provided) => (
-                <div {...provided.droppableProps} ref={provided.innerRef}>
-                  {all_sections?.map((item, index) => (
-                    <Draggable
-                      key={index}
-                      draggableId={index.toString()}
-                      index={index}
-                    >
-                      {(provided, snapshot) => (
-                        <div
-                          className={classnames(`endpoints_table_section`, {
-                            [`endpoints_table_section--dragging`]:
-                              !!snapshot?.isDragging,
-                          })}
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          style={getItemStyle(provided.draggableProps.style)}
-                        >
-                          <div className="endpoints_table_section__header">
-                            <LabelChanger
-                              provided={provided}
-                              snapshot={snapshot}
-                              data={{
-                                id: item?.group,
-                                label: item?.group,
-                              }}
-                            />
-                          </div>
-                          <Table data={item} />
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
+          <>
+            {all_sections?.map((item, index) => (
+              <div key={index} className={`endpoints_table_section`}>
+                <div className="endpoints_table_section__header">
+                  <LabelChanger
+                    data={{
+                      id: item?.group,
+                      label: item?.group,
+                    }}
+                  />
                 </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+                <TableStack
+                  fullWidth
+                  disabledSelect={true}
+                  data={item?.items}
+                  columns={columns}
+                  rowAction={({ row }) => (
+                    <IconButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setArchiveModal(row);
+                      }}
+                      icon={<TrashIcon color="#FF3636" />}
+                    />
+                  )}
+                  rowClick={({ row }) =>
+                    navigate(`/editor/endpoints${row?.name}/${row?.id}`)
+                  }
+                />
+              </div>
+            ))}
+          </>
         )}
       </EditorContentLayout>
       {!!archive_modal && (

@@ -1,0 +1,14 @@
+.table__icon{
+  display: flex;
+  align-items: center;
+
+  svg{
+    height: 18px;
+    width: 18px;
+    color: #F0F1F3;
+  }
+
+  &--disabled{
+    opacity: 0.3;
+  }
+}

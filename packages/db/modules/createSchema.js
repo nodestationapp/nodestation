@@ -29,19 +29,6 @@ const createSchema = async () => {
     await createSqliteFileIfNotExist();
   }
 
-  const formsTableExists = await knex.schema.hasTable("nodestation_forms");
-  if (!formsTableExists) {
-    await knex.schema.createTable("nodestation_forms", (table) => {
-      table.increments("id").primary();
-      table.string("data");
-      table.integer("is_read").defaultTo(0);
-      table.integer("archived").defaultTo(0);
-      table.string("form_id");
-      table.bigInteger("updated_at").nullable();
-      table.bigInteger("created_at").nullable();
-    });
-  }
-
   const emailSettingsTableExists = await knex.schema.hasTable(
     "nodestation_email_settings"
   );
@@ -134,8 +121,9 @@ const createSchema = async () => {
     await knex.schema.createTable("nodestation_preferences", (table) => {
       table.increments("id").primary();
       table.string("uid").nullable();
-      table.string("type").nullable();
+      table.string("sort").nullable();
       table.string("content").nullable();
+      table.string("table_id").nullable();
       table.bigInteger("updated_at").nullable();
       table.bigInteger("created_at").nullable();
     });

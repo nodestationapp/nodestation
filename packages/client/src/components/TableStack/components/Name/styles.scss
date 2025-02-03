@@ -1,0 +1,13 @@
+.table__boolean{
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  background-color: #30353E;
+  color: #fff;
+  border-radius: 5px;
+
+  > span{
+    font-size: 12px;
+    font-weight: 500;
+  }
+}

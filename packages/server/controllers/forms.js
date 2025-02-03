@@ -1,4 +1,4 @@
-import { knex } from "@nstation/db";
+import { createSchema, knex } from "@nstation/db";
 import { fs } from "@nstation/utils";
 
 const getAllForms = async (_, res) => {
@@ -7,14 +7,13 @@ const getAllForms = async (_, res) => {
 
     let formatted_forms = [];
     for await (const item of forms) {
-      const total_count = await knex("nodestation_forms")
-        .where({ form_id: item?.id?.toString() })
+      const total_count = await knex(item?.id)
         .count("* as count")
-        .then((row) => row.count);
+        .first()
+        .then((row) => row?.count);
 
-      const unread_count = await knex("nodestation_forms")
+      const unread_count = await knex(item?.id)
         .where({
-          form_id: item?.id?.toString(),
           is_read: 0,
           archived: 0,
         })
@@ -37,42 +36,41 @@ const getAllForms = async (_, res) => {
 };
 
 const getForm = async (req, res) => {
+  let { sort } = req?.query;
+
+  sort = !!sort ? sort?.split(":") : ["id", "asc"];
+
   try {
     const forms = fs.getFiles(["forms"]);
     const form = forms?.find(
       (item) => item?.id?.toString() === req?.params?.id?.toString()
     );
 
-    const entries_query = await knex("nodestation_forms")
+    const entries_query = await knex(form?.id)
       .where({
-        form_id: form?.id,
         archived: parseInt(req?.query?.archived || 0),
       })
-      .orderBy("created_at", "desc");
+      .orderBy(sort?.[0], sort?.[1]);
+    // .orderBy("created_at", "desc");
 
-    const formatted_entries_query = entries_query?.map((item) => ({
-      ...item,
-      data: JSON.parse(item?.data),
-    }));
-
-    const formatted_incoming = formatted_entries_query?.map((item) => ({
-      ...item,
-      data: Object.keys(item?.data).reduce((acc, curr) => {
-        if (item?.data?.[curr]?.size) {
-          acc[curr] = {
-            ...item?.data?.[curr],
-            url: `http://localhost:4040/${item?.data?.[curr]?.url}`,
-          };
-        } else {
-          acc[curr] = item?.data?.[curr];
-        }
-        return acc;
-      }, {}),
-    }));
+    // let formatted_incoming = formatted_entries_query?.map((item) => ({
+    //   ...item,
+    //   data: Object.keys(item?.data).reduce((acc, curr) => {
+    //     if (item?.data?.[curr]?.size) {
+    //       acc[curr] = {
+    //         ...item?.data?.[curr],
+    //         url: `http://localhost:4040/${item?.data?.[curr]?.url}`,
+    //       };
+    //     } else {
+    //       acc[curr] = item?.data?.[curr];
+    //     }
+    //     return acc;
+    //   }, {}),
+    // }));
 
     const formatted_query = {
       form,
-      incoming: formatted_incoming,
+      incoming: entries_query,
     };
 
     return res.status(200).json(formatted_query);
@@ -93,6 +91,8 @@ const createForm = async (req, res) => {
 
     const id = await fs.createFile(formatted_body);
 
+    await createSchema();
+
     return res.status(200).json(id);
   } catch (error) {
     console.error(error);
@@ -111,6 +111,8 @@ const updateForm = async (req, res) => {
 
     await fs.updateFile(req?.params?.id, formatted_body);
 
+    await createSchema();
+
     return res.status(200).json({ status: "ok" });
   } catch (err) {
     console.error(err);
@@ -123,6 +125,7 @@ const deleteForm = async (req, res) => {
 
   try {
     await fs.deleteFile(id);
+    await knex.schema.dropTable(id);
 
     return res.status(200).json({ status: "ok" });
   } catch (error) {
@@ -133,26 +136,24 @@ const deleteForm = async (req, res) => {
 
 const entryUpdateForm = async (req, res) => {
   const body = req?.body;
-  const { id } = req?.params;
+  const { id, entry_id } = req?.params;
 
   try {
-    const updated_at = Date.now();
+    // const updated_at = Date.now();
 
     if (body?.is_read !== undefined) {
-      await knex("nodestation_forms")
-        .where({ id: parseInt(id) })
+      await knex(id)
+        .where({ id: entry_id })
         .update({
           is_read: !!body?.is_read ? 1 : 0,
-          updated_at: updated_at,
         });
     }
 
     if (body?.archived !== undefined) {
-      await knex("nodestation_forms")
-        .where({ id: parseInt(id) })
+      await knex(id)
+        .where({ id: entry_id })
         .update({
           archived: !!body?.archived ? 1 : 0,
-          updated_at: updated_at,
         });
     }
 
@@ -166,8 +167,9 @@ const entryUpdateForm = async (req, res) => {
 const deleteEntryForm = async (req, res) => {
   const { id } = req?.params;
 
+  //TODO
   try {
-    await knex("nodestation_forms").where({ id }).del();
+    // await knex("nodestation_forms").where({ id }).del();
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

@@ -5,8 +5,10 @@ import Modal from "components/Modal";
 
 import api from "libs/api";
 import { useOrganization } from "context/organization";
+import { useTableWrapper } from "context/client/table-wrapper";
 
 const ArchiveEndpointModal = ({ data, onClose }) => {
+  const { table } = useTableWrapper();
   const queryClient = useQueryClient();
   const { removeMinimizeHandler } = useOrganization();
 
@@ -20,6 +22,7 @@ const ArchiveEndpointModal = ({ data, onClose }) => {
       queryClient.refetchQueries({ queryKey: ["editor"] });
 
       removeMinimizeHandler(data?.id);
+      table.setRowSelection({});
 
       onClose();
     } catch (err) {
@@ -45,21 +48,16 @@ const ArchiveEndpointModal = ({ data, onClose }) => {
 
   return (
     <Modal
-      header="Remove endpoint"
       onClose={onClose}
       onSubmit={onSubmit}
       loading={loading}
       variant="error"
-      submit_label="Remove item"
+      submit_label="Remove"
       submit_keys={["↵"]}
     >
       <span>
-        Are you sure you want to move the{" "}
-        <strong>
-          {data?.options?.method?.toUpperCase()} {`${data?.name}`}
-        </strong>{" "}
-        endpoint to the archive? The Endpoint will become inactive and will no
-        longer be available!
+        Are you sure you want to delete <strong>{data?.length} selected</strong>{" "}
+        item?
       </span>
     </Modal>
   );

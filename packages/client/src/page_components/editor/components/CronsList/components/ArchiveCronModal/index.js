@@ -38,9 +38,7 @@ const ArchiveCronModal = ({ data, onClose }) => {
       submit_label="Remove item"
     >
       <span>
-        Are you sure you want to move the{" "}
-        <strong>{data?.label || data?.name}</strong> cron to the archive? The
-        cron will no longer be available!
+        Are you sure you want to delete <strong>selected</strong> item?
       </span>
     </Modal>
   );

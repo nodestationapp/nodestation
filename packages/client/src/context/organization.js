@@ -1,14 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 import api from "libs/api";
-import { useApp } from "./app";
 
 const OrganizationContext = createContext();
 
 const OrganizationProvider = ({ children }) => {
-  const { socket } = useApp();
-
   const [add_table_modal, setAddTableModal] = useState(false);
   const [terminal, setTerminal] = useState(null);
   const [terminal_content, setTerminalContent] = useState("");
@@ -18,39 +15,15 @@ const OrganizationProvider = ({ children }) => {
       : []
   );
 
-  const { data: server, refetch: serverRefetch } = useQuery({
-    queryKey: ["server"],
-    queryFn: () => api.get("/server"),
-  });
-
   const { data: tables = [], refetch: refetchTables } = useQuery({
     queryKey: ["tables"],
     queryFn: () => api.get("/tables"),
   });
 
-  const { data: preferences = [] } = useQuery({
+  const { data: preferences = [], isLoading: loading } = useQuery({
     queryKey: ["preferences"],
     queryFn: () => api.get("/preferences"),
   });
-
-  useEffect(() => {
-    if (!!!server?.terminal) return;
-    const text = `${server?.terminal?.trim()}\n\r`;
-
-    terminal?.write(text);
-    setTerminalContent((prev) => prev + text);
-    // eslint-disable-next-line
-  }, [server?.terminal]);
-
-  useEffect(() => {
-    if (!!!socket) return;
-
-    socket?.on("serverRefetch", () => {
-      serverRefetch();
-    });
-
-    // eslint-disable-next-line
-  }, [socket]);
 
   const setMinimizeHandler = (id, label, extras) => {
     if (!minimizeItems?.find((item) => item?.id === id)) {
@@ -88,25 +61,26 @@ const OrganizationProvider = ({ children }) => {
       setMinimizeItems,
       setMinimizeHandler,
       removeMinimizeHandler,
-      server,
-      serverRefetch,
       terminal,
       setTerminal,
       terminal_content,
       setTerminalContent,
       refetchTables,
       preferences,
+      loading,
     };
     // eslint-disable-next-line
   }, [
     tables,
     add_table_modal,
     minimizeItems,
-    server,
     terminal,
     terminal_content,
     preferences,
+    loading,
   ]);
+
+  if (!!loading) return null;
 
   return (
     <OrganizationContext.Provider value={value}>

@@ -13,8 +13,6 @@ import { useEmails } from "context/client/emails";
 import {
   PlusIcon,
   AtSymbolIcon,
-  // TrashIcon,
-  // LockClosedIcon,
   Cog6ToothIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
@@ -31,39 +29,6 @@ const EmailsContent = () => {
     useEmails();
 
   const [email_editor, setEmailEditor] = useState(null);
-
-  // const table_data = {
-  //   keys: [...fields],
-  //   items: emails?.map((item) => {
-  //     return {
-  //       data: [
-  //         {
-  //           key: "name",
-  //           value: (
-  //             <>
-  //               {item?.name}
-  //               {!!item?.locked && (
-  //                 <LockClosedIcon color="#647082" height={18} width={18} />
-  //               )}
-  //             </>
-  //           ),
-  //         },
-  //       ],
-  //       onclick: () => setEmailEditor(item?.id),
-  //       actions: !!!item?.locked ? (
-  //         <>
-  //           <IconButton
-  //             icon={<TrashIcon color="#FF3636" />}
-  //             onClick={(e) => {
-  //               e.stopPropagation();
-  //               setArchiveModal(item);
-  //             }}
-  //           />
-  //         </>
-  //       ) : null,
-  //     };
-  //   }),
-  // };
 
   const columns = [
     {

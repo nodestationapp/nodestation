@@ -4,10 +4,11 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import Sidebar from "./components/Sidebar";
-import ToolBar from "../DashboardLayout/components/ToolBar";
 import AddTableModal from "./components/AddTableModal";
+import ToolBar from "../DashboardLayout/components/ToolBar";
 
 import { useOrganization } from "context/organization";
+import TableWrapperProvider from "context/client/table-wrapper";
 
 const mainClass = "editor-layout";
 
@@ -16,7 +17,7 @@ const EditorLayout = () => {
   const [mobile_sidebar_open, setMobileSidebarOpen] = useState(false);
 
   return (
-    <>
+    <TableWrapperProvider>
       <div className={mainClass}>
         <div className={`${mainClass}__wrapper`}>
           <Sidebar
@@ -32,7 +33,7 @@ const EditorLayout = () => {
       {add_table_modal && (
         <AddTableModal onClose={() => setAddTableModal(false)} />
       )}
-    </>
+    </TableWrapperProvider>
   );
 };
 
