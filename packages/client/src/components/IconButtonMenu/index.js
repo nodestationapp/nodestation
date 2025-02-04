@@ -6,14 +6,14 @@ import DropdownMenu from "components/DropdownMenu";
 
 const mainClass = "icon-button-menu";
 
-const IconButtonMenu = ({ icon, data }) => {
+const IconButtonMenu = ({ icon, data, component }) => {
   return (
     <div className={mainClass}>
       <Dropdown
         position={[null, "right"]}
         button={<IconButton size="small" icon={icon} />}
       >
-        <DropdownMenu items={data} />
+        {component || <DropdownMenu items={data} />}
       </Dropdown>
     </div>
   );

@@ -15,10 +15,13 @@ import Sort from "./components/Sort";
 import Icon from "./components/Icon";
 import Media from "./components/Media";
 import Level from "./components/Level";
+import Button from "components/Button";
 import Boolean from "./components/Boolean";
+import Toolbar from "./components/ToolBar";
 import LogSource from "./components/LogSource";
 import StatusChip from "components/StatusChip";
 import BadgeName from "./components/BadgeName";
+import IconButton from "components/IconButton";
 import Checkbox from "components/form/Checkbox";
 import LogMessage from "./components/LogMessage";
 import UserProfile from "./components/UserProfile";
@@ -26,15 +29,26 @@ import EndpointCode from "./components/EndpointCode";
 import EndpointName from "./components/EndpointName";
 import NoItemsFound from "./components/NoItemsFound";
 import TableSkeleton from "./components/TableSkeleton";
+import IconButtonMenu from "components/IconButtonMenu";
 import NewMessageName from "./components/NewMessageName";
 import EmailSparklines from "./components/EmailSparklines";
+import DragOrderSelect from "components/form/DragOrderSelect";
 
 import api from "libs/api";
 
 import { useOrganization } from "context/organization";
 import { useTableWrapper } from "context/client/table-wrapper";
 
-import { LockClosedIcon } from "@heroicons/react/24/outline";
+import {
+  Cog6ToothIcon,
+  EllipsisHorizontalIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  ListBulletIcon,
+  LockClosedIcon,
+  PlusIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 
 const mainClass = "table-stack";
 
@@ -92,6 +106,7 @@ const TableStack = ({
   meta,
   columns,
   sort,
+  alert,
   setSort,
   rowClick,
   tableId,
@@ -99,14 +114,22 @@ const TableStack = ({
   disabledSelect,
   loading = false,
   fullWidth = false,
+  toolbar: toolbarData,
 }) => {
   const { preferences } = useOrganization();
   const [isResizing, setIsResizing] = useState(false);
-  const [tempSelectedRows, setTempSelectedRows] = useState(false);
   const { setTable, setSelectedRows } = useTableWrapper();
+  const [tempSelectedRows, setTempSelectedRows] = useState(false);
 
   const table_preferences = preferences?.find(
     (item) => item?.table_id === tableId
+  );
+
+  const [columnOrder, setColumnOrder] = useState(
+    table_preferences?.order || null
+  );
+  const [columnVisibility, setColumnVisibility] = useState(
+    table_preferences?.visibility || []
   );
 
   const formatted_columns = useMemo(
@@ -153,17 +176,24 @@ const TableStack = ({
 
   const table = useReactTable({
     data: data || [],
+    initialState: {
+      columnPinning: {
+        left: ["select"],
+      },
+    },
     state: {
       sorting: sort,
+      columnOrder: columnOrder,
       rowSelection: tempSelectedRows,
+      columnVisibility: columnVisibility,
     },
+    manualSorting: true,
     onSortingChange: setSort,
     enableRowSelection: true,
-    enableColumnResizing: !!!fullWidth,
-    manualSorting: true,
     columns: formatted_columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
+    enableColumnResizing: !!!fullWidth,
     getCoreRowModel: getCoreRowModel(),
     onRowSelectionChange: setTempSelectedRows,
   });
@@ -217,6 +247,106 @@ const TableStack = ({
     header.getResizeHandler()(e);
   };
 
+  const onVisibilityHanlder = (id) => {
+    let temp = { ...columnVisibility };
+
+    console.log(temp?.[id]);
+
+    if (!!!temp?.hasOwnProperty(id)) {
+      temp[id] = false;
+    } else {
+      temp[id] = !temp[id];
+    }
+
+    setColumnVisibility(temp);
+    saveTransaction({ visibility: temp });
+  };
+
+  const onChangeColumnOrder = (value) => {
+    setColumnOrder(value);
+    saveTransaction({ order: value });
+  };
+
+  const toolbar = {
+    menu: toolbarData?.menu,
+    action: [
+      // toolbarData?.hideColumnOrder
+      ...(!!!toolbarData?.hideColumnOrder
+        ? [
+            <DragOrderSelect
+              multi={true}
+              value={columnOrder || columns?.map((item) => item?.slug)}
+              CustomButton={({ active }) => (
+                <IconButton
+                  size="small"
+                  active={active}
+                  icon={<ListBulletIcon />}
+                />
+              )}
+              itemAction={({ id }) => (
+                <IconButton
+                  size="small"
+                  icon={
+                    columnVisibility?.[id] === false ? (
+                      <EyeSlashIcon />
+                    ) : (
+                      <EyeIcon />
+                    )
+                  }
+                  onClick={() => onVisibilityHanlder(id)}
+                />
+              )}
+              actionAlwaysVisible={true}
+              options={columns?.map((item) => ({
+                label: item?.value,
+                value: item?.slug,
+                disabled: columnVisibility?.[item?.slug] === false,
+              }))}
+              onChange={({ target }) => onChangeColumnOrder(target?.value)}
+            />,
+          ]
+        : []),
+
+      ...(!!toolbarData?.settingsButtonHandler
+        ? [
+            <IconButton
+              size="small"
+              icon={<Cog6ToothIcon />}
+              href={toolbarData?.settingsButtonHandler}
+            />,
+          ]
+        : []),
+      ...(!!toolbarData?.deleteHandler
+        ? [
+            <IconButtonMenu
+              icon={<EllipsisHorizontalIcon />}
+              data={[
+                {
+                  type: "select",
+                  label: "Delete",
+                  icon: <TrashIcon />,
+                  onClick: toolbarData?.deleteHandler,
+                },
+              ]}
+            />,
+          ]
+        : []),
+      ...(!!toolbarData?.newButtonHandler
+        ? [
+            <Button icon={<PlusIcon />} onClick={toolbarData?.newButtonHandler}>
+              New
+            </Button>,
+          ]
+        : []),
+    ],
+    selectAction: [
+      {
+        icon: <TrashIcon color="#FF3636" />,
+        // onClick: (rows) => setArchiveEntryModal(rows),
+      },
+    ],
+  };
+
   return (
     <>
       <div
@@ -226,6 +356,7 @@ const TableStack = ({
           [`${mainClass}--sortable`]: !!setSort,
         })}
       >
+        <Toolbar data={toolbar} />
         {!!loading ? (
           <TableSkeleton />
         ) : (
@@ -293,6 +424,7 @@ const TableStack = ({
                   <NoItemsFound />
                 ) : (
                   <div className={`${mainClass}__body`}>
+                    {alert}
                     {table.getRowModel().rows.map((row, index) => (
                       <div
                         key={row.id}

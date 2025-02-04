@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import Loader from "components/Loader";
 import Breadcrumps from "./components/Breadcrumps";
-import Toolbar from "components/TableStack/components/ToolBar";
+// import Toolbar from "components/TableStack/components/ToolBar";
 
 const mainClass = "dashboard-content-layout";
 
@@ -20,7 +20,7 @@ const DashboardContentLayout = ({
       <div className={`${mainClass}__header`}>
         <Breadcrumps data={breadcrumps} loading={loading} />
       </div>
-      {(!!toolbar?.menu || !!toolbar?.action) && <Toolbar data={toolbar} />}
+      {/* {(!!toolbar?.menu || !!toolbar?.action) && <Toolbar data={toolbar} />} */}
       <div
         className={cx(`${mainClass}__content`, {
           [`${mainClass}__content--no-padding`]: !!noContentPadding,

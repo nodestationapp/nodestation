@@ -33,27 +33,39 @@ const FormsContent = () => {
     },
   ];
 
+  // const toolbar = {
+  //   action: [
+  //     <Button
+  //       icon={<PlusIcon />}
+  //       onClick={() => navigate(`/forms/new/settings`)}
+  //     >
+  //       New
+  //     </Button>,
+  //   ],
+  //   selectAction: [
+  //     {
+  //       icon: <TrashIcon color="#FF3636" />,
+  //       onClick: (rows) => setArchiveModal(rows),
+  //     },
+  //   ],
+  // };
+
   const toolbar = {
-    action: [
-      <Button
-        icon={<PlusIcon />}
-        onClick={() => navigate(`/forms/new/settings`)}
-      >
-        New
-      </Button>,
-    ],
-    selectAction: [
+    menu: [
       {
-        icon: <TrashIcon color="#FF3636" />,
-        onClick: (rows) => setArchiveModal(rows),
+        label: "My forms",
+        href: `/forms`,
       },
     ],
+    hideColumnOrder: true,
+    newButtonHandler: () => navigate(`/forms/new/settings`),
   };
 
   return (
-    <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
+    <DashboardContentLayout breadcrumps={breadcrumps}>
       <TableStack
         fullWidth
+        toolbar={toolbar}
         data={forms}
         columns={columns}
         loading={loading}

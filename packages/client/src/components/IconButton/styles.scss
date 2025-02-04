@@ -113,4 +113,10 @@
       }
     }
   }
+
+  &--active{
+    &::before {
+      opacity: 1;
+    }
+  }
 }

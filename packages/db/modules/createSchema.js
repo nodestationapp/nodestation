@@ -122,6 +122,7 @@ const createSchema = async () => {
       table.increments("id").primary();
       table.string("uid").nullable();
       table.string("sort").nullable();
+      table.string("order").nullable();
       table.string("content").nullable();
       table.string("table_id").nullable();
       table.bigInteger("updated_at").nullable();

@@ -1,9 +1,9 @@
-import { createContext, useContext, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { createContext, useContext, useMemo, useState } from "react";
 
 import api from "libs/api";
-import { useOrganization } from "context/organization";
 import sortParser from "libs/sortParser";
+import { useOrganization } from "context/organization";
 
 const UsersContext = createContext();
 
@@ -20,9 +20,9 @@ const UsersProvider = ({ children }) => {
   const sort_query = sortParser(sort);
 
   const {
-    isLoading: users_loading,
     data: users,
     refetch: usersRefetch,
+    isLoading: users_loading,
   } = useQuery({
     queryKey: ["users", sort_query],
     queryFn: () => api.get(`/auth?sort=${sort_query}`),

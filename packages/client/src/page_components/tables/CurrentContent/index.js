@@ -1,9 +1,6 @@
 import { useState } from "react";
 
-import Button from "components/Button";
-import IconButton from "components/IconButton";
 import TableStack from "components/TableStack";
-import IconButtonMenu from "components/IconButtonMenu";
 import ArchiveTableModal from "../components/ArchiveTableModal";
 import TableContentEditor from "./components/TableContentEditor";
 import ArchiveTableEntryModal from "../components/ArchiveTableEntryModal";
@@ -11,16 +8,19 @@ import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useTable } from "context/client/table";
 
-import {
-  PlusIcon,
-  TrashIcon,
-  CircleStackIcon,
-  Cog6ToothIcon,
-  EllipsisHorizontalIcon,
-} from "@heroicons/react/24/outline";
+import { CircleStackIcon } from "@heroicons/react/24/outline";
 
 const FormContent = () => {
-  const { data, id, loading, sort, setSort } = useTable();
+  const {
+    data,
+    id,
+    loading,
+    sort,
+    setSort,
+    columnOrder,
+    setColumnOrder,
+    columnVisibility,
+  } = useTable();
 
   const [archive_modal, setArchiveModal] = useState(false);
   const [content_editor, setContentEditor] = useState(null);
@@ -54,14 +54,11 @@ const FormContent = () => {
     return obj;
   }, {});
 
-  const asideMenu = [
-    {
-      type: "select",
-      icon: <TrashIcon />,
-      label: "Delete",
-      onClick: () => setArchiveModal(table),
-    },
-  ];
+  // TODO
+  //     {
+  //       icon: <TrashIcon color="#FF3636" />,
+  //       onClick: (rows) => setArchiveEntryModal(rows),
+  //     },
 
   const toolbar = {
     menu: [
@@ -70,39 +67,25 @@ const FormContent = () => {
         href: `/tables/${id}`,
       },
     ],
-    action: [
-      <IconButton
-        size="small"
-        icon={<Cog6ToothIcon />}
-        href={`/tables/${id}/settings`}
-      />,
-      <IconButtonMenu icon={<EllipsisHorizontalIcon />} data={asideMenu} />,
-      <Button
-        icon={<PlusIcon />}
-        onClick={() => setContentEditor(new_entry_schema)}
-      >
-        New
-      </Button>,
-    ],
-    selectAction: [
-      {
-        icon: <TrashIcon color="#FF3636" />,
-        onClick: (rows) => setArchiveEntryModal(rows),
-      },
-    ],
+    deleteHandler: () => setArchiveModal(table),
+    settingsButtonHandler: `/tables/${id}/settings`,
+    newButtonHandler: () => setContentEditor(new_entry_schema),
   };
 
   return (
     <>
-      <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
+      <DashboardContentLayout breadcrumps={breadcrumps}>
         <TableStack
-          key={[id, sort]}
           sort={sort}
           setSort={setSort}
           data={entries}
+          toolbar={toolbar}
           loading={loading}
           columns={columns}
-          tableId={table?.id}
+          tableId={id}
+          columnOrder={columnOrder}
+          setColumnOrder={setColumnOrder}
+          columnVisibility={columnVisibility}
           rowClick={(row) => setContentEditor(row)}
         />
         {!!content_editor && (

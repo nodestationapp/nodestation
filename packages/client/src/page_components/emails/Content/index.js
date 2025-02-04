@@ -3,19 +3,13 @@ import { useState } from "react";
 import Alert from "components/Alert";
 import Button from "components/Button";
 import TableStack from "components/TableStack";
-import IconButton from "components/IconButton";
 import ArchiveEmailModal from "../components/ArchiveEmailModal";
 import EmailContentEditor from "./components/EmailContentEditor";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useEmails } from "context/client/emails";
 
-import {
-  PlusIcon,
-  AtSymbolIcon,
-  Cog6ToothIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { AtSymbolIcon } from "@heroicons/react/24/outline";
 
 const breadcrumps = [
   {
@@ -25,8 +19,7 @@ const breadcrumps = [
 ];
 
 const EmailsContent = () => {
-  const { emails, email_settings, loading, archive_modal, setArchiveModal } =
-    useEmails();
+  const { emails, loading, archive_modal, setArchiveModal } = useEmails();
 
   const [email_editor, setEmailEditor] = useState(null);
 
@@ -38,29 +31,14 @@ const EmailsContent = () => {
     },
   ];
 
+  //     {
+  //       icon: <TrashIcon color="#FF3636" />,
+  //       onClick: (rows) => setArchiveModal(rows),
+  //     },
+
   const toolbar = {
-    menu: [
-      {
-        label: "Templates",
-        href: "/emails",
-      },
-    ],
-    action: [
-      <IconButton
-        size="small"
-        icon={<Cog6ToothIcon />}
-        href={`/emails/settings`}
-      />,
-      <Button onClick={() => setEmailEditor("new")} icon={<PlusIcon />}>
-        New
-      </Button>,
-    ],
-    selectAction: [
-      {
-        icon: <TrashIcon color="#FF3636" />,
-        onClick: (rows) => setArchiveModal(rows),
-      },
-    ],
+    hideColumnOrder: true,
+    newButtonHandler: () => setEmailEditor("new"),
   };
 
   const meta = emails?.map((item) => ({
@@ -68,23 +46,24 @@ const EmailsContent = () => {
   }));
 
   return (
-    <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
-      {!!!email_settings?.active && (
-        <Alert
-          text="To send email messages, you must first configure your settings."
-          action={
-            <Button variant="transparent" href="/emails/settings">
-              Configure
-            </Button>
-          }
-        />
-      )}
+    <DashboardContentLayout breadcrumps={breadcrumps}>
       <TableStack
         fullWidth
         meta={meta}
         data={emails}
+        toolbar={toolbar}
         columns={columns}
         loading={loading}
+        alert={
+          <Alert
+            text="To send email messages, you must first configure your settings."
+            action={
+              <Button variant="transparent" href="/emails/settings">
+                Configure
+              </Button>
+            }
+          />
+        }
         rowClick={(row) => setEmailEditor(row?.row?.id)}
       />
       {!!archive_modal && (

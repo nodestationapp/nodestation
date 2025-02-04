@@ -1,20 +1,13 @@
 import { useState } from "react";
 
-import Button from "components/Button";
 import TableStack from "components/TableStack";
-import IconButton from "components/IconButton";
 import UserProfileModal from "../components/UserProfileModal";
 import ArchiveUserModal from "../components/ArchiveUserModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useUsers } from "context/client/users";
 
-import {
-  PlusIcon,
-  UsersIcon,
-  TrashIcon,
-  Cog6ToothIcon,
-} from "@heroicons/react/24/outline";
+import { UsersIcon } from "@heroicons/react/24/outline";
 
 const table_menu = [
   {
@@ -32,6 +25,7 @@ const breadcrumps = [
 
 const UsersContent = () => {
   const { users, settings, loading, sort, setSort } = useUsers();
+
   const [edit_modal, setEditModal] = useState(false);
   const [archive_user_modal, setArchiveUserModal] = useState(false);
 
@@ -69,45 +63,34 @@ const UsersContent = () => {
     })) || []),
   ];
 
+  //     {
+  //       icon: <TrashIcon color="#FF3636" />,
+  //       onClick: (rows) => setArchiveUserModal(rows),
+  //     },
+
   const toolbar = {
     menu: [
       {
-        label: "Users",
-        href: "/authentication",
+        label: "Entries",
+        href: `/authentication`,
       },
     ],
-    action: [
-      <IconButton
-        size="small"
-        icon={<Cog6ToothIcon />}
-        href={`/authentication/settings`}
-      />,
-      <Button
-        icon={<PlusIcon />}
-        onClick={() => setEditModal({ row: new_user_schema })}
-      >
-        New
-      </Button>,
-    ],
-    selectAction: [
-      {
-        icon: <TrashIcon color="#FF3636" />,
-        onClick: (rows) => setArchiveUserModal(rows),
-      },
-    ],
+    settingsButtonHandler: `/authentication/settings`,
+    newButtonHandler: () => setEditModal({ row: new_user_schema }),
   };
 
   return (
     <>
-      <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
+      <DashboardContentLayout breadcrumps={breadcrumps}>
         <TableStack
           data={users}
           menu={table_menu}
           sort={sort}
+          toolbar={toolbar}
           setSort={setSort}
           columns={columns}
           loading={loading}
-          tableId={"users"}
+          tableId="users"
           rowClick={(row) => setEditModal(row)}
         />
         {!!edit_modal && (

@@ -18,6 +18,12 @@ const FormProvider = ({ archived, children }) => {
   const table_preferences = preferences?.find((item) => item?.table_id === id);
 
   const [checked, setChecked] = useState([]);
+  const [columnOrder, setColumnOrder] = useState(
+    table_preferences?.order || null
+  );
+  const [columnVisibility, setColumnVisibility] = useState(
+    table_preferences?.visibility || []
+  );
   const [sort, setSort] = useState(table_preferences?.sort || []);
 
   const sort_query = sortParser(sort);
@@ -107,9 +113,23 @@ const FormProvider = ({ archived, children }) => {
       setChecked,
       sort,
       setSort,
+      columnOrder,
+      setColumnOrder,
+      columnVisibility,
+      setColumnVisibility,
     };
     // eslint-disable-next-line
-  }, [data, id, loading, archived, emails, checked, sort]);
+  }, [
+    data,
+    id,
+    loading,
+    archived,
+    emails,
+    checked,
+    sort,
+    columnOrder,
+    columnVisibility,
+  ]);
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
 };

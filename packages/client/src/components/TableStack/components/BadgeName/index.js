@@ -5,8 +5,6 @@ const mainClass = "table__user-badge-name";
 const BadgeName = ({ data }) => {
   const count = parseInt(data?.unread_count);
 
-  console.log(data);
-
   return (
     <div className={mainClass}>
       <span>{data?.name}</span>
