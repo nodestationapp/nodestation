@@ -7,7 +7,6 @@ import Button from "components/Button";
 import TableStack from "components/TableStack";
 import IconButton from "components/IconButton";
 import NoItemsFound from "components/List/components/NoItemsFound";
-import LabelChanger from "components/List/components/LabelChanger";
 import ArchiveEndpointModal from "./components/ArchiveEndpointModal";
 import EditorContentLayout from "components/layouts/EditorContentLayout";
 
@@ -129,36 +128,52 @@ const EndpointsList = () => {
           <NoItemsFound />
         ) : (
           <>
-            {all_sections?.map((item, index) => (
-              <div key={index} className={`endpoints_table_section`}>
-                <div className="endpoints_table_section__header">
+            {all_sections?.map((item, index) => {
+              console.log(item);
+
+              const toolbar = {
+                menu: [
+                  {
+                    label:
+                      item?.group.charAt(0).toUpperCase() +
+                      item?.group.slice(1),
+                    variant: "label",
+                  },
+                ],
+                hideColumnOrder: true,
+              };
+              return (
+                <div key={index} className={`endpoints_table_section`}>
+                  {/* <div className="endpoints_table_section__header">
                   <LabelChanger
                     data={{
                       id: item?.group,
                       label: item?.group,
                     }}
                   />
+                </div> */}
+                  <TableStack
+                    fullWidth
+                    toolbar={toolbar}
+                    disabledSelect={true}
+                    data={item?.items}
+                    columns={columns}
+                    rowAction={({ row }) => (
+                      <IconButton
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setArchiveModal(row);
+                        }}
+                        icon={<TrashIcon color="#FF3636" />}
+                      />
+                    )}
+                    rowClick={({ row }) =>
+                      navigate(`/editor/endpoints${row?.name}/${row?.id}`)
+                    }
+                  />
                 </div>
-                <TableStack
-                  fullWidth
-                  disabledSelect={true}
-                  data={item?.items}
-                  columns={columns}
-                  rowAction={({ row }) => (
-                    <IconButton
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setArchiveModal(row);
-                      }}
-                      icon={<TrashIcon color="#FF3636" />}
-                    />
-                  )}
-                  rowClick={({ row }) =>
-                    navigate(`/editor/endpoints${row?.name}/${row?.id}`)
-                  }
-                />
-              </div>
-            ))}
+              );
+            })}
           </>
         )}
       </EditorContentLayout>
