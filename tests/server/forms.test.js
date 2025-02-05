@@ -118,16 +118,12 @@ describe(`Forms`, () => {
       },
       incoming: [
         {
-          id: expect.any(Number),
-          data: {
-            email: entryFormBody.email,
-            first_name: entryFormBody.first_name,
-            last_name: entryFormBody.last_name,
-          },
+          id: expect.any(String),
+          email: entryFormBody.email,
+          first_name: entryFormBody.first_name,
+          last_name: entryFormBody.last_name,
           is_read: 0,
           archived: 0,
-          form_id: fileID,
-          updated_at: null,
           created_at: expect.any(Number),
         },
       ],
@@ -136,9 +132,9 @@ describe(`Forms`, () => {
     entryID = response.body.incoming[0].id;
   });
 
-  it("PUT /forms/entry/:id", async () => {
+  it("PUT /forms/:id/entry/:entry_id", async () => {
     const response = await request(app)
-      .put(`/admin/api/forms/entry/${entryID}`)
+      .put(`/admin/api/forms/${fileID}/entry/${entryID}`)
       .send({
         is_read: true,
         archived: true,
@@ -155,24 +151,20 @@ describe(`Forms`, () => {
     expect(response2.status).toBe(200);
     expect(response2.body.incoming).toMatchObject([
       {
-        id: expect.any(Number),
-        data: {
-          email: entryFormBody.email,
-          first_name: entryFormBody.first_name,
-          last_name: entryFormBody.last_name,
-        },
+        id: expect.any(String),
+        email: entryFormBody.email,
+        first_name: entryFormBody.first_name,
+        last_name: entryFormBody.last_name,
         is_read: 1,
         archived: 1,
-        form_id: fileID,
-        updated_at: expect.any(Number),
         created_at: expect.any(Number),
       },
     ]);
   });
 
-  it("DELETE /forms/entry/:id", async () => {
+  it("DELETE /forms/:id/entry/:entry_id", async () => {
     const response = await request(app)
-      .delete(`/admin/api/forms/entry/${entryID}`)
+      .delete(`/admin/api/forms/${fileID}/entry/${entryID}`)
       .set("Authorization", `Bearer ${token}`);
 
     const response2 = await request(app)

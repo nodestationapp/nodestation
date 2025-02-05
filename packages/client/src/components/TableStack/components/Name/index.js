@@ -17,8 +17,6 @@ const Name = ({ data }) => {
   const boolean = toggleBoolean(data);
   if (!!!boolean) return <span>-</span>;
 
-  console.log(data);
-
   return (
     <div className={mainClass}>
       <span>{toggleBoolean(data)}</span>

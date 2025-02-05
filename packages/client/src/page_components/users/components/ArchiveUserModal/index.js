@@ -5,16 +5,18 @@ import Modal from "components/Modal";
 import { useUsers } from "context/client/users";
 import { useTableWrapper } from "context/client/table-wrapper";
 
-const ArchiveUserModal = ({ data, onClose }) => {
+const ArchiveUserModal = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const { deleteUsers } = useUsers();
   const { table } = useTableWrapper();
+
+  const itemsToDelete = table.getSelectedRowModel()?.rows;
 
   const onSubmit = async () => {
     setLoading(true);
 
     try {
-      for await (const item of data) {
+      for await (const item of itemsToDelete) {
         await deleteUsers(item?.original?.id);
       }
       table.setRowSelection({});
@@ -36,8 +38,8 @@ const ArchiveUserModal = ({ data, onClose }) => {
       submit_label="Delete"
     >
       <span>
-        Are you sure you want to delete <strong>{data?.length} selected</strong>{" "}
-        items?
+        Are you sure you want to delete{" "}
+        <strong>{itemsToDelete?.length} selected</strong> items?
       </span>
     </Modal>
   );

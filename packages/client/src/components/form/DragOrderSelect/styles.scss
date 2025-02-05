@@ -190,6 +190,10 @@
       &--selected {
         background-color: #2a2b31;
       }
+
+      &--disabled{
+        opacity: 0.4;
+      }
     }
 
     &__bottom{
@@ -277,6 +281,20 @@ span{
   &--light{
     button{
       background-color: #383E48;
+    }
+  }
+
+  &--custom-button{
+    button{
+      padding: 0;
+      border: none;
+      height: fit-content;
+    }
+  }
+
+  &--action-visible{
+    .icon-button{
+      display: flex;
     }
   }
 }

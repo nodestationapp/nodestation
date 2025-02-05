@@ -4,19 +4,25 @@ import { useQueryClient } from "@tanstack/react-query";
 import Modal from "components/Modal";
 import api from "libs/api";
 
-const ArchiveEmailModal = ({ data, onClose }) => {
+import { useTableWrapper } from "context/client/table-wrapper";
+
+const ArchiveEmailModal = ({ onClose }) => {
   const queryClient = useQueryClient();
+  const { table } = useTableWrapper();
 
   const [loading, setLoading] = useState(false);
+
+  const itemsToDelete = table.getSelectedRowModel()?.rows;
 
   const onSubmit = async () => {
     setLoading(true);
 
     try {
-      for await (const row of data) {
+      for await (const row of itemsToDelete) {
         await api.delete(`/emails/${row?.original?.id}`);
       }
 
+      table.setRowSelection({});
       queryClient.refetchQueries({ queryKey: ["emails"] });
 
       onClose();
@@ -35,8 +41,8 @@ const ArchiveEmailModal = ({ data, onClose }) => {
       submit_label="Remove item"
     >
       <span>
-        Are you sure you want to delete <strong>{data?.length} selected</strong>{" "}
-        items?
+        Are you sure you want to delete{" "}
+        <strong>{itemsToDelete?.length} selected</strong> items?
       </span>
     </Modal>
   );

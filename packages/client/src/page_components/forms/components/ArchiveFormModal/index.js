@@ -14,13 +14,15 @@ const ArchiveFormModal = ({ data, type, onClose }) => {
 
   const [loading, setLoading] = useState(false);
 
+  const itemsToDelete = !!data?.id ? [data] : table.getSelectedRowModel()?.rows;
+
   const onSubmit = async () => {
     setLoading(true);
 
     try {
       const entry_ids = !!data?.id
         ? [data?.id]
-        : data?.map((item) => item?.original?.id);
+        : itemsToDelete?.map((item) => item?.original?.id);
 
       for await (const item of entry_ids) {
         await api.delete(`/forms/${item}`);
@@ -66,8 +68,8 @@ const ArchiveFormModal = ({ data, type, onClose }) => {
       submit_keys={["↵"]}
     >
       <span>
-        Are you sure you want to delete <strong>{data?.length} selected</strong>{" "}
-        items?
+        Are you sure you want to delete{" "}
+        <strong>{itemsToDelete?.length} selected</strong> items?
       </span>
     </Modal>
   );

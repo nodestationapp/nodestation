@@ -37,7 +37,14 @@ const mapDefaults = (schema, value, is_update) => {
   }
 };
 
-const upsertEntry = async ({ type, id, body, files, entry_id, extraFields }) =>
+const upsertEntry = async ({
+  type,
+  id,
+  body,
+  files,
+  entry_id,
+  extraFields = [],
+}) =>
   new Promise(async (resolve, reject) => {
     const allSchemas = !!type ? fs.getFiles([type]) : fs.getFiles();
     const schema = allSchemas?.find((item) => item?.id?.toString() === id);

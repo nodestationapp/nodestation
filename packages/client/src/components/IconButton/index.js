@@ -13,6 +13,7 @@ const IconButton = ({
   size,
   type = "button",
   variant,
+  active,
   ...rest
 }) => {
   const content_props = {
@@ -24,6 +25,7 @@ const IconButton = ({
   const classes = classnames(mainClass, {
     [`${mainClass}--${size}`]: !!size,
     [`${mainClass}--${variant}`]: !!variant,
+    [`${mainClass}--active`]: !!active,
   });
 
   return href ? (

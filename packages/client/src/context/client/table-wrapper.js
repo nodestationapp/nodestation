@@ -5,6 +5,7 @@ const TableWrapperContext = createContext();
 const TableWrapperProvider = ({ children }) => {
   const [table, setTable] = useState(null);
   const [selectedRows, setSelectedRows] = useState(null);
+  // const [selectedRows, setSelectedRows] = useState(null);
 
   const value = useMemo(() => {
     return { table, setTable, selectedRows, setSelectedRows };

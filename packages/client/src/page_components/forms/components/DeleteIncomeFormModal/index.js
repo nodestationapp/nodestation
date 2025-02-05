@@ -7,19 +7,21 @@ import api from "libs/api";
 import { useForm } from "context/client/form";
 import { useTableWrapper } from "context/client/table-wrapper";
 
-const DeleteIncomeFormModal = ({ data, type, onClose, previewModalClose }) => {
+const DeleteIncomeFormModal = ({ type, onClose, previewModalClose }) => {
   const { id, archived } = useForm();
   const { table } = useTableWrapper();
   const queryClient = useQueryClient();
 
   const [loading, setLoading] = useState(false);
 
+  const itemsToDelete = table.getSelectedRowModel()?.rows;
+
   const onSubmit = async () => {
     setLoading(true);
 
     try {
-      for await (const item of data) {
-        await api.delete(`/forms/entry/${item?.original?.id}`);
+      for await (const item of itemsToDelete) {
+        await api.delete(`/forms/${id}/entry/${item?.original?.id}`);
       }
 
       queryClient.refetchQueries({
@@ -48,8 +50,8 @@ const DeleteIncomeFormModal = ({ data, type, onClose, previewModalClose }) => {
       submit_label="Delete item"
     >
       <span>
-        Are you sure you want to delete <strong>{data?.length} selected</strong>{" "}
-        items?
+        Are you sure you want to delete{" "}
+        <strong>{itemsToDelete?.length} selected</strong> items?
       </span>
     </Modal>
   );

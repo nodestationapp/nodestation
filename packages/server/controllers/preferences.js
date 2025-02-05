@@ -70,6 +70,16 @@ const upsertPreferences = async (req, res) => {
                 sort: safeJSONStringify(body?.sort),
               }
             : {}),
+          ...(!!body?.hasOwnProperty("order")
+            ? {
+                order: safeJSONStringify(body?.order),
+              }
+            : {}),
+          ...(!!body?.hasOwnProperty("visibility")
+            ? {
+                visibility: safeJSONStringify(body?.visibility),
+              }
+            : {}),
           content: safeJSONStringify(content),
           updated_at: currentDate,
         });
@@ -81,6 +91,16 @@ const upsertPreferences = async (req, res) => {
         ...(!!body?.hasOwnProperty("sort")
           ? {
               sort: safeJSONStringify(body?.sort),
+            }
+          : {}),
+        ...(!!body?.hasOwnProperty("order")
+          ? {
+              order: safeJSONStringify(body?.order),
+            }
+          : {}),
+        ...(!!body?.hasOwnProperty("visibility")
+          ? {
+              visibility: safeJSONStringify(body?.visibility),
             }
           : {}),
         created_at: currentDate,

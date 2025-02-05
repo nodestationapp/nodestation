@@ -46,6 +46,9 @@ const DragOrderSelect = ({
   hideError,
   id,
   variant,
+  CustomButton,
+  itemAction,
+  actionAlwaysVisible,
 }) => {
   const is_error = !!!hideError && touched && !!error;
 
@@ -78,6 +81,7 @@ const DragOrderSelect = ({
   };
 
   const formatted_value = value?.map((item) => ({
+    disabled: options?.find((element) => element?.value === item)?.disabled,
     label: options?.find((element) => element?.value === item)?.label,
     value: item,
   }));
@@ -105,7 +109,9 @@ const DragOrderSelect = ({
         [`${mainClass}--error`]: !!is_error,
         [`${mainClass}--empty`]: !!!value,
         [`${mainClass}--filled`]: !!value,
+        [`${mainClass}--custom-button`]: !!CustomButton,
         [`${mainClass}--${variant}`]: !!variant,
+        [`${mainClass}--action-visible`]: !!actionAlwaysVisible,
       })}
     >
       {!!label && (
@@ -114,19 +120,24 @@ const DragOrderSelect = ({
           {!!required && <span>*</span>}
         </label>
       )}
+      {/* <CustomButton /> */}
       <button
         ref={button_ref}
         type="button"
         onClick={() => setSelectOpen((prev) => !prev)}
       >
-        <span>
-          {value
-            ?.map(
-              (item) =>
-                options?.find((element) => element?.value === item)?.label
-            )
-            ?.join(", ") || placeholder}
-        </span>
+        {CustomButton ? (
+          <CustomButton active={!!select_open} />
+        ) : (
+          <span>
+            {value
+              ?.map(
+                (item) =>
+                  options?.find((element) => element?.value === item)?.label
+              )
+              ?.join(", ") || placeholder}
+          </span>
+        )}
       </button>
       {select_open && (
         <div
@@ -156,6 +167,8 @@ const DragOrderSelect = ({
                     id={item?.value}
                     key={item?.value}
                     data={item}
+                    disabled={item?.disabled}
+                    itemAction={itemAction}
                     removeMiddleware={removeMiddleware}
                   />
                 ))}
@@ -186,7 +199,13 @@ const DragOrderSelect = ({
   );
 };
 
-const DragOrderSelectItem = ({ id, data, removeMiddleware }) => {
+const DragOrderSelectItem = ({
+  id,
+  data,
+  removeMiddleware,
+  disabled,
+  itemAction: ItemAction,
+}) => {
   const {
     attributes,
     isDragging,
@@ -204,7 +223,9 @@ const DragOrderSelectItem = ({ id, data, removeMiddleware }) => {
 
   return (
     <div
-      className={`${mainClass}__options__item`}
+      className={classnames(`${mainClass}__options__item`, {
+        [`${mainClass}__options__item--disabled`]: !!disabled,
+      })}
       style={style}
       ref={setNodeRef}
     >
@@ -218,12 +239,16 @@ const DragOrderSelectItem = ({ id, data, removeMiddleware }) => {
         />
         <p>{data?.label}</p>
       </div>
-      <IconButton
-        onClick={() => removeMiddleware(data?.value)}
-        variant="light"
-        size="small"
-        icon={<XMarkIcon />}
-      />
+      {!!ItemAction ? (
+        <ItemAction id={id} />
+      ) : (
+        <IconButton
+          onClick={() => removeMiddleware(data?.value)}
+          variant="light"
+          size="small"
+          icon={<XMarkIcon />}
+        />
+      )}
     </div>
   );
 };

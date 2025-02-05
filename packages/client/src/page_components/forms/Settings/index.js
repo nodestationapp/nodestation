@@ -85,12 +85,11 @@ const FormSettingsContent = () => {
         ? [
             <IconButton
               size="small"
-              onClick={() => setArchiveModal(form)}
+              onClick={() => setArchiveModal({ id: id })}
               icon={<TrashIcon color="#FF3636" />}
             />,
           ]
         : []),
-
       <Button disabled={!!!dirty} loading={!!isSubmitting} onClick={submitForm}>
         Save <KeyViewer data={["⌘", "S"]} />
       </Button>,

@@ -1,17 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
-import Button from "components/Button";
 import TableStack from "components/TableStack";
 import ArchiveFormModal from "../components/ArchiveFormModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useForms } from "context/client/forms";
 
-import {
-  PlusIcon,
-  PaperAirplaneIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { PaperAirplaneIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 const breadcrumps = [
   {
@@ -34,37 +29,34 @@ const FormsContent = () => {
   ];
 
   const toolbar = {
-    action: [
-      <Button
-        icon={<PlusIcon />}
-        onClick={() => navigate(`/forms/new/settings`)}
-      >
-        New
-      </Button>,
+    menu: [
+      {
+        label: "My forms",
+        href: `/forms`,
+      },
     ],
+    hideColumnOrder: true,
+    newButtonHandler: () => navigate(`/forms/new/settings`),
     selectAction: [
       {
         icon: <TrashIcon color="#FF3636" />,
-        onClick: (rows) => setArchiveModal(rows),
+        onClick: () => setArchiveModal(true),
       },
     ],
   };
 
   return (
-    <DashboardContentLayout toolbar={toolbar} breadcrumps={breadcrumps}>
+    <DashboardContentLayout breadcrumps={breadcrumps}>
       <TableStack
         fullWidth
+        toolbar={toolbar}
         data={forms}
         columns={columns}
         loading={loading}
         rowClick={(row) => navigate(`/forms/${row?.row?.id}`)}
       />
       {!!archive_modal && (
-        <ArchiveFormModal
-          type="list"
-          data={archive_modal}
-          onClose={() => setArchiveModal(null)}
-        />
+        <ArchiveFormModal type="list" onClose={() => setArchiveModal(null)} />
       )}
     </DashboardContentLayout>
   );
