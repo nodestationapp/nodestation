@@ -1,5 +1,5 @@
 import request from "supertest";
-import { expect, it, describe, beforeAll, afterAll } from "vitest";
+import { expect, it, describe, beforeAll, afterAll, afterEach } from "vitest";
 
 import { createApp, login } from "../utils/index.js";
 
@@ -52,6 +52,10 @@ describe(`Forms`, () => {
 
   afterAll(async () => {
     app.close();
+  });
+
+  afterEach(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
   });
 
   it("POST /forms", async () => {
