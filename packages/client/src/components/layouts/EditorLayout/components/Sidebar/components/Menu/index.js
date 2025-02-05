@@ -212,6 +212,9 @@ const Menu = () => {
           aria-label="directory tree"
           selectedIds={selectedIds}
           expandedIds={expandedIds}
+          onExpand={(e) => {
+            onClickHandler(e);
+          }}
           onNodeSelect={(e) => onClickHandler(e)}
           nodeRenderer={({
             level,

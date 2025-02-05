@@ -3,6 +3,7 @@ import { useState } from "react";
 import TableStack from "components/TableStack";
 import PreviewModal from "./components/PreviewModal";
 import RequestsModal from "components/RequestsModal";
+import ArchiveFormModal from "../components/ArchiveFormModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import DeleteIncomeFormModal from "page_components/forms/components/DeleteIncomeFormModal";
@@ -13,14 +14,13 @@ import { useTableWrapper } from "context/client/table-wrapper";
 import getHost from "libs/helpers/getHost";
 
 import {
-  ArchiveBoxArrowDownIcon,
-  ArchiveBoxIcon,
+  TrashIcon,
   EnvelopeIcon,
+  ArchiveBoxIcon,
   EnvelopeOpenIcon,
   PaperAirplaneIcon,
-  TrashIcon,
+  ArchiveBoxArrowDownIcon,
 } from "@heroicons/react/24/outline";
-import ArchiveFormModal from "../components/ArchiveFormModal";
 
 const FormContentWrapper = ({ toolbar }) => {
   const { data, loading, readHandler, archived, sort, setSort } = useForm();
