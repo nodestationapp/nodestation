@@ -20,6 +20,7 @@ import {
   PaperAirplaneIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
+import ArchiveFormModal from "../components/ArchiveFormModal";
 
 const FormContentWrapper = ({ toolbar }) => {
   const { data, loading, readHandler, archived, sort, setSort } = useForm();
@@ -72,7 +73,6 @@ const FormContentWrapper = ({ toolbar }) => {
         columns={columns}
         loading={loading}
         tableId={form?.id}
-        onSelectionChange={(rows) => console.log(rows)}
         rowClick={(row) => setPreviewModal(row)}
         data={incoming?.map((item) => ({
           id: item?.id,
@@ -111,6 +111,7 @@ const FormContent = () => {
   const { data, id, loading, archived, updateIncomeForm } = useForm();
 
   const [archive_modal, setArchiveModal] = useState(false);
+  const [incoming_archive_modal, setIncomingArchiveModal] = useState(false);
   const [request_modal, setRequestModal] = useState(false);
 
   const form = data?.form;
@@ -160,7 +161,7 @@ const FormContent = () => {
     selectAction: [
       {
         icon: <TrashIcon color="#FF3636" />,
-        onClick: () => setArchiveModal(true),
+        onClick: () => setIncomingArchiveModal(true),
       },
       {
         icon: !!isReadSelected ? (
@@ -179,7 +180,7 @@ const FormContent = () => {
         onClick: () => onArchiveHandler(),
       },
     ],
-    deleteHandler: () => setArchiveModal(form),
+    deleteHandler: () => setArchiveModal({ id: form?.id }),
     settingsButtonHandler: `/forms/${id}/settings`,
   };
 
@@ -228,17 +229,19 @@ const FormContent = () => {
   return (
     <>
       <DashboardContentLayout breadcrumps={breadcrumps}>
-        <FormContentWrapper
-          toolbar={toolbar}
-          archive_modal={archive_modal}
-          setArchiveModal={setArchiveModal}
-        />
+        <FormContentWrapper toolbar={toolbar} />
       </DashboardContentLayout>
       {!!archive_modal && (
-        <DeleteIncomeFormModal
-          type="list"
+        <ArchiveFormModal
           data={archive_modal}
           onClose={() => setArchiveModal(false)}
+        />
+      )}
+      {!!incoming_archive_modal && (
+        <DeleteIncomeFormModal
+          type="list"
+          data={incoming_archive_modal}
+          onClose={() => setIncomingArchiveModal(false)}
         />
       )}
       {request_modal && (

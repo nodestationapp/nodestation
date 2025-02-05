@@ -51,7 +51,7 @@ const TableSettingsContent = () => {
   const toolbar = ({ dirty, isSubmitting, submitForm }) => ({
     menu: [
       {
-        label: "Users",
+        label: "Entries",
         href: `/authentication`,
       },
     ],

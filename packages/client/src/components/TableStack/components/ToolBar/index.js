@@ -5,7 +5,7 @@ import IconButton from "components/IconButton";
 
 const mainClass = "table__toolbar";
 
-const Toolbar = ({ data, selectedRows }) => {
+const Toolbar = ({ data, selectedRows = [] }) => {
   const selectedLength = Object.keys(selectedRows).length;
 
   return (

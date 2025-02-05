@@ -14,7 +14,7 @@ const ArchiveFormModal = ({ data, type, onClose }) => {
 
   const [loading, setLoading] = useState(false);
 
-  const itemsToDelete = table.getSelectedRowModel()?.rows;
+  const itemsToDelete = !!data?.id ? [data] : table.getSelectedRowModel()?.rows;
 
   const onSubmit = async () => {
     setLoading(true);

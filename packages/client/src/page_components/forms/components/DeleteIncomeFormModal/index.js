@@ -21,7 +21,7 @@ const DeleteIncomeFormModal = ({ type, onClose, previewModalClose }) => {
 
     try {
       for await (const item of itemsToDelete) {
-        await api.delete(`/forms/entry/${item?.original?.id}`);
+        await api.delete(`/forms/${id}/entry/${item?.original?.id}`);
       }
 
       queryClient.refetchQueries({
