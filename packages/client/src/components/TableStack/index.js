@@ -49,7 +49,6 @@ import {
   PlusIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import Tooltip from "components/Tooltip";
 
 const mainClass = "table-stack";
 
@@ -114,7 +113,6 @@ const TableStack = ({
   rowAction,
   disabledSelect,
   loading = false,
-  onSelectionChange,
   fullWidth = false,
   toolbar: toolbarData,
 }) => {
@@ -283,51 +281,47 @@ const TableStack = ({
     action: [
       ...(!!!toolbarData?.hideColumnOrder
         ? [
-            <Tooltip text="Properties">
-              <DragOrderSelect
-                multi={true}
-                value={columnOrder || columns?.map((item) => item?.slug)}
-                CustomButton={({ active }) => (
-                  <IconButton
-                    size="small"
-                    active={active}
-                    icon={<ListBulletIcon />}
-                  />
-                )}
-                itemAction={({ id }) => (
-                  <IconButton
-                    size="small"
-                    icon={
-                      columnVisibility?.[id] === false ? (
-                        <EyeSlashIcon />
-                      ) : (
-                        <EyeIcon />
-                      )
-                    }
-                    onClick={() => onVisibilityHanlder(id)}
-                  />
-                )}
-                actionAlwaysVisible={true}
-                options={columns?.map((item) => ({
-                  label: item?.value,
-                  value: item?.slug,
-                  disabled: columnVisibility?.[item?.slug] === false,
-                }))}
-                onChange={({ target }) => onChangeColumnOrder(target?.value)}
-              />
-            </Tooltip>,
+            <DragOrderSelect
+              multi={true}
+              value={columnOrder || columns?.map((item) => item?.slug)}
+              CustomButton={({ active }) => (
+                <IconButton
+                  size="small"
+                  active={active}
+                  icon={<ListBulletIcon />}
+                />
+              )}
+              itemAction={({ id }) => (
+                <IconButton
+                  size="small"
+                  icon={
+                    columnVisibility?.[id] === false ? (
+                      <EyeSlashIcon />
+                    ) : (
+                      <EyeIcon />
+                    )
+                  }
+                  onClick={() => onVisibilityHanlder(id)}
+                />
+              )}
+              actionAlwaysVisible={true}
+              options={columns?.map((item) => ({
+                label: item?.value,
+                value: item?.slug,
+                disabled: columnVisibility?.[item?.slug] === false,
+              }))}
+              onChange={({ target }) => onChangeColumnOrder(target?.value)}
+            />,
           ]
         : []),
 
       ...(!!toolbarData?.settingsButtonHandler
         ? [
-            <Tooltip text="Settings">
-              <IconButton
-                size="small"
-                icon={<Cog6ToothIcon />}
-                href={toolbarData?.settingsButtonHandler}
-              />
-            </Tooltip>,
+            <IconButton
+              size="small"
+              icon={<Cog6ToothIcon />}
+              href={toolbarData?.settingsButtonHandler}
+            />,
           ]
         : []),
       ...(!!toolbarData?.deleteHandler

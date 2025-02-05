@@ -8,6 +8,8 @@ const mainClass = "table__toolbar";
 const Toolbar = ({ data, selectedRows = [] }) => {
   const selectedLength = Object.keys(selectedRows).length;
 
+  console.log(data);
+
   return (
     <div className={mainClass}>
       <div className={`${mainClass}__content`}>

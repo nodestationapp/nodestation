@@ -78,6 +78,10 @@ const HelpersList = () => {
         <TableStack
           fullWidth
           data={helpers}
+          toolbar={{
+            menu: [{ label: "Helpers", variant: "label" }],
+            hideColumnOrder: true,
+          }}
           columns={columns}
           disabledSelect={true}
           rowClick={({ row }) =>

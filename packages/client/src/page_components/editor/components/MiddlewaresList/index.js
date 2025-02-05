@@ -66,6 +66,10 @@ const MiddlewaresList = () => {
         <TableStack
           fullWidth
           data={middlewares}
+          toolbar={{
+            menu: [{ label: "Middlewares", variant: "label" }],
+            hideColumnOrder: true,
+          }}
           columns={columns}
           disabledSelect={true}
           rowClick={({ row }) =>

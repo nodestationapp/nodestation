@@ -63,6 +63,10 @@ const CronsList = () => {
       >
         <TableStack
           fullWidth
+          toolbar={{
+            menu: [{ label: "Crons", variant: "label" }],
+            hideColumnOrder: true,
+          }}
           data={formatted_crons}
           columns={columns}
           disabledSelect={true}
