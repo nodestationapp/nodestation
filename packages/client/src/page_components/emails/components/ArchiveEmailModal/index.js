@@ -6,7 +6,7 @@ import api from "libs/api";
 
 import { useTableWrapper } from "context/client/table-wrapper";
 
-const ArchiveEmailModal = ({ data, onClose }) => {
+const ArchiveEmailModal = ({ onClose }) => {
   const queryClient = useQueryClient();
   const { table } = useTableWrapper();
 
@@ -22,6 +22,7 @@ const ArchiveEmailModal = ({ data, onClose }) => {
         await api.delete(`/emails/${row?.original?.id}`);
       }
 
+      table.setRowSelection({});
       queryClient.refetchQueries({ queryKey: ["emails"] });
 
       onClose();

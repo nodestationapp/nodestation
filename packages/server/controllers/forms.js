@@ -51,6 +51,7 @@ const getForm = async (req, res) => {
         archived: parseInt(req?.query?.archived || 0),
       })
       .orderBy(sort?.[0], sort?.[1]);
+
     // .orderBy("created_at", "desc");
 
     // let formatted_incoming = formatted_entries_query?.map((item) => ({
