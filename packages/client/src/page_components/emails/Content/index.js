@@ -9,7 +9,7 @@ import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useEmails } from "context/client/emails";
 
-import { AtSymbolIcon } from "@heroicons/react/24/outline";
+import { AtSymbolIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 const breadcrumps = [
   {
@@ -31,14 +31,15 @@ const EmailsContent = () => {
     },
   ];
 
-  //     {
-  //       icon: <TrashIcon color="#FF3636" />,
-  //       onClick: (rows) => setArchiveModal(rows),
-  //     },
-
   const toolbar = {
     hideColumnOrder: true,
     newButtonHandler: () => setEmailEditor("new"),
+    selectAction: [
+      {
+        icon: <TrashIcon color="#FF3636" />,
+        onClick: () => setArchiveModal(true),
+      },
+    ],
   };
 
   const meta = emails?.map((item) => ({

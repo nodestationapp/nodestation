@@ -113,13 +113,15 @@ const TableStack = ({
   rowAction,
   disabledSelect,
   loading = false,
+  onSelectionChange,
   fullWidth = false,
   toolbar: toolbarData,
 }) => {
   const { preferences } = useOrganization();
   const [isResizing, setIsResizing] = useState(false);
-  const { setTable, setSelectedRows } = useTableWrapper();
-  const [tempSelectedRows, setTempSelectedRows] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const { setTable, setSelectedRows: setSelectedRowsContext } =
+    useTableWrapper();
 
   const table_preferences = preferences?.find(
     (item) => item?.table_id === tableId
@@ -184,7 +186,7 @@ const TableStack = ({
     state: {
       sorting: sort,
       columnOrder: columnOrder,
-      rowSelection: tempSelectedRows,
+      rowSelection: selectedRows,
       columnVisibility: columnVisibility,
     },
     manualSorting: true,
@@ -195,7 +197,7 @@ const TableStack = ({
     columnResizeDirection: "ltr",
     enableColumnResizing: !!!fullWidth,
     getCoreRowModel: getCoreRowModel(),
-    onRowSelectionChange: setTempSelectedRows,
+    onRowSelectionChange: setSelectedRows,
   });
 
   const saveTransaction = async (values) => {
@@ -236,9 +238,15 @@ const TableStack = ({
   }, [table]);
 
   useEffect(() => {
-    setSelectedRows(table?.getSelectedRowModel()?.rows);
+    const selectedRows = table.getSelectedRowModel()?.rows;
+    setSelectedRowsContext(selectedRows);
     // eslint-disable-next-line
-  }, [tempSelectedRows]);
+  }, [selectedRows]);
+
+  useEffect(() => {
+    setTable(table);
+    // eslint-disable-next-line
+  }, [table]);
 
   const handleMouseDown = (e, header) => {
     e.stopPropagation();
@@ -249,8 +257,6 @@ const TableStack = ({
 
   const onVisibilityHanlder = (id) => {
     let temp = { ...columnVisibility };
-
-    console.log(temp?.[id]);
 
     if (!!!temp?.hasOwnProperty(id)) {
       temp[id] = false;
@@ -270,7 +276,6 @@ const TableStack = ({
   const toolbar = {
     menu: toolbarData?.menu,
     action: [
-      // toolbarData?.hideColumnOrder
       ...(!!!toolbarData?.hideColumnOrder
         ? [
             <DragOrderSelect
@@ -339,12 +344,7 @@ const TableStack = ({
           ]
         : []),
     ],
-    selectAction: [
-      {
-        icon: <TrashIcon color="#FF3636" />,
-        // onClick: (rows) => setArchiveEntryModal(rows),
-      },
-    ],
+    selectAction: toolbarData?.selectAction || [],
   };
 
   return (
@@ -356,7 +356,7 @@ const TableStack = ({
           [`${mainClass}--sortable`]: !!setSort,
         })}
       >
-        <Toolbar data={toolbar} />
+        <Toolbar data={toolbar} selectedRows={selectedRows} />
         {!!loading ? (
           <TableSkeleton />
         ) : (

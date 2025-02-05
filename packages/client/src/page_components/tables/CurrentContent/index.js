@@ -8,7 +8,7 @@ import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useTable } from "context/client/table";
 
-import { CircleStackIcon } from "@heroicons/react/24/outline";
+import { CircleStackIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 const FormContent = () => {
   const {
@@ -54,17 +54,17 @@ const FormContent = () => {
     return obj;
   }, {});
 
-  // TODO
-  //     {
-  //       icon: <TrashIcon color="#FF3636" />,
-  //       onClick: (rows) => setArchiveEntryModal(rows),
-  //     },
-
   const toolbar = {
     menu: [
       {
         label: "Entries",
         href: `/tables/${id}`,
+      },
+    ],
+    selectAction: [
+      {
+        icon: <TrashIcon color="#FF3636" />,
+        onClick: () => setArchiveEntryModal(true),
       },
     ],
     deleteHandler: () => setArchiveModal(table),

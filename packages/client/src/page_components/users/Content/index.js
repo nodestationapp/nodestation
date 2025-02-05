@@ -7,7 +7,7 @@ import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useUsers } from "context/client/users";
 
-import { UsersIcon } from "@heroicons/react/24/outline";
+import { TrashIcon, UsersIcon } from "@heroicons/react/24/outline";
 
 const table_menu = [
   {
@@ -63,16 +63,17 @@ const UsersContent = () => {
     })) || []),
   ];
 
-  //     {
-  //       icon: <TrashIcon color="#FF3636" />,
-  //       onClick: (rows) => setArchiveUserModal(rows),
-  //     },
-
   const toolbar = {
     menu: [
       {
         label: "Entries",
         href: `/authentication`,
+      },
+    ],
+    selectAction: [
+      {
+        icon: <TrashIcon color="#FF3636" />,
+        onClick: () => setArchiveUserModal(true),
       },
     ],
     settingsButtonHandler: `/authentication/settings`,
@@ -101,10 +102,7 @@ const UsersContent = () => {
         )}
       </DashboardContentLayout>
       {!!archive_user_modal && (
-        <ArchiveUserModal
-          data={archive_user_modal}
-          onClose={() => setArchiveUserModal(false)}
-        />
+        <ArchiveUserModal onClose={() => setArchiveUserModal(false)} />
       )}
     </>
   );

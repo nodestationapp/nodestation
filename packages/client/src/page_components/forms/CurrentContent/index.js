@@ -12,7 +12,14 @@ import { useTableWrapper } from "context/client/table-wrapper";
 
 import getHost from "libs/helpers/getHost";
 
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import {
+  ArchiveBoxArrowDownIcon,
+  ArchiveBoxIcon,
+  EnvelopeIcon,
+  EnvelopeOpenIcon,
+  PaperAirplaneIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 
 const FormContentWrapper = ({ toolbar }) => {
   const { data, loading, readHandler, archived, sort, setSort } = useForm();
@@ -65,6 +72,7 @@ const FormContentWrapper = ({ toolbar }) => {
         columns={columns}
         loading={loading}
         tableId={form?.id}
+        onSelectionChange={(rows) => console.log(rows)}
         rowClick={(row) => setPreviewModal(row)}
         data={incoming?.map((item) => ({
           id: item?.id,
@@ -149,63 +157,39 @@ const FormContent = () => {
         href: `/forms/${id}/archived`,
       },
     ],
+    selectAction: [
+      {
+        icon: <TrashIcon color="#FF3636" />,
+        onClick: () => setArchiveModal(true),
+      },
+      {
+        icon: !!isReadSelected ? (
+          <EnvelopeIcon color="#F0F1F3" />
+        ) : isReadSelected === null ? null : (
+          <EnvelopeOpenIcon color="#F0F1F3" />
+        ),
+        onClick: () => onReadHandler(),
+      },
+      {
+        icon: !!archived ? (
+          <ArchiveBoxIcon color="#F0F1F3" />
+        ) : (
+          <ArchiveBoxArrowDownIcon color="#F0F1F3" />
+        ),
+        onClick: () => onArchiveHandler(),
+      },
+    ],
     deleteHandler: () => setArchiveModal(form),
     settingsButtonHandler: `/forms/${id}/settings`,
   };
 
-  // const toolbar = {
-  //   menu: [
-  //     {
-  //       label: "Incoming",
-  //       href: `/forms/${id}`,
-  //     },
-  //     {
-  //       label: "Archived",
-  //       href: `/forms/${id}/archived`,
-  //     },
-  //   ],
-  //   action: [
-  //     <IconButton
-  //       size="small"
-  //       icon={<Cog6ToothIcon />}
-  //       href={`/forms/${id}/settings`}
-  //     />,
-  //     <IconButtonMenu icon={<EllipsisHorizontalIcon />} data={asideMenu} />,
-  //   ],
-  //   selectAction: [
-  //     {
-  //       icon: !!isReadSelected ? (
-  //         <EnvelopeIcon color="#F0F1F3" />
-  //       ) : isReadSelected === null ? null : (
-  //         <EnvelopeOpenIcon color="#F0F1F3" />
-  //       ),
-  //       // icon: !!is_read ? (
-  //       //   <EnvelopeIcon color="#F0F1F3" />
-  //       // ) : (
-  //       //   <EnvelopeOpenIcon color="#F0F1F3" />
-  //       // ),
-  //       onClick: (row) => onReadHandler(row),
-  //     },
-  //     {
-  //       icon: !!archived ? (
-  //         <ArchiveBoxIcon color="#F0F1F3" />
-  //       ) : (
-  //         <ArchiveBoxArrowDownIcon color="#F0F1F3" />
-  //       ),
-  //       onClick: (row) => onArchiveHandler(row),
-  //     },
-  //     {
-  //       icon: <TrashIcon color="#FF3636" />,
-  //       onClick: (row) => setArchiveModal(row),
-  //     },
-  //   ],
-  // };
-
-  const onArchiveHandler = async (rows) => {
+  const onArchiveHandler = async () => {
     try {
+      const itemsToArchive = table.getSelectedRowModel()?.rows;
+
       let nextArchived;
-      const firstValue = rows[0].original?.archived;
-      const allSame = rows.every(
+      const firstValue = itemsToArchive[0].original?.archived;
+      const allSame = itemsToArchive.every(
         (item) => item.original?.archived === firstValue
       );
 
@@ -213,7 +197,7 @@ const FormContent = () => {
         nextArchived = !!!firstValue;
       }
 
-      for await (const row of rows) {
+      for await (const row of itemsToArchive) {
         updateIncomeForm(row?.original?.id, {
           archived: nextArchived,
         });
@@ -225,9 +209,11 @@ const FormContent = () => {
     }
   };
 
-  const onReadHandler = async (rows) => {
+  const onReadHandler = async () => {
     try {
-      for await (const row of rows) {
+      const itemsToRead = table.getSelectedRowModel()?.rows;
+
+      for await (const row of itemsToRead) {
         updateIncomeForm(row?.original?.id, {
           is_read: !!!isReadSelected,
         });

@@ -3,20 +3,18 @@ import "./styles.scss";
 import Submenu from "./components/Submenu";
 import IconButton from "components/IconButton";
 
-import { useTableWrapper } from "context/client/table-wrapper";
-
 const mainClass = "table__toolbar";
 
-const Toolbar = ({ data }) => {
-  const { selectedRows } = useTableWrapper();
+const Toolbar = ({ data, selectedRows }) => {
+  const selectedLength = Object.keys(selectedRows).length;
 
   return (
     <div className={mainClass}>
       <div className={`${mainClass}__content`}>
         <div className={`${mainClass}__main`}>
-          {!!selectedRows?.length ? (
+          {!!selectedLength > 0 ? (
             <div className={`${mainClass}__main__select-action`}>
-              <span className="small">Selected {selectedRows?.length}</span>
+              <span className="small">Selected {selectedLength}</span>
               <div className={`${mainClass}__main__select-action__options`}>
                 {data?.selectAction?.map((item, index) => {
                   if (!!!item?.icon) return null;
@@ -25,7 +23,7 @@ const Toolbar = ({ data }) => {
                       key={index}
                       size="small"
                       icon={item?.icon}
-                      onClick={() => item?.onClick(selectedRows)}
+                      onClick={item?.onClick}
                     />
                   );
                 })}
