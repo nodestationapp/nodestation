@@ -48,7 +48,7 @@ import {
   ListBulletIcon,
   LockClosedIcon,
   EllipsisHorizontalIcon,
-  AdjustmentsVerticalIcon,
+  BoltIcon,
 } from "@heroicons/react/24/outline";
 
 const mainClass = "table-stack";
@@ -293,11 +293,7 @@ const TableStack = ({
             <IconButton
               active={!!filtersExpanded}
               size="small"
-              icon={
-                <AdjustmentsVerticalIcon
-                  color={!!isFilterValue ? "#8A6FF1" : ""}
-                />
-              }
+              icon={<BoltIcon color={!!isFilterValue ? "#8A6FF1" : ""} />}
               onClick={() => {
                 setFiltersExpanded((prev) => !prev);
                 saveTransaction({ filtersToggle: !!filtersExpanded ? 0 : 1 });
