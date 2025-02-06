@@ -11,6 +11,7 @@ const FormsProvider = ({ children }) => {
   const { isLoading: loading, data: forms } = useQuery({
     queryKey: ["forms"],
     queryFn: () => api.get("/forms"),
+    placeholderData: (previousData) => previousData,
   });
 
   const value = useMemo(() => {

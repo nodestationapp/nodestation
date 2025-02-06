@@ -35,8 +35,16 @@ const getAllForms = async (_, res) => {
   }
 };
 
+const applyFilters = (query, filters) => {
+  return query.where((builder) => {
+    Object.entries(filters).forEach(([key, value]) => {
+      builder.where(key, "like", `%${value}%`);
+    });
+  });
+};
+
 const getForm = async (req, res) => {
-  let { sort } = req?.query;
+  let { sort, ...rest } = req?.query;
 
   sort = !!sort ? sort?.split(":") : ["id", "asc"];
 
@@ -47,6 +55,7 @@ const getForm = async (req, res) => {
     );
 
     const entries_query = await knex(form?.id)
+      .modify(applyFilters, rest)
       .where({
         archived: parseInt(req?.query?.archived || 0),
       })

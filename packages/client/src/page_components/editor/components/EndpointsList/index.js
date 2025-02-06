@@ -129,8 +129,6 @@ const EndpointsList = () => {
         ) : (
           <>
             {all_sections?.map((item, index) => {
-              console.log(item);
-
               const toolbar = {
                 menu: [
                   {

@@ -1,3 +1,5 @@
+import queryString from "query-string";
+
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
@@ -21,8 +23,17 @@ const TableProvider = ({ children }) => {
     table_preferences?.visibility || []
   );
   const [sort, setSort] = useState(table_preferences?.sort || []);
+  const [filters, setFilters] = useState(
+    table_preferences?.filters || [{ field: null, value: "" }]
+  );
 
   const sort_query = sortParser(sort);
+  const filters_query = filters.reduce((acc, item) => {
+    if (item.field) {
+      acc[item.field] = item.value || "";
+    }
+    return acc;
+  }, {});
 
   useEffect(() => {
     setSort(table_preferences?.sort);
@@ -33,10 +44,19 @@ const TableProvider = ({ children }) => {
     data,
     refetch: tableRefetch,
   } = useQuery({
-    queryKey: ["tables", id, sort_query],
-    queryFn: () => api.get(`/tables/${id}?sort=${sort_query}`),
+    queryKey: ["tables", id, sort_query, filters_query],
+    queryFn: () =>
+      api.get(
+        `/tables/${id}?${queryString.stringify({
+          ...filters_query,
+          sort: sort_query || undefined,
+        })}`
+      ),
     enabled: !!!preferencesLoading,
+    placeholderData: (previousData) => previousData,
   });
+
+  // const loading = tableLoading && !data;
 
   const updateTable = (values) =>
     new Promise(async (resolve, reject) => {
@@ -125,9 +145,11 @@ const TableProvider = ({ children }) => {
       setColumnOrder,
       columnVisibility,
       setColumnVisibility,
+      filters,
+      setFilters,
     };
     // eslint-disable-next-line
-  }, [data, id, loading, sort, columnOrder, columnVisibility]);
+  }, [data, id, loading, sort, columnOrder, columnVisibility, filters]);
 
   return (
     <TableContext.Provider value={value}>{children}</TableContext.Provider>

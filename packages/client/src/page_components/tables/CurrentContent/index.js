@@ -20,6 +20,8 @@ const FormContent = () => {
     columnOrder,
     setColumnOrder,
     columnVisibility,
+    filters,
+    setFilters,
   } = useTable();
 
   const [archive_modal, setArchiveModal] = useState(false);
@@ -77,13 +79,15 @@ const FormContent = () => {
       <DashboardContentLayout breadcrumps={breadcrumps}>
         <TableStack
           sort={sort}
-          filters={true}
           setSort={setSort}
+          filters={filters}
+          setFilters={setFilters}
           data={entries}
           toolbar={toolbar}
           loading={loading}
           columns={columns}
           tableId={id}
+          tableSchema={table?.fields}
           columnOrder={columnOrder}
           setColumnOrder={setColumnOrder}
           columnVisibility={columnVisibility}

@@ -80,6 +80,17 @@ const upsertPreferences = async (req, res) => {
                 visibility: safeJSONStringify(body?.visibility),
               }
             : {}),
+          ...(!!body?.hasOwnProperty("filters")
+            ? {
+                filters: safeJSONStringify(body?.filters),
+              }
+            : {}),
+          ...(!!body?.hasOwnProperty("filtersToggle")
+            ? {
+                filtersToggle: safeJSONStringify(body?.filtersToggle),
+              }
+            : {}),
+
           content: safeJSONStringify(content),
           updated_at: currentDate,
         });

@@ -1,59 +1,40 @@
 import "./styles.scss";
 
-import { useState } from "react";
-
-import Pill from "components/Pill";
-import Input from "components/form/Input";
-import Dropdown from "components/Dropdown";
-import IconButton from "components/IconButton";
-import DropdownMenu from "components/DropdownMenu";
-
-import field_type_data from "libs/field_type_data";
-
-import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
+import FilterItem from "./components/FilterItem";
 
 const mainClass = "table__filters";
 
-const Filters = ({ columns }) => {
-  const [activeFilter, setActiveFilter] = useState(null);
+const Filters = ({ saveTransaction, filters, setFilters, tableSchema }) => {
+  const onRemoveHandler = (field) => {
+    let temp = [...filters];
 
-  const formatted_columns = columns?.map((item) => {
-    const field = field_type_data?.find(
-      (element) => element?.value === item?.type
-    );
-
-    return {
-      ...field,
-      label: item?.value,
-      onClick: () => setActiveFilter(item?.value),
-    };
-  });
+    const index = temp?.findIndex((item) => item?.field === field);
+    if (temp?.length === 1) {
+      temp[index] = {
+        field: null,
+        value: null,
+      };
+    } else {
+      temp.splice(index, 1);
+    }
+    setFilters(temp);
+    saveTransaction({ filters: temp });
+  };
 
   return (
     <div className={mainClass}>
-      <Dropdown
-        position={[null, "left"]}
-        preventChildrenClick={true}
-        button={<Pill label="Add filter" icon={<PlusIcon />} />}
-      >
-        {!!activeFilter ? (
-          <div className={`${mainClass}__content`}>
-            <div className={`${mainClass}__content__header`}>
-              <span>
-                {activeFilter} <strong>contains</strong>
-              </span>
-              <IconButton
-                icon={<TrashIcon />}
-                size="small"
-                onClick={() => setActiveFilter(null)}
-              />
-            </div>
-            <Input placeholder="Type a value" size="small" variant="dark" />
-          </div>
-        ) : (
-          <DropdownMenu items={formatted_columns} />
-        )}
-      </Dropdown>
+      {filters?.map((item, index) => (
+        <FilterItem
+          key={index}
+          data={item}
+          index={index}
+          filters={filters}
+          columns={tableSchema}
+          setFilters={setFilters}
+          onRemove={onRemoveHandler}
+          saveTransaction={saveTransaction}
+        />
+      ))}
     </div>
   );
 };

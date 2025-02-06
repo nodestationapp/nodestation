@@ -1,0 +1,35 @@
+.table__filter-item{
+  height: 39px;
+  // border-bottom: 1px solid #3C414B;
+  display: flex;
+  align-items: center;
+
+  &__content{
+    $self: &;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    background-color: #3C414B;
+    border: 1px solid #2b3441;
+    border-radius: 7px;
+    // overflow: hidden;
+
+    &__header{
+      // margin-bottom: 5px;
+      padding: 10px 3px;
+      padding-top: 0;
+      padding-right: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      
+      span{
+        font-size: 13px;
+      }
+    }
+  }
+
+  .dropdown__content{
+    width: 250px;
+  }
+}

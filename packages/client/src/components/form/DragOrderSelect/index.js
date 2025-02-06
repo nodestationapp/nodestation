@@ -234,7 +234,6 @@ const DragOrderSelectItem = ({
           {...attributes}
           {...listeners}
           size="small"
-          variant="light"
           icon={<EllipsisVerticalIcon />}
         />
         <p>{data?.label}</p>
@@ -244,7 +243,6 @@ const DragOrderSelectItem = ({
       ) : (
         <IconButton
           onClick={() => removeMiddleware(data?.value)}
-          variant="light"
           size="small"
           icon={<XMarkIcon />}
         />

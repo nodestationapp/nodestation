@@ -49,9 +49,17 @@ const getAllTables = async (_, res) => {
   }
 };
 
+const applyFilters = (query, filters) => {
+  return query.where((builder) => {
+    Object.entries(filters).forEach(([key, value]) => {
+      builder.where(key, "like", `%${value}%`);
+    });
+  });
+};
+
 const getTable = async (req, res) => {
   const { id } = req?.params;
-  let { sort } = req?.query;
+  let { sort, ...rest } = req?.query;
 
   sort = !!sort ? sort?.split(":") : ["id", "asc"];
 
@@ -65,7 +73,9 @@ const getTable = async (req, res) => {
 
     let entries = [];
     if (!!table?.slug) {
-      entries = await knex(table?.slug).orderBy(sort?.[0], sort?.[1]);
+      entries = await knex(table?.slug)
+        .modify(applyFilters, rest)
+        .orderBy(sort?.[0], sort?.[1]);
       entries = parseJSONFields(entries, settings);
     }
 

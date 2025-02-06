@@ -11,14 +11,31 @@
   justify-content: center;
   align-items: center;
   white-space: nowrap;
-  gap: 3px;
+  gap: 6px;
 
   svg{
     height: 15px;
     width: 15px;
+
+    path{
+      fill: #848484;
+    }
   }
 
   &:hover{
     background-color: rgba(#fff, 0.05);
+  }
+
+  &--active{
+    color: #8A6FF1;
+    gap: 6px;
+    border-color: #8A6FF1;
+    background-color: rgba(#8A6FF1, 0.15);
+
+    svg{
+      path{
+        fill: #8A6FF1;
+      }
+    }
   }
 }

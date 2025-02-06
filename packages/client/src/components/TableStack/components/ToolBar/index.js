@@ -6,7 +6,17 @@ import IconButton from "components/IconButton";
 
 const mainClass = "table__toolbar";
 
-const Toolbar = ({ data, selectedRows = [], columns, filters }) => {
+const Toolbar = ({
+  data,
+  selectedRows = [],
+  columns,
+  filters,
+  saveTransaction,
+  preferences,
+  setFilters,
+  tableSchema,
+  filtersExpanded,
+}) => {
   const selectedLength = Object.keys(selectedRows).length;
 
   return (
@@ -36,7 +46,15 @@ const Toolbar = ({ data, selectedRows = [], columns, filters }) => {
         </div>
         <div className={`${mainClass}__aside`}>{data?.action}</div>
       </div>
-      {!!filters && <Filters columns={columns} />}
+      {!!filtersExpanded && (
+        <Filters
+          filters={filters}
+          setFilters={setFilters}
+          tableSchema={tableSchema}
+          preferences={preferences}
+          saveTransaction={saveTransaction}
+        />
+      )}
     </div>
   );
 };

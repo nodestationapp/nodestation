@@ -24,7 +24,8 @@ const breadcrumps = [
 ];
 
 const UsersContent = () => {
-  const { users, settings, loading, sort, setSort } = useUsers();
+  const { users, settings, loading, sort, setSort, filters, setFilters } =
+    useUsers();
 
   const [edit_modal, setEditModal] = useState(false);
   const [archive_user_modal, setArchiveUserModal] = useState(false);
@@ -87,11 +88,14 @@ const UsersContent = () => {
           data={users}
           menu={table_menu}
           sort={sort}
+          filters={filters}
+          setFilters={setFilters}
           toolbar={toolbar}
           setSort={setSort}
           columns={columns}
           loading={loading}
           tableId="users"
+          tableSchema={settings?.fields}
           rowClick={(row) => setEditModal(row)}
         />
         {!!edit_modal && (

@@ -8,8 +8,6 @@ const mainClass = "table__toolbar__menu";
 const Submenu = ({ data }) => {
   const { pathname } = useLocation();
 
-  console.log(data);
-
   return (
     <div className={mainClass}>
       {data?.map(({ label, href, icon, variant }, index) => {

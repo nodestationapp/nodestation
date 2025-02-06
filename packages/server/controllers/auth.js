@@ -12,6 +12,14 @@ import { knex, createSchema } from "@nstation/db";
 
 import upsertEntry from "#libs/upsertEntry.js";
 
+const applyFilters = (query, filters) => {
+  return query.where((builder) => {
+    Object.entries(filters).forEach(([key, value]) => {
+      builder.where(key, "like", `%${value}%`);
+    });
+  });
+};
+
 const authRegister = async (req, res) => {
   let body = req?.body;
 
@@ -52,13 +60,13 @@ const authLogin = async (req, res) => {
 };
 
 const getAllAuth = async (req, res) => {
-  let { sort } = req?.query;
+  let { sort, ...rest } = req?.query;
 
   sort = !!sort ? sort?.split(":") : ["id", "asc"];
 
   try {
     const data = await knex("nodestation_users")
-      .select()
+      .modify(applyFilters, rest)
       .orderBy(sort?.[0], sort?.[1]);
 
     const settings = await knex("nodestation_media_settings").first();

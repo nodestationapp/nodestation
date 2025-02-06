@@ -124,6 +124,9 @@ const createSchema = async () => {
       table.string("sort").nullable();
       table.string("order").nullable();
       table.string("content").nullable();
+      table.string("visibility").nullable();
+      table.string("filters").nullable();
+      table.string("filtersToggle").nullable();
       table.string("table_id").nullable();
       table.bigInteger("updated_at").nullable();
       table.bigInteger("created_at").nullable();

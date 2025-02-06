@@ -1,11 +1,13 @@
+import queryString from "query-string";
 import { useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, useMemo, useState } from "react";
 
 import api from "libs/api";
+import sortParser from "libs/sortParser";
+
 import { useApp } from "context/app";
 import { useOrganization } from "context/organization";
-import sortParser from "libs/sortParser";
 
 const FormContext = createContext();
 
@@ -25,20 +27,34 @@ const FormProvider = ({ archived, children }) => {
     table_preferences?.visibility || []
   );
   const [sort, setSort] = useState(table_preferences?.sort || []);
+  const [filters, setFilters] = useState(
+    table_preferences?.filters || [{ field: null, value: "" }]
+  );
 
   const sort_query = sortParser(sort);
+  const filters_query = filters.reduce((acc, item) => {
+    if (item.field) {
+      acc[item.field] = item.value || "";
+    }
+    return acc;
+  }, {});
 
   const {
     data,
     isLoading: loading,
     refetch: refetchForms,
   } = useQuery({
-    queryKey: ["forms", id, archived, sort_query],
+    queryKey: ["forms", id, archived, sort_query, filters_query],
     queryFn: () =>
       api.get(
-        `/forms/${id}?archived=${archived === true ? 1 : 0}&sort=${sort_query}`
+        `/forms/${id}?${queryString.stringify({
+          ...filters_query,
+          archived: archived === true ? 1 : 0,
+          sort: sort_query || undefined,
+        })}`
       ),
     enabled: id !== "new" && !!!preferencesLoading,
+    placeholderData: (previousData) => previousData,
   });
 
   const { data: emails } = useQuery({
@@ -117,6 +133,8 @@ const FormProvider = ({ archived, children }) => {
       setColumnOrder,
       columnVisibility,
       setColumnVisibility,
+      filters,
+      setFilters,
     };
     // eslint-disable-next-line
   }, [
@@ -129,6 +147,7 @@ const FormProvider = ({ archived, children }) => {
     sort,
     columnOrder,
     columnVisibility,
+    filters,
   ]);
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;

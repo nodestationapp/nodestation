@@ -40,14 +40,15 @@ import { useOrganization } from "context/organization";
 import { useTableWrapper } from "context/client/table-wrapper";
 
 import {
-  Cog6ToothIcon,
-  EllipsisHorizontalIcon,
   EyeIcon,
-  EyeSlashIcon,
-  ListBulletIcon,
-  LockClosedIcon,
   PlusIcon,
   TrashIcon,
+  EyeSlashIcon,
+  Cog6ToothIcon,
+  ListBulletIcon,
+  LockClosedIcon,
+  EllipsisHorizontalIcon,
+  AdjustmentsVerticalIcon,
 } from "@heroicons/react/24/outline";
 
 const mainClass = "table-stack";
@@ -109,23 +110,28 @@ const TableStack = ({
   alert,
   setSort,
   filters,
+  setFilters,
   rowClick,
   tableId,
   rowAction,
+  tableSchema,
   disabledSelect,
   loading = false,
   fullWidth = false,
   toolbar: toolbarData,
 }) => {
   const { preferences } = useOrganization();
-  const [isResizing, setIsResizing] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const { setTable, setSelectedRows: setSelectedRowsContext } =
-    useTableWrapper();
-
   const table_preferences = preferences?.find(
     (item) => item?.table_id === tableId
   );
+
+  const [isResizing, setIsResizing] = useState(false);
+  const [filtersExpanded, setFiltersExpanded] = useState(
+    table_preferences?.filtersToggle
+  );
+  const [selectedRows, setSelectedRows] = useState([]);
+  const { setTable, setSelectedRows: setSelectedRowsContext } =
+    useTableWrapper();
 
   const [columnOrder, setColumnOrder] = useState(
     table_preferences?.order || null
@@ -277,9 +283,29 @@ const TableStack = ({
     saveTransaction({ order: value });
   };
 
+  const isFilterValue = filters?.some((item) => !!item?.value);
+
   const toolbar = {
     menu: toolbarData?.menu,
     action: [
+      ...(!!filters
+        ? [
+            <IconButton
+              active={!!filtersExpanded}
+              size="small"
+              icon={
+                <AdjustmentsVerticalIcon
+                  color={!!isFilterValue ? "#8A6FF1" : ""}
+                />
+              }
+              onClick={() => {
+                setFiltersExpanded((prev) => !prev);
+                saveTransaction({ filtersToggle: !!filtersExpanded ? 0 : 1 });
+              }}
+            />,
+          ]
+        : []),
+
       ...(!!!toolbarData?.hideColumnOrder
         ? [
             <DragOrderSelect
@@ -362,9 +388,14 @@ const TableStack = ({
       >
         <Toolbar
           data={toolbar}
-          selectedRows={selectedRows}
           columns={columns}
           filters={filters}
+          tableSchema={tableSchema}
+          setFilters={setFilters}
+          selectedRows={selectedRows}
+          preferences={table_preferences}
+          filtersExpanded={filtersExpanded}
+          saveTransaction={saveTransaction}
         />
         {!!loading ? (
           <TableSkeleton />
@@ -391,7 +422,6 @@ const TableStack = ({
                         <div
                           key={header.id}
                           className={`${mainClass}__header__col`}
-                          // header.column.getIsResizing()
                           style={{
                             width: header.getSize(),
                           }}
