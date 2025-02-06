@@ -1,14 +1,13 @@
 import "./styles.scss";
 
+import Filters from "./components/Filters";
 import Submenu from "./components/Submenu";
 import IconButton from "components/IconButton";
 
 const mainClass = "table__toolbar";
 
-const Toolbar = ({ data, selectedRows = [] }) => {
+const Toolbar = ({ data, selectedRows = [], columns, filters }) => {
   const selectedLength = Object.keys(selectedRows).length;
-
-  console.log(data);
 
   return (
     <div className={mainClass}>
@@ -37,6 +36,7 @@ const Toolbar = ({ data, selectedRows = [] }) => {
         </div>
         <div className={`${mainClass}__aside`}>{data?.action}</div>
       </div>
+      {!!filters && <Filters columns={columns} />}
     </div>
   );
 };

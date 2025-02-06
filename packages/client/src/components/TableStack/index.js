@@ -108,6 +108,7 @@ const TableStack = ({
   sort,
   alert,
   setSort,
+  filters,
   rowClick,
   tableId,
   rowAction,
@@ -359,7 +360,12 @@ const TableStack = ({
           [`${mainClass}--sortable`]: !!setSort,
         })}
       >
-        <Toolbar data={toolbar} selectedRows={selectedRows} />
+        <Toolbar
+          data={toolbar}
+          selectedRows={selectedRows}
+          columns={columns}
+          filters={filters}
+        />
         {!!loading ? (
           <TableSkeleton />
         ) : (

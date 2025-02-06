@@ -77,6 +77,7 @@ const FormContent = () => {
       <DashboardContentLayout breadcrumps={breadcrumps}>
         <TableStack
           sort={sort}
+          filters={true}
           setSort={setSort}
           data={entries}
           toolbar={toolbar}

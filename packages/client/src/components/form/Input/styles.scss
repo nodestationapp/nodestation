@@ -97,6 +97,19 @@
     }
   }
 
+  &--dark{
+    label{
+      background-color: #21252B;
+    }
+    
+    input{
+      background-color: transparent;
+      // border: 1px solid red;
+
+      border-color: #757980;
+    }
+  }
+
   &--id{
     input{
       background-color: #868F9D;
@@ -128,6 +141,19 @@
             &:focus {
                 box-shadow: none;
             }
+        }
+      }
+    }
+  }
+
+  &--small{
+    .input{
+      &__content{
+        height: 35px;
+
+        input{
+          padding: 0 10px;
+          font-size: 13px;
         }
       }
     }

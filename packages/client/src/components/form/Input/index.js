@@ -20,6 +20,7 @@ const Input = ({
   id,
   variant,
   aside,
+  size,
 }) => {
   const is_error = touched && error !== undefined;
 
@@ -32,6 +33,7 @@ const Input = ({
         [`${mainClass}--${variant}`]: !!variant,
         [`${mainClass}--filled`]: !!value || type === "datetime-local",
         [`${mainClass}--disabled`]: !!disabled,
+        [`${mainClass}--${size}`]: !!size,
       })}
     >
       <div className={`${mainClass}__content`}>

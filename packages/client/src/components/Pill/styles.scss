@@ -1,0 +1,24 @@
+.pill {
+  padding: 0 8px;
+  height: 26px;
+  background-color: transparent;
+  border: 1px solid #3C414B;
+  border-radius: 80px;
+  color: #848484;
+  font-weight: 400;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  gap: 3px;
+
+  svg{
+    height: 15px;
+    width: 15px;
+  }
+
+  &:hover{
+    background-color: rgba(#fff, 0.05);
+  }
+}
