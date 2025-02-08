@@ -1,3 +1,4 @@
+import Pill from "components/Pill";
 import FormikInput from "components/formik/FormikInput";
 import FormikSelect from "components/formik/FormikSelect";
 import FormikDateTime from "components/formik/FormikDateTime";
@@ -11,6 +12,7 @@ const tableInputRender = (item) => {
     select_data = item?.options?.map((item) => ({
       label: item?.label,
       value: item?.label,
+      color: item?.color,
     }));
   }
 
@@ -42,6 +44,9 @@ const tableInputRender = (item) => {
           name={item?.slug}
           label={item?.name}
           options={select_data}
+          CustomValue={({ label, color }) => (
+            <Pill label={label} color={color} textColor="#F0F1F3" readOnly />
+          )}
         />
       );
     case "media":

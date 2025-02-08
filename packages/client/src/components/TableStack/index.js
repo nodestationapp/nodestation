@@ -202,7 +202,7 @@ const TableStack = ({
     },
     state: {
       sorting: sort,
-      columnOrder: columnOrder,
+      columnOrder: columnOrder?.map((item) => item?.value),
       rowSelection: selectedRows,
       columnVisibility: columnVisibility,
     },
@@ -319,7 +319,7 @@ const TableStack = ({
               multi={true}
               value={
                 !!columnOrder?.[0]
-                  ? columnOrder
+                  ? columnOrder?.map((item) => item?.value)
                   : columns?.map((item) => item?.slug)
               }
               CustomButton={({ active }) => (
@@ -348,7 +348,7 @@ const TableStack = ({
                 value: item?.slug,
                 disabled: columnVisibility?.[item?.slug] === false,
               }))}
-              onChange={({ target }) => onChangeColumnOrder(target?.value)}
+              onChange={(value) => onChangeColumnOrder(value)}
             />,
           ]
         : []),

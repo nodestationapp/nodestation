@@ -52,8 +52,8 @@ const DragOrderSelectContent = ({
         sensors={sensors}
         onDragEnd={({ active, over }) => {
           if (over && active.id !== over?.id) {
-            const oldIndex = data.findIndex((v) => v?.id === active.id);
-            const newIndex = data.findIndex((v) => v?.id === over.id);
+            const oldIndex = data.findIndex((v) => v?.value === active.id);
+            const newIndex = data.findIndex((v) => v?.value === over.id);
 
             const reorder = arrayMove(data, oldIndex, newIndex);
 
@@ -124,7 +124,7 @@ const DragOrderSelectItem = ({
         {!!LabelComponent ? (
           <LabelComponent id={id} label={data?.label} color={data?.color} />
         ) : (
-          <p>data?.label</p>
+          <p>{data?.label}</p>
         )}
       </div>
       {!!ItemAction ? (

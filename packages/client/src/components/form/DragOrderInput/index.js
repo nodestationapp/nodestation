@@ -19,8 +19,6 @@ const mainClass = "dragOrderInput";
 const DragOrderInput = ({ onChange, value = [], name }) => {
   const ref = useRef();
 
-  console.log(value);
-
   const [newInputValue, setNewInputValue] = useState("");
   const [activeNewInput, setActiveNewInput] = useState(false);
 
@@ -60,7 +58,6 @@ const DragOrderInput = ({ onChange, value = [], name }) => {
                 <Input placeholder="Type color" size="small" value={label} />
               }
             />
-            {/* <TwitterPicker onChange={({ hex }) => onColorChange(hex)} /> */}
           </div>
         </Dropdown>
       </div>
@@ -110,7 +107,6 @@ const DragOrderInput = ({ onChange, value = [], name }) => {
               onChange={(e) => setNewInputValue(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  // e.preventDefault();
                   onAddHandler(e);
                 }
               }}

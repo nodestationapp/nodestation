@@ -115,7 +115,7 @@
       align-items: center;
       justify-content: flex-start !important;
       text-align: left;
-      padding: 13px;
+      padding: 10px;
       color: $text-color;
       font-size: 14px;
       line-height: 14px;
@@ -206,6 +206,14 @@ span{
 }
     }
   }
+
+  &--custom-value{
+    .select__content{
+      > button{
+        height: 45px;
+      }
+      }
+    }
 
   &--top {
     .select {

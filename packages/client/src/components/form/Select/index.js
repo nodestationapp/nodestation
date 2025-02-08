@@ -28,6 +28,7 @@ const Select = ({
   noArrow,
   multi,
   CustomButton,
+  CustomValue,
 }) => {
   const is_error = !!!hideError && touched && !!error;
 
@@ -76,6 +77,7 @@ const Select = ({
         [`${mainClass}--empty`]: value === "",
         [`${mainClass}--filled`]: value !== "",
         [`${mainClass}--${variant}`]: !!variant,
+        [`${mainClass}--custom-value`]: !!CustomValue,
       })}
     >
       <div className={`${mainClass}__content`}>
@@ -103,8 +105,16 @@ const Select = ({
               {current_value?.[0]?.icon}
               {value !== null && (
                 <>
-                  {current_value?.map((item) => item?.label)?.join(", ") ||
-                    placeholder}
+                  {CustomValue ? (
+                    <>
+                      {current_value?.map((item) => (
+                        <CustomValue label={item?.label} color={item?.color} />
+                      ))}
+                    </>
+                  ) : (
+                    current_value?.map((item) => item?.label)?.join(", ") ||
+                    placeholder
+                  )}
                 </>
               )}
             </span>
@@ -124,8 +134,17 @@ const Select = ({
                   })}
                   onClick={() => onChangeHandler({ name, value: item?.value })}
                 >
-                  {item?.icon}
-                  {item?.label}
+                  {!!CustomValue ? (
+                    <>
+                      <CustomValue label={item?.label} color={item?.color} />
+                    </>
+                  ) : (
+                    <>
+                      {item?.icon}
+                      {item?.label}
+                    </>
+                  )}
+
                   {current_value?.find(
                     (element) => element?.value === item?.value
                   ) && (
