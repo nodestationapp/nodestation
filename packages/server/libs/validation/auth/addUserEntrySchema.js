@@ -4,9 +4,9 @@ import { object, string, mixed, number } from "yup";
 const validationSchemaOptions = (type) => {
   switch (type) {
     case "id":
-    case "short_text":
+    case "text":
     case "long_text":
-    case "enumeration":
+    case "select":
       return string().required("Field is required");
     case "number":
     case "boolean":

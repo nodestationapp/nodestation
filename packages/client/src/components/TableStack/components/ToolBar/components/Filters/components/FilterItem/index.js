@@ -72,6 +72,7 @@ const FilterItem = ({
         preventChildrenClick={true}
         button={
           <Pill
+            variant="rounded"
             active={!!data?.value}
             label={selectedColumn?.label || "Add filter"}
             icon={!!data?.field ? selectedColumn?.icon : <PlusIcon />}

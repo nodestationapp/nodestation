@@ -10,19 +10,19 @@ const formBody = {
     {
       name: "Email",
       slug: "email",
-      type: "short_text",
+      type: "text",
       required: false,
     },
     {
       name: "First name",
       slug: "first_name",
-      type: "short_text",
+      type: "text",
       required: false,
     },
     {
       name: "Last name",
       slug: "last_name",
-      type: "short_text",
+      type: "text",
       required: false,
     },
   ],

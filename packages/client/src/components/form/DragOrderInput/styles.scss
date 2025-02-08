@@ -1,0 +1,53 @@
+.dragOrderInput{
+  padding-top: 15px;
+  border-top: 1px solid #4B4F55;
+
+  &__content{
+    // padding-left: 8px;
+    min-height: 30px;
+    border-radius: 8px;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    // border: 1px solid #4B4F55;
+    color: #F0F1F3;
+    font-weight: 400;
+
+    &__header{
+      display: flex;
+      margin-bottom: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    > span{
+      display: block;
+      font-size: 14px;
+      color: #AEB3BD;
+      font-weight: 400;
+    }
+
+    .input{
+      margin-bottom: 5px;
+    }
+
+    .drag-order-select__content__item{
+      height: 35px;
+      padding: 0 5px;
+      // border-bottom: 1px solid #4B4F55;
+      // border-radius: 0;
+
+      &__label{
+        gap: 10px;
+
+        .icon-button{
+          cursor: grab;
+
+          &::before{
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

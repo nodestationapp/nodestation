@@ -7,12 +7,10 @@ import FormikPhotoInput from "components/formik/FormikPhotoInput";
 const tableInputRender = (item) => {
   let select_data = null;
 
-  if (item?.type === "enumeration") {
-    const options = item?.options?.split("\n");
-
-    select_data = options?.map((item) => ({
-      label: item,
-      value: item,
+  if (item?.type === "select") {
+    select_data = item?.options?.map((item) => ({
+      label: item?.label,
+      value: item?.label,
     }));
   }
 
@@ -37,7 +35,7 @@ const tableInputRender = (item) => {
     case "long_text":
       return <FormikTextarea name={item?.slug} label={item?.name} />;
     case "boolean":
-    case "enumeration":
+    case "select":
       return (
         <FormikSelect
           required={item?.required}

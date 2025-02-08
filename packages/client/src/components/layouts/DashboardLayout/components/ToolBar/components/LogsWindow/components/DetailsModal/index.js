@@ -15,8 +15,8 @@ const mainClass = "logs-window";
 
 const value_render = ({ label, type, value }) => {
   switch (type) {
-    case "short_text":
-    case "enumeration":
+    case "text":
+    case "select":
     case "long_text":
     case "email":
       return <span>{value?.toString()}</span>;
@@ -45,22 +45,22 @@ const DetailsModal = ({ data, onClose }) => {
       icon: <InformationCircleIcon />,
       items: [
         {
-          type: "short_text",
+          type: "text",
           label: "Request URL",
           value: data?.source?.path,
         },
         {
-          type: "short_text",
+          type: "text",
           label: "Method",
           value: data?.req?.method,
         },
         {
-          type: "short_text",
+          type: "text",
           label: "Status Code",
           value: data?.res?.status,
         },
         {
-          type: "short_text",
+          type: "text",
           label: "Response Time",
           value: `${data?.responseTime} ms`,
         },

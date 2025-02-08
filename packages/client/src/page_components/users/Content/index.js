@@ -59,7 +59,7 @@ const UsersContent = () => {
     ...(table_fields?.map((item) => ({
       key: item?.type,
       value: item?.name,
-      type: item?.slug === "status" ? "status" : item?.type,
+      type: item?.type === "select" ? "status" : item?.type,
       slug: item?.slug,
     })) || []),
   ];

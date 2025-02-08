@@ -1,9 +1,7 @@
 .pill {
-  padding: 0 8px;
-  height: 26px;
+  padding: 0px 6px;
+  height: 25px;
   background-color: transparent;
-  border: 1px solid #3C414B;
-  border-radius: 80px;
   color: #848484;
   font-weight: 400;
   font-size: 13px;
@@ -12,6 +10,27 @@
   align-items: center;
   white-space: nowrap;
   gap: 6px;
+  border-radius: 5px;
+  font-weight: 500;
+
+  //     align-items: center;
+  //     background-color: #2b3441;
+  //     padding: 0px 6px;
+  //     border-radius: 5px;
+  //     -webkit-user-select: none;
+  //     user-select: none;
+  //     width: fit-content;
+  //     height: 23px;
+
+  &--rounded{
+    border-radius: 80px;
+    border: 1px solid #3C414B;
+  }
+
+  &--read-only{
+    pointer-events: none;
+    cursor: default;
+  }
 
   svg{
     height: 15px;

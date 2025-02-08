@@ -53,7 +53,7 @@ import {
 
 const mainClass = "table-stack";
 
-const table_value_type = (item, cell, meta) => {
+const table_value_type = (item, cell, meta, tableSchema) => {
   const value = !!item?.sort
     ? cell?.row?.original
     : !!cell?.row?.original?.hasOwnProperty(item?.slug)
@@ -70,7 +70,13 @@ const table_value_type = (item, cell, meta) => {
     case "json":
       return <span>{JSON.stringify(value)}</span>;
     case "status":
-      return <StatusChip status={value} />;
+      return (
+        <StatusChip
+          field={item?.slug}
+          status={value}
+          tableSchema={tableSchema}
+        />
+      );
     case "email_sparklines":
       return <EmailSparklines data={value} />;
     case "badge_name":
@@ -173,7 +179,12 @@ const TableStack = ({
         header: () => <span className="light">{item?.value}</span>,
         cell: (cell) => (
           <span className="light">
-            {table_value_type(item, cell, meta?.[cell?.row?.index])}
+            {table_value_type(
+              item,
+              cell,
+              meta?.[cell?.row?.index],
+              tableSchema
+            )}
           </span>
         ),
       })),
@@ -306,7 +317,11 @@ const TableStack = ({
         ? [
             <DragOrderSelect
               multi={true}
-              value={columnOrder || columns?.map((item) => item?.slug)}
+              value={
+                !!columnOrder?.[0]
+                  ? columnOrder
+                  : columns?.map((item) => item?.slug)
+              }
               CustomButton={({ active }) => (
                 <IconButton
                   size="small"

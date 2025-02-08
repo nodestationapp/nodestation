@@ -29,8 +29,8 @@ const mainClass = "preview-modal";
 
 const value_render = (type, value) => {
   switch (type) {
-    case "short_text":
-    case "enumeration":
+    case "text":
+    case "select":
     case "long_text":
     case "email":
       return <span>{value?.toString()}</span>;

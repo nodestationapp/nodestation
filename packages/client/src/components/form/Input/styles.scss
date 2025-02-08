@@ -41,7 +41,7 @@
 
   &__content {
     height: 40px;
-    position: relative;
+    // position: relative;
 
     input {
       padding: 0 15px;
@@ -57,6 +57,20 @@
         border-color: #757980;
       }
     }
+
+    &__wrapper{
+      height: 100%;
+      display: flex;
+      position: relative;
+    }
+  }
+
+  &__aside{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10000;
   }
 
   &--disabled{
@@ -66,6 +80,14 @@
   &--active {
     #{ $self }__content {
       border-color: red;
+    }
+  }
+
+  &--is-aside{
+    .input{
+      &__field{
+        padding-right: 70px !important;
+      }
     }
   }
 

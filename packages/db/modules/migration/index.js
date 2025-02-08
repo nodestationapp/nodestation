@@ -3,9 +3,9 @@ import { fs } from "../../../utils/index.js";
 
 const typesMap = {
   id: "string",
-  short_text: "string",
+  text: "string",
   long_text: "text",
-  enumeration: "string",
+  select: "string",
   media: "text",
   numeric: "integer",
   json: "json",

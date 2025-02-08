@@ -1,78 +1,22 @@
 import { useFormikContext } from "formik";
 
+import Id from "./components/Id";
+import Text from "./components/Text";
+import Select from "./components/Select";
+import Boolean from "./components/Boolean";
 import FormikInput from "components/formik/FormikInput";
-import FormikSelect from "components/formik/FormikSelect";
 import FormikSwitch from "components/formik/FormikSwitch";
-import FormikTextarea from "components/formik/FormikTextarea";
-
-const boolean_default_options = [
-  {
-    label: "NULL",
-    value: null,
-  },
-  {
-    label: "TRUE",
-    value: true,
-  },
-  {
-    label: "FALSE",
-    value: false,
-  },
-];
-
-const id_default_options = [
-  {
-    label: "generate_id()",
-    value: "generate_id()",
-  },
-];
 
 const extra_input_render = (type, locked) => {
   switch (type) {
     case "id":
-      return (
-        <>
-          <FormikSelect
-            label="Default value"
-            name="default"
-            disabled={locked}
-            removeActiveLabel={true}
-            options={id_default_options}
-          />
-          <FormikSwitch label="Required" name="required" disabled={locked} />
-        </>
-      );
+      return <Id locked={locked} />;
     case "boolean":
-      return (
-        <>
-          <FormikSelect
-            label="Default value"
-            name="default"
-            removeActiveLabel={true}
-            options={boolean_default_options}
-          />
-          <FormikSwitch label="Required" name="required" />
-        </>
-      );
-    case "enumeration":
-      return (
-        <>
-          <FormikTextarea label="Options" name="options" variant="light" />
-          <FormikInput label="Default value" name="default" />
-          <FormikSwitch label="Required" name="required" disabled={locked} />
-        </>
-      );
-    case "long_text":
-      return (
-        <>
-          <FormikTextarea
-            label="Default value"
-            name="default"
-            variant="light"
-          />
-          <FormikSwitch label="Required" name="required" disabled={locked} />
-        </>
-      );
+      return <Boolean />;
+    case "select":
+      return <Select locked={locked} />;
+    case "text":
+      return <Text />;
     default:
       return (
         <>
