@@ -36,6 +36,7 @@ const CreateFieldModal = ({ index, form, onClose }) => {
         type: formik_values?.type,
         name: formik_values?.name,
         variant: formik_values?.variant,
+        multi: formik_values?.multi,
         default: formik_values?.default,
         required: formik_values?.required,
         options: formik_values?.options,
@@ -50,6 +51,7 @@ const CreateFieldModal = ({ index, form, onClose }) => {
       temp.push({
         slug,
         name: formik_values?.name,
+        multi: formik_values?.multi,
         type: formik_values?.type,
         default: formik_values?.default,
         required: formik_values?.required,
@@ -68,6 +70,7 @@ const CreateFieldModal = ({ index, form, onClose }) => {
         name: form?.name || "",
         type: form?.type || "",
         variant: form?.variant || "",
+        multi: form?.multi || "",
         default: form?.default || "",
         options: form?.options || [],
         required: form?.required || false,

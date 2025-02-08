@@ -1,7 +1,9 @@
 import "./styles.scss";
+import "react-perfect-scrollbar/dist/css/styles.css";
 
 import classnames from "classnames";
 import { useState, useRef } from "react";
+import PerfectScrollbar from "react-perfect-scrollbar";
 
 import useOnScreen from "libs/helpers/useOnScreen";
 import useClickOutside from "libs/helpers/useClickOutside";
@@ -48,18 +50,20 @@ const Select = ({
 
   const onChangeHandler = (item) => {
     if (multi) {
-      let temp = [...value];
+      let temp = [...current_value];
 
-      const index = temp?.findIndex((element) => element === item?.value);
+      const index = temp?.findIndex(
+        (element) => element?.value === item?.value
+      );
       if (index === -1) {
-        temp.push(item?.value);
+        temp.push(item);
       } else {
         temp.splice(index, 1);
       }
 
-      onChange({ target: { name: item?.name, value: temp } });
+      onChange({ target: { name, value: temp?.map((item) => item?.value) } });
     } else {
-      onChange({ target: { name: item?.name, value: item?.value } });
+      onChange({ target: { name, value: item?.value } });
       setSelectOpen((prev) => !prev);
     }
   };
@@ -123,7 +127,12 @@ const Select = ({
         )}
         {select_open && (
           <div className={`${mainClass}__options`}>
-            <div className={`${mainClass}__options__wrapper`}>
+            <PerfectScrollbar
+              options={{
+                useBothWheelAxes: false,
+                suppressScrollX: true,
+              }}
+            >
               {options?.map((item, index) => (
                 <button
                   type="button"
@@ -132,7 +141,13 @@ const Select = ({
                     [`${mainClass}__options__item--selected`]:
                       selected?.value === item?.value,
                   })}
-                  onClick={() => onChangeHandler({ name, value: item?.value })}
+                  onClick={() =>
+                    onChangeHandler({
+                      label: item?.value,
+                      value: item?.value,
+                      color: item?.color,
+                    })
+                  }
                 >
                   {!!CustomValue ? (
                     <>
@@ -156,7 +171,7 @@ const Select = ({
                   )}
                 </button>
               ))}
-            </div>
+            </PerfectScrollbar>
           </div>
         )}
       </div>

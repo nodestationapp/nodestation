@@ -83,7 +83,7 @@ const FormContentWrapper = ({ toolbar }) => {
         tableId={form?.id}
         filters={filters}
         setFilters={setFilters}
-        tableSchema={fields}
+        tableSchema={data?.form?.fields}
         rowClick={(row) => setPreviewModal(row)}
         data={incoming?.map((item) => ({
           id: item?.id,

@@ -5,12 +5,12 @@ import FormikDragOrderInput from "components/formik/FormikDragOrderInput";
 
 const boolean_default_options = [
   {
-    label: "Single select",
-    value: "single_select",
+    label: "Single",
+    value: false,
   },
   {
-    label: "Multi select",
-    value: "multi_select",
+    label: "Multi",
+    value: true,
   },
 ];
 
@@ -19,7 +19,7 @@ const Select = ({ locked }) => {
     <>
       <FormikSelect
         label="Variant"
-        name="variant"
+        name="multi"
         removeActiveLabel={true}
         options={boolean_default_options}
       />

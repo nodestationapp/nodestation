@@ -40,6 +40,7 @@ const tableInputRender = (item) => {
     case "select":
       return (
         <FormikSelect
+          multi={item?.multi}
           required={item?.required}
           name={item?.slug}
           label={item?.name}

@@ -59,7 +59,7 @@ const UserProfileModal = ({ data, onClose }) => {
         onSubmit(values, setSubmitting, setErrors);
       }}
     >
-      {({ isSubmitting, submitForm }) => (
+      {({ isSubmitting, submitForm, values }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
           <AsideModal
             header={

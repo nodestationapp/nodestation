@@ -69,7 +69,7 @@ const table_value_type = (item, cell, meta, tableSchema) => {
       return <Media data={value} />;
     case "json":
       return <span>{JSON.stringify(value)}</span>;
-    case "status":
+    case "select":
       return (
         <StatusChip
           field={item?.slug}
@@ -142,6 +142,7 @@ const TableStack = ({
   const [columnOrder, setColumnOrder] = useState(
     table_preferences?.order || null
   );
+
   const [columnVisibility, setColumnVisibility] = useState(
     table_preferences?.visibility || []
   );

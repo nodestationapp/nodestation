@@ -43,7 +43,7 @@ const FormContent = () => {
     table?.fields?.map((item) => ({
       key: item?.type,
       value: item?.name,
-      type: item?.type === "select" ? "status" : item?.type,
+      type: item?.type,
       slug: item?.slug,
     })) || [];
 
