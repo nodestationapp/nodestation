@@ -31,6 +31,7 @@ const DragOrderSelect = ({
   CustomButton,
   itemAction,
   actionAlwaysVisible,
+  withAddAction,
 }) => {
   const is_error = !!!hideError && touched && !!error;
 
@@ -129,7 +130,7 @@ const DragOrderSelect = ({
               actionAlwaysVisible={actionAlwaysVisible}
             />
           </div>
-          {value?.length !== options?.length && (
+          {value?.length !== options?.length && withAddAction && (
             <div className={`${mainClass}__options__bottom`}>
               <Select
                 onChange={({ target }) => appendMiddleware(target?.value)}

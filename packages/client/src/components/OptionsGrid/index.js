@@ -15,6 +15,7 @@ const inputTypeRender = (data) => {
           placeholder="Empty"
           value={data?.value}
           multi={data?.multi}
+          withAddAction
           options={data?.options}
           onChange={({ target }) => data?.onChange(target?.value)}
         />
