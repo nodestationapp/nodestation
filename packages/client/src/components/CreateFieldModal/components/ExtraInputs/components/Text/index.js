@@ -8,11 +8,11 @@ import FormikTextarea from "components/formik/FormikTextarea";
 
 const variant_options = [
   {
-    label: "Short text",
+    label: "Short",
     value: "short",
   },
   {
-    label: "Long text",
+    label: "Long",
     value: "long",
   },
 ];

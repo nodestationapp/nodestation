@@ -41,28 +41,30 @@ const UsersContent = () => {
 
   let table_fields = settings?.fields?.filter(
     (item) =>
-      item?.slug !== "id" &&
+      // item?.slug !== "id" &&
       item?.slug !== "first_name" &&
       item?.slug !== "last_name" &&
       item?.slug !== "photo" &&
       item?.slug !== "password"
   );
 
-  const columns = [
-    {
-      sort: "first_name",
-      key: "first_name",
-      value: "User",
-      type: "user_profile",
-      slug: "first_name",
-    },
-    ...(table_fields?.map((item) => ({
-      key: item?.type,
-      value: item?.name,
-      type: item?.type,
-      slug: item?.slug,
-    })) || []),
-  ];
+  const columns = !!table_fields
+    ? [
+        {
+          sort: "first_name",
+          key: "first_name",
+          value: "User",
+          type: "user_profile",
+          slug: "first_name",
+        },
+        ...(table_fields?.map((item) => ({
+          key: item?.type,
+          value: item?.name,
+          type: item?.type,
+          slug: item?.slug,
+        })) || []),
+      ]
+    : [];
 
   const toolbar = {
     menu: [

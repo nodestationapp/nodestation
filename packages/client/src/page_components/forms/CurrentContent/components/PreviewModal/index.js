@@ -31,7 +31,6 @@ const value_render = (type, value) => {
   switch (type) {
     case "text":
     case "select":
-    case "long_text":
     case "email":
       return <span>{value?.toString()}</span>;
     case "media":
@@ -146,7 +145,7 @@ const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
                 key={index}
                 className={classnames(`${mainClass}__item`, {
                   [`${mainClass}__item--vertical`]:
-                    item?.type === "media" || item?.type === "long_text",
+                    item?.type === "media" || item?.variant === "long",
                 })}
               >
                 <span>{item?.name}:</span>

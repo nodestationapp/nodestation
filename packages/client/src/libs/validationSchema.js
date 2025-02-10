@@ -4,7 +4,6 @@ const validationSchemaOptions = (type) => {
   switch (type) {
     case "id":
     case "text":
-    case "long_text":
       return string().required("Field is required");
     case "number":
     case "boolean":

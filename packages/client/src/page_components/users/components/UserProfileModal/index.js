@@ -83,14 +83,7 @@ const UserProfileModal = ({ data, onClose }) => {
                   if (item?.slug === "created_at") return null;
                 }
 
-                return (
-                  <div
-                    key={index}
-                    style={item?.type === "long_text" ? { width: "100%" } : {}}
-                  >
-                    {tableInputRender(item)}
-                  </div>
-                );
+                return <div key={index}>{tableInputRender(item)}</div>;
               })}
             </div>
           </AsideModal>

@@ -46,14 +46,9 @@ const UsersProvider = ({ children }) => {
     placeholderData: (previousData) => previousData,
   });
 
-  const { data: settings } = useQuery({
+  const { data: settings, isLoading: settings_loading } = useQuery({
     queryKey: ["users_settings"],
     queryFn: () => api.get("/auth/settings"),
-  });
-
-  const { data: emails } = useQuery({
-    queryKey: ["client_emails"],
-    queryFn: () => api.get(`/emails`),
   });
 
   const updateAuth = (values) =>
@@ -87,13 +82,12 @@ const UsersProvider = ({ children }) => {
       }
     });
 
-  const loading = !!users_loading;
+  const loading = !!users_loading || !!settings_loading;
 
   const value = useMemo(() => {
     return {
       users,
       settings,
-      emails,
       loading,
       updateAuth,
       deleteUsers,
@@ -103,7 +97,7 @@ const UsersProvider = ({ children }) => {
       setFilters,
     };
     // eslint-disable-next-line
-  }, [users, settings, emails, loading, sort, filters]);
+  }, [users, settings, loading, sort, filters]);
 
   return (
     <UsersContext.Provider value={value}>{children}</UsersContext.Provider>

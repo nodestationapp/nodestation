@@ -139,11 +139,7 @@ const TableStack = ({
   const { setTable, setSelectedRows: setSelectedRowsContext } =
     useTableWrapper();
 
-  const columnOrderInit = table_preferences?.order?.filter((item) =>
-    columns?.find((element) => element?.slug === item)
-  );
-
-  const [columnOrder, setColumnOrder] = useState(columnOrderInit);
+  const [columnOrder, setColumnOrder] = useState(table_preferences?.order);
 
   const [columnVisibility, setColumnVisibility] = useState(
     table_preferences?.visibility || []
@@ -426,6 +422,7 @@ const TableStack = ({
                   className: `${mainClass}__wrapper`,
                 }}
               >
+                {alert}
                 <div className={`${mainClass}__header`}>
                   {table.getHeaderGroups().map((headerGroup) => (
                     <div
@@ -477,7 +474,7 @@ const TableStack = ({
                   <NoItemsFound />
                 ) : (
                   <div className={`${mainClass}__body`}>
-                    {alert}
+                    {/* {alert} */}
                     {table.getRowModel().rows.map((row, index) => (
                       <div
                         key={row.id}

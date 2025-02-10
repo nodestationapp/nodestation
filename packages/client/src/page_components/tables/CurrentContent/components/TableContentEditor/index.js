@@ -85,14 +85,7 @@ const TableContentEditor = ({ data = {}, onClose }) => {
                 if (!!!data?.id) {
                   if (item?.slug === "id") return null;
                 }
-                return (
-                  <div
-                    key={index}
-                    style={item?.type === "long_text" ? { width: "100%" } : {}}
-                  >
-                    {tableInputRender(item)}
-                  </div>
-                );
+                return <div key={index}>{tableInputRender(item)}</div>;
               })}
             </div>
           </AsideModal>

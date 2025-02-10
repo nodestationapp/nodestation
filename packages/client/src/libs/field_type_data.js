@@ -4,7 +4,6 @@ import { ReactComponent as DateIcon } from "assets/icons/content-types/date.svg"
 import { ReactComponent as MediaIcon } from "assets/icons/content-types/media.svg";
 import { ReactComponent as NumericIcon } from "assets/icons/content-types/number.svg";
 import { ReactComponent as BooleanIcon } from "assets/icons/content-types/boolean.svg";
-// import { ReactComponent as LongTextIcon } from "assets/icons/content-types/long-text.svg";
 import { ReactComponent as ShortTextIcon } from "assets/icons/content-types/short-text.svg";
 import { ReactComponent as EnumerationIcon } from "assets/icons/content-types/enumeration.svg";
 
@@ -19,11 +18,6 @@ const field_type_data = [
     label: "Text",
     value: "text",
   },
-  // {
-  //   icon: <LongTextIcon />,
-  //   label: "Long text",
-  //   value: "long_text",
-  // },
   {
     icon: <BooleanIcon />,
     label: "Boolean",
