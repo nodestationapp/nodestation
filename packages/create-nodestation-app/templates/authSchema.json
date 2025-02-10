@@ -66,7 +66,6 @@
         }
       ],
       "default": "client",
-      "variant": "single_select",
       "primary_key": ""
     },
     {
@@ -96,7 +95,6 @@
       "default": "inactive",
       "origin": "system",
       "required": true,
-      "variant": "single_select",
       "primary_key": ""
     },
     {

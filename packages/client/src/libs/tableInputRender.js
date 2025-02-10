@@ -34,8 +34,22 @@ const tableInputRender = (item) => {
   }
 
   switch (item?.type) {
-    case "long_text":
-      return <FormikTextarea name={item?.slug} label={item?.name} />;
+    case "text":
+      switch (item?.variant) {
+        case "long":
+          return <FormikTextarea name={item?.slug} label={item?.name} />;
+        default:
+          return (
+            <FormikInput
+              name={item?.slug}
+              label={item?.name}
+              variant="light"
+              required={!!item?.required}
+              type={item?.type === "password" ? "password" : "text"}
+              disabled={!!item?.read_only}
+            />
+          );
+      }
     case "boolean":
     case "select":
       return (

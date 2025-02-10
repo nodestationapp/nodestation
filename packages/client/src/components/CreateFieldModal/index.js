@@ -71,7 +71,7 @@ const CreateFieldModal = ({ index, form, onClose }) => {
         name: form?.name || "",
         type: form?.type || "",
         variant: form?.variant || "",
-        multi: form?.multi || "",
+        multi: !!form?.multi,
         default: form?.default || "",
         options: form?.options || [],
         required: form?.required || false,

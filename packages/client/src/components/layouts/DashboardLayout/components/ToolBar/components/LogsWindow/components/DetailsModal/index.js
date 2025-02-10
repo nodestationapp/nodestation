@@ -16,9 +16,8 @@ const mainClass = "logs-window";
 const value_render = ({ label, type, value }) => {
   switch (type) {
     case "text":
-    case "select":
-    case "long_text":
     case "email":
+    case "select":
       return <span>{value?.toString()}</span>;
     case "json":
       return (
@@ -111,8 +110,7 @@ const DetailsModal = ({ data, onClose }) => {
                     `${mainClass}__details__section__content__item`,
                     {
                       [`${mainClass}__details__section__content__item--vertical`]:
-                        element?.type === "long_text" ||
-                        element?.type === "json",
+                        element?.variant === "long" || element?.type === "json",
                     }
                   )}
                 >

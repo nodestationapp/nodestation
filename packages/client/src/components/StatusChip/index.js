@@ -8,15 +8,24 @@ const StatusChip = ({ field, status, tableSchema }) => {
     (item) => item?.slug === field
   )?.options;
 
-  const selectedOption = schemaOptions?.find((item) => item?.label === status);
+  const selectedStatus = status?.split(",");
 
   return (
     <div className={mainClass}>
-      <Pill
-        label={selectedOption?.label}
-        color={selectedOption?.color}
-        textColor="#F0F1F3"
-      />
+      {selectedStatus?.map((item, index) => {
+        const selectedOption = schemaOptions?.find(
+          (element) => element?.label === item
+        );
+
+        return (
+          <Pill
+            key={index}
+            label={selectedOption?.label}
+            color={selectedOption?.color}
+            textColor="#F0F1F3"
+          />
+        );
+      })}
     </div>
   );
 };

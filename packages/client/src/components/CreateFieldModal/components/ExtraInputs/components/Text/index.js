@@ -9,11 +9,11 @@ import FormikTextarea from "components/formik/FormikTextarea";
 const variant_options = [
   {
     label: "Short text",
-    value: "short_text",
+    value: "short",
   },
   {
     label: "Long text",
-    value: "long_text",
+    value: "long",
   },
 ];
 
@@ -22,7 +22,7 @@ const Text = ({ locked }) => {
 
   useEffect(() => {
     if (!!values?.variant) return;
-    setFieldValue("variant", "short_text");
+    setFieldValue("variant", "short");
     // eslint-disable-next-line
   }, []);
 
@@ -34,7 +34,7 @@ const Text = ({ locked }) => {
         removeActiveLabel={true}
         options={variant_options}
       />
-      {values?.variant === "short_text" ? (
+      {values?.variant === "short" ? (
         <FormikInput label="Default value" name="default" variant="light" />
       ) : (
         <FormikTextarea label="Default value" name="default" variant="light" />
