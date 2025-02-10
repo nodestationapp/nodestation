@@ -101,7 +101,7 @@ const createTable = async (req, res) => {
       type: "tbl",
       fields: [
         {
-          name: "id",
+          name: "ID",
           slug: "id",
           type: "id",
           required: true,

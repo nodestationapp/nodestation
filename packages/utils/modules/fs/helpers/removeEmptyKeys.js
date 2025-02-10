@@ -1,4 +1,4 @@
-const removeEmptyKeys = (arr) => {
+const removeEmptyKeys = (arr = []) => {
   return arr.map((obj) => {
     return Object.fromEntries(
       Object.entries(obj).filter(([key, value]) => {
@@ -6,6 +6,7 @@ const removeEmptyKeys = (arr) => {
           value !== null &&
           value !== undefined &&
           value !== "" &&
+          value !== false &&
           !(Array.isArray(value) && value.length === 0)
         );
       })

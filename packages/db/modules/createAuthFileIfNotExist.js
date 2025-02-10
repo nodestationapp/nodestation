@@ -8,7 +8,7 @@ export default async () => {
       slug: "nodestation_users",
       fields: [
         {
-          name: "id",
+          name: "ID",
           slug: "id",
           type: "id",
           required: true,

@@ -34,7 +34,8 @@ const loadRoutes = (server) => {
           newRouter[item?.options?.method.toLowerCase()](
             `/api${item?.name}`,
             authMiddleware(item?.options?.auth),
-            item?.options?.middlewares?.map((item) => middlewares?.[item]),
+            item?.options?.middlewares?.map((item) => middlewares?.[item]) ||
+              [],
             handler
           );
         }

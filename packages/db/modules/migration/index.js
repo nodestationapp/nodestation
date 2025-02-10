@@ -45,7 +45,7 @@ export default async () => {
       fields: [
         ...item?.fields,
         {
-          name: "id",
+          name: "ID",
           type: "id",
           slug: "id",
           primary_key: true,

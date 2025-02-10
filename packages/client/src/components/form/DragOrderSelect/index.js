@@ -50,18 +50,8 @@ const DragOrderSelect = ({
     let temp = [...value];
 
     temp.push(item);
-    onChange({ target: { value: temp } });
+    onChange(temp);
   };
-
-  // const removeMiddleware = (item) => {
-  //   let temp = [...value];
-
-  //   const index = temp?.findIndex((element) => element === item);
-
-  //   temp.splice(index, 1);
-
-  //   onChange({ target: { value: temp } });
-  // };
 
   const formatted_value = value?.map((item) => ({
     disabled: options?.find((element) => element?.value === item)?.disabled,

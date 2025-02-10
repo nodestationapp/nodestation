@@ -7,6 +7,7 @@ import checkEntryExist from "../helpers/checkEntryExists.js";
 import generateCustomId from "../helpers/generateCustomId.js";
 import folderNameParser from "../helpers/folderNameParser.js";
 import generateServer from "../helpers/generateServer/index.js";
+import removeEmptyKeys from "./removeEmptyKeys.js";
 
 const createFile = async (body, entry_id) =>
   new Promise(async (resolve, reject) => {
@@ -29,6 +30,13 @@ const createFile = async (body, entry_id) =>
     }
 
     delete body.type;
+
+    if (!!body?.fields) {
+      body = {
+        ...body,
+        fields: removeEmptyKeys(body?.fields),
+      };
+    }
 
     const jsonContent = JSON.stringify(body, null, 2);
     fs.writeFileSync(

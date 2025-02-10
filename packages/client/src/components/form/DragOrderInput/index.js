@@ -19,24 +19,28 @@ const mainClass = "dragOrderInput";
 const DragOrderInput = ({ onChange, value = [], name }) => {
   const ref = useRef();
 
+  const options = [...(value || [])];
+
+  value = value?.map((item) => item?.value);
+
   const [newInputValue, setNewInputValue] = useState("");
   const [activeNewInput, setActiveNewInput] = useState(false);
 
   useClickOutside(ref, () => setActiveNewInput(false), activeNewInput);
 
   const onChangeHandler = (value) => {
-    onChange({ target: { name, value } });
-  };
+    const newOrderData = value?.map((item) =>
+      options?.find((element) => element?.value === item)
+    );
 
-  const maxIndex = value.length
-    ? Math.max(...value.map((obj) => obj.value))
-    : 0;
+    onChange({ target: { name, value: newOrderData } });
+  };
 
   const LabelComponent = ({ id, label, color = "#6E5B39" }) => {
     const onColorChange = (field, newValue) => {
       const temp = [...value];
 
-      const index = temp.findIndex((item) => item?.id === id);
+      const index = temp.findIndex((item) => item?.label === id);
 
       temp[index] = { ...temp[index], [field]: newValue };
 
@@ -69,12 +73,11 @@ const DragOrderInput = ({ onChange, value = [], name }) => {
       target: {
         name: "options",
         value: [
-          ...value,
+          ...options,
           {
             color: "#6E5B39",
             label: newInputValue,
-            id: maxIndex + 1,
-            value: maxIndex + 1,
+            value: newInputValue,
           },
         ],
       },
@@ -117,7 +120,8 @@ const DragOrderInput = ({ onChange, value = [], name }) => {
           name={name}
           LabelComponent={LabelComponent}
           onChange={onChangeHandler}
-          data={value || []}
+          value={value}
+          data={options}
         />
       </div>
     </div>

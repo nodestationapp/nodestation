@@ -53,6 +53,7 @@ const CreateFieldModal = ({ index, form, onClose }) => {
         name: formik_values?.name,
         multi: formik_values?.multi,
         type: formik_values?.type,
+        variant: formik_values?.variant,
         default: formik_values?.default,
         required: formik_values?.required,
         options: formik_values?.options,

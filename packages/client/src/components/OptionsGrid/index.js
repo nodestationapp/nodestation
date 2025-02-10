@@ -12,12 +12,12 @@ const inputTypeRender = (data) => {
       return (
         <DragOrderSelect
           noArrow
+          withAddAction
           placeholder="Empty"
           value={data?.value}
           multi={data?.multi}
-          withAddAction
           options={data?.options}
-          onChange={({ target }) => data?.onChange(target?.value)}
+          onChange={(value) => data?.onChange(value)}
         />
       );
     case "dropdown-input":
