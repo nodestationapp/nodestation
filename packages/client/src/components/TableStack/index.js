@@ -139,9 +139,11 @@ const TableStack = ({
   const { setTable, setSelectedRows: setSelectedRowsContext } =
     useTableWrapper();
 
-  const [columnOrder, setColumnOrder] = useState(
-    table_preferences?.order || null
+  const columnOrderInit = table_preferences?.order?.filter((item) =>
+    columns?.find((element) => element?.slug === item)
   );
+
+  const [columnOrder, setColumnOrder] = useState(columnOrderInit);
 
   const [columnVisibility, setColumnVisibility] = useState(
     table_preferences?.visibility || []

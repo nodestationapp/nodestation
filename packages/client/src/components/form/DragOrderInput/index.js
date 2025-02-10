@@ -38,13 +38,11 @@ const DragOrderInput = ({ onChange, value = [], name }) => {
 
   const LabelComponent = ({ id, label, color = "#6E5B39" }) => {
     const onColorChange = (field, newValue) => {
-      const temp = [...value];
-
-      const index = temp.findIndex((item) => item?.label === id);
-
+      const temp = [...options];
+      const index = temp.findIndex((item) => item?.value === id);
       temp[index] = { ...temp[index], [field]: newValue };
 
-      onChangeHandler(temp);
+      onChange({ target: { name, value: temp } });
     };
 
     return (
