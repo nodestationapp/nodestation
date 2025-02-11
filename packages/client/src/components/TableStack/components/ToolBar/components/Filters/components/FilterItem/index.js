@@ -1,14 +1,13 @@
 import "./styles.scss";
 
 import Pill from "components/Pill";
-import Input from "components/form/Input";
 import Dropdown from "components/Dropdown";
-import IconButton from "components/IconButton";
 import DropdownMenu from "components/DropdownMenu";
+import FilterItemContent from "./components/FilterItemContent";
 
 import field_type_data from "libs/field_type_data";
 
-import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 const mainClass = "table__filter-item";
 
@@ -30,6 +29,7 @@ const FilterItem = ({
       ...field,
       label: item?.name,
       slug: item?.slug,
+      options: item?.options,
       onClick: () => onFilterSelect(item?.slug),
     };
   });
@@ -80,26 +80,12 @@ const FilterItem = ({
         }
       >
         {!!data?.field ? (
-          <div className={`${mainClass}__content`}>
-            <div className={`${mainClass}__content__header`}>
-              <span>
-                {selectedColumn?.label} <strong>contains</strong>
-              </span>
-              <IconButton
-                icon={<TrashIcon />}
-                size="small"
-                onClick={() => onRemove(data?.field)}
-              />
-            </div>
-            <Input
-              placeholder="Type a value"
-              size="small"
-              variant="dark"
-              name={data?.field}
-              value={data?.value}
-              onChange={(e) => onTypeHandler(e)}
-            />
-          </div>
+          <FilterItemContent
+            data={data}
+            selectedColumn={selectedColumn}
+            onRemove={onRemove}
+            onTypeHandler={onTypeHandler}
+          />
         ) : (
           <DropdownMenu items={formatted_columns} />
         )}

@@ -9,7 +9,6 @@ const mainClass = "table__toolbar";
 const Toolbar = ({
   data,
   selectedRows = [],
-  columns,
   filters,
   saveTransaction,
   preferences,
