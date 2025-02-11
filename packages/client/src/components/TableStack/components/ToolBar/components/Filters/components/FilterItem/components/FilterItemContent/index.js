@@ -1,16 +1,56 @@
 import "./styles.scss";
 
+import Input from "components/form/Input";
 import IconButton from "components/IconButton";
 import FilterSelectInput from "./components/Select";
 
 import { TrashIcon } from "@heroicons/react/24/outline";
+import Select from "components/form/Select";
 
 const mainClass = "table__filter-item";
 
-const filterInputRender = (column) => {
+const filterInputRender = (column, onChangeHandler, value) => {
   switch (column?.value) {
     case "select":
-      return <FilterSelectInput options={column?.options} />;
+      return (
+        <FilterSelectInput
+          currentValue={value}
+          options={column?.options}
+          onChange={onChangeHandler}
+        />
+      );
+    case "id":
+    case "text":
+    case "numeric":
+      return (
+        <Input
+          value={value}
+          placeholder="Type a value"
+          onChange={(e) => onChangeHandler(e.target.value)}
+        />
+      );
+    case "boolean":
+      return (
+        <Select
+          value={value}
+          options={[
+            {
+              label: "NULL",
+              value: "null",
+            },
+            {
+              label: "TRUE",
+              value: 1,
+            },
+            {
+              label: "FALSE",
+              value: 0,
+            },
+          ]}
+          placeholder="Select a value"
+          onChange={(e) => onChangeHandler(e.target.value)}
+        />
+      );
     default:
       return null;
   }
@@ -18,11 +58,16 @@ const filterInputRender = (column) => {
 
 const FilterItemContent = ({
   data,
-  selectedColumn,
+  value,
   onRemove,
-  // onTypeHandler,
+  selectedColumn,
+  onChangeHandler,
 }) => {
-  const filterInput = filterInputRender(selectedColumn);
+  const filterInput = filterInputRender(
+    selectedColumn,
+    onChangeHandler,
+    value?.value
+  );
 
   return (
     <div className={`${mainClass}__content`}>
@@ -37,14 +82,6 @@ const FilterItemContent = ({
         />
       </div>
       {filterInput}
-      {/* <Input
-        placeholder="Type a value"
-        size="small"
-        variant="dark"
-        name={data?.field}
-        value={data?.value}
-        onChange={(e) => onTypeHandler(e)}
-      /> */}
     </div>
   );
 };

@@ -11,14 +11,7 @@ import { fs } from "@nstation/utils";
 import { knex, createSchema } from "@nstation/db";
 
 import upsertEntry from "#libs/upsertEntry.js";
-
-const applyFilters = (query, filters) => {
-  return query.where((builder) => {
-    Object.entries(filters).forEach(([key, value]) => {
-      builder.where(key, "like", `%${value}%`);
-    });
-  });
-};
+import applyFilters from "#libs/applyFilters.js";
 
 const authRegister = async (req, res) => {
   let body = req?.body;
@@ -65,8 +58,11 @@ const getAllAuth = async (req, res) => {
   sort = !!sort ? sort?.split(":") : ["id", "asc"];
 
   try {
+    const files = fs.getFiles();
+    const auth = files?.find((item) => item?.id?.toString() === "auth");
+
     const data = await knex("nodestation_users")
-      .modify(applyFilters, rest)
+      .modify(applyFilters, rest, auth?.fields)
       .orderBy(sort?.[0], sort?.[1]);
 
     const settings = await knex("nodestation_media_settings").first();

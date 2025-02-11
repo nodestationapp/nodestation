@@ -4,6 +4,7 @@ import { fs } from "@nstation/utils";
 import { knex, createSchema } from "@nstation/db";
 
 import upsertEntry from "#libs/upsertEntry.js";
+import applyFilters from "#libs/applyFilters.js";
 
 const safeJSONParse = (input) => {
   try {
@@ -49,14 +50,6 @@ const getAllTables = async (_, res) => {
   }
 };
 
-const applyFilters = (query, filters) => {
-  return query.where((builder) => {
-    Object.entries(filters).forEach(([key, value]) => {
-      builder.where(key, "like", `%${value}%`);
-    });
-  });
-};
-
 const getTable = async (req, res) => {
   const { id } = req?.params;
   let { sort, ...rest } = req?.query;
@@ -74,7 +67,7 @@ const getTable = async (req, res) => {
     let entries = [];
     if (!!table?.slug) {
       entries = await knex(table?.slug)
-        .modify(applyFilters, rest)
+        .modify(applyFilters, rest, table?.fields)
         .orderBy(sort?.[0], sort?.[1]);
       entries = parseJSONFields(entries, settings);
     }

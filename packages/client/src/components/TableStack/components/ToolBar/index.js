@@ -50,7 +50,6 @@ const Toolbar = ({
           filters={filters}
           setFilters={setFilters}
           tableSchema={tableSchema}
-          preferences={preferences}
           saveTransaction={saveTransaction}
         />
       )}

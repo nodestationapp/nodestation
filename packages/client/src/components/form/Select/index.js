@@ -107,20 +107,18 @@ const Select = ({
           >
             <span>
               {current_value?.[0]?.icon}
-              {value !== null && (
-                <>
-                  {CustomValue ? (
-                    <>
-                      {current_value?.map((item) => (
-                        <CustomValue label={item?.label} color={item?.color} />
-                      ))}
-                    </>
-                  ) : (
-                    current_value?.map((item) => item?.label)?.join(", ") ||
-                    placeholder
-                  )}
-                </>
-              )}
+              <>
+                {CustomValue ? (
+                  <>
+                    {current_value?.map((item) => (
+                      <CustomValue label={item?.label} color={item?.color} />
+                    ))}
+                  </>
+                ) : (
+                  current_value?.map((item) => item?.label)?.join(", ") ||
+                  placeholder
+                )}
+              </>
             </span>
             {!!!noArrow && <ChevronDownIcon />}
           </button>

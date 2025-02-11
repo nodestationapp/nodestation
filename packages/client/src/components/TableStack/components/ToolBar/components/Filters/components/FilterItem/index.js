@@ -20,6 +20,8 @@ const FilterItem = ({
   setFilters,
   saveTransaction,
 }) => {
+  const current_filter = filters?.[index];
+
   const formatted_columns = columns?.map((item) => {
     const field = field_type_data?.find(
       (element) => element?.value === item?.type
@@ -29,6 +31,7 @@ const FilterItem = ({
       ...field,
       label: item?.name,
       slug: item?.slug,
+      type: item?.type,
       options: item?.options,
       onClick: () => onFilterSelect(item?.slug),
     };
@@ -54,11 +57,11 @@ const FilterItem = ({
     saveTransaction({ filters: temp });
   };
 
-  const onTypeHandler = (e) => {
+  const onChangeHandler = (value) => {
     const temp = [...filters];
     temp[index] = {
       ...temp[index],
-      value: e?.target?.value,
+      value,
     };
 
     setFilters(temp);
@@ -82,9 +85,10 @@ const FilterItem = ({
         {!!data?.field ? (
           <FilterItemContent
             data={data}
-            selectedColumn={selectedColumn}
             onRemove={onRemove}
-            onTypeHandler={onTypeHandler}
+            value={current_filter}
+            selectedColumn={selectedColumn}
+            onChangeHandler={onChangeHandler}
           />
         ) : (
           <DropdownMenu items={formatted_columns} />

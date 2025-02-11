@@ -24,7 +24,9 @@ const UsersProvider = ({ children }) => {
   const sort_query = sortParser(sort);
   const filters_query = filters.reduce((acc, item) => {
     if (item.field) {
-      acc[item.field] = item.value || "";
+      acc[item.field] = Array.isArray(item.value)
+        ? item?.value?.join(",") || undefined
+        : item.value || undefined;
     }
     return acc;
   }, {});
