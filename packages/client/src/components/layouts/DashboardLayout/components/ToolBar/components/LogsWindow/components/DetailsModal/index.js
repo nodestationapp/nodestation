@@ -15,10 +15,9 @@ const mainClass = "logs-window";
 
 const value_render = ({ label, type, value }) => {
   switch (type) {
-    case "short_text":
-    case "enumeration":
-    case "long_text":
+    case "text":
     case "email":
+    case "select":
       return <span>{value?.toString()}</span>;
     case "json":
       return (
@@ -45,22 +44,22 @@ const DetailsModal = ({ data, onClose }) => {
       icon: <InformationCircleIcon />,
       items: [
         {
-          type: "short_text",
+          type: "text",
           label: "Request URL",
           value: data?.source?.path,
         },
         {
-          type: "short_text",
+          type: "text",
           label: "Method",
           value: data?.req?.method,
         },
         {
-          type: "short_text",
+          type: "text",
           label: "Status Code",
           value: data?.res?.status,
         },
         {
-          type: "short_text",
+          type: "text",
           label: "Response Time",
           value: `${data?.responseTime} ms`,
         },
@@ -111,8 +110,7 @@ const DetailsModal = ({ data, onClose }) => {
                     `${mainClass}__details__section__content__item`,
                     {
                       [`${mainClass}__details__section__content__item--vertical`]:
-                        element?.type === "long_text" ||
-                        element?.type === "json",
+                        element?.variant === "long" || element?.type === "json",
                     }
                   )}
                 >

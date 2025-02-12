@@ -41,7 +41,7 @@ const sendForm = async (req, res) => {
       files: req?.files,
       extraFields: [
         {
-          name: "id",
+          name: "ID",
           type: "id",
           slug: "id",
           primary_key: true,

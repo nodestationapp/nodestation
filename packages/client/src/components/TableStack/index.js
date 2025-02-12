@@ -40,19 +40,20 @@ import { useOrganization } from "context/organization";
 import { useTableWrapper } from "context/client/table-wrapper";
 
 import {
-  Cog6ToothIcon,
-  EllipsisHorizontalIcon,
   EyeIcon,
-  EyeSlashIcon,
-  ListBulletIcon,
-  LockClosedIcon,
   PlusIcon,
   TrashIcon,
+  EyeSlashIcon,
+  Cog6ToothIcon,
+  ListBulletIcon,
+  LockClosedIcon,
+  EllipsisHorizontalIcon,
+  BoltIcon,
 } from "@heroicons/react/24/outline";
 
 const mainClass = "table-stack";
 
-const table_value_type = (item, cell, meta) => {
+const table_value_type = (item, cell, meta, tableSchema) => {
   const value = !!item?.sort
     ? cell?.row?.original
     : !!cell?.row?.original?.hasOwnProperty(item?.slug)
@@ -68,8 +69,14 @@ const table_value_type = (item, cell, meta) => {
       return <Media data={value} />;
     case "json":
       return <span>{JSON.stringify(value)}</span>;
-    case "status":
-      return <StatusChip status={value} />;
+    case "select":
+      return (
+        <StatusChip
+          field={item?.slug}
+          status={value}
+          tableSchema={tableSchema}
+        />
+      );
     case "email_sparklines":
       return <EmailSparklines data={value} />;
     case "badge_name":
@@ -108,27 +115,32 @@ const TableStack = ({
   sort,
   alert,
   setSort,
+  filters,
+  setFilters,
   rowClick,
   tableId,
   rowAction,
+  tableSchema,
   disabledSelect,
   loading = false,
   fullWidth = false,
   toolbar: toolbarData,
 }) => {
   const { preferences } = useOrganization();
-  const [isResizing, setIsResizing] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const { setTable, setSelectedRows: setSelectedRowsContext } =
-    useTableWrapper();
-
   const table_preferences = preferences?.find(
     (item) => item?.table_id === tableId
   );
 
-  const [columnOrder, setColumnOrder] = useState(
-    table_preferences?.order || null
+  const [isResizing, setIsResizing] = useState(false);
+  const [filtersExpanded, setFiltersExpanded] = useState(
+    table_preferences?.filtersToggle
   );
+  const [selectedRows, setSelectedRows] = useState([]);
+  const { setTable, setSelectedRows: setSelectedRowsContext } =
+    useTableWrapper();
+
+  const [columnOrder, setColumnOrder] = useState(table_preferences?.order);
+
   const [columnVisibility, setColumnVisibility] = useState(
     table_preferences?.visibility || []
   );
@@ -166,7 +178,12 @@ const TableStack = ({
         header: () => <span className="light">{item?.value}</span>,
         cell: (cell) => (
           <span className="light">
-            {table_value_type(item, cell, meta?.[cell?.row?.index])}
+            {table_value_type(
+              item,
+              cell,
+              meta?.[cell?.row?.index],
+              tableSchema
+            )}
           </span>
         ),
       })),
@@ -184,7 +201,7 @@ const TableStack = ({
     },
     state: {
       sorting: sort,
-      columnOrder: columnOrder,
+      columnOrder: columnOrder?.map((item) => item),
       rowSelection: selectedRows,
       columnVisibility: columnVisibility,
     },
@@ -276,14 +293,34 @@ const TableStack = ({
     saveTransaction({ order: value });
   };
 
+  const isFilterValue = filters?.some((item) => !!item?.value);
+
   const toolbar = {
     menu: toolbarData?.menu,
     action: [
+      ...(!!filters
+        ? [
+            <IconButton
+              active={!!filtersExpanded}
+              size="small"
+              icon={<BoltIcon color={!!isFilterValue ? "#8A6FF1" : ""} />}
+              onClick={() => {
+                setFiltersExpanded((prev) => !prev);
+                saveTransaction({ filtersToggle: !!filtersExpanded ? 0 : 1 });
+              }}
+            />,
+          ]
+        : []),
+
       ...(!!!toolbarData?.hideColumnOrder
         ? [
             <DragOrderSelect
               multi={true}
-              value={columnOrder || columns?.map((item) => item?.slug)}
+              value={
+                !!columnOrder?.[0]
+                  ? columnOrder?.map((item) => item)
+                  : columns?.map((item) => item?.slug)
+              }
               CustomButton={({ active }) => (
                 <IconButton
                   size="small"
@@ -306,11 +343,11 @@ const TableStack = ({
               )}
               actionAlwaysVisible={true}
               options={columns?.map((item) => ({
-                label: item?.value,
                 value: item?.slug,
+                label: item?.value,
                 disabled: columnVisibility?.[item?.slug] === false,
               }))}
-              onChange={({ target }) => onChangeColumnOrder(target?.value)}
+              onChange={(value) => onChangeColumnOrder(value)}
             />,
           ]
         : []),
@@ -359,7 +396,16 @@ const TableStack = ({
           [`${mainClass}--sortable`]: !!setSort,
         })}
       >
-        <Toolbar data={toolbar} selectedRows={selectedRows} />
+        <Toolbar
+          data={toolbar}
+          columns={columns}
+          filters={filters}
+          tableSchema={tableSchema}
+          setFilters={setFilters}
+          selectedRows={selectedRows}
+          filtersExpanded={filtersExpanded}
+          saveTransaction={saveTransaction}
+        />
         {!!loading ? (
           <TableSkeleton />
         ) : (
@@ -375,6 +421,7 @@ const TableStack = ({
                   className: `${mainClass}__wrapper`,
                 }}
               >
+                {alert}
                 <div className={`${mainClass}__header`}>
                   {table.getHeaderGroups().map((headerGroup) => (
                     <div
@@ -385,7 +432,6 @@ const TableStack = ({
                         <div
                           key={header.id}
                           className={`${mainClass}__header__col`}
-                          // header.column.getIsResizing()
                           style={{
                             width: header.getSize(),
                           }}
@@ -427,7 +473,7 @@ const TableStack = ({
                   <NoItemsFound />
                 ) : (
                   <div className={`${mainClass}__body`}>
-                    {alert}
+                    {/* {alert} */}
                     {table.getRowModel().rows.map((row, index) => (
                       <div
                         key={row.id}

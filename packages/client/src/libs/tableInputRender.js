@@ -1,3 +1,4 @@
+import Pill from "components/Pill";
 import FormikInput from "components/formik/FormikInput";
 import FormikSelect from "components/formik/FormikSelect";
 import FormikDateTime from "components/formik/FormikDateTime";
@@ -7,12 +8,11 @@ import FormikPhotoInput from "components/formik/FormikPhotoInput";
 const tableInputRender = (item) => {
   let select_data = null;
 
-  if (item?.type === "enumeration") {
-    const options = item?.options?.split("\n");
-
-    select_data = options?.map((item) => ({
-      label: item,
-      value: item,
+  if (item?.type === "select") {
+    select_data = item?.options?.map((item) => ({
+      label: item?.label,
+      value: item?.label,
+      color: item?.color,
     }));
   }
 
@@ -34,16 +34,34 @@ const tableInputRender = (item) => {
   }
 
   switch (item?.type) {
-    case "long_text":
-      return <FormikTextarea name={item?.slug} label={item?.name} />;
+    case "text":
+      switch (item?.variant) {
+        case "long":
+          return <FormikTextarea name={item?.slug} label={item?.name} />;
+        default:
+          return (
+            <FormikInput
+              name={item?.slug}
+              label={item?.name}
+              variant="light"
+              required={!!item?.required}
+              type={item?.type === "password" ? "password" : "text"}
+              disabled={!!item?.read_only}
+            />
+          );
+      }
     case "boolean":
-    case "enumeration":
+    case "select":
       return (
         <FormikSelect
+          multi={item?.multi}
           required={item?.required}
           name={item?.slug}
           label={item?.name}
           options={select_data}
+          CustomValue={({ label, color }) => (
+            <Pill label={label} color={color} textColor="#F0F1F3" readOnly />
+          )}
         />
       );
     case "media":

@@ -1,3 +1,4 @@
+import queryString from "query-string";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, useMemo, useState } from "react";
 
@@ -16,27 +17,40 @@ const UsersProvider = ({ children }) => {
   );
 
   const [sort, setSort] = useState(table_preferences?.sort || []);
+  const [filters, setFilters] = useState(
+    table_preferences?.filters || [{ field: null, value: "" }]
+  );
 
   const sort_query = sortParser(sort);
+  const filters_query = filters.reduce((acc, item) => {
+    if (item.field) {
+      acc[item.field] = Array.isArray(item.value)
+        ? item?.value?.join(",") || undefined
+        : item.value || undefined;
+    }
+    return acc;
+  }, {});
 
   const {
     data: users,
     refetch: usersRefetch,
     isLoading: users_loading,
   } = useQuery({
-    queryKey: ["users", sort_query],
-    queryFn: () => api.get(`/auth?sort=${sort_query}`),
+    queryKey: ["users", sort_query, filters_query],
+    queryFn: () =>
+      api.get(
+        `/auth?${queryString.stringify({
+          ...filters_query,
+          sort: sort_query || undefined,
+        })}`
+      ),
     enabled: !!!preferencesLoading,
+    placeholderData: (previousData) => previousData,
   });
 
-  const { data: settings } = useQuery({
+  const { data: settings, isLoading: settings_loading } = useQuery({
     queryKey: ["users_settings"],
     queryFn: () => api.get("/auth/settings"),
-  });
-
-  const { data: emails } = useQuery({
-    queryKey: ["client_emails"],
-    queryFn: () => api.get(`/emails`),
   });
 
   const updateAuth = (values) =>
@@ -70,21 +84,22 @@ const UsersProvider = ({ children }) => {
       }
     });
 
-  const loading = !!users_loading;
+  const loading = !!users_loading || !!settings_loading;
 
   const value = useMemo(() => {
     return {
       users,
       settings,
-      emails,
       loading,
       updateAuth,
       deleteUsers,
       sort,
       setSort,
+      filters,
+      setFilters,
     };
     // eslint-disable-next-line
-  }, [users, settings, emails, loading, sort]);
+  }, [users, settings, loading, sort, filters]);
 
   return (
     <UsersContext.Provider value={value}>{children}</UsersContext.Provider>

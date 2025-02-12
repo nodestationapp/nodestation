@@ -3,9 +3,8 @@ import { fs } from "../../../utils/index.js";
 
 const typesMap = {
   id: "string",
-  short_text: "string",
-  long_text: "text",
-  enumeration: "string",
+  text: "text",
+  select: "string",
   media: "text",
   numeric: "integer",
   json: "json",
@@ -45,7 +44,7 @@ export default async () => {
       fields: [
         ...item?.fields,
         {
-          name: "id",
+          name: "ID",
           type: "id",
           slug: "id",
           primary_key: true,

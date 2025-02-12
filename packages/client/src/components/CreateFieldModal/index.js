@@ -1,7 +1,8 @@
 import slugify from "slugify";
 import { Form, Formik, useFormikContext } from "formik";
 
-import Modal from "components/Modal";
+import KeyViewer from "components/KeyViewer";
+import AsideModal from "components/AsideModal";
 import ExtraInputs from "./components/ExtraInputs";
 import FormikInput from "components/formik/FormikInput";
 import FormikSelect from "components/formik/FormikSelect";
@@ -26,13 +27,19 @@ const CreateFieldModal = ({ index, form, onClose }) => {
         }));
       }
 
+      if (!!formik_values?.options) {
+        formik_values?.options?.forEach((item) => delete item?.LabelComponent);
+      }
+
       temp[index] = {
         ...temp[index],
         type: formik_values?.type,
         name: formik_values?.name,
+        variant: formik_values?.variant,
+        multi: formik_values?.multi,
         default: formik_values?.default,
         required: formik_values?.required,
-        options: formik_values?.options?.trim(),
+        options: formik_values?.options,
         primary_key: formik_values?.primary_key,
       };
     } else {
@@ -44,10 +51,12 @@ const CreateFieldModal = ({ index, form, onClose }) => {
       temp.push({
         slug,
         name: formik_values?.name,
+        multi: formik_values?.multi,
         type: formik_values?.type,
+        variant: formik_values?.variant,
         default: formik_values?.default,
         required: formik_values?.required,
-        options: formik_values?.options?.trim(),
+        options: formik_values?.options,
         primary_key: formik_values?.primary_key,
       });
     }
@@ -61,8 +70,10 @@ const CreateFieldModal = ({ index, form, onClose }) => {
       initialValues={{
         name: form?.name || "",
         type: form?.type || "",
+        variant: form?.variant || "",
+        multi: !!form?.multi,
         default: form?.default || "",
-        options: form?.options || "",
+        options: form?.options || [],
         required: form?.required || false,
         primary_key: form?.primary_key || "",
       }}
@@ -72,11 +83,16 @@ const CreateFieldModal = ({ index, form, onClose }) => {
     >
       {({ submitForm }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
-          <Modal
+          <AsideModal
             header="Add field"
             onClose={onClose}
             onSubmit={submitForm}
-            submit_label="Add"
+            submit_label={
+              <>
+                Save
+                <KeyViewer data={["⌘", "S"]} />
+              </>
+            }
           >
             <div className="form">
               <FormikInput
@@ -93,7 +109,7 @@ const CreateFieldModal = ({ index, form, onClose }) => {
               />
               <ExtraInputs locked={form?.origin === "system"} />
             </div>
-          </Modal>
+          </AsideModal>
         </Form>
       )}
     </Formik>

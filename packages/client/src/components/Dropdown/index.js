@@ -7,7 +7,7 @@ import useClickOutside from "libs/helpers/useClickOutside";
 
 const mainClass = "dropdown";
 
-const Dropdown = ({ children, button, position }) => {
+const Dropdown = ({ children, button, position, preventChildrenClick }) => {
   const [dropdown_open, setDropdownOpen] = useState(false);
   const ref = useRef();
 
@@ -38,7 +38,9 @@ const Dropdown = ({ children, button, position }) => {
       {!!dropdown_open && (
         <div
           className={`${mainClass}__content`}
-          onClick={() => setDropdownOpen(false)}
+          onClick={() =>
+            !!!preventChildrenClick ? setDropdownOpen(false) : null
+          }
         >
           {children}
         </div>

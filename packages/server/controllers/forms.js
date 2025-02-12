@@ -1,3 +1,4 @@
+import applyFilters from "#libs/applyFilters.js";
 import { createSchema, knex } from "@nstation/db";
 import { fs } from "@nstation/utils";
 
@@ -36,7 +37,7 @@ const getAllForms = async (_, res) => {
 };
 
 const getForm = async (req, res) => {
-  let { sort } = req?.query;
+  let { sort, ...rest } = req?.query;
 
   sort = !!sort ? sort?.split(":") : ["id", "asc"];
 
@@ -47,6 +48,7 @@ const getForm = async (req, res) => {
     );
 
     const entries_query = await knex(form?.id)
+      .modify(applyFilters, rest, form?.fields)
       .where({
         archived: parseInt(req?.query?.archived || 0),
       })

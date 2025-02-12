@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import TableStack from "components/TableStack";
-import ArchiveTableModal from "../components/ArchiveTableModal";
 import TableContentEditor from "./components/TableContentEditor";
 import ArchiveTableEntryModal from "../components/ArchiveTableEntryModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
@@ -20,9 +19,10 @@ const FormContent = () => {
     columnOrder,
     setColumnOrder,
     columnVisibility,
+    filters,
+    setFilters,
   } = useTable();
 
-  const [archive_modal, setArchiveModal] = useState(false);
   const [content_editor, setContentEditor] = useState(null);
   const [archive_entry_modal, setArchiveEntryModal] = useState(false);
 
@@ -67,7 +67,6 @@ const FormContent = () => {
         onClick: () => setArchiveEntryModal(true),
       },
     ],
-    deleteHandler: () => setArchiveModal(table),
     settingsButtonHandler: `/tables/${id}/settings`,
     newButtonHandler: () => setContentEditor(new_entry_schema),
   };
@@ -78,11 +77,14 @@ const FormContent = () => {
         <TableStack
           sort={sort}
           setSort={setSort}
+          filters={filters}
+          setFilters={setFilters}
           data={entries}
           toolbar={toolbar}
           loading={loading}
           columns={columns}
           tableId={id}
+          tableSchema={table?.fields}
           columnOrder={columnOrder}
           setColumnOrder={setColumnOrder}
           columnVisibility={columnVisibility}
@@ -95,12 +97,6 @@ const FormContent = () => {
           />
         )}
       </DashboardContentLayout>
-      {!!archive_modal && (
-        <ArchiveTableModal
-          data={archive_modal}
-          onClose={() => setArchiveModal(false)}
-        />
-      )}
       {!!archive_entry_modal && (
         <ArchiveTableEntryModal
           data={archive_entry_modal}

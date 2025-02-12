@@ -1,21 +1,31 @@
 import "./styles.scss";
-import classnames from "classnames";
-
-import status_chip_colors from "libs/status_chip_colors";
+import Pill from "components/Pill";
 
 const mainClass = "status-chip";
 
-const StatusChip = ({ status, select_mode }) => {
-  const current_chip_color = status_chip_colors(status);
+const StatusChip = ({ field, status, tableSchema }) => {
+  const schemaOptions = tableSchema?.find(
+    (item) => item?.slug === field
+  )?.options;
+
+  const selectedStatus = status?.split(",");
 
   return (
-    <div
-      className={classnames(mainClass, `${mainClass}--${current_chip_color}`, {
-        [`${mainClass}--select-mode`]: !!select_mode,
+    <div className={mainClass}>
+      {selectedStatus?.map((item, index) => {
+        const selectedOption = schemaOptions?.find(
+          (element) => element?.label === item
+        );
+
+        return (
+          <Pill
+            key={index}
+            label={selectedOption?.label}
+            color={selectedOption?.color}
+            textColor="#F0F1F3"
+          />
+        );
       })}
-    >
-      <span></span>
-      <label>{status}</label>
     </div>
   );
 };

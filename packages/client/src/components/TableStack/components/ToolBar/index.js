@@ -1,14 +1,22 @@
 import "./styles.scss";
 
+import Filters from "./components/Filters";
 import Submenu from "./components/Submenu";
 import IconButton from "components/IconButton";
 
 const mainClass = "table__toolbar";
 
-const Toolbar = ({ data, selectedRows = [] }) => {
+const Toolbar = ({
+  data,
+  selectedRows = [],
+  filters,
+  saveTransaction,
+  preferences,
+  setFilters,
+  tableSchema,
+  filtersExpanded,
+}) => {
   const selectedLength = Object.keys(selectedRows).length;
-
-  console.log(data);
 
   return (
     <div className={mainClass}>
@@ -37,6 +45,14 @@ const Toolbar = ({ data, selectedRows = [] }) => {
         </div>
         <div className={`${mainClass}__aside`}>{data?.action}</div>
       </div>
+      {!!filtersExpanded && (
+        <Filters
+          filters={filters}
+          setFilters={setFilters}
+          tableSchema={tableSchema}
+          saveTransaction={saveTransaction}
+        />
+      )}
     </div>
   );
 };

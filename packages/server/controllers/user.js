@@ -19,16 +19,20 @@ const getUserMe = async (req, res) => {
     const forms = fs.getFiles(["forms"]);
 
     for await (const item of forms) {
-      const unread_count = await knex(item?.id)
-        .where({
-          is_read: 0,
-          archived: 0,
-        })
-        .count("* as count")
-        .first()
-        .then((row) => row.count);
+      try {
+        const unread_count = await knex(item?.id)
+          .where({
+            is_read: 0,
+            archived: 0,
+          })
+          .count("* as count")
+          .first()
+          .then((row) => row.count);
 
-      forms_count += unread_count;
+        forms_count += unread_count;
+      } catch (err) {
+        console.error(err);
+      }
     }
 
     const logs_count = await knex("nodestation_logs")

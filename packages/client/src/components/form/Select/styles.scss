@@ -83,6 +83,7 @@
   }
 
   &__options {
+    padding: 3px;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -92,8 +93,8 @@
     border-radius: 5px;
     min-width: 100%;
     max-height: 242px;
-    overflow: hidden;
-    box-shadow: 0px 4px 6px -3px rgba(51, 51, 51, 0.3);
+    // overflow: hidden;
+    box-shadow: 0px 4px 6px -3px rgba(#000, 0.2);
     z-index: -100;
 
     &__action{
@@ -104,18 +105,12 @@
       }
     }
 
-    &__wrapper {
-      overflow: auto;
-      display: flex;
-      flex-direction: column;
-    }
-
     &__item {
       display: flex;
       align-items: center;
       justify-content: flex-start !important;
       text-align: left;
-      padding: 13px;
+      padding: 0 10px;
       color: $text-color;
       font-size: 14px;
       line-height: 14px;
@@ -123,6 +118,8 @@
       width: 100%;
       gap: 15px;
       color: #fff;
+      border-radius: 5px;
+      height: 35px;
 
       &__selected-icon{
         position: absolute;
@@ -148,7 +145,7 @@
       }
 
       &:hover {
-        background-color: #434851;
+        background-color: #30353D;
       }
 
       &--selected {
@@ -206,6 +203,14 @@ span{
 }
     }
   }
+
+  &--custom-value{
+    .select__content{
+      > button{
+        height: 45px;
+      }
+      }
+    }
 
   &--top {
     .select {

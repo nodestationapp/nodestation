@@ -21,8 +21,7 @@ const EndpointOptions = () => {
 
   const auth_options = settings?.fields
     ?.find((item) => item?.slug === "type")
-    ?.options?.split("\n")
-    ?.map((item) => ({ label: item, value: item }));
+    ?.options?.map((item) => ({ label: item?.label, value: item?.label }));
 
   const mid_options = editor
     ?.filter((item) => item?.type === "mid")

@@ -20,6 +20,9 @@ const Input = ({
   id,
   variant,
   aside,
+  size,
+  onKeyDown,
+  autoFocus,
 }) => {
   const is_error = touched && error !== undefined;
 
@@ -32,6 +35,8 @@ const Input = ({
         [`${mainClass}--${variant}`]: !!variant,
         [`${mainClass}--filled`]: !!value || type === "datetime-local",
         [`${mainClass}--disabled`]: !!disabled,
+        [`${mainClass}--${size}`]: !!size,
+        [`${mainClass}--is-aside`]: !!aside,
       })}
     >
       <div className={`${mainClass}__content`}>
@@ -41,17 +46,21 @@ const Input = ({
             {!!required && <span>*</span>}
           </label>
         )}
-        <input
-          className={`${mainClass}__field`}
-          type={type}
-          disabled={!!disabled}
-          placeholder={placeholder}
-          value={value}
-          name={name}
-          onChange={onChange}
-          maxLength={maxLength}
-        />
-        {aside}
+        <div className={`${mainClass}__content__wrapper`}>
+          <input
+            className={`${mainClass}__field`}
+            type={type}
+            disabled={!!disabled}
+            placeholder={placeholder}
+            value={value}
+            name={name}
+            onChange={onChange}
+            maxLength={maxLength}
+            onKeyDown={onKeyDown}
+            autoFocus={autoFocus}
+          />
+          <div className={`${mainClass}__aside`}>{aside}</div>
+        </div>
       </div>
       {!!is_error && <small className={`${mainClass}__error`}>{error}</small>}
     </div>

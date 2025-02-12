@@ -3,7 +3,6 @@ import { useState } from "react";
 import TableStack from "components/TableStack";
 import PreviewModal from "./components/PreviewModal";
 import RequestsModal from "components/RequestsModal";
-import ArchiveFormModal from "../components/ArchiveFormModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import DeleteIncomeFormModal from "page_components/forms/components/DeleteIncomeFormModal";
@@ -23,7 +22,16 @@ import {
 } from "@heroicons/react/24/outline";
 
 const FormContentWrapper = ({ toolbar }) => {
-  const { data, loading, readHandler, archived, sort, setSort } = useForm();
+  const {
+    data,
+    loading,
+    readHandler,
+    archived,
+    sort,
+    setSort,
+    filters,
+    setFilters,
+  } = useForm();
 
   const [preview_modal, setPreviewModal] = useState(false);
 
@@ -33,7 +41,7 @@ const FormContentWrapper = ({ toolbar }) => {
   let fields =
     data?.form?.fields?.map((item) => ({
       key: item?.type,
-      value: item?.name,
+      name: item?.name,
       type: item?.type,
       slug: item?.slug,
     })) || [];
@@ -42,7 +50,7 @@ const FormContentWrapper = ({ toolbar }) => {
     ...fields,
     {
       key: "date",
-      value: "Created at",
+      name: "Created at",
       type: "date",
       slug: "created_at",
     },
@@ -51,7 +59,7 @@ const FormContentWrapper = ({ toolbar }) => {
   const columns =
     fields?.map((item) => ({
       key: item?.type,
-      value: item?.value,
+      value: item?.name,
       type: item?.type,
       slug: item?.slug,
     })) || [];
@@ -73,6 +81,9 @@ const FormContentWrapper = ({ toolbar }) => {
         columns={columns}
         loading={loading}
         tableId={form?.id}
+        filters={filters}
+        setFilters={setFilters}
+        tableSchema={data?.form?.fields}
         rowClick={(row) => setPreviewModal(row)}
         data={incoming?.map((item) => ({
           id: item?.id,
@@ -110,9 +121,8 @@ const FormContent = () => {
   const { table, selectedRows } = useTableWrapper();
   const { data, id, loading, archived, updateIncomeForm } = useForm();
 
-  const [archive_modal, setArchiveModal] = useState(false);
-  const [incoming_archive_modal, setIncomingArchiveModal] = useState(false);
   const [request_modal, setRequestModal] = useState(false);
+  const [incoming_archive_modal, setIncomingArchiveModal] = useState(false);
 
   const form = data?.form;
 
@@ -180,7 +190,6 @@ const FormContent = () => {
         onClick: () => onArchiveHandler(),
       },
     ],
-    deleteHandler: () => setArchiveModal({ id: form?.id }),
     settingsButtonHandler: `/forms/${id}/settings`,
   };
 
@@ -231,12 +240,6 @@ const FormContent = () => {
       <DashboardContentLayout breadcrumps={breadcrumps}>
         <FormContentWrapper toolbar={toolbar} />
       </DashboardContentLayout>
-      {!!archive_modal && (
-        <ArchiveFormModal
-          data={archive_modal}
-          onClose={() => setArchiveModal(false)}
-        />
-      )}
       {!!incoming_archive_modal && (
         <DeleteIncomeFormModal
           type="list"
