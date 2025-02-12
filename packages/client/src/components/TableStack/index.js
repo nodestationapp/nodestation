@@ -403,7 +403,6 @@ const TableStack = ({
           tableSchema={tableSchema}
           setFilters={setFilters}
           selectedRows={selectedRows}
-          preferences={table_preferences}
           filtersExpanded={filtersExpanded}
           saveTransaction={saveTransaction}
         />
