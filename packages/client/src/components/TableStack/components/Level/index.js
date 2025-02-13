@@ -26,8 +26,16 @@ const icon_render = (type) => {
   }
 };
 
-const Level = ({ data }) => {
-  return <div className={mainClass}>{icon_render(data)}</div>;
+const Level = ({ data, meta }) => {
+  return (
+    <div className={mainClass}>
+      {meta?.source?.type === "endpoint" ? (
+        <span>{meta?.res?.status}</span>
+      ) : (
+        icon_render(data)
+      )}
+    </div>
+  );
 };
 
 export default Level;

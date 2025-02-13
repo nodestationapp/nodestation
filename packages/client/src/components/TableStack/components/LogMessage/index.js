@@ -21,7 +21,7 @@ const messageRender = (data) => {
   }
 };
 
-const LogMessage = ({ data }) => {
+const LogMessage = ({ data, meta }) => {
   const message = messageRender(data);
 
   return (

@@ -76,6 +76,7 @@ const FormContent = () => {
       <DashboardContentLayout breadcrumps={breadcrumps}>
         <TableStack
           sort={sort}
+          tableId={id}
           setSort={setSort}
           filters={filters}
           setFilters={setFilters}
@@ -83,7 +84,6 @@ const FormContent = () => {
           toolbar={toolbar}
           loading={loading}
           columns={columns}
-          tableId={id}
           tableSchema={table?.fields}
           columnOrder={columnOrder}
           setColumnOrder={setColumnOrder}

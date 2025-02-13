@@ -88,13 +88,15 @@ const table_value_type = (item, cell, meta, tableSchema) => {
     case "date":
       return <Date data={value} />;
     case "level":
-      return <Level data={value} />;
+      return <Level data={value} meta={cell?.row?.original} />;
     case "log_source":
       return <LogSource data={value} />;
     case "endpoint_code":
       return <EndpointCode data={value} />;
     case "log_message":
-      return <LogMessage data={value} />;
+      return (
+        <LogMessage data={cell?.row?.original} meta={cell?.row?.original} />
+      );
     case "boolean":
       return <Boolean data={value} />;
     case "icon":
@@ -151,6 +153,7 @@ const TableStack = ({
         ? [
             {
               id: "select",
+              size: 40,
               header: ({ table }) => (
                 <Checkbox
                   disabled={!!meta?.some((item) => item?.locked)}
@@ -173,7 +176,7 @@ const TableStack = ({
       ...columns.map((item) => ({
         id: item?.slug,
         enableSorting: !!setSort,
-        size: table_preferences?.content?.[item?.slug] || undefined,
+        size: table_preferences?.content?.[item?.slug] || item?.width,
         accessorFn: (row) => row?.[item?.slug],
         header: () => <span className="light">{item?.value}</span>,
         cell: (cell) => (
@@ -196,7 +199,7 @@ const TableStack = ({
     data: data || [],
     initialState: {
       columnPinning: {
-        left: ["select"],
+        left: ["select", "level"],
       },
     },
     state: {
@@ -396,16 +399,18 @@ const TableStack = ({
           [`${mainClass}--sortable`]: !!setSort,
         })}
       >
-        <Toolbar
-          data={toolbar}
-          columns={columns}
-          filters={filters}
-          tableSchema={tableSchema}
-          setFilters={setFilters}
-          selectedRows={selectedRows}
-          filtersExpanded={filtersExpanded}
-          saveTransaction={saveTransaction}
-        />
+        {!!toolbarData && (
+          <Toolbar
+            data={toolbar}
+            columns={columns}
+            filters={filters}
+            tableSchema={tableSchema}
+            setFilters={setFilters}
+            selectedRows={selectedRows}
+            filtersExpanded={filtersExpanded}
+            saveTransaction={saveTransaction}
+          />
+        )}
         {!!loading ? (
           <TableSkeleton />
         ) : (
@@ -434,6 +439,11 @@ const TableStack = ({
                           className={`${mainClass}__header__col`}
                           style={{
                             width: header.getSize(),
+                            flex: !!formatted_columns?.[index]?.size
+                              ? "unset"
+                              : !!fullWidth
+                              ? 1
+                              : "unset",
                           }}
                         >
                           <div
@@ -473,7 +483,6 @@ const TableStack = ({
                   <NoItemsFound />
                 ) : (
                   <div className={`${mainClass}__body`}>
-                    {/* {alert} */}
                     {table.getRowModel().rows.map((row, index) => (
                       <div
                         key={row.id}
@@ -485,12 +494,17 @@ const TableStack = ({
                           rowClick({ row: row.original, meta: meta?.[index] })
                         }
                       >
-                        {row.getVisibleCells().map((cell) => (
+                        {row.getVisibleCells().map((cell, index) => (
                           <div
                             key={cell.id}
                             className={`${mainClass}__body__col`}
                             style={{
                               width: cell.column.getSize(),
+                              flex: !!formatted_columns?.[index]?.size
+                                ? "unset"
+                                : !!fullWidth
+                                ? 1
+                                : "unset",
                             }}
                           >
                             <span>

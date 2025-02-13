@@ -1,16 +1,15 @@
 import "./styles.scss";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
-import moment from "moment";
 import cx from "classnames";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 
-import Table from "components/Table";
 import Tooltip from "components/Tooltip";
 import KeyViewer from "components/KeyViewer";
 import IconButton from "components/IconButton";
+import TableStack from "components/TableStack";
 import DetailsModal from "./components/DetailsModal";
 
 import api from "libs/api";
@@ -28,7 +27,7 @@ const mainClass = "logs-window";
 
 const LogsWindowContent = ({ onClose }) => {
   const { getUserData } = useApp();
-  const { logs, fetchNextPage, loading } = useLogs();
+  const { logs, fetchNextPage } = useLogs();
   const [cookies, setCookie] = useCookies(["logs_maximize"]);
 
   const [details_modal, setDetailsModal] = useState(null);
@@ -63,66 +62,102 @@ const LogsWindowContent = ({ onClose }) => {
     // eslint-disable-next-line
   }, []);
 
-  const fields = [
+  const columns = [
     {
       key: "level",
+      slug: "level",
+      type: "level",
+      width: 40,
     },
     {
       key: "log_source",
       value: "Source",
+      slug: "log_source",
+      type: "log_source",
+      width: 200,
     },
     {
       key: "log_created_at",
       value: "Date",
+      slug: "created_at",
+      type: "date",
+      width: 250,
     },
     {
       key: "details",
       value: "Message",
+      slug: "message",
+      type: "log_message",
     },
   ];
 
-  const table_data = {
-    keys: [...fields],
-    items: logs?.map((item) => {
-      return {
-        animationHighlight: !!!item?.is_read,
-        preventClick: item?.source?.type === "emails",
-        onclick: () => setDetailsModal(item),
-        data: [
-          ...(item?.source?.type === "endpoint"
-            ? [
-                {
-                  key: "level",
-                  type: "endpoint_code",
-                  value: item?.res?.status,
-                },
-              ]
-            : [
-                {
-                  key: "level",
-                  type: "level",
-                  value: item?.level,
-                },
-              ]),
+  // const columns = [
+  //   {
+  //     key: "name",
+  //     value: "Name",
+  //     slug: "name",
+  //     type: "name",
+  //   },
+  //   {
+  //     key: "status",
+  //     value: "Status",
+  //     slug: "status",
+  //     type: "status",
+  //   },
+  //   {
+  //     key: "schedule",
+  //     value: "Schedule",
+  //     slug: "schedule",
+  //   },
+  //   {
+  //     key: "timezone",
+  //     value: "Timezone",
+  //     slug: "timezone",
+  //   },
+  // ];
 
-          {
-            key: "log_source",
-            type: "log_source",
-            value: item,
-          },
-          {
-            key: "log_created_at",
-            value: moment(item?.created_at)?.format("YYYY-MM-DD HH:mm:ss A"),
-          },
-          {
-            key: "details",
-            type: "log_message",
-            value: item,
-          },
-        ],
-      };
-    }),
-  };
+  // const table_data = {
+  //   keys: [...fields],
+  //   items: logs?.map((item) => {
+  //     return {
+  //       animationHighlight: !!!item?.is_read,
+  //       preventClick: item?.source?.type === "emails",
+  //       onclick: () => setDetailsModal(item),
+  //       data: [
+  //         ...(item?.source?.type === "endpoint"
+  //           ? [
+  //               {
+  //                 key: "level",
+  //                 type: "endpoint_code",
+  //                 value: item?.res?.status,
+  //               },
+  //             ]
+  //           : [
+  //               {
+  //                 key: "level",
+  //                 type: "level",
+  //                 value: item?.level,
+  //               },
+  //             ]),
+
+  //         {
+  //           key: "log_source",
+  //           type: "log_source",
+  //           value: item,
+  //         },
+  //         {
+  //           key: "log_created_at",
+  //           value: moment(item?.created_at)?.format("YYYY-MM-DD HH:mm:ss A"),
+  //         },
+  //         {
+  //           key: "details",
+  //           type: "log_message",
+  //           value: item,
+  //         },
+  //       ],
+  //     };
+  //   }),
+  // };
 
   const handleScroll = ({ scrollTop, scrollHeight, clientHeight }) => {
     if (scrollTop + clientHeight >= scrollHeight - 50) {
@@ -162,7 +197,14 @@ const LogsWindowContent = ({ onClose }) => {
         }}
       >
         <div className={`${mainClass}__content`}>
-          <Table data={table_data} loading={loading} />
+          {/* <Table data={table_data} loading={loading} /> */}
+          <TableStack
+            fullWidth
+            data={logs}
+            columns={columns}
+            disabledSelect={true}
+            rowClick={({ row }) => setDetailsModal(row)}
+          />
         </div>
       </PerfectScrollbar>
       {!!details_modal && (
