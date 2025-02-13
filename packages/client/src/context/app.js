@@ -8,6 +8,7 @@ import api from "libs/api";
 import EditorProvider from "./client/editor";
 import OrganizationProvider from "./organization";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import SplashScreen from "components/SplashScreen";
 
 const AppContext = createContext();
 
@@ -184,7 +185,7 @@ const AppProvider = ({ children }) => {
     // eslint-disable-next-line
   }, [user, organizations, forms_count, is_admin, socket, logs_count]);
 
-  if (!!loading) return null;
+  if (!!loading) return <SplashScreen />;
 
   if (!!user) {
     return (
