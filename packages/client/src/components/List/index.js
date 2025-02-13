@@ -12,6 +12,7 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
 import FormItem from "./components/FormItem";
 import EndpointItem from "./components/EndpointItem";
@@ -47,6 +48,7 @@ const List = ({ type, data: value, onOrderChange }) => {
     <div className={mainClass}>
       <DndContext
         sensors={sensors}
+        modifiers={[restrictToVerticalAxis]}
         onDragEnd={({ active, over }) => {
           if (over && active.id !== over?.id) {
             const oldIndex = value.findIndex((v) => v?.slug === active.id);

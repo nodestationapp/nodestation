@@ -18,6 +18,7 @@ class ExpressServer {
     this.loadRoutes = loadRoutes.bind(null, this);
 
     this.app = express();
+    this.app.set("trust proxy", "127.0.0.1");
     this.port = config.port || 3000;
     this.router = new express.Router();
     this.server = http.createServer(this.app);

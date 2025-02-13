@@ -22,20 +22,22 @@ const FilterItem = ({
 }) => {
   const current_filter = filters?.[index];
 
-  const formatted_columns = columns?.map((item) => {
-    const field = field_type_data?.find(
-      (element) => element?.value === item?.type
-    );
+  const formatted_columns = columns
+    ?.map((item) => {
+      const field = field_type_data?.find(
+        (element) => element?.value === item?.type
+      );
 
-    return {
-      ...field,
-      label: item?.name,
-      slug: item?.slug,
-      type: item?.type,
-      options: item?.options,
-      onClick: () => onFilterSelect(item?.slug),
-    };
-  });
+      return {
+        ...field,
+        label: item?.name,
+        slug: item?.slug,
+        type: item?.type,
+        options: item?.options,
+        onClick: () => onFilterSelect(item?.slug),
+      };
+    })
+    ?.filter((item) => item?.type !== "media");
 
   const selectedColumn = formatted_columns?.find(
     (item) => item?.slug === data?.field

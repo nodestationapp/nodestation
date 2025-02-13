@@ -11,7 +11,6 @@ const Toolbar = ({
   selectedRows = [],
   filters,
   saveTransaction,
-  preferences,
   setFilters,
   tableSchema,
   filtersExpanded,

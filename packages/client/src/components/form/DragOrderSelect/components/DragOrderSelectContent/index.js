@@ -15,6 +15,7 @@ import {
 } from "@dnd-kit/sortable";
 import cx from "classnames";
 import { CSS } from "@dnd-kit/utilities";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
 import IconButton from "components/IconButton";
 
@@ -53,6 +54,7 @@ const DragOrderSelectContent = ({
     <div className={mainClass}>
       <DndContext
         sensors={sensors}
+        modifiers={[restrictToVerticalAxis]}
         onDragEnd={({ active, over }) => {
           if (over && active.id !== over?.id) {
             const oldIndex = value.findIndex((v) => v === active.id);
