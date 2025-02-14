@@ -2,6 +2,7 @@ import "./styles.scss";
 
 import classnames from "classnames";
 import { useState, useRef } from "react";
+import PerfectScrollbar from "react-perfect-scrollbar";
 
 import Select from "../Select";
 import TransparentButton from "components/TransparentButton";
@@ -111,15 +112,21 @@ const DragOrderSelect = ({
             [`${mainClass}__options--empty`]: !!!value?.length,
           })}
         >
-          <div className={`${mainClass}__options__wrapper`}>
-            <DragOrderSelectContent
-              value={value}
-              onChange={onChange}
-              data={formatted_value}
-              itemAction={itemAction}
-              actionAlwaysVisible={actionAlwaysVisible}
-            />
-          </div>
+          <PerfectScrollbar
+            options={{
+              wheelPropagation: true,
+            }}
+          >
+            <div className={`${mainClass}__options__wrapper`}>
+              <DragOrderSelectContent
+                value={value}
+                onChange={onChange}
+                data={formatted_value}
+                itemAction={itemAction}
+                actionAlwaysVisible={actionAlwaysVisible}
+              />
+            </div>
+          </PerfectScrollbar>
           {value?.length !== options?.length && withAddAction && (
             <div className={`${mainClass}__options__bottom`}>
               <Select

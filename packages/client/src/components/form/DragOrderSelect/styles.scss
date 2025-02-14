@@ -89,7 +89,7 @@
     border-radius: 5px;
     min-width: 280px;
     width: fit-content;
-    max-height: 242px;
+    max-height: 420px;
     box-shadow: 0px 4px 6px -3px rgba(#000, 0.2);
     z-index: -100;
 
@@ -106,8 +106,8 @@
     }
 
     &__wrapper {
-      overflow-y: auto;
-      overflow-x: hidden;
+      // overflow-y: auto;
+      // overflow-x: hidden;
       display: flex;
       flex-direction: column;
     }
