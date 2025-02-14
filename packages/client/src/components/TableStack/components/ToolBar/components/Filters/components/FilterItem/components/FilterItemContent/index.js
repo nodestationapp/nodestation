@@ -23,6 +23,7 @@ const filterInputRender = (column, onChangeHandler, value) => {
     case "id":
     case "text":
     case "numeric":
+    case "json":
       return (
         <Input
           value={value}

@@ -16,6 +16,7 @@ const filterQueryBuild = (data, builder) => {
           }
           return builder;
         case "text":
+        case "json":
           return builder.orWhere(
             data?.key,
             data?.condition,
