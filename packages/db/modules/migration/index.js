@@ -9,7 +9,7 @@ const typesMap = {
   numeric: "integer",
   json: "json",
   boolean: "integer",
-  date: "bigInteger",
+  date: "string",
 };
 
 function createOrModifyColumn({ table, schema, dbColumns }) {
@@ -25,6 +25,20 @@ function createOrModifyColumn({ table, schema, dbColumns }) {
 
   if (!!dbColumns?.[schema?.slug]) {
     column.alter();
+  }
+
+  if (!!schema?.default) {
+    if (schema?.default === "generate_id()") {
+      column.defaultTo(knex.fn.uuid());
+    }
+
+    if (schema?.default === "now()") {
+      if (knex.client.config.client === "pg") {
+        column.defaultTo(knex.raw("EXTRACT(EPOCH FROM NOW())::BIGINT"));
+      } else {
+        column.defaultTo(knex.raw("(strftime('%s', 'now') * 1)"));
+      }
+    }
   }
 
   return column;

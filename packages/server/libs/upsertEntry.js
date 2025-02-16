@@ -20,23 +20,6 @@ function extractUploadPath(fullPath) {
   return null;
 }
 
-const mapDefaults = (schema, value, is_update) => {
-  value = value === "null" ? null : value;
-
-  if (!!is_update) {
-    return value;
-  }
-
-  switch (schema?.default) {
-    case "generate_id()":
-      return ulid();
-    case "now()":
-      return Date.now();
-    default:
-      return value;
-  }
-};
-
 const upsertEntry = async ({
   type,
   id,
@@ -75,7 +58,7 @@ const upsertEntry = async ({
       }
 
       let formatted_body = schemaFields.reduce((acc, curr) => {
-        acc[curr.slug] = mapDefaults(curr, body?.[curr.slug], !!entry_id);
+        acc[curr.slug] = body?.[curr.slug];
         return acc;
       }, {});
 

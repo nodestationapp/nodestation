@@ -25,7 +25,7 @@ const authRegister = async (req, res) => {
     if (!!!usersCount) {
       body.type = "admin";
     } else {
-      if (!!!body?.type || body?.type === "admin") {
+      if (body?.type === "admin") {
         return res.status(500).json({ error: "Something went wrong" });
       }
     }

@@ -1,6 +1,9 @@
 import cx from "classnames";
 import { Formik, Form } from "formik";
 import { useEffect, useState } from "react";
+import prettier from "prettier/standalone";
+import parserBabel from "prettier/plugins/babel";
+import estreePlugin from "prettier/plugins/estree";
 
 import Button from "components/Button";
 import KeyViewer from "components/KeyViewer";
@@ -19,6 +22,18 @@ import { useOrganization } from "context/organization";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 
 const mainClass = "editor-content";
+
+const formatCode = async (value) => {
+  const formattedCode = await prettier.format(value, {
+    parser: "babel",
+    plugins: [estreePlugin, parserBabel],
+    singleQuote: false,
+    tabWidth: 2,
+    semi: true,
+  });
+
+  return formattedCode;
+};
 
 const ContentEditor = ({ data, onSubmit, loading, type }) => {
   const { setMinimizeHandler } = useOrganization();
@@ -46,6 +61,21 @@ const ContentEditor = ({ data, onSubmit, loading, type }) => {
     }
   };
 
+  const onSubmitHandler = async (values, setSubmitting, resetForm) => {
+    try {
+      const formattedContent = await formatCode(values?.content);
+
+      const formatted_values = {
+        ...values,
+        content: formattedContent,
+      };
+
+      await onSubmit(formatted_values, setSubmitting, resetForm);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const initial_values = editorFormikRender(type, current_editor);
   const editor_options = editorOptionsRender(type);
   const title_input = editorTitleInputRender(type);
@@ -60,7 +90,7 @@ const ContentEditor = ({ data, onSubmit, loading, type }) => {
       enableReinitialize={true}
       validationSchema={editorSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        onSubmit(values, setSubmitting, resetForm);
+        onSubmitHandler(values, setSubmitting, resetForm);
       }}
     >
       {({ submitForm, isSubmitting, dirty, errors }) => (

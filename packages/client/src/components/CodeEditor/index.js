@@ -39,7 +39,7 @@ const CodeEditor = ({ language = "javascript" }) => {
       theme="myTheme"
       options={{
         wordWrap: true,
-        minimap: { enabled: false }, // Wyłączenie minimapy
+        minimap: { enabled: false },
       }}
     />
   );
