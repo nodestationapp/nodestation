@@ -69,7 +69,7 @@ const FormIncomingItem = ({
         </div>
         <div className={`${mainClass}__actions`}>
           <div className={`${mainClass}__actions__extras`}>
-            <span>{moment(created_at)?.format("DD MMM")}</span>
+            <span>{moment?.unix(created_at)?.format("DD MMM")}</span>
           </div>
           <Tooltip text={!!is_read ? "Mark as unread" : "Mark as read"}>
             <IconButton

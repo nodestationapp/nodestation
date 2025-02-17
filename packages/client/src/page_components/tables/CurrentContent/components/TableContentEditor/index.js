@@ -7,21 +7,6 @@ import tableInputRender from "libs/tableInputRender";
 
 import { useTable } from "context/client/table";
 
-const mapDefaults = (schema, value, is_update) => {
-  value = value === null ? "" : value;
-
-  if (!!is_update) {
-    return value;
-  }
-
-  switch (schema?.type) {
-    case "boolean":
-      return schema?.default !== undefined ? schema?.default : "";
-    default:
-      return schema?.default || "";
-  }
-};
-
 const TableContentEditor = ({ data = {}, onClose }) => {
   const { data: table_data, addTableEntry, updateTableEntry } = useTable();
 
@@ -48,20 +33,9 @@ const TableContentEditor = ({ data = {}, onClose }) => {
     }
   };
 
-  let formatted_data = Object.fromEntries(
-    Object.entries(data).map(([key, value]) => [
-      key,
-      mapDefaults(
-        table_data?.table?.fields?.find((item) => item?.slug === key),
-        value,
-        !!data?.id
-      ),
-    ])
-  );
-
   return (
     <Formik
-      initialValues={formatted_data}
+      initialValues={data}
       onSubmit={(values, { setSubmitting, setErrors }) => {
         onSubmit(values, setSubmitting, setErrors);
       }}

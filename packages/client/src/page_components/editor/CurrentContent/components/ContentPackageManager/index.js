@@ -111,8 +111,8 @@ const ContentPackageManager = ({ data }) => {
         onclick: !!is_installing
           ? null
           : installed_package?.type === "system"
-          ? null
-          : () => {},
+            ? null
+            : () => {},
         actions: !!!is_installing && (
           <>
             {!!installed_package ? (
@@ -160,7 +160,7 @@ const ContentPackageManager = ({ data }) => {
           {
             key: "created_at",
             value: !!installed_package?.created_at
-              ? moment(installed_package?.created_at)?.format("lll")
+              ? moment?.unix(installed_package?.created_at)?.format("lll")
               : "-",
           },
         ],

@@ -16,11 +16,11 @@ const FilterDate = ({ value = [], onChange }) => {
   };
 
   const value_from = !!value?.[0]
-    ? moment(value?.[0])?.format("YYYY-MM-DDTHH:mm")
+    ? moment?.unix(value?.[0])?.format("YYYY-MM-DDTHH:mm")
     : null;
 
   const value_to = !!value?.[1]
-    ? moment(value?.[1])?.format("YYYY-MM-DDTHH:mm")
+    ? moment?.unix(value?.[1])?.format("YYYY-MM-DDTHH:mm")
     : null;
 
   return (

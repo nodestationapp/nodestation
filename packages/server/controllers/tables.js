@@ -165,10 +165,16 @@ const deleteTable = async (req, res) => {
 
 const addTableEntry = async (req, res) => {
   const { id } = req?.params;
-  const body = req?.body;
+  let body = req?.body;
   const files = req?.files;
 
   try {
+    for (const key in body) {
+      if (body[key] === "null") {
+        delete body[key];
+      }
+    }
+
     await upsertEntry({ type: "tables", id, body, files });
 
     return res.status(200).json({ status: "ok" });

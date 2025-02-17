@@ -57,7 +57,10 @@ const serverGenerator = async () => {
     const all_endpoints = editor?.filter(
       (item) =>
         (!("status" in item) || item.status === "active") &&
-        (item?.type === "ep" || item?.type === "cron" || item?.type === "mid")
+        (item?.type === "ep" ||
+          item?.type === "cron" ||
+          item?.type === "mid" ||
+          item?.type === "fn")
     );
 
     const all_crons = all_endpoints?.filter((item) => item?.type === "cron");

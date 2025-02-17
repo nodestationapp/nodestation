@@ -50,7 +50,7 @@ const DiffViewer = ({ mode, previous, current, height }) => {
         <div className={`${mainClass}__header__text`}>
           <span>{`Version ${version}`}</span>
           <small>
-            {moment(editor_history_entry?.[1]?.created_at).format("lll")}
+            {moment.unix(editor_history_entry?.[1]?.created_at)?.format("lll")}
           </small>
         </div>
         <div className={`${mainClass}__header__aside`}>

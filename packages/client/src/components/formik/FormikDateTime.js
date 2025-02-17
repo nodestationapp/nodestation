@@ -7,7 +7,7 @@ const FormikDateTime = ({ type, name, ...rest }) => {
   const [field, meta] = useField({ name, type });
 
   const value = !!field?.value
-    ? moment(field?.value)?.format("YYYY-MM-DDTHH:mm")
+    ? moment?.unix(field?.value)?.format("YYYY-MM-DDTHH:mm")
     : null;
 
   const onChange = (e) => {

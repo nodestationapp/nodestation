@@ -32,6 +32,14 @@ function createOrModifyColumn({ table, schema, dbColumns }) {
       column.defaultTo(knex.fn.uuid());
     }
 
+    if (schema?.default === true) {
+      column.defaultTo(1);
+    }
+
+    if (schema?.default === false) {
+      column.defaultTo(0);
+    }
+
     if (schema?.default === "now()") {
       if (knex.client.config.client === "pg") {
         column.defaultTo(knex.raw("EXTRACT(EPOCH FROM NOW())::BIGINT"));

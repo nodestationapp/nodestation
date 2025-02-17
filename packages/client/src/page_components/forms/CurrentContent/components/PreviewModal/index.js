@@ -155,7 +155,7 @@ const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
           })}
           <div className={`${mainClass}__item`}>
             <span>Created at:</span>
-            <span>{moment(data?.meta?.created_at).format("lll")}</span>
+            <span>{moment.unix(data?.meta?.created_at)?.format("lll")}</span>
           </div>
         </div>
       </AsideModal>
