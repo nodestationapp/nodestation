@@ -43,7 +43,7 @@ describe(`Authentication`, () => {
         last_name: expect.any(String),
         first_name: expect.any(String),
         password: expect.any(String),
-        created_at: expect.any(Number),
+        created_at: expect.any(String),
       },
     });
   });

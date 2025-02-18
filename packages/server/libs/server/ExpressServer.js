@@ -36,7 +36,7 @@ class ExpressServer {
       this.router(req, res, next);
     });
 
-    this.app.use("/api", apiRoutes);
+    this.app.use("/api", express.json(), apiRoutes);
     this.app.use("/admin/api", express.json(), allRoutes);
     this.app.use("/uploads", express.static(path.join(rootPath, "uploads")));
 
