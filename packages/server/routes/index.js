@@ -12,14 +12,14 @@ import preferencesRoute from "./preferences.js";
 
 const router = express.Router();
 
-router.use("/auth", express.json(), authRoute);
-router.use("/user", express.json(), userRoute);
-router.use("/logs", express.json(), logsRoute);
-router.use("/forms", express.json(), formsRoute);
-router.use("/media", express.json(), mediaRoute);
-router.use("/editor", express.json(), editorRoute);
-router.use("/emails", express.json(), emailsRoute);
-router.use("/tables", express.json(), tablesRoute);
-router.use("/preferences", express.json(), preferencesRoute);
+router.use("/auth", authRoute);
+router.use("/user", userRoute);
+router.use("/logs", logsRoute);
+router.use("/forms", formsRoute);
+router.use("/media", mediaRoute);
+router.use("/editor", editorRoute);
+router.use("/emails", emailsRoute);
+router.use("/tables", tablesRoute);
+router.use("/preferences", preferencesRoute);
 
 export default router;

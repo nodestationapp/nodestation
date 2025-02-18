@@ -1,6 +1,7 @@
 import path from "path";
 import fs_sys from "fs";
 import express from "express";
+
 import { fs, rootPath } from "@nstation/utils";
 import { authMiddleware } from "@nstation/auth";
 
@@ -33,6 +34,9 @@ const loadRoutes = (server) => {
 
           newRouter[item?.options?.method.toLowerCase()](
             `/api${item?.name}`,
+            item?.options?.parser === "raw"
+              ? express.raw({ type: "application/json" })
+              : express.json(),
             authMiddleware(item?.options?.auth),
             item?.options?.middlewares?.map((item) => middlewares?.[item]) ||
               [],

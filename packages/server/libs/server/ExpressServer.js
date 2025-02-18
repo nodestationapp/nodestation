@@ -29,7 +29,6 @@ class ExpressServer {
 
     // MIDDLEWARES
     this.app.use(cors);
-    this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
 
     //ROUTES
@@ -38,7 +37,7 @@ class ExpressServer {
     });
 
     this.app.use("/api", apiRoutes);
-    this.app.use("/admin/api", allRoutes);
+    this.app.use("/admin/api", express.json(), allRoutes);
     this.app.use("/uploads", express.static(path.join(rootPath, "uploads")));
 
     this.loadRoutes();
