@@ -8,7 +8,7 @@ const StatusChip = ({ field, status, tableSchema }) => {
     (item) => item?.slug === field
   )?.options;
 
-  const selectedStatus = status?.split(",");
+  const selectedStatus = !!status ? status?.split(",") : [];
 
   return (
     <div className={mainClass}>

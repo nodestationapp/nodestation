@@ -57,10 +57,10 @@ const table_value_type = (item, cell, meta, tableSchema) => {
   const value = !!item?.sort
     ? cell?.row?.original
     : !!cell?.row?.original?.hasOwnProperty(item?.slug)
-    ? cell?.getValue()
-    : !!item?.type
-    ? cell?.row?.original
-    : null;
+      ? cell?.getValue()
+      : !!item?.type
+        ? cell?.row?.original
+        : null;
 
   switch (item?.type) {
     case "user_profile":
@@ -192,7 +192,7 @@ const TableStack = ({
       })),
     ],
     // eslint-disable-next-line
-    [loading]
+    [columns]
   );
 
   const table = useReactTable({
@@ -442,8 +442,8 @@ const TableStack = ({
                             flex: !!formatted_columns?.[index]?.size
                               ? "unset"
                               : !!fullWidth
-                              ? 1
-                              : "unset",
+                                ? 1
+                                : "unset",
                           }}
                         >
                           <div
@@ -503,8 +503,8 @@ const TableStack = ({
                               flex: !!formatted_columns?.[index]?.size
                                 ? "unset"
                                 : !!fullWidth
-                                ? 1
-                                : "unset",
+                                  ? 1
+                                  : "unset",
                             }}
                           >
                             <span>
