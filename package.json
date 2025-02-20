@@ -41,6 +41,9 @@
     "github": {
       "release": true
     },
+    "hooks": {
+      "before:release": "npm run build"
+    },
     "plugins": {
       "@release-it/conventional-changelog": {
         "preset": "angular",
