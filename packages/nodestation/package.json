@@ -1,6 +1,6 @@
 {
   "name": "nodestation",
-  "version": "1.12.1",
+  "version": "1.12.2",
   "main": "index.js",
   "type": "module",
   "license": "MIT",
@@ -23,8 +23,8 @@
     "start": "nodemon ./index.js --watch ../server"
   },
   "dependencies": {
-    "@nstation/server": "^1.12.1",
-    "@nstation/utils": "^1.12.1",
+    "@nstation/server": "^1.12.2",
+    "@nstation/utils": "^1.12.2",
     "dotenv": "^16.4.7"
   }
 }
