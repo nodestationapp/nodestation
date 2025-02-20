@@ -1,4 +1,3 @@
-import { ulid } from "ulid";
 import { v4 as uuidv4 } from "uuid";
 
 import bcrypt from "bcryptjs";
@@ -19,32 +18,28 @@ const register = async (body) =>
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(body?.password, salt);
 
-      const uid = ulid();
       const token = uuidv4();
-      const created_at = Date.now();
 
-      await knex("nodestation_users").insert({
-        // created_at,
-        type: body?.type,
-        email: body?.email,
-        password: hashedPassword,
-        last_name: body?.last_name,
-        first_name: body?.first_name,
-        status: body?.type === "admin" ? "active" : "inactive",
-      });
+      const newUser = await knex("nodestation_users")
+        .insert({
+          type: body?.type,
+          email: body?.email,
+          password: hashedPassword,
+          last_name: body?.last_name,
+          first_name: body?.first_name,
+          status: body?.type === "admin" ? "active" : "inactive",
+        })
+        .returning("id");
 
       if (body?.type !== "admin") {
         await knex("nodestation_email_activations").insert({
-          uid: uid,
+          uid: newUser?.[0]?.id,
           token: token,
-          created_at: created_at,
         });
 
         const context_body = {
           ...body,
-          uid,
           token,
-          created_at,
           PUBLIC_URL: process.env.PUBLIC_URL,
         };
 

@@ -11,8 +11,10 @@ const FormikDateTime = ({ type, name, ...rest }) => {
     : null;
 
   const onChange = (e) => {
+    const date = moment(e?.target?.value, "YYYY-MM-DDTHH:mm")?.unix();
+
     field.onChange({
-      target: { name, value: moment(e?.target?.value).valueOf() },
+      target: { name, value: date },
     });
   };
 

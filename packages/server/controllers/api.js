@@ -1,7 +1,5 @@
 import upsertEntry from "#libs/upsertEntry.js";
-import { ulid } from "ulid";
-import { knex } from "@nstation/db";
-import { logger, fs, sendEmail } from "@nstation/utils";
+// import { logger, fs, sendEmail } from "@nstation/utils";
 
 const sendForm = async (req, res) => {
   let body = req?.body;
@@ -13,26 +11,6 @@ const sendForm = async (req, res) => {
       is_read: false,
       archived: false,
     };
-    // const created_at = Date.now();
-
-    // const forms = fs.getFiles(["forms"]);
-    // const form = forms?.find((item) => item?.id?.toString() === id?.toString());
-
-    // if (req?.files?.length > 0) {
-    //   req?.files?.forEach((item) => {
-    //     body[item?.fieldname] = {
-    //       name: item?.originalname,
-    //       type: item?.mimetype,
-    //       url: item?.path,
-    //       size: item?.size,
-    //     };
-    //   });
-    // }
-
-    // const formatted_body = form?.fields.reduce((acc, curr) => {
-    //   acc[curr.slug] = body?.[curr.slug];
-    //   return acc;
-    // }, {});
 
     await upsertEntry({
       type: "forms",
