@@ -7,6 +7,7 @@ import FilterSelectInput from "./components/Select";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Select from "components/form/Select";
 import FilterDate from "./components/Date";
+import UsersInput from "components/form/Users";
 
 const mainClass = "table__filter-item";
 
@@ -36,6 +37,15 @@ const filterInputRender = (column, onChangeHandler, value) => {
         <FilterDate
           value={value}
           onChange={(value) => onChangeHandler(value)}
+        />
+      );
+    case "user":
+      return (
+        <UsersInput
+          value={value}
+          size="small"
+          noArrow={true}
+          onChange={(e) => onChangeHandler(e.target.value)}
         />
       );
     case "boolean":

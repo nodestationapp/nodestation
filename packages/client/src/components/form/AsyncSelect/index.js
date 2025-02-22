@@ -32,6 +32,8 @@ const AsyncSelect = ({
   variant,
   noArrow,
   getData,
+  placeholder,
+  size,
 }) => {
   const is_error = !!!hideError && touched && !!error;
   const [inputValue, setInputValue] = useState("");
@@ -53,7 +55,7 @@ const AsyncSelect = ({
 
   const onChangeHandler = (item) => {
     setInputValue(item?.label);
-    onChange({ target: { name, value: item } });
+    onChange(item);
     setSelectOpen(false);
     setInputValue("");
     setSelectedIndex(-1);
@@ -121,6 +123,7 @@ const AsyncSelect = ({
         [`${mainClass}--empty`]: !!!value?.label,
         [`${mainClass}--filled`]: !!value?.label || !!select_open,
         [`${mainClass}--${variant}`]: !!variant,
+        [`${mainClass}--${size}`]: !!size,
       })}
     >
       <div className={`${mainClass}__content`}>
@@ -152,20 +155,26 @@ const AsyncSelect = ({
               ref={input_ref}
               value={inputValue}
               placeholder={
-                !!value?.label ? value?.label : !!select_open ? "Select..." : ""
+                !!value?.label
+                  ? value?.label
+                  : !!select_open
+                    ? "Select..."
+                    : placeholder
               }
               onChange={(e) => onInputValueChange(e?.target?.value)}
               onKeyDown={onKeyDown}
             />
           </div>
-          {!!value?.label && (
-            <IconButton
-              onClick={() => onChangeHandler(null)}
-              size="small"
-              icon={<XMarkIcon />}
-            />
-          )}
-          {!!!noArrow && <ChevronDownIcon />}
+          <div className={`${mainClass}__content__button__aside`}>
+            {!!value?.label && (
+              <IconButton
+                onClick={() => onChangeHandler(null)}
+                size="small"
+                icon={<XMarkIcon />}
+              />
+            )}
+            {!!!noArrow && <ChevronDownIcon />}
+          </div>
         </div>
         {select_open && (
           <div className={`${mainClass}__options`}>

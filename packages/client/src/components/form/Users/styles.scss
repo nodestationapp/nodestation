@@ -1,6 +1,6 @@
 @import "styles/variables.scss";
 
-.async-select {
+.select {
   font-size: 14px;
   outline-width: 0;
   width: 100%;
@@ -34,9 +34,10 @@
       }
     }
 
-    &__button {
+    > button {
       padding: 0 15px;
       border-radius: 8px;
+      height: 40px;
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -44,47 +45,25 @@
       background-color: transparent;
       border: 1px solid #4B4F55;
       color: #fff;
-      cursor:text;
-
-      &__aside{
+  
+      > svg{
+        height: 18px;
+        width: 18px;
+        color: #4B4F55;
+      }
+  
+      span {
         display: flex;
         align-items: center;
-        flex-shrink: 0;
-
-        > svg{
+        gap: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+  
+        > svg {
           height: 18px;
           width: 18px;
-        }
-      }
-
-      .icon-button{
-        margin-right: 10px;
-      }
-
-      &__wrapper{
-        width: 100%;
-        flex: 1;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-        input{
-          border: none;
-          background-color: transparent;
-          color: #F0F1F3;
-          height: 45px;
-          flex: 1;
-
-          &::placeholder{
-            color: #F0F1F3;      
-          }
-        }
-    
-        > img, svg {
-          height: 25px;
-          width: 25px;
-          border-radius: 50%;
-          object-fit: cover;
         }
       }
     }
@@ -98,31 +77,9 @@
       font-size: 12px;
     }
   }
-  
-  /* HTML: <div class="loader"></div> */
-  &__loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 41px;
 
-    span{
-      color: #647082;
-    }
-
-    .loader{
-      width: 6px;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      animation: l5 1s infinite linear alternate;
-    }
-
-    @keyframes l5 {
-      0%  {box-shadow: 11px 0 #757980, -11px 0 #75798040; background: #757980 }
-      33% {box-shadow: 11px 0 #757980, -11px 0 #75798040; background: #75798040}
-      66% {box-shadow: 11px 0 #75798040, -11px 0 #757980; background: #75798040}
-      100%{box-shadow: 11px 0 #75798040, -11px 0 #757980; background: #757980 }
-    }
+  &__custom-button{
+    width: fit-content;
   }
 
   &__options {
@@ -158,14 +115,30 @@
       line-height: 14px;
       font-weight: 400;
       width: 100%;
-      gap: 10px;
+      gap: 15px;
       color: #fff;
       border-radius: 5px;
       height: 35px;
 
-      img, svg {
-        height: 25px;
-        width: 25px;
+      &__selected-icon{
+        position: absolute;
+        right: 13px;
+        display: flex;
+
+        svg{
+          height: 15px;
+          width: 15px;
+        }
+      }
+
+      > svg {
+        height: 18px;
+        width: 18px;
+      }
+
+      img {
+        height: 16px;
+        width: 16px;
         border-radius: 50%;
         object-fit: cover;
       }
@@ -191,7 +164,7 @@
     position: relative;
     z-index: 1000;
 
-    .async-select__content__button {
+    > button {
       border-color: #757980;
 
       > svg {
@@ -221,20 +194,12 @@
   }
 
   &--empty{
-    .async-select__content__button__wrapper{
-      input{
-        &::placeholder{
-          color: #AEB3BD;
-          font-weight: 300;
-        }
-      }
-    }
     > button {
 
-      span{
+span{
 
-        color: #656F7D;
-      }
+  color: #656F7D;
+}
     }
   }
 
@@ -251,18 +216,6 @@
       &__options {
         top: unset;
         bottom: calc(100% + 10px);
-      }
-    }
-  }
-
-  &--small{
-    .async-select__content__button{
-      padding: 0 10px;
-
-      &__wrapper{
-        input{
-          height: 40px;
-        }
       }
     }
   }
