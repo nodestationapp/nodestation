@@ -1,6 +1,6 @@
 {
   "name": "@nstation/client",
-  "version": "1.12.3",
+  "version": "1.13.0",
   "homepage": "/",
   "license": "MIT",
   "description": "Nodestation's client",
