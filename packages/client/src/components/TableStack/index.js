@@ -63,6 +63,7 @@ const table_value_type = (item, cell, meta, tableSchema) => {
         : null;
 
   switch (item?.type) {
+    case "user":
     case "user_profile":
       return <UserProfile data={value} />;
     case "media":

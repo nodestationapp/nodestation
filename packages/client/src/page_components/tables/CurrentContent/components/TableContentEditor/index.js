@@ -16,7 +16,15 @@ const TableContentEditor = ({ data = {}, onClose }) => {
 
       Object.keys(values)?.forEach((item) => {
         if (!!!values?.[item]?.size) {
-          formData.append(item, values?.[item]?.file || values?.[item]);
+          const is_user_type = table_data?.table?.fields?.find(
+            (element) => element?.slug === item && element?.type === "user"
+          );
+
+          if (!!is_user_type) {
+            formData.append(item, values?.[item]?.id || null);
+          } else {
+            formData.append(item, values?.[item]?.file || values?.[item]);
+          }
         }
       });
 

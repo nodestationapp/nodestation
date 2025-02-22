@@ -6,6 +6,7 @@ import { ReactComponent as NumericIcon } from "assets/icons/content-types/number
 import { ReactComponent as BooleanIcon } from "assets/icons/content-types/boolean.svg";
 import { ReactComponent as ShortTextIcon } from "assets/icons/content-types/short-text.svg";
 import { ReactComponent as EnumerationIcon } from "assets/icons/content-types/enumeration.svg";
+import { ReactComponent as UserIcon } from "assets/icons/content-types/user.svg";
 
 const field_type_data = [
   {
@@ -37,6 +38,11 @@ const field_type_data = [
     icon: <MediaIcon />,
     label: "Media",
     value: "media",
+  },
+  {
+    icon: <UserIcon />,
+    label: "User",
+    value: "user",
   },
   {
     icon: <JsonIcon />,

@@ -1,10 +1,9 @@
 import slugify from "slugify";
 
 import { fs } from "@nstation/utils";
-import { knex, createSchema } from "@nstation/db";
+import { knex, createSchema, queryBuilder } from "@nstation/db";
 
 import upsertEntry from "#libs/upsertEntry.js";
-import applyFilters from "#libs/applyFilters.js";
 
 const safeJSONParse = (input) => {
   try {
@@ -62,14 +61,16 @@ const getTable = async (req, res) => {
       (item) => item?.id?.toString() === id?.toString()
     );
 
-    const settings = await knex("nodestation_media_settings").first();
+    // const settings = await knex("nodestation_media_settings").first();
 
     let entries = [];
+
     if (!!table?.slug) {
-      entries = await knex(table?.slug)
-        .modify(applyFilters, rest, table?.fields)
-        .orderBy(sort?.[0], sort?.[1]);
-      entries = parseJSONFields(entries, settings);
+      entries = await queryBuilder({
+        table,
+        sort,
+        filters: rest,
+      });
     }
 
     return res.status(200).json({ table, entries });

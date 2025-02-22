@@ -4,6 +4,7 @@ import FormikSelect from "components/formik/FormikSelect";
 import FormikDateTime from "components/formik/FormikDateTime";
 import FormikTextarea from "components/formik/FormikTextarea";
 import FormikPhotoInput from "components/formik/FormikPhotoInput";
+import FormikUsers from "components/formik/FormikUsers";
 
 const tableInputRender = (item) => {
   let select_data = null;
@@ -64,6 +65,8 @@ const tableInputRender = (item) => {
           )}
         />
       );
+    case "user":
+      return <FormikUsers label={item?.name} name={item?.slug} />;
     case "media":
       return (
         <FormikPhotoInput
