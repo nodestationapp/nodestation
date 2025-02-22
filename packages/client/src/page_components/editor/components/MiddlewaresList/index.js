@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 import Button from "components/Button";
 import TableStack from "components/TableStack";
+import IconButton from "components/IconButton";
 import EditorContentLayout from "components/layouts/EditorContentLayout";
 import ArchiveMiddlewareModal from "./components/ArchiveMiddlewareModal";
 
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useEditor } from "context/client/editor";
-import IconButton from "components/IconButton";
 
 const MiddlewaresList = () => {
   const navigate = useNavigate();
@@ -19,30 +19,6 @@ const MiddlewaresList = () => {
   const middlewares = editor?.filter((item) => item?.type === "mid");
 
   const [archive_modal, setArchiveModal] = useState();
-
-  // const table_data = {
-  //   keys: [...fields],
-  //   items: middlewares?.map((item) => ({
-  //     onclick: () => navigate(`/editor/middlewares/${item?.id}`),
-  //     actions: (
-  //       <>
-  //         <IconButton
-  //           icon={<TrashIcon color="#FF3636" />}
-  //           onClick={(e) => {
-  //             e.stopPropagation();
-  //             setArchiveModal(item);
-  //           }}
-  //         />
-  //       </>
-  //     ),
-  //     data: [
-  //       {
-  //         key: "name",
-  //         value: item?.name,
-  //       },
-  //     ],
-  //   })),
-  // };
 
   const columns = [
     {

@@ -142,8 +142,6 @@ const entryUpdateForm = async (req, res) => {
   const { id, entry_id } = req?.params;
 
   try {
-    // const updated_at = Date.now();
-
     if (body?.is_read !== undefined) {
       await knex(id)
         .where({ id: entry_id })

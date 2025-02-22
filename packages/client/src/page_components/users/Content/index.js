@@ -41,7 +41,6 @@ const UsersContent = () => {
 
   let table_fields = settings?.fields?.filter(
     (item) =>
-      // item?.slug !== "id" &&
       item?.slug !== "first_name" &&
       item?.slug !== "last_name" &&
       item?.slug !== "photo" &&

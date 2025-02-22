@@ -16,16 +16,8 @@ const Sidebar = () => {
       <div className={mainClass}>
         <div className={`${mainClass}__header`}>
           <Dropdown
-            button={
-              <Avatar
-                // photo={organization?.photo?.location}
-                user={user?.project_name}
-                type="organization"
-              />
-            }
-          >
-            {/* <OrganizationSelect /> */}
-          </Dropdown>
+            button={<Avatar user={user?.project_name} type="organization" />}
+          ></Dropdown>
         </div>
         <Menu />
       </div>

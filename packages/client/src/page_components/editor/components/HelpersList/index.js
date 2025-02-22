@@ -9,11 +9,7 @@ import EditorContentLayout from "components/layouts/EditorContentLayout";
 
 import { useEditor } from "context/client/editor";
 
-import {
-  PlusIcon,
-  TrashIcon,
-  //  TrashIcon
-} from "@heroicons/react/24/outline";
+import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import TableStack from "components/TableStack";
 import IconButton from "components/IconButton";
 
@@ -24,37 +20,6 @@ const HelpersList = () => {
   const helpers = editor?.filter((item) => item?.type === "fn");
 
   const [archive_modal, setArchiveModal] = useState();
-
-  // const fields = [
-  //   {
-  //     key: "name",
-  //     value: "Name",
-  //   },
-  // ];
-
-  // const table_data = {
-  //   keys: [...fields],
-  //   items: helpers?.map((item) => ({
-  //     onclick: () => navigate(`/editor/helpers/${item?.id}`),
-  //     actions: (
-  //       <>
-  //         <IconButton
-  //           icon={<TrashIcon color="#FF3636" />}
-  //           onClick={(e) => {
-  //             e.stopPropagation();
-  //             setArchiveModal(item);
-  //           }}
-  //         />
-  //       </>
-  //     ),
-  //     data: [
-  //       {
-  //         key: "name",
-  //         value: item?.name,
-  //       },
-  //     ],
-  //   })),
-  // };
 
   const columns = [
     {

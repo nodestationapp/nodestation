@@ -50,14 +50,6 @@ function createOrModifyColumn({ table, schema, dbColumns }) {
     }
   }
 
-  // if (schema?.type === "user") {
-  //   column
-  //     .unsigned()
-  //     .references("id")
-  //     .inTable("nodestation_users")
-  //     .onDelete("CASCADE");
-  // }
-
   return column;
 }
 

@@ -54,8 +54,6 @@ const EmailsProvider = ({ children }) => {
     // eslint-disable-next-line
   }, [emails, email_settings, loading, archive_modal, settings_loading]);
 
-  // if (settings_loading) return null;
-
   return (
     <EmailsContext.Provider value={value}>{children}</EmailsContext.Provider>
   );

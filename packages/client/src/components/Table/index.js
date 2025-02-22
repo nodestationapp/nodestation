@@ -7,7 +7,6 @@ import { Fragment, useState } from "react";
 import Date from "./components/Date";
 import Media from "./components/Media";
 import Level from "./components/Level";
-// import Button from "components/Button";
 import Boolean from "./components/Boolean";
 import LogSource from "./components/LogSource";
 import StatusChip from "components/StatusChip";
@@ -22,11 +21,7 @@ import NewMessageName from "./components/NewMessageName";
 import EmailSparklines from "./components/EmailSparklines";
 import NoItemsFound from "components/List/components/NoItemsFound";
 
-import {
-  // AdjustmentsHorizontalIcon,
-  ArrowDownIcon,
-  ArrowsUpDownIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowDownIcon, ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 
 const mainClass = "table";
 

@@ -20,7 +20,6 @@ const LoginContent = () => {
       await login(values);
     } catch (err) {
       setErrors(err?.response?.data?.errors);
-      // setErrors({ email: "", password: err?.response?.data?.error });
       setSubmitting(false);
     }
   };

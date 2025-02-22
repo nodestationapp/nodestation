@@ -1,5 +1,4 @@
 import upsertEntry from "#libs/upsertEntry.js";
-// import { logger, fs, sendEmail } from "@nstation/utils";
 
 const sendForm = async (req, res) => {
   let body = req?.body;
@@ -45,14 +44,6 @@ const sendForm = async (req, res) => {
         },
       ],
     });
-
-    // await knex("nodestation_forms")
-    //   .insert({
-    //     data: JSON.stringify(formatted_body),
-    //     form_id: id,
-    //     created_at,
-    //   })
-    //   .returning("id");
 
     // if (!!form?.settings?.auto_responder?.active) {
     //   const email =

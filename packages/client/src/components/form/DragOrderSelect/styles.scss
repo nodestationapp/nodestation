@@ -106,8 +106,6 @@
     }
 
     &__wrapper {
-      // overflow-y: auto;
-      // overflow-x: hidden;
       display: flex;
       flex-direction: column;
     }
@@ -201,7 +199,6 @@
     }
 
     &__bottom{
-      // padding: 5px;
 
       .select{
         &__options{

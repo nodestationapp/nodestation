@@ -94,7 +94,6 @@ const FormContentWrapper = ({ toolbar }) => {
       />
       {!!preview_modal && (
         <PreviewModal
-          // name={preview_modal?.name}
           data={preview_modal}
           fields={form?.fields}
           readHandler={readHandler}

@@ -48,13 +48,6 @@ const EmailCurrentSetting = () => {
         label: "Templates",
         href: "/emails",
       },
-      // {
-      //   label: "Settings",
-      //   href: "/emails/settings",
-      //   icon: !!!email_settings?.active ? (
-      //     <ExclamationCircleIcon color="#FFD00D" />
-      //   ) : null,
-      // },
     ],
   };
 

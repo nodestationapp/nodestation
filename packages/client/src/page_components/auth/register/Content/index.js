@@ -43,7 +43,6 @@ const RegisterContent = () => {
             email: "",
             password: "",
           }}
-          // validationSchema={registerSchema}
           onSubmit={(values, { setSubmitting, setErrors }) => {
             onSubmit(values, setSubmitting, setErrors);
           }}

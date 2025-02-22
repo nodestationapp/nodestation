@@ -58,8 +58,6 @@ const TableProvider = ({ children }) => {
     placeholderData: (previousData) => previousData,
   });
 
-  // const loading = tableLoading && !data;
-
   const updateTable = (values) =>
     new Promise(async (resolve, reject) => {
       try {

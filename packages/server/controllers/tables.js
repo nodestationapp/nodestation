@@ -61,8 +61,6 @@ const getTable = async (req, res) => {
       (item) => item?.id?.toString() === id?.toString()
     );
 
-    // const settings = await knex("nodestation_media_settings").first();
-
     let entries = [];
 
     if (!!table?.slug) {
