@@ -15,15 +15,40 @@ function transformData(data) {
           transformedItem[parent] = {};
         }
 
-        transformedItem[parent][nestedKey] = value;
-      } else {
-        if (!!value) {
-          transformedItem[key] = value;
+        if (!!item?.[`${parent}.id`]) {
+          transformedItem[parent][nestedKey] = value;
+        } else {
+          transformedItem[parent] = null;
         }
+      } else {
+        transformedItem[key] = value;
       }
     }
 
     return transformedItem;
+  });
+}
+
+function processObjects(objects, settings) {
+  return objects.map((obj) => {
+    for (const key in obj) {
+      if (obj[key] && typeof obj[key] === "object" && obj[key].photo) {
+        try {
+          let photo = JSON.parse(obj[key].photo);
+          obj[key].photo = {
+            ...photo,
+            url:
+              settings?.active === "local"
+                ? `${process.env.PUBLIC_URL}${photo.url}`
+                : photo.url,
+          };
+        } catch (e) {
+          console.error("Invalid JSON in photo field", e);
+          obj[key].photo = null;
+        }
+      }
+    }
+    return obj;
   });
 }
 
@@ -50,10 +75,10 @@ export default async ({ table, filters, sort }) => {
         )
         .select(
           `${table?.slug}.*`,
-          `nodestation_users.id as profile.id`,
-          `nodestation_users.first_name as profile.first_name`,
-          `nodestation_users.last_name as profile.last_name`,
-          `nodestation_users.photo as profile.photo`
+          `nodestation_users.id as ${item?.slug}.id`,
+          `nodestation_users.first_name as ${item?.slug}.first_name`,
+          `nodestation_users.last_name as ${item?.slug}.last_name`,
+          `nodestation_users.photo as ${item?.slug}.photo`
         );
 
       is_user_type = true;
@@ -64,31 +89,9 @@ export default async ({ table, filters, sort }) => {
     const settings = await knex("nodestation_media_settings").first();
 
     query = query.then((items) => {
-      const formatted_items = transformData(items);
-
-      return formatted_items.map((item) => {
-        const photo = !!item?.profile?.photo
-          ? JSON.parse(item?.profile?.photo)
-          : null;
-
-        return {
-          ...item,
-          profile: !!item?.profile?.id
-            ? {
-                ...item?.profile,
-                photo: !!photo
-                  ? {
-                      ...photo,
-                      url:
-                        settings?.active === "local"
-                          ? `${process.env.PUBLIC_URL}${photo?.url}`
-                          : photo?.url,
-                    }
-                  : null,
-              }
-            : null,
-        };
-      });
+      let formatted_items = transformData(items);
+      formatted_items = processObjects(formatted_items, settings);
+      return formatted_items;
     });
   }
 

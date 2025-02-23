@@ -54,7 +54,7 @@ const UsersContent = () => {
           key: "first_name",
           value: "User",
           type: "user_profile",
-          slug: "first_name",
+          slug: "user",
         },
         ...(table_fields?.map((item) => ({
           key: item?.type,

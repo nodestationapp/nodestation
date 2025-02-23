@@ -54,13 +54,9 @@ import {
 const mainClass = "table-stack";
 
 const table_value_type = (item, cell, meta, tableSchema) => {
-  const value = !!item?.sort
-    ? cell?.row?.original
-    : !!cell?.row?.original?.hasOwnProperty(item?.slug)
-      ? cell?.getValue()
-      : !!item?.type
-        ? cell?.row?.original
-        : null;
+  const value = cell?.row?.original?.hasOwnProperty(item?.slug)
+    ? cell?.row?.original?.[item?.slug]
+    : cell?.row?.original;
 
   switch (item?.type) {
     case "user":
