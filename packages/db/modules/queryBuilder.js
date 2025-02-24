@@ -1,3 +1,4 @@
+import { fs } from "@nstation/utils";
 import knex from "./knex.js";
 import applyFilters from "./utils/applyFilters.js";
 
@@ -79,6 +80,26 @@ export default async ({ table, filters, sort }) => {
           `nodestation_users.first_name as ${item?.slug}.first_name`,
           `nodestation_users.last_name as ${item?.slug}.last_name`,
           `nodestation_users.photo as ${item?.slug}.photo`
+        );
+
+      is_user_type = true;
+    }
+
+    if (!!item?.reference?.table) {
+      const tables = fs.getFiles(["tables"]);
+      const ref_table = tables?.find(
+        (element) => element?.id?.toString() === item?.reference?.table
+      );
+
+      query = query
+        .leftJoin(
+          ref_table?.slug,
+          `${table?.slug}.${item?.slug}`,
+          `${ref_table?.slug}.id`
+        )
+        .select(
+          `${table?.slug}.*`,
+          `${ref_table?.slug}.${ref_table?.display_name} as ${item?.slug}`
         );
 
       is_user_type = true;

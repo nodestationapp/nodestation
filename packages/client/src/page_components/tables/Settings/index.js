@@ -46,6 +46,20 @@ const TableSettingsContent = () => {
       ],
     },
     {
+      label: "Display name",
+      items: [
+        {
+          type: "select",
+          name: "display_name",
+          placeholder: "Table name",
+          options: table?.fields?.map((item) => ({
+            label: item?.name,
+            value: item?.slug,
+          })),
+        },
+      ],
+    },
+    {
       label: "Fields",
       items: [
         {
@@ -91,6 +105,7 @@ const TableSettingsContent = () => {
       <Formik
         initialValues={{
           name: table?.name,
+          display_name: table?.display_name || null,
           fields: table?.fields || [],
           status: table?.status || "active",
           settings: {

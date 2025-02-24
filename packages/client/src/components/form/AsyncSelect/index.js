@@ -140,12 +140,16 @@ const AsyncSelect = ({
           onClick={onClickHandler}
         >
           <div className={`${mainClass}__content__button__wrapper`}>
-            {!!value?.label && (
+            {value?.hasOwnProperty("photo") && (
               <>
-                {value?.photo ? (
-                  <img alt="" src={value?.photo} />
-                ) : (
-                  <ProfilePlaceholder />
+                {!!value?.label && (
+                  <>
+                    {value?.photo ? (
+                      <img alt="" src={value?.photo} />
+                    ) : (
+                      <ProfilePlaceholder />
+                    )}
+                  </>
                 )}
               </>
             )}
@@ -155,11 +159,7 @@ const AsyncSelect = ({
               ref={input_ref}
               value={inputValue}
               placeholder={
-                !!value?.label
-                  ? value?.label
-                  : !!select_open
-                    ? "Select..."
-                    : placeholder
+                !!value?.label ? value?.label : !!select_open ? "Select..." : ""
               }
               onChange={(e) => onInputValueChange(e?.target?.value)}
               onKeyDown={onKeyDown}
@@ -205,10 +205,14 @@ const AsyncSelect = ({
                       onClick={() => onChangeHandler(item)}
                     >
                       <>
-                        {item?.photo ? (
-                          <img alt="" src={item?.photo} />
-                        ) : (
-                          <ProfilePlaceholder />
+                        {item?.hasOwnProperty("photo") && (
+                          <>
+                            {item?.photo ? (
+                              <img alt="" src={item?.photo} />
+                            ) : (
+                              <ProfilePlaceholder />
+                            )}
+                          </>
                         )}
                         {item?.label}
                       </>

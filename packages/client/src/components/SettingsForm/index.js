@@ -10,6 +10,7 @@ import ChangePasswordForm from "components/ChangePasswordForm";
 import Providers from "page_components/users/Settings/components/Providers";
 import ExtraSettings from "page_components/forms/Settings/components/ExtraSettings";
 import InputElementsEditor from "page_components/forms/Settings/components/InputElementsEditor";
+import FormikSelect from "components/formik/FormikSelect";
 
 const mainClass = "settings-form";
 
@@ -27,6 +28,16 @@ const input_type_render = (type, item) => {
       return <MediaProviders />;
     case "change_password":
       return <ChangePasswordForm />;
+    case "select":
+      return (
+        <FormikSelect
+          name={item?.name}
+          disabled={item?.disabled}
+          placeholder={item?.placeholder}
+          options={item?.options || []}
+          variant="dark"
+        />
+      );
     default:
       return (
         <FormikInput

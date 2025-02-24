@@ -1,0 +1,27 @@
+.table__text{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    gap: 5px;
+
+    &__relation-icon{
+        svg{
+            height: 18px;
+            width: 18px;
+            // opacity: 0.5;
+          }
+    }
+
+    &--is-relation{
+        span{
+            text-decoration: underline;
+        }
+    }
+  
+    // svg{
+    //   height: 18px;
+    //   width: 18px;
+    //   opacity: 0.5;
+    // }
+}

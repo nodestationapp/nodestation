@@ -46,10 +46,10 @@ import {
   EyeSlashIcon,
   Cog6ToothIcon,
   ListBulletIcon,
-  LockClosedIcon,
   EllipsisHorizontalIcon,
   BoltIcon,
 } from "@heroicons/react/24/outline";
+import Text from "./components/Text";
 
 const mainClass = "table-stack";
 
@@ -100,9 +100,12 @@ const table_value_type = (item, cell, meta, tableSchema) => {
       return <Icon data={value} meta={item} />;
     default:
       return (
-        <p className={`${mainClass}__regular`}>
-          {value || "-"} {!!meta?.locked && <LockClosedIcon />}
-        </p>
+        <Text
+          tableSchema={tableSchema}
+          locked={meta?.locked}
+          value={value}
+          column={item?.slug}
+        />
       );
   }
 };
@@ -176,16 +179,8 @@ const TableStack = ({
         size: table_preferences?.content?.[item?.slug] || item?.width,
         accessorFn: (row) => row?.[item?.slug],
         header: () => <span className="light">{item?.value}</span>,
-        cell: (cell) => (
-          <span className="light">
-            {table_value_type(
-              item,
-              cell,
-              meta?.[cell?.row?.index],
-              tableSchema
-            )}
-          </span>
-        ),
+        cell: (cell) =>
+          table_value_type(item, cell, meta?.[cell?.row?.index], tableSchema),
       })),
     ],
     // eslint-disable-next-line
