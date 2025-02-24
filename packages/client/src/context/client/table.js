@@ -2,7 +2,7 @@ import queryString from "query-string";
 
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 import api from "libs/api";
 import sortParser from "libs/sortParser";
@@ -16,8 +16,6 @@ const TableProvider = ({ children }) => {
   const { preferences, loading: preferencesLoading } = useOrganization();
   const table_preferences = preferences?.find((item) => item?.table_id === id);
 
-  // console.log(table_preferences?.table_id === id);
-
   const [columnOrder, setColumnOrder] = useState(
     table_preferences?.order || null
   );
@@ -29,7 +27,7 @@ const TableProvider = ({ children }) => {
     table_preferences?.filters || [{ field: null, value: "" }]
   );
 
-  const sort_query = sortParser(sort);
+  const sort_query = sortParser(table_preferences?.sort);
   const filters_query = filters.reduce((acc, item) => {
     if (item.field) {
       acc[item.field] = Array.isArray(item.value)
@@ -39,18 +37,12 @@ const TableProvider = ({ children }) => {
     return acc;
   }, {});
 
-  useEffect(() => {
-    setSort(table_preferences?.sort);
-  }, [table_preferences?.sort]);
-
-  console.log(sort_query);
-
   const {
     isLoading: loading,
     data,
     refetch: tableRefetch,
   } = useQuery({
-    queryKey: ["tables", id, sort_query, filters_query],
+    queryKey: ["tables", table_preferences],
     queryFn: () =>
       api.get(
         `/tables/${id}?${queryString.stringify({

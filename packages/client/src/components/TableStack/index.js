@@ -128,7 +128,7 @@ const TableStack = ({
   fullWidth = false,
   toolbar: toolbarData,
 }) => {
-  const { preferences } = useOrganization();
+  const { preferences, refetchPreferences } = useOrganization();
   const table_preferences = preferences?.find(
     (item) => item?.table_id === tableId
   );
@@ -146,6 +146,16 @@ const TableStack = ({
   const [columnVisibility, setColumnVisibility] = useState(
     table_preferences?.visibility || []
   );
+
+  useEffect(() => {
+    setFiltersExpanded(table_preferences?.filtersToggle);
+    setColumnVisibility(table_preferences?.visibility);
+    setColumnOrder(table_preferences?.order);
+    setSort(table_preferences?.sort);
+    setFilters(table_preferences?.filters);
+    // setFilters()
+    // eslint-disable-next-line
+  }, [tableId]);
 
   const formatted_columns = useMemo(
     () => [
@@ -188,7 +198,7 @@ const TableStack = ({
   );
 
   const table = useReactTable({
-    data: data || [],
+    data: data,
     initialState: {
       columnPinning: {
         left: ["select", "level"],
@@ -216,6 +226,8 @@ const TableStack = ({
       table_id: tableId,
       ...values,
     });
+
+    refetchPreferences();
   };
 
   useEffect(() => {
@@ -241,7 +253,7 @@ const TableStack = ({
       saveTransaction({ sort });
     }
     // eslint-disable-next-line
-  }, [tableId, sort]);
+  }, [sort]);
 
   useEffect(() => {
     setTable(table);
