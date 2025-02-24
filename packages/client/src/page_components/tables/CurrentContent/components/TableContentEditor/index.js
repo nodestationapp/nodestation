@@ -62,7 +62,11 @@ const TableContentEditor = ({ data = {}, onClose }) => {
                 if (!!!data?.id) {
                   if (item?.slug === "id") return null;
                 }
-                return <div key={index}>{tableInputRender(item)}</div>;
+                return (
+                  <div key={index}>
+                    {tableInputRender(item, table_data?.table?.display_name)}
+                  </div>
+                );
               })}
             </div>
           </AsideModal>

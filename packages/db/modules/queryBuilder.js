@@ -99,7 +99,8 @@ export default async ({ table, filters, sort }) => {
         )
         .select(
           `${table?.slug}.*`,
-          `${ref_table?.slug}.${ref_table?.display_name} as ${item?.slug}`
+          `${ref_table?.slug}.id as ${item?.slug}.id`,
+          `${ref_table?.slug}.${ref_table?.display_name} as ${item?.slug}.label`
         );
 
       is_user_type = true;

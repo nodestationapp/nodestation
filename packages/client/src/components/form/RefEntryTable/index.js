@@ -4,11 +4,21 @@ import AsyncSelect from "components/form/AsyncSelect";
 
 import api from "libs/api";
 import { useTable } from "context/client/table";
+import { useOrganization } from "context/organization";
 
-const RefTable = ({ value, name, label, onChange, size, noArrow }) => {
+const RefEntryTable = ({
+  value,
+  name,
+  label,
+  onChange,
+  size,
+  noArrow,
+  table,
+}) => {
   const { id } = useTable();
+  const { tables } = useOrganization();
 
-  const [tables, setTables] = useState([]);
+  const [entries, setEntries] = useState([]);
   const [selectValue, setSelectValue] = useState(null);
 
   useEffect(() => {
@@ -30,10 +40,10 @@ const RefTable = ({ value, name, label, onChange, size, noArrow }) => {
 
   const fetchData = async (id) => {
     try {
-      const data = await api.get(`/tables/${id}`);
+      const data = await api.get(`/tables/${table}`);
 
       if (!!!id) {
-        setTables(data);
+        setEntries(data?.entries);
       }
 
       return data?.table;
@@ -47,10 +57,12 @@ const RefTable = ({ value, name, label, onChange, size, noArrow }) => {
     label: selectValue?.label,
   };
 
-  const options = tables
+  const display_name = tables?.find((item) => item?.id === table)?.display_name;
+
+  const options = entries
     ?.map((item) => ({
       id: item?.id,
-      label: item?.name,
+      label: item?.[display_name],
     }))
     ?.filter((item) => item?.id !== selectValue?.id && item?.id !== id);
 
@@ -72,4 +84,4 @@ const RefTable = ({ value, name, label, onChange, size, noArrow }) => {
   );
 };
 
-export default RefTable;
+export default RefEntryTable;

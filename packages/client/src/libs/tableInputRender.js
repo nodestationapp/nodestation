@@ -5,8 +5,9 @@ import FormikDateTime from "components/formik/FormikDateTime";
 import FormikTextarea from "components/formik/FormikTextarea";
 import FormikPhotoInput from "components/formik/FormikPhotoInput";
 import FormikUsers from "components/formik/FormikUsers";
+import FormikRefEntryTable from "components/formik/FormikRefEntryTable";
 
-const tableInputRender = (item) => {
+const tableInputRender = (item, display_name) => {
   let select_data = null;
 
   if (item?.type === "select") {
@@ -87,7 +88,14 @@ const tableInputRender = (item) => {
         />
       );
     default:
-      return (
+      return item?.reference ? (
+        <FormikRefEntryTable
+          table={item?.reference?.table}
+          display_name={display_name}
+          // value={item?.reference?.table}
+          name={item?.slug}
+        />
+      ) : (
         <FormikInput
           name={item?.slug}
           label={item?.name}

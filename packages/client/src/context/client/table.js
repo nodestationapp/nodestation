@@ -16,6 +16,8 @@ const TableProvider = ({ children }) => {
   const { preferences, loading: preferencesLoading } = useOrganization();
   const table_preferences = preferences?.find((item) => item?.table_id === id);
 
+  // console.log(table_preferences?.table_id === id);
+
   const [columnOrder, setColumnOrder] = useState(
     table_preferences?.order || null
   );
@@ -41,6 +43,8 @@ const TableProvider = ({ children }) => {
     setSort(table_preferences?.sort);
   }, [table_preferences?.sort]);
 
+  console.log(sort_query);
+
   const {
     isLoading: loading,
     data,
@@ -54,7 +58,7 @@ const TableProvider = ({ children }) => {
           sort: sort_query || undefined,
         })}`
       ),
-    enabled: !!!preferencesLoading,
+    enabled: !!!preferencesLoading || table_preferences?.table_id === id,
     placeholderData: (previousData) => previousData,
   });
 

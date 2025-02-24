@@ -27,7 +27,7 @@ const FormContent = () => {
   const [archive_entry_modal, setArchiveEntryModal] = useState(false);
 
   const table = data?.table;
-  const entries = data?.entries;
+  const entries = data?.entries || [];
 
   const breadcrumps = [
     {

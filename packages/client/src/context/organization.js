@@ -20,7 +20,11 @@ const OrganizationProvider = ({ children }) => {
     queryFn: () => api.get("/tables"),
   });
 
-  const { data: preferences = [], isLoading: loading } = useQuery({
+  const {
+    data: preferences = [],
+    isLoading: loading,
+    refetch: refetchPreferences,
+  } = useQuery({
     queryKey: ["preferences"],
     queryFn: () => api.get("/preferences"),
   });
@@ -68,6 +72,7 @@ const OrganizationProvider = ({ children }) => {
       refetchTables,
       preferences,
       loading,
+      refetchPreferences,
     };
     // eslint-disable-next-line
   }, [

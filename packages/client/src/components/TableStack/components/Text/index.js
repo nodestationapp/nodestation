@@ -30,7 +30,7 @@ const Text = ({ tableSchema, locked, value, column }) => {
           <LinkIcon />
         </div>
       )}
-      <span>{value || "-"}</span> {locked && <LockClosedIcon />}
+      <span>{value?.label || value || "-"}</span> {locked && <LockClosedIcon />}
     </div>
   );
 };
