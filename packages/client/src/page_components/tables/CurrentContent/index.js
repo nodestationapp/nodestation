@@ -10,18 +10,7 @@ import { useTable } from "context/client/table";
 import { CircleStackIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 const FormContent = () => {
-  const {
-    data,
-    id,
-    loading,
-    sort,
-    setSort,
-    columnOrder,
-    setColumnOrder,
-    columnVisibility,
-    filters,
-    setFilters,
-  } = useTable();
+  const { data, id, loading, sort, setSort, filters, setFilters } = useTable();
 
   const [content_editor, setContentEditor] = useState(null);
   const [archive_entry_modal, setArchiveEntryModal] = useState(false);
@@ -85,9 +74,6 @@ const FormContent = () => {
           loading={loading}
           columns={columns}
           tableSchema={table?.fields}
-          columnOrder={columnOrder}
-          setColumnOrder={setColumnOrder}
-          columnVisibility={columnVisibility}
           rowClick={(row) => setContentEditor(row)}
         />
         {!!content_editor && (

@@ -16,12 +16,6 @@ const TableProvider = ({ children }) => {
   const { preferences, loading: preferencesLoading } = useOrganization();
   const table_preferences = preferences?.find((item) => item?.table_id === id);
 
-  const [columnOrder, setColumnOrder] = useState(
-    table_preferences?.order || null
-  );
-  const [columnVisibility, setColumnVisibility] = useState(
-    table_preferences?.visibility || []
-  );
   const [sort, setSort] = useState(table_preferences?.sort || []);
   const [filters, setFilters] = useState(
     table_preferences?.filters || [{ field: null, value: "" }]
@@ -137,15 +131,11 @@ const TableProvider = ({ children }) => {
       deleteTableEntries,
       sort,
       setSort,
-      columnOrder,
-      setColumnOrder,
-      columnVisibility,
-      setColumnVisibility,
       filters,
       setFilters,
     };
     // eslint-disable-next-line
-  }, [data, id, loading, sort, columnOrder, columnVisibility, filters]);
+  }, [data, id, loading, sort, filters]);
 
   return (
     <TableContext.Provider value={value}>{children}</TableContext.Provider>

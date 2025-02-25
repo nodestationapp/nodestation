@@ -10,6 +10,7 @@ import cx from "classnames";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import React, { useEffect, useMemo, useState } from "react";
 
+import Text from "./components/Text";
 import Date from "./components/Date";
 import Sort from "./components/Sort";
 import Icon from "./components/Icon";
@@ -49,7 +50,6 @@ import {
   EllipsisHorizontalIcon,
   BoltIcon,
 } from "@heroicons/react/24/outline";
-import Text from "./components/Text";
 
 const mainClass = "table-stack";
 
@@ -153,7 +153,7 @@ const TableStack = ({
     setColumnOrder(table_preferences?.order);
     setSort(table_preferences?.sort);
     setFilters(table_preferences?.filters);
-    // setFilters()
+    setSelectedRows([]);
     // eslint-disable-next-line
   }, [tableId]);
 
@@ -210,6 +210,7 @@ const TableStack = ({
       rowSelection: selectedRows,
       columnVisibility: columnVisibility,
     },
+    manualFiltering: true,
     manualSorting: true,
     onSortingChange: setSort,
     enableRowSelection: true,
@@ -269,11 +270,6 @@ const TableStack = ({
     setSelectedRowsContext(selectedRows);
     // eslint-disable-next-line
   }, [selectedRows]);
-
-  useEffect(() => {
-    setTable(table);
-    // eslint-disable-next-line
-  }, [table]);
 
   const handleMouseDown = (e, header) => {
     e.stopPropagation();
