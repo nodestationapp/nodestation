@@ -1,29 +1,27 @@
-import { knex } from "@nstation/db";
+import { knex, queryBuilder } from "@nstation/db";
 
 const getLogs = async (req, res) => {
   const pageSize = 50;
-  const { page = 1 } = req?.query;
+  const { page = 1, ...rest } = req?.query;
 
   try {
-    const data = await knex("nodestation_logs")
-      .orderBy("created_at", "desc")
-      .limit(pageSize)
-      .offset((req?.query?.page - 1) * pageSize);
+    const data = await queryBuilder({
+      table: "nodestation_logs",
+      sort: ["created_at", "desc"],
+      filters: rest,
+      pagination: {
+        pageSize,
+        page,
+      },
+    });
 
     const totalItems = await knex("nodestation_logs")
       .count("id as count")
       .first();
     const hasNextPage = page * pageSize < totalItems.count;
 
-    const formatted_data = data?.map((item) => ({
-      ...item,
-      source: JSON.parse(item?.source),
-      req: JSON.parse(item?.req),
-      res: JSON.parse(item?.res),
-    }));
-
     return res.status(200).json({
-      items: formatted_data,
+      items: data,
       nextPage: !!hasNextPage ? parseInt(req?.query?.page) + 1 : null,
     });
   } catch (err) {

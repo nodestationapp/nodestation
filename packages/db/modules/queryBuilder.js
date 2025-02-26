@@ -52,11 +52,17 @@ function processObjects(objects, settings) {
   });
 }
 
-export default async ({ table, filters, sort }) => {
-  let query = knex(table?.slug);
+export default async ({ table, filters, sort, pagination }) => {
+  let query = knex(table?.slug || table);
 
   if (!!filters) {
     query = query.modify(applyFilters, filters, table?.fields);
+  }
+
+  if (!!pagination) {
+    query = query
+      .limit(pagination.pageSize)
+      .offset((pagination.page - 1) * pagination.pageSize);
   }
 
   if (!!sort) {

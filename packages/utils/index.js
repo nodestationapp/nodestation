@@ -7,5 +7,17 @@ import rootPath from "./modules/rootPath.js";
 import server from "./modules/server/index.js";
 import uploader from "./modules/uploader/index.js";
 import sendEmail from "./modules/sendEmail/index.js";
+import logger_morgan from "./modules/logger_morgan.js";
 
-export { io, fs, cli, cors, server, logger, rootPath, uploader, sendEmail };
+export {
+  io,
+  fs,
+  cli,
+  cors,
+  server,
+  logger,
+  rootPath,
+  uploader,
+  sendEmail,
+  logger_morgan,
+};

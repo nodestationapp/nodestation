@@ -19,31 +19,33 @@ const Toolbar = ({
 
   return (
     <div className={mainClass}>
-      <div className={`${mainClass}__content`}>
-        <div className={`${mainClass}__main`}>
-          {!!selectedLength > 0 ? (
-            <div className={`${mainClass}__main__select-action`}>
-              <span className="small">Selected {selectedLength}</span>
-              <div className={`${mainClass}__main__select-action__options`}>
-                {data?.selectAction?.map((item, index) => {
-                  if (!!!item?.icon) return null;
-                  return (
-                    <IconButton
-                      key={index}
-                      size="small"
-                      icon={item?.icon}
-                      onClick={item?.onClick}
-                    />
-                  );
-                })}
+      {!!data?.menu && (
+        <div className={`${mainClass}__content`}>
+          <div className={`${mainClass}__main`}>
+            {!!selectedLength > 0 ? (
+              <div className={`${mainClass}__main__select-action`}>
+                <span className="small">Selected {selectedLength}</span>
+                <div className={`${mainClass}__main__select-action__options`}>
+                  {data?.selectAction?.map((item, index) => {
+                    if (!!!item?.icon) return null;
+                    return (
+                      <IconButton
+                        key={index}
+                        size="small"
+                        icon={item?.icon}
+                        onClick={item?.onClick}
+                      />
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ) : (
-            <>{!!data?.menu && <Submenu data={data?.menu} />}</>
-          )}
+            ) : (
+              <>{!!data?.menu && <Submenu data={data?.menu} />}</>
+            )}
+          </div>
+          <div className={`${mainClass}__aside`}>{data?.action}</div>
         </div>
-        <div className={`${mainClass}__aside`}>{data?.action}</div>
-      </div>
+      )}
       {!!filtersExpanded && (
         <Filters
           filters={filters}

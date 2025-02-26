@@ -80,13 +80,23 @@ const createSchema = async () => {
     await knex.schema.createTable("nodestation_logs", (table) => {
       table.increments("id").primary();
       table.string("level").nullable();
-      table.string("source").nullable();
-      table.text("message").nullable();
-      table.text("req").nullable();
+      table.string("method").nullable();
+      table.text("url").nullable();
+      table.text("status").nullable();
       table.text("res").nullable();
+      table.text("ip").nullable();
+      table.text("headers").nullable();
+      table.text("body").nullable();
       table.integer("is_read").defaultTo(0);
       table.integer("responseTime").nullable();
-      table.bigInteger("created_at").nullable();
+      table
+        .bigInteger("created_at")
+        .nullable()
+        .defaultTo(
+          knex.client.config.client === "pg"
+            ? knex.raw("EXTRACT(EPOCH FROM NOW())::BIGINT")
+            : knex.raw("(strftime('%s', 'now') * 1)")
+        );
     });
   }
 

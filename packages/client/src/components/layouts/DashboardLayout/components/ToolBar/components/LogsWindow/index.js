@@ -27,7 +27,7 @@ const mainClass = "logs-window";
 
 const LogsWindowContent = ({ onClose }) => {
   const { getUserData } = useApp();
-  const { logs, fetchNextPage } = useLogs();
+  const { logs, fetchNextPage, filters, setFilters } = useLogs();
   const [cookies, setCookie] = useCookies(["logs_maximize"]);
 
   const [details_modal, setDetailsModal] = useState(null);
@@ -71,23 +71,24 @@ const LogsWindowContent = ({ onClose }) => {
     },
     {
       key: "log_source",
-      value: "Source",
       slug: "log_source",
       type: "log_source",
-      width: 200,
+      width: 65,
+    },
+    {
+      key: "log_source",
+      slug: "method",
+      width: 65,
     },
     {
       key: "log_created_at",
-      value: "Date",
       slug: "created_at",
       type: "date",
-      width: 250,
+      width: 200,
     },
     {
       key: "details",
-      value: "Message",
-      slug: "message",
-      type: "log_message",
+      slug: "url",
     },
   ];
 
@@ -96,6 +97,14 @@ const LogsWindowContent = ({ onClose }) => {
       fetchNextPage();
     }
   };
+
+  const tableSchema = [
+    {
+      name: "Level",
+      slug: "level",
+      type: "text",
+    },
+  ];
 
   return (
     <div
@@ -129,12 +138,17 @@ const LogsWindowContent = ({ onClose }) => {
         }}
       >
         <div className={`${mainClass}__content`}>
-          {/* <Table data={table_data} loading={loading} /> */}
           <TableStack
             fullWidth
+            hideHeader
             data={logs}
+            filters={filters}
+            tableId="logs"
+            tableSchema={tableSchema}
+            setFilters={setFilters}
             columns={columns}
             disabledSelect={true}
+            alwaysFiltersExpanded
             rowClick={({ row }) => setDetailsModal(row)}
           />
         </div>
