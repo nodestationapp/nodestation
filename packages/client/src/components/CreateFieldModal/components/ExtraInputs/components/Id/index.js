@@ -1,7 +1,6 @@
-import FormikInput from "components/formik/FormikInput";
-import FormikRefTable from "components/formik/FormikRefTable";
 import FormikSelect from "components/formik/FormikSelect";
 import FormikSwitch from "components/formik/FormikSwitch";
+import FormikRefTable from "components/formik/FormikRefTable";
 
 const id_default_options = [
   {

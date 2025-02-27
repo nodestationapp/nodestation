@@ -137,7 +137,7 @@ const TableStack = ({
 
   const [isResizing, setIsResizing] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(
-    table_preferences?.filtersToggle || alwaysFiltersExpanded
+    table_preferences?.filtersToggle
   );
   const [selectedRows, setSelectedRows] = useState([]);
   const { setTable } = useTableWrapper();
@@ -405,7 +405,7 @@ const TableStack = ({
           tableSchema={tableSchema}
           setFilters={setFilters}
           selectedRows={selectedRows}
-          filtersExpanded={filtersExpanded}
+          filtersExpanded={alwaysFiltersExpanded}
           saveTransaction={saveTransaction}
         />
         {!!loading ? (

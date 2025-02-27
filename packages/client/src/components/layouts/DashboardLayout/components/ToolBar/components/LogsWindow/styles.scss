@@ -27,7 +27,20 @@
     }
 
     &__content{
-        padding: 10px 20px;
+        padding: 0px 20px 10px;
+
+        .table__toolbar{
+            padding: 3px 0;
+            position: sticky;
+            top: 0;
+            background-color: #1B2023;
+            z-index: 100;
+        }
+
+        .table-stack__body__row{
+            border-top: 1px solid #3C414B;
+            border-bottom: none;
+        }
     }
 
     &__details{
