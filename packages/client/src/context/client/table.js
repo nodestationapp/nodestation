@@ -36,7 +36,13 @@ const TableProvider = ({ children }) => {
     data,
     refetch: tableRefetch,
   } = useQuery({
-    queryKey: ["tables", table_preferences],
+    queryKey: [
+      "tables",
+      id,
+      table_preferences?.sort,
+      table_preferences?.order,
+      table_preferences?.filters,
+    ],
     queryFn: () =>
       api.get(
         `/tables/${id}?${queryString.stringify({
@@ -45,7 +51,7 @@ const TableProvider = ({ children }) => {
         })}`
       ),
     enabled: !!!preferencesLoading || table_preferences?.table_id === id,
-    placeholderData: (previousData) => previousData,
+    // placeholderData: (previousData) => previousData,
   });
 
   const updateTable = (values) =>

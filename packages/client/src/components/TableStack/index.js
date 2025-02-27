@@ -138,8 +138,7 @@ const TableStack = ({
     table_preferences?.filtersToggle
   );
   const [selectedRows, setSelectedRows] = useState([]);
-  const { setTable, setSelectedRows: setSelectedRowsContext } =
-    useTableWrapper();
+  const { setTable } = useTableWrapper();
 
   const [columnOrder, setColumnOrder] = useState(table_preferences?.order);
 
@@ -151,8 +150,12 @@ const TableStack = ({
     setFiltersExpanded(table_preferences?.filtersToggle);
     setColumnVisibility(table_preferences?.visibility);
     setColumnOrder(table_preferences?.order);
-    setSort(table_preferences?.sort);
-    setFilters(table_preferences?.filters);
+    if (table_preferences?.sort) {
+      setSort(table_preferences?.sort);
+    }
+    if (table_preferences?.filters) {
+      setFilters(table_preferences?.filters);
+    }
     setSelectedRows([]);
     // eslint-disable-next-line
   }, [tableId]);
@@ -264,12 +267,6 @@ const TableStack = ({
     };
     // eslint-disable-next-line
   }, [table]);
-
-  useEffect(() => {
-    const selectedRows = table.getSelectedRowModel()?.rows;
-    setSelectedRowsContext(selectedRows);
-    // eslint-disable-next-line
-  }, [selectedRows]);
 
   const handleMouseDown = (e, header) => {
     e.stopPropagation();

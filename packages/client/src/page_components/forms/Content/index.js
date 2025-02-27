@@ -51,6 +51,7 @@ const FormsContent = () => {
         fullWidth
         toolbar={toolbar}
         data={forms}
+        tableId="nodestation_forms"
         columns={columns}
         loading={loading}
         rowClick={(row) => navigate(`/forms/${row?.row?.id}`)}
