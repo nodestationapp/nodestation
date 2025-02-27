@@ -98,7 +98,7 @@ const Table = ({
         return <Date data={value} />;
       case "level":
         return <Level data={value} />;
-      case "log_source":
+      case "method":
         return <LogSource data={value} />;
       case "endpoint_code":
         return <EndpointCode data={value} />;

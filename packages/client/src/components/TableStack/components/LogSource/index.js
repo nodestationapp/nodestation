@@ -24,18 +24,14 @@ const mainClass = "table__log-source";
 // };
 
 const method_render = (data) => {
-  switch (data?.method) {
+  switch (data) {
     case "POST":
     case "GET":
     case "PUT":
     case "DELETE":
       return (
         <>
-          <MethodSelect
-            method={data?.method?.toLowerCase()}
-            read_only
-            size="small"
-          />
+          <MethodSelect method={data?.toLowerCase()} read_only size="small" />
         </>
       );
     default:

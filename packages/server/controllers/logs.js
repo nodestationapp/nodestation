@@ -6,7 +6,36 @@ const getLogs = async (req, res) => {
 
   try {
     const data = await queryBuilder({
-      table: "nodestation_logs",
+      table: {
+        slug: "nodestation_logs",
+        fields: [
+          {
+            name: "Level",
+            slug: "level",
+            type: "select",
+          },
+          {
+            name: "Method",
+            slug: "method",
+            type: "select",
+          },
+          {
+            name: "Status",
+            slug: "status",
+            type: "text",
+          },
+          {
+            name: "Url",
+            slug: "url",
+            type: "text",
+          },
+          {
+            name: "Created at",
+            slug: "created_at",
+            type: "date",
+          },
+        ],
+      },
       sort: ["created_at", "desc"],
       filters: rest,
       pagination: {

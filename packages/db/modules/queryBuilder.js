@@ -53,7 +53,7 @@ function processObjects(objects, settings) {
 }
 
 export default async ({ table, filters, sort, pagination }) => {
-  let query = knex(table?.slug || table);
+  let query = knex(table?.slug);
 
   if (!!filters) {
     query = query.modify(applyFilters, filters, table?.fields);

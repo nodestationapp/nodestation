@@ -86,7 +86,7 @@ const table_value_type = (item, cell, meta, tableSchema) => {
       return <Date data={value} />;
     case "level":
       return <Level data={value} meta={cell?.row?.original} />;
-    case "log_source":
+    case "method":
       return <LogSource data={value} />;
     case "endpoint_code":
       return <EndpointCode data={value} />;

@@ -70,24 +70,24 @@ const LogsWindowContent = ({ onClose }) => {
       width: 40,
     },
     {
-      key: "log_source",
-      slug: "log_source",
-      type: "log_source",
-      width: 65,
-    },
-    {
-      key: "log_source",
+      key: "method",
       slug: "method",
+      type: "method",
       width: 65,
     },
     {
-      key: "log_created_at",
+      key: "status",
+      slug: "status",
+      width: 50,
+    },
+    {
+      key: "created_at",
       slug: "created_at",
       type: "date",
       width: 200,
     },
     {
-      key: "details",
+      key: "url",
       slug: "url",
     },
   ];
@@ -102,7 +102,61 @@ const LogsWindowContent = ({ onClose }) => {
     {
       name: "Level",
       slug: "level",
+      type: "select",
+      options: [
+        {
+          label: "Success",
+          value: "success",
+          color: "#009E77",
+        },
+        {
+          label: "Error",
+          value: "error",
+          color: "#ED342D",
+        },
+      ],
+    },
+    {
+      name: "Method",
+      slug: "method",
+      type: "select",
+      options: [
+        {
+          label: "POST",
+          value: "POST",
+          color: "#009E77",
+        },
+        {
+          label: "GET",
+          value: "GET",
+          color: "#1191FF",
+        },
+        {
+          label: "PUT",
+          value: "PUT",
+          color: "#E97500",
+        },
+        {
+          label: "DELETE",
+          value: "DELETE",
+          color: "#F93F3E",
+        },
+      ],
+    },
+    {
+      name: "Status",
+      slug: "status",
       type: "text",
+    },
+    {
+      name: "Url",
+      slug: "url",
+      type: "text",
+    },
+    {
+      name: "Created at",
+      slug: "created_at",
+      type: "date",
     },
   ];
 

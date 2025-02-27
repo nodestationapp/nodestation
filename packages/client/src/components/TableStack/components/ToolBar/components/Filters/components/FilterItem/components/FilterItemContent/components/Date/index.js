@@ -9,7 +9,7 @@ const FilterDate = ({ value = [], onChange }) => {
   const onChangeHandler = (newDate, index) => {
     let temp = value || [];
 
-    const formatted_value = moment(newDate).valueOf();
+    const formatted_value = moment(newDate).unix();
     temp[index] = formatted_value;
 
     onChange(temp);
