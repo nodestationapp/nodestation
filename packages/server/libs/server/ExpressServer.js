@@ -1,14 +1,12 @@
 import path from "path";
 import http from "http";
 import fs_sys from "fs";
-import morgan from "morgan";
 import express from "express";
 import bodyParser from "body-parser";
-import { rootPath, cors, io, logger_morgan } from "@nstation/utils";
+import { rootPath, cors, io, logger } from "@nstation/utils";
 
 import apiRoutes from "#routes/api.js";
 import allRoutes from "#routes/index.js";
-import logListener from "#libs/logListener.js";
 import loadRoutes from "#libs/server/loadRoutes.js";
 import cronsImport from "#libs/server/cronsImport.js";
 
@@ -26,16 +24,11 @@ class ExpressServer {
 
     io({ server: this.server, app: this.app });
 
-    logListener({ app: this.app });
-
     // MIDDLEWARES
     this.app.use(cors);
     this.app.use(bodyParser.urlencoded({ extended: true }));
 
-    const morganFormat =
-      ":method :url :status :response-time ms :res[content-length]";
-
-    this.app.use(logger_morgan);
+    this.app.use(logger);
 
     //ROUTES
     this.app.use((req, res, next) => {

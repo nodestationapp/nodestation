@@ -1,7 +1,20 @@
+import morgan from "morgan";
 import { knex } from "@nstation/db";
 
+const getLevel = (status) => {
+  let level = null;
+
+  if (status >= 100 && status <= 399) {
+    level = "success";
+  } else if (status >= 400 && status <= 599) {
+    level = "error";
+  }
+
+  return level;
+};
+
 const sanitizeSensitiveData = (body) => {
-  const sensitiveFields = ["password", "access_token"];
+  const sensitiveFields = ["password", "access_token", "authorization"];
 
   let sanitizedBody = body;
 
@@ -14,39 +27,57 @@ const sanitizeSensitiveData = (body) => {
   return sanitizedBody;
 };
 
-const logger = async ({
-  req,
-  res,
-  level,
-  source,
-  message,
-  responseBody,
-  responseTime,
-}) => {
-  try {
-    const created_at = Date.now();
+const logger = morgan((tokens, req, res) => {
+  const allowedEndpoints = [
+    "/api",
+    "/admin/api/auth/login",
+    "/admin/api/auth/register",
+    "/admin/api/auth/password-reset",
+    "/admin/api/auth/change-password",
+    "/admin/api/auth/login",
+  ];
 
-    await knex("nodestation_logs").insert({
-      level,
-      message,
-      created_at,
-      responseTime,
-      source: JSON.stringify(source),
-      req: {
-        body: sanitizeSensitiveData(req?.body),
-        method: req?.method,
-        headers: req?.headers,
-      },
-      res: {
-        body: sanitizeSensitiveData(responseBody),
-        status: res?.statusCode,
-      },
-    });
+  const data = {
+    method: tokens.method(req, res),
+    url: tokens.url(req, res),
+    status: tokens.status(req, res),
+    responseTime: tokens["response-time"](req, res),
+    ip: req.ip,
+    headers: req.headers,
+    body: req.body,
+    timestamp: tokens.date(req, res, "iso"),
+  };
+
+  const level = getLevel(data?.status);
+
+  const canLogToDB = allowedEndpoints.some((endpoint) =>
+    data.url.startsWith(endpoint)
+  );
+
+  if (!!canLogToDB) {
+    knex("nodestation_logs")
+      .insert({
+        level,
+        method: data.method,
+        url: data.url,
+        status: data.status,
+        responseTime: data.responseTime,
+        ip: data.ip,
+        headers: sanitizeSensitiveData(data.headers),
+        body: sanitizeSensitiveData(data.body),
+      })
+      .catch((err) => console.error(err));
 
     req?.io?.emit("new_log");
-  } catch (err) {
-    console.error(err);
   }
-};
+
+  return [
+    data.timestamp.padEnd(24),
+    data.method.padEnd(3),
+    String(data.status).padStart(1),
+    data.url,
+    data.responseTime,
+  ].join(" ");
+});
 
 export default logger;

@@ -61,7 +61,7 @@ const DetailsModal = ({ data, onClose }) => {
         {
           type: "text",
           label: "Response Time",
-          value: data?.responseTime,
+          value: `${data?.responseTime} ms`,
         },
       ],
     },

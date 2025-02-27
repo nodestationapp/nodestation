@@ -1,7 +1,6 @@
 import { knex } from "@nstation/db";
 
 import aws from "./aws.js";
-import logger from "../logger.js";
 import elastic from "./elastic.js";
 import mailgun from "./mailgun.js";
 import fs from "#modules/fs/index.js";
@@ -51,18 +50,18 @@ const sendEmail = async (template, options) => {
 
   await emailProvider({ template, options, settings });
 
-  await logger({
-    level: "success",
-    source: {
-      type: "emails",
-      name: template?.name,
-    },
-    message: `email_message_sent`,
-    responseBody: {
-      template,
-      recipients: options?.recipients,
-    },
-  });
+  // await logger({
+  //   level: "success",
+  //   source: {
+  //     type: "emails",
+  //     name: template?.name,
+  //   },
+  //   message: `email_message_sent`,
+  //   responseBody: {
+  //     template,
+  //     recipients: options?.recipients,
+  //   },
+  // });
 };
 
 export default sendEmail;
