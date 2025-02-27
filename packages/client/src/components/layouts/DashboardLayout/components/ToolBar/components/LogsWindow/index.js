@@ -27,7 +27,7 @@ const mainClass = "logs-window";
 
 const LogsWindowContent = ({ onClose }) => {
   const { getUserData } = useApp();
-  const { logs, fetchNextPage } = useLogs();
+  const { logs, fetchNextPage, filters, setFilters } = useLogs();
   const [cookies, setCookie] = useCookies(["logs_maximize"]);
 
   const [details_modal, setDetailsModal] = useState(null);
@@ -70,24 +70,25 @@ const LogsWindowContent = ({ onClose }) => {
       width: 40,
     },
     {
-      key: "log_source",
-      value: "Source",
-      slug: "log_source",
-      type: "log_source",
+      key: "method",
+      slug: "method",
+      type: "method",
+      width: 65,
+    },
+    {
+      key: "status",
+      slug: "status",
+      width: 50,
+    },
+    {
+      key: "created_at",
+      slug: "created_at",
+      type: "date",
       width: 200,
     },
     {
-      key: "log_created_at",
-      value: "Date",
-      slug: "created_at",
-      type: "date",
-      width: 250,
-    },
-    {
-      key: "details",
-      value: "Message",
-      slug: "message",
-      type: "log_message",
+      key: "url",
+      slug: "url",
     },
   ];
 
@@ -96,6 +97,68 @@ const LogsWindowContent = ({ onClose }) => {
       fetchNextPage();
     }
   };
+
+  const tableSchema = [
+    {
+      name: "Level",
+      slug: "level",
+      type: "select",
+      options: [
+        {
+          label: "Success",
+          value: "success",
+          color: "#009E77",
+        },
+        {
+          label: "Error",
+          value: "error",
+          color: "#ED342D",
+        },
+      ],
+    },
+    {
+      name: "Method",
+      slug: "method",
+      type: "select",
+      options: [
+        {
+          label: "POST",
+          value: "POST",
+          color: "#009E77",
+        },
+        {
+          label: "GET",
+          value: "GET",
+          color: "#1191FF",
+        },
+        {
+          label: "PUT",
+          value: "PUT",
+          color: "#E97500",
+        },
+        {
+          label: "DELETE",
+          value: "DELETE",
+          color: "#F93F3E",
+        },
+      ],
+    },
+    {
+      name: "Status",
+      slug: "status",
+      type: "text",
+    },
+    {
+      name: "Url",
+      slug: "url",
+      type: "text",
+    },
+    {
+      name: "Created at",
+      slug: "created_at",
+      type: "date",
+    },
+  ];
 
   return (
     <div
@@ -129,12 +192,17 @@ const LogsWindowContent = ({ onClose }) => {
         }}
       >
         <div className={`${mainClass}__content`}>
-          {/* <Table data={table_data} loading={loading} /> */}
           <TableStack
             fullWidth
+            hideHeader
             data={logs}
+            filters={filters}
+            tableId="logs"
+            tableSchema={tableSchema}
+            setFilters={setFilters}
             columns={columns}
             disabledSelect={true}
+            alwaysFiltersExpanded
             rowClick={({ row }) => setDetailsModal(row)}
           />
         </div>

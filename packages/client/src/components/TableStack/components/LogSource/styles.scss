@@ -1,9 +1,6 @@
 .table__log-source{
   display: flex;
   align-items: center;
-  padding: 5px;
-  background-color: #272D34;
-  color: #fff;
   border-radius: 5px;
   gap: 5px;
 
@@ -21,15 +18,5 @@
     flex-shrink: 0;
     height: 14px;
     width: 14px;
-  }
-
-  &--endpoint{
-    padding: 0;
-    background-color: transparent;
-
-    > span{
-      margin-left: 1px;
-      max-width: 135px;
-    }
   }
 }

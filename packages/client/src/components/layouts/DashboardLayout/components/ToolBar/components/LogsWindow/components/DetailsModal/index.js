@@ -8,7 +8,7 @@ import AsideModal from "components/AsideModal";
 import {
   InformationCircleIcon,
   ArrowTrendingUpIcon,
-  ArrowTrendingDownIcon,
+  // ArrowTrendingDownIcon,
 } from "@heroicons/react/24/outline";
 
 const mainClass = "logs-window";
@@ -46,17 +46,17 @@ const DetailsModal = ({ data, onClose }) => {
         {
           type: "text",
           label: "Request URL",
-          value: data?.source?.path,
+          value: data?.url,
         },
         {
           type: "text",
           label: "Method",
-          value: data?.req?.method,
+          value: data?.method,
         },
         {
           type: "text",
           label: "Status Code",
-          value: data?.res?.status,
+          value: data?.status,
         },
         {
           type: "text",
@@ -72,26 +72,26 @@ const DetailsModal = ({ data, onClose }) => {
         {
           type: "json",
           label: "Body",
-          value: data?.req?.body,
+          value: JSON.parse(data?.body),
         },
         {
           type: "json",
           label: "Headers",
-          value: data?.req?.headers,
+          value: JSON.parse(data?.headers),
         },
       ],
     },
-    {
-      label: "Response",
-      icon: <ArrowTrendingDownIcon />,
-      items: [
-        {
-          type: "json",
-          label: "Body",
-          value: data?.res?.body,
-        },
-      ],
-    },
+    // {
+    //   label: "Response",
+    //   icon: <ArrowTrendingDownIcon />,
+    //   items: [
+    //     {
+    //       type: "json",
+    //       label: "Body",
+    //       value: data?.res?.body,
+    //     },
+    //   ],
+    // },
   ];
 
   return (

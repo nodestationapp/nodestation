@@ -86,7 +86,7 @@ const table_value_type = (item, cell, meta, tableSchema) => {
       return <Date data={value} />;
     case "level":
       return <Level data={value} meta={cell?.row?.original} />;
-    case "log_source":
+    case "method":
       return <LogSource data={value} />;
     case "endpoint_code":
       return <EndpointCode data={value} />;
@@ -119,6 +119,7 @@ const TableStack = ({
   setSort,
   filters,
   setFilters,
+  hideHeader,
   rowClick,
   tableId,
   rowAction,
@@ -127,6 +128,7 @@ const TableStack = ({
   loading = false,
   fullWidth = false,
   toolbar: toolbarData,
+  alwaysFiltersExpanded,
 }) => {
   const { preferences, refetchPreferences } = useOrganization();
   const table_preferences = preferences?.find(
@@ -135,7 +137,7 @@ const TableStack = ({
 
   const [isResizing, setIsResizing] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(
-    table_preferences?.filtersToggle
+    table_preferences?.filtersToggle || alwaysFiltersExpanded
   );
   const [selectedRows, setSelectedRows] = useState([]);
   const { setTable } = useTableWrapper();
@@ -396,18 +398,16 @@ const TableStack = ({
           [`${mainClass}--sortable`]: !!setSort,
         })}
       >
-        {!!toolbarData && (
-          <Toolbar
-            data={toolbar}
-            columns={columns}
-            filters={filters}
-            tableSchema={tableSchema}
-            setFilters={setFilters}
-            selectedRows={selectedRows}
-            filtersExpanded={filtersExpanded}
-            saveTransaction={saveTransaction}
-          />
-        )}
+        <Toolbar
+          data={!!toolbarData ? toolbar : null}
+          columns={columns}
+          filters={filters}
+          tableSchema={tableSchema}
+          setFilters={setFilters}
+          selectedRows={selectedRows}
+          filtersExpanded={filtersExpanded}
+          saveTransaction={saveTransaction}
+        />
         {!!loading ? (
           <TableSkeleton />
         ) : (
@@ -424,58 +424,60 @@ const TableStack = ({
                 }}
               >
                 {alert}
-                <div className={`${mainClass}__header`}>
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <div
-                      key={headerGroup.id}
-                      className={`${mainClass}__header__row`}
-                    >
-                      {headerGroup.headers.map((header, index) => (
-                        <div
-                          key={header.id}
-                          className={`${mainClass}__header__col`}
-                          style={{
-                            width: header.getSize(),
-                            flex: !!formatted_columns?.[index]?.size
-                              ? "unset"
-                              : !!fullWidth
-                                ? 1
-                                : "unset",
-                          }}
-                        >
+                {!!!hideHeader && (
+                  <div className={`${mainClass}__header`}>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                      <div
+                        key={headerGroup.id}
+                        className={`${mainClass}__header__row`}
+                      >
+                        {headerGroup.headers.map((header, index) => (
                           <div
-                            className={`${mainClass}__header__col__wrapper`}
-                            onClick={header.column.getToggleSortingHandler()}
-                          >
-                            {header.isPlaceholder
-                              ? null
-                              : flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
-                                )}
-                            {index !== 0 && header?.column?.getCanSort() && (
-                              <Sort id={header?.id} data={sort} />
-                            )}
-                          </div>
-                          <div
-                            {...{
-                              onDoubleClick: () => header.column.resetSize(),
-                              onMouseDown: (e) => handleMouseDown(e, header),
-                              onTouchStart: (e) => handleMouseDown(e, header),
-                              className: `${`${mainClass}__header__col__resizer`} ${
-                                table.options.columnResizeDirection
-                              } ${
-                                header.column.getIsResizing()
-                                  ? "isResizing"
-                                  : ""
-                              }`,
+                            key={header.id}
+                            className={`${mainClass}__header__col`}
+                            style={{
+                              width: header.getSize(),
+                              flex: !!formatted_columns?.[index]?.size
+                                ? "unset"
+                                : !!fullWidth
+                                  ? 1
+                                  : "unset",
                             }}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
+                          >
+                            <div
+                              className={`${mainClass}__header__col__wrapper`}
+                              onClick={header.column.getToggleSortingHandler()}
+                            >
+                              {header.isPlaceholder
+                                ? null
+                                : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                  )}
+                              {index !== 0 && header?.column?.getCanSort() && (
+                                <Sort id={header?.id} data={sort} />
+                              )}
+                            </div>
+                            <div
+                              {...{
+                                onDoubleClick: () => header.column.resetSize(),
+                                onMouseDown: (e) => handleMouseDown(e, header),
+                                onTouchStart: (e) => handleMouseDown(e, header),
+                                className: `${`${mainClass}__header__col__resizer`} ${
+                                  table.options.columnResizeDirection
+                                } ${
+                                  header.column.getIsResizing()
+                                    ? "isResizing"
+                                    : ""
+                                }`,
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                )}
                 {data?.length === 0 ? (
                   <NoItemsFound />
                 ) : (
