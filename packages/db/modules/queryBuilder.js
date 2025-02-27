@@ -57,7 +57,7 @@ export default async ({ table, filters, sort, pagination }) => {
   let query = knex(table?.slug);
 
   if (!!filters) {
-    query = query.modify(applyFilters, filters, table?.fields);
+    query = query.modify(applyFilters, filters, table);
   }
 
   if (!!pagination) {
@@ -91,10 +91,10 @@ export default async ({ table, filters, sort, pagination }) => {
       is_user_type = true;
     }
 
-    if (!!item?.reference?.table) {
+    if (!!item?.relation) {
       const tables = fs.getFiles(["tables"]);
       const ref_table = tables?.find(
-        (element) => element?.id?.toString() === item?.reference?.table
+        (element) => element?.id?.toString() === item?.relation
       );
 
       query = query

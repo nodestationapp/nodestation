@@ -180,9 +180,7 @@ const LogsWindowContent = ({ onClose }) => {
               )
             }
           />
-          <Tooltip text={<KeyViewer variant="dark" no_margin data={["Esc"]} />}>
-            <IconButton onClick={onClose} size="small" icon={<XMarkIcon />} />
-          </Tooltip>
+          <IconButton onClick={onClose} size="small" icon={<XMarkIcon />} />
         </div>
       </div>
       <PerfectScrollbar

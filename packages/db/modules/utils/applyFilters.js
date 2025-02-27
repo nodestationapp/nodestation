@@ -28,7 +28,7 @@ const filterQueryBuild = (data, builder) => {
   }
 };
 
-const applyFilters = (query, filters, schema) => {
+const applyFilters = (query, filters, table) => {
   const formatted_filters = Object.keys(filters)?.reduce((acc, item) => {
     acc[item] = filters[item]?.split(",");
     return acc;
@@ -37,11 +37,11 @@ const applyFilters = (query, filters, schema) => {
   return query.where((builder) => {
     Object.entries(formatted_filters).forEach(([key, value]) => {
       builder.where((builder) => {
-        const type = schema?.find((item) => item?.slug === key)?.type;
+        const type = table?.fields?.find((item) => item?.slug === key)?.type;
 
         value?.forEach((element) => {
           const data = {
-            key,
+            key: `${table?.slug}.${key}`,
             type,
             value: element,
             originalValue: value,

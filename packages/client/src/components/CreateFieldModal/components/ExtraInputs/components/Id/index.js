@@ -19,7 +19,7 @@ const Id = ({ locked }) => {
         removeActiveLabel={true}
         options={id_default_options}
       />
-      <FormikRefTable label="Relation" name="reference.table" />
+      <FormikRefTable label="Relation" name="relation" />
       <FormikSwitch label="Required" name="required" disabled={locked} />
     </>
   );

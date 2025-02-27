@@ -17,7 +17,6 @@ const mainClass = "async-select";
 let timer;
 
 const AsyncSelect = ({
-  name,
   label,
   options = [],
   required,
@@ -32,7 +31,6 @@ const AsyncSelect = ({
   variant,
   noArrow,
   getData,
-  placeholder,
   size,
 }) => {
   const is_error = !!!hideError && touched && !!error;

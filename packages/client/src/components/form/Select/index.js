@@ -44,9 +44,11 @@ const Select = ({
   });
 
   const can_bottom = useOnScreen(button_ref);
-  const current_value = !!multi
-    ? options?.filter((item) => value?.includes(item?.value))
-    : [options?.find((item) => item?.value === value)];
+  const current_value = !!value
+    ? !!multi
+      ? options?.filter((item) => value?.includes(item?.value))
+      : [options?.find((item) => item?.value === value)]
+    : null;
 
   const onChangeHandler = (item) => {
     if (multi) {

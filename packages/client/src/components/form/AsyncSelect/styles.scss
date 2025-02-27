@@ -54,6 +54,10 @@
         > svg{
           height: 18px;
           width: 18px;
+
+          path{
+            stroke: #4B4F55;
+          }
         }
       }
 
@@ -275,6 +279,16 @@
   &--light{
     button{
       background-color: #383E48;
+    }
+  }
+
+  &--small{
+    .async-select {
+      &__content{
+        &__button{
+          padding: 0 15px;
+        }
+      }
     }
   }
 }

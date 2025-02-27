@@ -62,7 +62,13 @@ const tableInputRender = (item, display_name) => {
           label={item?.name}
           options={select_data}
           CustomValue={({ label, color }) => (
-            <Pill label={label} color={color} textColor="#F0F1F3" readOnly />
+            <Pill
+              label={label}
+              color={color || "#5A5A5A"}
+              textColor="#F0F1F3"
+              size="small"
+              readOnly
+            />
           )}
         />
       );
@@ -88,12 +94,12 @@ const tableInputRender = (item, display_name) => {
         />
       );
     default:
-      return item?.reference ? (
+      return item?.relation ? (
         <FormikRefEntryTable
-          table={item?.reference?.table}
-          display_name={display_name}
-          // value={item?.reference?.table}
           name={item?.slug}
+          label={item?.name}
+          table={item?.relation}
+          display_name={display_name}
         />
       ) : (
         <FormikInput

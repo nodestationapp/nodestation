@@ -13,6 +13,7 @@ const Pill = ({
   color,
   textColor,
   readOnly,
+  size,
 }) => {
   return (
     <button
@@ -24,6 +25,7 @@ const Pill = ({
         [`${mainClass}--active`]: !!active,
         [`${mainClass}--${variant}`]: !!variant,
         [`${mainClass}--read-only`]: !!readOnly,
+        [`${mainClass}--${size}`]: !!size,
       })}
     >
       {icon}

@@ -405,7 +405,7 @@ const TableStack = ({
           tableSchema={tableSchema}
           setFilters={setFilters}
           selectedRows={selectedRows}
-          filtersExpanded={alwaysFiltersExpanded}
+          filtersExpanded={alwaysFiltersExpanded || filtersExpanded}
           saveTransaction={saveTransaction}
         />
         {!!loading ? (

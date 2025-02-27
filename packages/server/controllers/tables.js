@@ -189,6 +189,12 @@ const updateTableEntry = async (req, res) => {
   const files = req?.files;
 
   try {
+    for (const key in body) {
+      if (body[key] === "null") {
+        delete body[key];
+      }
+    }
+
     await upsertEntry({ type: "tables", id, body, files, entry_id });
 
     return res.status(200).json({ status: "ok" });
