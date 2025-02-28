@@ -38,7 +38,6 @@ const MediaProvider = ({ children }) => {
               headers: {
                 "Content-Type": "multipart/form-data",
               },
-              withCredentials: true,
               onUploadProgress: ({ loaded, total }) => {
                 setPercent((prev) => {
                   let temp = [...prev];
