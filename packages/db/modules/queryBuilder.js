@@ -30,22 +30,23 @@ function transformData(data) {
   });
 }
 
-function processObjects(objects, settings) {
+function mediaParser(fields, objects, settings) {
   return objects.map((obj) => {
     for (const key in obj) {
-      if (obj[key] && typeof obj[key] === "object" && obj[key].photo) {
+      const type = fields?.find((item) => item?.slug === key)?.type;
+
+      if (type === "media") {
         try {
-          let photo = JSON.parse(obj[key].photo);
-          obj[key].photo = {
-            ...photo,
+          let media = JSON.parse(obj[key]);
+          obj[key] = {
+            ...media,
             url:
               settings?.active === "local"
-                ? `${process.env.PUBLIC_URL}${photo.url}`
-                : photo.url,
+                ? `${process.env.PUBLIC_URL}${media.url}`
+                : media.url,
           };
         } catch (e) {
-          console.error("Invalid JSON in photo field", e);
-          obj[key].photo = null;
+          obj[key] = null;
         }
       }
     }
@@ -70,8 +71,6 @@ export default async ({ table, filters, sort, pagination }) => {
     query = query.orderBy(sort?.[0], sort?.[1]);
   }
 
-  let is_user_type = false;
-
   table?.fields?.forEach((item) => {
     if (item?.type === "user") {
       query = query
@@ -87,8 +86,6 @@ export default async ({ table, filters, sort, pagination }) => {
           `nodestation_users.last_name as ${item?.slug}.last_name`,
           `nodestation_users.photo as ${item?.slug}.photo`
         );
-
-      is_user_type = true;
     }
 
     if (!!item?.relation) {
@@ -108,20 +105,16 @@ export default async ({ table, filters, sort, pagination }) => {
           `${ref_table?.slug}.id as ${item?.slug}.id`,
           `${ref_table?.slug}.${ref_table?.display_name} as ${item?.slug}.label`
         );
-
-      is_user_type = true;
     }
   });
 
-  if (!!is_user_type) {
-    const settings = await knex("nodestation_media_settings").first();
+  const settings = await knex("nodestation_media_settings").first();
 
-    query = query.then((items) => {
-      let formatted_items = transformData(items);
-      formatted_items = processObjects(formatted_items, settings);
-      return formatted_items;
-    });
-  }
+  query = query.then((items) => {
+    let formatted_items = transformData(items);
+    formatted_items = mediaParser(table?.fields, formatted_items, settings);
+    return formatted_items;
+  });
 
   return query;
 };

@@ -7,6 +7,10 @@
     display: flex;
     border-bottom: 1px solid #3C414B;
 
+    &:last-child{
+      border-bottom: none;
+    }
+
     &__label{
       max-width: 180px;
       width: 100%;

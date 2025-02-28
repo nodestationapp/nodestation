@@ -1,6 +1,5 @@
-import applyFilters from "#libs/applyFilters.js";
-import { createSchema, knex } from "@nstation/db";
 import { fs } from "@nstation/utils";
+import { createSchema, knex, queryBuilder } from "@nstation/db";
 
 const getAllForms = async (_, res) => {
   try {
@@ -47,29 +46,11 @@ const getForm = async (req, res) => {
       (item) => item?.id?.toString() === req?.params?.id?.toString()
     );
 
-    const entries_query = await knex(form?.id)
-      .modify(applyFilters, rest, form?.fields)
-      .where({
-        archived: parseInt(req?.query?.archived || 0),
-      })
-      .orderBy(sort?.[0], sort?.[1]);
-
-    // .orderBy("created_at", "desc");
-
-    // let formatted_incoming = formatted_entries_query?.map((item) => ({
-    //   ...item,
-    //   data: Object.keys(item?.data).reduce((acc, curr) => {
-    //     if (item?.data?.[curr]?.size) {
-    //       acc[curr] = {
-    //         ...item?.data?.[curr],
-    //         url: `http://localhost:4040/${item?.data?.[curr]?.url}`,
-    //       };
-    //     } else {
-    //       acc[curr] = item?.data?.[curr];
-    //     }
-    //     return acc;
-    //   }, {}),
-    // }));
+    const entries_query = await queryBuilder({
+      table: { ...form, slug: form?.id },
+      sort,
+      filters: rest,
+    });
 
     const formatted_query = {
       form,

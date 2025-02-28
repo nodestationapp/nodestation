@@ -8,10 +8,9 @@ import {
 } from "@nstation/auth";
 import bcrypt from "bcryptjs";
 import { fs } from "@nstation/utils";
-import { knex, createSchema } from "@nstation/db";
+import { knex, createSchema, queryBuilder } from "@nstation/db";
 
 import upsertEntry from "#libs/upsertEntry.js";
-import applyFilters from "#libs/applyFilters.js";
 
 const authRegister = async (req, res) => {
   let body = req?.body;
@@ -61,31 +60,13 @@ const getAllAuth = async (req, res) => {
     const files = fs.getFiles();
     const auth = files?.find((item) => item?.id?.toString() === "auth");
 
-    const data = await knex("nodestation_users")
-      .modify(applyFilters, rest, auth?.fields)
-      .orderBy(sort?.[0], sort?.[1]);
-
-    const settings = await knex("nodestation_media_settings").first();
-    const formatted_data = data?.map((item) => {
-      const photo = !!item?.photo ? JSON.parse(item?.photo) : null;
-
-      return {
-        ...item,
-        ...(!!photo
-          ? {
-              photo: {
-                ...photo,
-                url:
-                  settings?.active === "local"
-                    ? `${process.env.PUBLIC_URL}${photo?.url}`
-                    : photo?.url,
-              },
-            }
-          : {}),
-      };
+    const data = await queryBuilder({
+      table: auth,
+      sort,
+      filters: rest,
     });
 
-    return res.status(200).json(formatted_data);
+    return res.status(200).json(data);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
