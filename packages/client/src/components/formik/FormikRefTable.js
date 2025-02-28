@@ -4,7 +4,7 @@ import RefTable from "components/form/RefTable";
 const FormikRefTable = ({ type, name, ...rest }) => {
   const [field, meta] = useField({ name, type });
 
-  return <RefTable {...rest} {...field} {...meta} />;
+  return <RefTable {...rest} {...field} {...meta} size="small" />;
 };
 
 export default FormikRefTable;

@@ -6,8 +6,6 @@ import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 
-import Tooltip from "components/Tooltip";
-import KeyViewer from "components/KeyViewer";
 import IconButton from "components/IconButton";
 import TableStack from "components/TableStack";
 import DetailsModal from "./components/DetailsModal";
