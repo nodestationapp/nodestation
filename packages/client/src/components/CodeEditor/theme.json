@@ -343,6 +343,7 @@
     "editorWhitespace.foreground": "#6a737d",
     "editorIndentGuide.background": "#6a737d",
     "editorIndentGuide.activeBackground": "#f6f8fa",
-    "editor.selectionHighlightBorder": "#444d56"
+    "editor.selectionHighlightBorder": "#444d56",
+    "editor.foregroundSecondary": "#ff0000"
   }
 }

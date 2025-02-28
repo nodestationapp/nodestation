@@ -32,6 +32,7 @@ const CodeEditor = ({ language = "javascript" }) => {
       ref={ref}
       height="100%"
       width="100%"
+      loading={null}
       defaultLanguage={language}
       value={values?.content}
       onChange={(e) => onChange(e)}
