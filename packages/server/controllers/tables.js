@@ -98,21 +98,33 @@ const createTable = async (req, res) => {
       lower: true,
     });
 
+    // TODO
     const formatted_body = {
       ...body,
-      slug,
-      type: "tbl",
+      ...(body?.type !== "form"
+        ? {
+            slug,
+          }
+        : {}),
+      type: body?.type || "tbl",
       fields: [
         {
           name: "ID",
-          slug: "id",
           type: "id",
-          required: true,
-          read_only: true,
-          origin: "system",
+          slug: "id",
           primary_key: true,
           default: "generate_id()",
         },
+        // {
+        //   name: "ID",
+        //   slug: "id",
+        //   type: "id",
+        //   required: true,
+        //   read_only: true,
+        //   origin: "system",
+        //   primary_key: true,
+        //   default: "generate_id()",
+        // },
       ],
     };
 

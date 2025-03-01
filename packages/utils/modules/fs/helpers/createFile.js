@@ -38,6 +38,8 @@ const createFile = async (body, entry_id) =>
       };
     }
 
+    console.log(body);
+
     const jsonContent = JSON.stringify(body, null, 2);
     fs.writeFileSync(
       path.join(rootPath, "src", folder, `${id}.json`),

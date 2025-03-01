@@ -31,7 +31,10 @@ const DashboardLayout = () => {
         <ToolBar />
       </div>
       {add_table_modal && (
-        <AddTableModal onClose={() => setAddTableModal(false)} />
+        <AddTableModal
+          type={add_table_modal}
+          onClose={() => setAddTableModal(false)}
+        />
       )}
     </TableWrapperProvider>
   );

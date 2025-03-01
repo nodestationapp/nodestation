@@ -67,13 +67,6 @@ export default async () => {
       fields: [
         ...item?.fields,
         {
-          name: "ID",
-          type: "id",
-          slug: "id",
-          primary_key: true,
-          default: "generate_id()",
-        },
-        {
           name: "Is read",
           type: "boolean",
           slug: "is_read",

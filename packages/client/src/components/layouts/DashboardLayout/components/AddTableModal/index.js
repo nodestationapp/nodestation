@@ -7,13 +7,13 @@ import FormikInput from "components/formik/FormikInput";
 
 import api from "libs/api";
 
-const AddTableModal = ({ onClose }) => {
+const AddTableModal = ({ type, onClose }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const onSubmit = async (values, setSubmitting, setErrors) => {
     try {
-      const table = await api.post("/tables", { ...values });
+      const table = await api.post("/tables", { ...values, type });
 
       navigate(`/tables/${table?.id}/settings`);
 

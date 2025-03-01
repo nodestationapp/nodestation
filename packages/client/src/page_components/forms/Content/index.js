@@ -7,6 +7,7 @@ import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 import { useForms } from "context/client/forms";
 
 import { PaperAirplaneIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useOrganization } from "context/organization";
 
 const breadcrumps = [
   {
@@ -18,6 +19,7 @@ const breadcrumps = [
 const FormsContent = () => {
   const navigate = useNavigate();
   const { forms, loading, archive_modal, setArchiveModal } = useForms();
+  const { setAddTableModal } = useOrganization();
 
   const columns = [
     {
@@ -36,7 +38,7 @@ const FormsContent = () => {
       },
     ],
     hideColumnOrder: true,
-    newButtonHandler: () => navigate(`/forms/new/settings`),
+    newButtonHandler: () => setAddTableModal("form"),
     selectAction: [
       {
         icon: <TrashIcon color="#FF3636" />,

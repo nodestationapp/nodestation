@@ -12,12 +12,8 @@ import Emails from "pages/client/emails";
 import EmailSettings from "pages/client/emails/settings";
 
 import Forms from "pages/client/forms";
-import Form from "pages/client/forms/current";
-import FormSettings from "pages/client/forms/settings";
 
 import Media from "pages/client/media";
-
-import UsersSettings from "pages/client/users/settings";
 
 import Table from "pages/client/tables";
 import TableSettings from "pages/client/tables/settings";
@@ -42,16 +38,16 @@ const clientRoutes = () => {
         <Route path="/forms">
           <Route index element={<Forms />} />
           <Route path=":id" element={<Table type="forms" />} />
-          <Route path=":id/archived" element={<Form archived />} />
-          <Route path=":id/settings" element={<FormSettings />} />
+          <Route path=":id/archived" element={<Table archived />} />
+          <Route path=":id/settings" element={<TableSettings />} />
         </Route>
         <Route path="/media">
           <Route index element={<Media />} />
           <Route path=":id" element={<MediaSettings />} />
         </Route>
         <Route path="/authentication">
-          <Route index element={<Table />} />
-          <Route path="settings" element={<UsersSettings />} />
+          <Route index element={<Table type="auth" />} />
+          <Route path="settings" element={<TableSettings />} />
         </Route>
         <Route path="/tables">
           <Route path=":id" element={<Table />} />

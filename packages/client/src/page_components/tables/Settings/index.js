@@ -18,6 +18,8 @@ const TableSettingsContent = () => {
 
   const [archive_modal, setArchiveModal] = useState(false);
 
+  console.log(id);
+
   const table = data?.table;
 
   const breadcrumps = [
@@ -40,7 +42,7 @@ const TableSettingsContent = () => {
       items: [
         {
           name: "name",
-          disabled: true,
+          disabled: id !== "new",
           placeholder: "Table name",
         },
       ],
