@@ -34,21 +34,19 @@ router
   .put(authMiddleware(["admin"]), updateTable)
   .delete(authMiddleware(["admin"]), deleteTable);
 
-router
-  .route("/:id/entry")
-  .post(
-    authMiddleware(["admin"]),
-    uploader,
-    validate({ getValidationSchema: addTableEntrySchema }),
-    addTableEntry
-  );
+router.route("/:id/entry").post(
+  authMiddleware(["admin"]),
+  uploader,
+  // validate({ getValidationSchema: addTableEntrySchema }),
+  addTableEntry
+);
 
 router
   .route("/:id/entry/:entry_id")
   .put(
     authMiddleware(["admin"]),
     uploader,
-    validate({ getValidationSchema: addTableEntrySchema }),
+    // validate({ getValidationSchema: addTableEntrySchema }),
     updateTableEntry
   )
   .delete(authMiddleware(["admin"]), deleteTableEntries);

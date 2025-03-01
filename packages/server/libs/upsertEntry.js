@@ -27,6 +27,12 @@ const upsertEntry = async ({
   extraFields = [],
 }) =>
   new Promise(async (resolve, reject) => {
+    for (const key in body) {
+      if (body[key] === "null") {
+        delete body[key];
+      }
+    }
+
     const allSchemas = !!type ? fs.getFiles([type]) : fs.getFiles();
     const schema = allSchemas?.find((item) => item?.id?.toString() === id);
     let schemaFields = schema?.fields;

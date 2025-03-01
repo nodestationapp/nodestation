@@ -1,10 +1,33 @@
 import { knex, queryBuilder } from "@nstation/db";
 
+const safeJSONParse = (input) => {
+  try {
+    return JSON.parse(input);
+  } catch (error) {
+    return input;
+  }
+};
+const parseJSONFields = (array) => {
+  return array.map((item) => {
+    return Object.fromEntries(
+      Object.entries(item).map(([key, value]) => {
+        const parsedValue = safeJSONParse(value);
+        return [key, parsedValue];
+      })
+    );
+  });
+};
+
 const getLogs = async (req, res) => {
   const pageSize = 50;
-  const { page = 1, ...rest } = req?.query;
+  const { page = 1 } = req?.query;
 
   try {
+    let preferences = await knex("nodestation_preferences").where({
+      table_id: "nodestation_logs",
+    });
+    preferences = parseJSONFields(preferences)?.[0];
+
     const data = await queryBuilder({
       table: {
         slug: "nodestation_logs",
@@ -36,8 +59,8 @@ const getLogs = async (req, res) => {
           },
         ],
       },
-      sort: ["created_at", "desc"],
-      filters: rest,
+      sort: { id: "created_at", desc: true },
+      filters: preferences?.filters,
       pagination: {
         pageSize,
         page,

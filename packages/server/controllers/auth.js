@@ -51,28 +51,6 @@ const authLogin = async (req, res) => {
   }
 };
 
-const getAllAuth = async (req, res) => {
-  let { sort, ...rest } = req?.query;
-
-  sort = !!sort ? sort?.split(":") : ["id", "asc"];
-
-  try {
-    const files = fs.getFiles();
-    const auth = files?.find((item) => item?.id?.toString() === "auth");
-
-    const data = await queryBuilder({
-      table: auth,
-      sort,
-      filters: rest,
-    });
-
-    return res.status(200).json(data);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "Something went wrong" });
-  }
-};
-
 const getSettingsAuth = async (_, res) => {
   try {
     const files = fs.getFiles();
@@ -214,7 +192,6 @@ const deleteUserAuth = async (req, res) => {
 };
 
 export {
-  getAllAuth,
   getSettingsAuth,
   updateSettingsAuth,
   updateUserAuth,

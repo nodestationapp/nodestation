@@ -6,7 +6,6 @@ import limiter from "#libs/rate-limit.js";
 
 import {
   authLogin,
-  getAllAuth,
   addUserAuth,
   authRegister,
   authActivation,
@@ -37,7 +36,6 @@ router
 router.route("/activation").post(limiter, authActivation);
 router
   .route("/")
-  .get(authMiddleware(["admin"]), getAllAuth)
   .post(
     authMiddleware(["admin"]),
     uploader,

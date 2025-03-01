@@ -232,7 +232,7 @@ const TableStack = ({
   }, [isResizing]);
 
   useEffect(() => {
-    if (!!sort?.length) {
+    if (sort !== null) {
       saveTransaction({ sort });
     }
     // eslint-disable-next-line

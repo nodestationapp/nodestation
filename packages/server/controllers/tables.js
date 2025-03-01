@@ -174,18 +174,17 @@ const deleteTable = async (req, res) => {
 };
 
 const addTableEntry = async (req, res) => {
-  const { id } = req?.params;
-  let body = req?.body;
+  const body = req?.body;
   const files = req?.files;
+  const { id } = req?.params;
 
   try {
-    for (const key in body) {
-      if (body[key] === "null") {
-        delete body[key];
-      }
-    }
-
-    await upsertEntry({ type: "tables", id, body, files });
+    await upsertEntry({
+      type: id !== "auth" ? "tables" : null,
+      id,
+      body,
+      files,
+    });
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {
@@ -195,18 +194,18 @@ const addTableEntry = async (req, res) => {
 };
 
 const updateTableEntry = async (req, res) => {
-  const { id, entry_id } = req?.params;
   const body = req?.body;
   const files = req?.files;
+  const { id, entry_id } = req?.params;
 
   try {
-    for (const key in body) {
-      if (body[key] === "null") {
-        delete body[key];
-      }
-    }
-
-    await upsertEntry({ type: "tables", id, body, files, entry_id });
+    await upsertEntry({
+      type: id !== "auth" ? "tables" : null,
+      id,
+      body,
+      files,
+      entry_id,
+    });
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {
@@ -219,7 +218,7 @@ const deleteTableEntries = async (req, res) => {
   const { id, entry_id } = req?.params;
 
   try {
-    const tables = fs.getFiles(["tables"]);
+    const tables = id !== "auth" ? fs.getFiles(["tables"]) : fs.getFiles();
     const table = tables?.find(
       (item) => item?.id?.toString() === id?.toString()
     );
