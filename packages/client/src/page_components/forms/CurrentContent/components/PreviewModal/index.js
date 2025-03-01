@@ -16,7 +16,7 @@ import DeleteIncomeFormModal from "page_components/forms/components/DeleteIncome
 import api from "libs/api";
 import formatBytes from "libs/helpers/formatBytes";
 
-import { useForm } from "context/client/form";
+// import { useForm } from "context/client/form";
 
 import {
   PaperClipIcon,
@@ -61,7 +61,7 @@ const value_render = (type, value) => {
 const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { updateIncomeForm } = useForm();
+  // const { updateIncomeForm } = useForm();
 
   const [loading, setLoading] = useState(false);
   const [delete_modal, setDeleteModal] = useState(false);
@@ -71,7 +71,7 @@ const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
   useEffect(() => {
     (async function () {
       if (!!data?.meta?.disabled) return;
-      readHandler(data?.meta?.id, 0);
+      // readHandler(data?.meta?.id, 0);
     })();
     // eslint-disable-next-line
   }, []);
@@ -96,9 +96,9 @@ const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
 
   const moveToArchiveHandler = async () => {
     try {
-      await updateIncomeForm(data?.meta?.id, {
-        archived: !!data?.meta?.disabled ? false : true,
-      });
+      // await updateIncomeForm(data?.meta?.id, {
+      //   archived: !!data?.meta?.disabled ? false : true,
+      // });
       onClose();
     } catch (err) {
       console.error(err);

@@ -17,7 +17,6 @@ import FormSettings from "pages/client/forms/settings";
 
 import Media from "pages/client/media";
 
-import Users from "pages/client/users";
 import UsersSettings from "pages/client/users/settings";
 
 import Table from "pages/client/tables";
@@ -42,7 +41,7 @@ const clientRoutes = () => {
         </Route>
         <Route path="/forms">
           <Route index element={<Forms />} />
-          <Route path=":id" element={<Form />} />
+          <Route path=":id" element={<Table type="forms" />} />
           <Route path=":id/archived" element={<Form archived />} />
           <Route path=":id/settings" element={<FormSettings />} />
         </Route>
@@ -51,7 +50,7 @@ const clientRoutes = () => {
           <Route path=":id" element={<MediaSettings />} />
         </Route>
         <Route path="/authentication">
-          <Route index element={<Users />} />
+          <Route index element={<Table />} />
           <Route path="settings" element={<UsersSettings />} />
         </Route>
         <Route path="/tables">

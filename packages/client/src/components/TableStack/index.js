@@ -35,9 +35,6 @@ import NewMessageName from "./components/NewMessageName";
 import EmailSparklines from "./components/EmailSparklines";
 import DragOrderSelect from "components/form/DragOrderSelect";
 
-import api from "libs/api";
-
-import { useOrganization } from "context/organization";
 import { useTableWrapper } from "context/client/table-wrapper";
 
 import {
@@ -114,11 +111,9 @@ const TableStack = ({
   data,
   meta,
   columns,
-  sort,
   alert,
-  setSort,
-  filters,
-  setFilters,
+  filtering,
+  preferences,
   hideHeader,
   rowClick,
   tableId,
@@ -126,41 +121,32 @@ const TableStack = ({
   tableSchema,
   disabledSelect,
   loading = false,
+  saveTransaction,
   fullWidth = false,
   toolbar: toolbarData,
   alwaysFiltersExpanded,
 }) => {
-  const { preferences, refetchPreferences } = useOrganization();
-  const table_preferences = preferences?.find(
-    (item) => item?.table_id === tableId
-  );
-
   const [isResizing, setIsResizing] = useState(false);
-  const [filtersExpanded, setFiltersExpanded] = useState(
-    table_preferences?.filtersToggle
-  );
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const { setTable } = useTableWrapper();
 
-  const [columnOrder, setColumnOrder] = useState(table_preferences?.order);
-
-  const [columnVisibility, setColumnVisibility] = useState(
-    table_preferences?.visibility || []
-  );
+  const [sort, setSort] = useState(null);
+  const [filters, setFilters] = useState(null);
+  const [columnOrder, setColumnOrder] = useState(null);
+  const [columnVisibility, setColumnVisibility] = useState([]);
 
   useEffect(() => {
-    setFiltersExpanded(table_preferences?.filtersToggle);
-    setColumnVisibility(table_preferences?.visibility);
-    setColumnOrder(table_preferences?.order);
-    if (table_preferences?.sort) {
-      setSort(table_preferences?.sort);
-    }
-    if (table_preferences?.filters) {
-      setFilters(table_preferences?.filters);
-    }
+    if (!!!preferences) return;
+
+    setFiltersExpanded(preferences?.filtersToggle);
+    setColumnVisibility(preferences?.visibility);
+    setColumnOrder(preferences?.order);
+    setSort(preferences?.sort || null);
+    setFilters(preferences?.filters || [{ field: null, value: null }]);
     setSelectedRows([]);
     // eslint-disable-next-line
-  }, [tableId]);
+  }, [tableId, loading]);
 
   const formatted_columns = useMemo(
     () => [
@@ -191,7 +177,7 @@ const TableStack = ({
       ...columns.map((item) => ({
         id: item?.slug,
         enableSorting: !!setSort,
-        size: table_preferences?.content?.[item?.slug] || item?.width,
+        size: preferences?.content?.[item?.slug] || item?.width,
         accessorFn: (row) => row?.[item?.slug],
         header: () => <span className="light">{item?.value}</span>,
         cell: (cell) =>
@@ -226,15 +212,6 @@ const TableStack = ({
     getCoreRowModel: getCoreRowModel(),
     onRowSelectionChange: setSelectedRows,
   });
-
-  const saveTransaction = async (values) => {
-    await api.post("/preferences", {
-      table_id: tableId,
-      ...values,
-    });
-
-    refetchPreferences();
-  };
 
   useEffect(() => {
     const handleMouseUp = (e) => {
@@ -300,7 +277,7 @@ const TableStack = ({
   const toolbar = {
     menu: toolbarData?.menu,
     action: [
-      ...(!!filters
+      ...(!!filtering
         ? [
             <IconButton
               active={!!filtersExpanded}

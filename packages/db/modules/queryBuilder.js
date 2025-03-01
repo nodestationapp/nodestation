@@ -1,8 +1,8 @@
-import { fs } from "@nstation/utils";
 import knex from "./knex.js";
+import { fs } from "@nstation/utils";
 import applyFilters from "./utils/applyFilters.js";
 
-function transformData(data) {
+function transformData(data, settings) {
   return data.map((item) => {
     const transformedItem = {};
 
@@ -17,13 +17,30 @@ function transformData(data) {
         }
 
         if (!!item?.[`${parent}.id`]) {
-          transformedItem[parent][nestedKey] = value;
+          if (nestedKey === "photo") {
+            let media = !!value ? JSON.parse(value) : null;
+            transformedItem[parent][nestedKey] = {
+              ...media,
+              url:
+                settings?.active === "local"
+                  ? `${process.env.PUBLIC_URL}${media.url}`
+                  : media.url,
+            };
+          } else {
+            transformedItem[parent][nestedKey] = value;
+          }
         } else {
           transformedItem[parent] = null;
         }
       } else {
         transformedItem[key] = value;
       }
+
+      // transformedItem = mediaParser(
+      //   { slug: "photo", type: "media" },
+      //   [transformedItem],
+      //   settings
+      // );
     }
 
     return transformedItem;
@@ -55,7 +72,7 @@ function mediaParser(fields, objects, settings) {
 }
 
 export default async ({ table, filters, sort, pagination }) => {
-  let query = knex(table?.slug);
+  let query = knex(table?.slug || table?.id || "nodestation_users");
 
   if (!!filters) {
     query = query.modify(applyFilters, filters, table);
@@ -68,7 +85,10 @@ export default async ({ table, filters, sort, pagination }) => {
   }
 
   if (!!sort) {
-    query = query.orderBy(sort?.[0], sort?.[1]);
+    const field = sort?.id;
+    const method = sort?.desc ? "desc" : "asc";
+
+    query = query.orderBy(field, method);
   }
 
   table?.fields?.forEach((item) => {
@@ -111,7 +131,7 @@ export default async ({ table, filters, sort, pagination }) => {
   const settings = await knex("nodestation_media_settings").first();
 
   query = query.then((items) => {
-    let formatted_items = transformData(items);
+    let formatted_items = transformData(items, settings);
     formatted_items = mediaParser(table?.fields, formatted_items, settings);
     return formatted_items;
   });

@@ -8,12 +8,14 @@ import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 import { useTable } from "context/client/table";
 
 import { CircleStackIcon, TrashIcon } from "@heroicons/react/24/outline";
+import PreviewModal from "page_components/forms/CurrentContent/components/PreviewModal";
 
 const FormContent = () => {
-  const { data, id, loading, sort, setSort, filters, setFilters } = useTable();
+  const { data, id, loading, type, saveTableTransaction } = useTable();
 
   const [content_editor, setContentEditor] = useState(null);
   const [archive_entry_modal, setArchiveEntryModal] = useState(false);
+  const [preview_modal, setPreviewModal] = useState(false);
 
   const table = data?.table;
   const entries = data?.entries || [];
@@ -29,7 +31,7 @@ const FormContent = () => {
   ];
 
   const columns =
-    table?.fields?.map((item) => ({
+    data?.columns?.map((item) => ({
       key: item?.type,
       value: item?.name,
       type: item?.type,
@@ -64,18 +66,18 @@ const FormContent = () => {
     <>
       <DashboardContentLayout breadcrumps={breadcrumps}>
         <TableStack
-          key={[id, sort]}
-          sort={sort}
           tableId={id}
-          setSort={setSort}
-          filters={filters}
-          setFilters={setFilters}
           data={entries}
+          preferences={data?.preferences}
           toolbar={toolbar}
           loading={loading}
           columns={columns}
+          filtering={true}
           tableSchema={table?.fields}
-          rowClick={(row) => setContentEditor(row)}
+          saveTransaction={saveTableTransaction}
+          rowClick={(row) =>
+            type === "forms" ? setPreviewModal(row) : setContentEditor(row)
+          }
         />
         {!!content_editor && (
           <TableContentEditor
@@ -88,6 +90,14 @@ const FormContent = () => {
         <ArchiveTableEntryModal
           data={archive_entry_modal}
           onClose={() => setArchiveEntryModal(false)}
+        />
+      )}
+      {!!preview_modal && (
+        <PreviewModal
+          data={preview_modal}
+          fields={data?.columns}
+          // readHandler={readHandler}
+          onClose={() => setPreviewModal(false)}
         />
       )}
     </>

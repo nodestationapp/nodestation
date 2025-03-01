@@ -29,8 +29,10 @@ const filterQueryBuild = (data, builder) => {
 };
 
 const applyFilters = (query, filters, table) => {
-  const formatted_filters = Object.keys(filters)?.reduce((acc, item) => {
-    acc[item] = filters[item]?.split(",");
+  const removeEmptyFilters = filters?.filter((item) => !!item?.value);
+
+  const formatted_filters = removeEmptyFilters?.reduce((acc, item) => {
+    acc[item.field] = Array.isArray(item.value) ? item?.value : [item?.value];
     return acc;
   }, {});
 

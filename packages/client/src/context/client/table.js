@@ -1,51 +1,26 @@
-import queryString from "query-string";
-
-import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useMemo, useState } from "react";
+import { useParams, useLocation } from "react-router-dom";
+import { createContext, useContext, useMemo } from "react";
 
 import api from "libs/api";
-import sortParser from "libs/sortParser";
-import { useOrganization } from "context/organization";
 
 const TableContext = createContext();
 
-const TableProvider = ({ children }) => {
-  const { id } = useParams();
+const TableProvider = ({ type, children }) => {
+  const { pathname } = useLocation();
+  let { id } = useParams();
 
-  const { preferences, loading: preferencesLoading } = useOrganization();
-  const table_preferences = preferences?.find((item) => item?.table_id === id);
-
-  const [sort, setSort] = useState(table_preferences?.sort || []);
-  const [filters, setFilters] = useState(
-    table_preferences?.filters || [{ field: null, value: "" }]
-  );
-
-  const sort_query = sortParser(table_preferences?.sort);
-  const filters_query = filters.reduce((acc, item) => {
-    if (item.field) {
-      acc[item.field] = Array.isArray(item.value)
-        ? item?.value?.join(",") || undefined
-        : item.value || undefined;
-    }
-    return acc;
-  }, {});
+  if (pathname === "/authentication") {
+    id = "auth";
+  }
 
   const {
-    isLoading: loading,
     data,
+    isLoading: loading,
     refetch: tableRefetch,
   } = useQuery({
-    queryKey: ["tables", id, filters_query],
-    queryFn: () =>
-      api.get(
-        `/tables/${id}?${queryString.stringify({
-          ...filters_query,
-          sort: sort_query || undefined,
-        })}`
-      ),
-    enabled: !!!preferencesLoading || table_preferences?.table_id === id,
-    placeholderData: (previousData) => previousData,
+    queryKey: ["tables", id],
+    queryFn: () => api.get(`/tables/${id}`),
   });
 
   const updateTable = (values) =>
@@ -119,23 +94,30 @@ const TableProvider = ({ children }) => {
       }
     });
 
+  const saveTableTransaction = async (values) => {
+    await api.post("/preferences", {
+      table_id: id,
+      ...values,
+    });
+
+    tableRefetch();
+  };
+
   const value = useMemo(() => {
     return {
       data,
       id,
+      type,
       loading,
       updateTable,
       updateTableEntry,
       deleteTable,
       addTableEntry,
       deleteTableEntries,
-      sort,
-      setSort,
-      filters,
-      setFilters,
+      saveTableTransaction,
     };
     // eslint-disable-next-line
-  }, [data, id, loading, sort, filters]);
+  }, [data, id, loading]);
 
   return (
     <TableContext.Provider value={value}>{children}</TableContext.Provider>

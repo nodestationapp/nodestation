@@ -5,39 +5,6 @@ import { knex, createSchema, queryBuilder } from "@nstation/db";
 
 import upsertEntry from "#libs/upsertEntry.js";
 
-const safeJSONParse = (input) => {
-  try {
-    return JSON.parse(input);
-  } catch (error) {
-    return input;
-  }
-};
-
-const formatIfMediaObject = (value, settings) => {
-  if (value && typeof value === "object" && "size" in value) {
-    return {
-      ...value,
-      url:
-        settings?.active === "local"
-          ? `${process.env.PUBLIC_URL}${value?.url}`
-          : value?.url,
-    };
-  }
-  return value;
-};
-
-const parseJSONFields = (array, settings) => {
-  return array.map((item) => {
-    return Object.fromEntries(
-      Object.entries(item).map(([key, value]) => {
-        const parsedValue = safeJSONParse(value);
-        const formattedValue = formatIfMediaObject(parsedValue, settings);
-        return [key, formattedValue];
-      })
-    );
-  });
-};
-
 const getAllTables = async (_, res) => {
   try {
     const tables = fs.getFiles(["tables"]);
@@ -49,29 +16,73 @@ const getAllTables = async (_, res) => {
   }
 };
 
-const getTable = async (req, res) => {
-  const { id } = req?.params;
-  let { sort, ...rest } = req?.query;
+const safeJSONParse = (input) => {
+  try {
+    return JSON.parse(input);
+  } catch (error) {
+    return input;
+  }
+};
+const parseJSONFields = (array) => {
+  return array.map((item) => {
+    return Object.fromEntries(
+      Object.entries(item).map(([key, value]) => {
+        const parsedValue = safeJSONParse(value);
+        return [key, parsedValue];
+      })
+    );
+  });
+};
 
-  sort = !!sort ? sort?.split(":") : ["id", "asc"];
+const getTable = async (req, res) => {
+  let { id } = req?.params;
 
   try {
-    const tables = fs.getFiles(["tables"]);
+    let preferences = await knex("nodestation_preferences").where({
+      table_id: id,
+    });
+    preferences = parseJSONFields(preferences)?.[0];
+
+    const auth = fs.getFiles();
+    let tables = fs.getFiles(["tables", "forms"]);
+    const authTable = auth?.find((item) => item?.id?.toString() === "auth");
+    tables.push(authTable);
+
     const table = tables?.find(
       (item) => item?.id?.toString() === id?.toString()
     );
 
-    let entries = [];
+    let columns = table?.fields;
+    if (id === "auth") {
+      columns = !!columns
+        ? [
+            {
+              name: "User",
+              sort: "first_name",
+              type: "user_profile",
+              slug: "user",
+              origin: "system",
+            },
+            ...(columns || []),
+          ]
+        : [];
 
-    if (!!table?.slug) {
-      entries = await queryBuilder({
-        table,
-        sort,
-        filters: rest,
-      });
+      columns = columns?.filter(
+        (item) =>
+          item?.slug !== "first_name" &&
+          item?.slug !== "last_name" &&
+          item?.slug !== "photo" &&
+          item?.slug !== "password"
+      );
     }
 
-    return res.status(200).json({ table, entries });
+    const entries = await queryBuilder({
+      table,
+      sort: preferences?.sort?.[0],
+      filters: preferences?.filters,
+    });
+
+    return res.status(200).json({ table, entries, columns, preferences });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });

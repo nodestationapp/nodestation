@@ -5,12 +5,11 @@ import { Fragment } from "react";
 import MediaProviders from "components/MediaProviders";
 import EmailProviders from "components/EmailProviders";
 import FormikInput from "components/formik/FormikInput";
+import FormikSelect from "components/formik/FormikSelect";
 import ChangePasswordForm from "components/ChangePasswordForm";
 
-import Providers from "page_components/users/Settings/components/Providers";
 import ExtraSettings from "page_components/forms/Settings/components/ExtraSettings";
 import InputElementsEditor from "page_components/forms/Settings/components/InputElementsEditor";
-import FormikSelect from "components/formik/FormikSelect";
 
 const mainClass = "settings-form";
 
@@ -20,8 +19,6 @@ const input_type_render = (type, item) => {
       return <InputElementsEditor />;
     case "form_extras":
       return <ExtraSettings />;
-    case "auth_providers":
-      return <Providers />;
     case "email_providers":
       return <EmailProviders />;
     case "media_providers":

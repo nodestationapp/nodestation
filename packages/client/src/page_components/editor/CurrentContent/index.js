@@ -5,7 +5,6 @@ import HelpersList from "../components/HelpersList";
 import ContentEditor from "./components/ContentEditor";
 import EndpointsList from "../components/EndpointsList";
 import MiddlewaresList from "../components/MiddlewaresList";
-import ContentPackageManager from "./components/ContentPackageManager";
 
 import { useEditor } from "context/client/editor";
 
@@ -49,8 +48,7 @@ const EditorContent = () => {
             loading={editor_entry_loading}
           />
         );
-      case "package-manager":
-        return <ContentPackageManager />;
+
       case "endpoints":
         return <EndpointsList />;
       case "crons":
