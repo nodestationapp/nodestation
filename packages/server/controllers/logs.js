@@ -24,13 +24,13 @@ const getLogs = async (req, res) => {
 
   try {
     let preferences = await knex("nodestation_preferences").where({
-      table_id: "nodestation_logs",
+      table_id: "logs",
     });
     preferences = parseJSONFields(preferences)?.[0];
 
     const data = await queryBuilder({
       table: {
-        slug: "nodestation_logs",
+        table: "nodestation_logs",
         fields: [
           {
             name: "Level",
@@ -74,6 +74,7 @@ const getLogs = async (req, res) => {
 
     return res.status(200).json({
       items: data,
+      preferences,
       nextPage: !!hasNextPage ? parseInt(req?.query?.page) + 1 : null,
     });
   } catch (err) {

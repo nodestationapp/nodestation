@@ -25,7 +25,8 @@ const mainClass = "logs-window";
 
 const LogsWindowContent = ({ onClose }) => {
   const { getUserData } = useApp();
-  const { logs, fetchNextPage, filters, setFilters } = useLogs();
+  const { logs, fetchNextPage, saveTableTransaction, preferences, loading } =
+    useLogs();
   const [cookies, setCookie] = useCookies(["logs_maximize"]);
 
   const [details_modal, setDetailsModal] = useState(null);
@@ -192,14 +193,16 @@ const LogsWindowContent = ({ onClose }) => {
             fullWidth
             hideHeader
             data={logs}
-            filters={filters}
+            loading={!!loading}
+            filtering={true}
             tableId="logs"
+            preferences={preferences}
             tableSchema={tableSchema}
-            setFilters={setFilters}
             columns={columns}
             disabledSelect={true}
-            alwaysFiltersExpanded
+            alwaysFiltersExpanded={true}
             rowClick={({ row }) => setDetailsModal(row)}
+            saveTransaction={saveTableTransaction}
           />
         </div>
       </PerfectScrollbar>

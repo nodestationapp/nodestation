@@ -131,7 +131,7 @@ const TableStack = ({
   const { setTable, selectedRows, setSelectedRows } = useTableWrapper();
 
   const [sort, setSort] = useState(null);
-  const [filters, setFilters] = useState(null);
+  const [filters, setFilters] = useState([{ field: null, value: null }]);
   const [columnOrder, setColumnOrder] = useState(null);
   const [columnVisibility, setColumnVisibility] = useState([]);
 
