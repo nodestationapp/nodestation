@@ -46,7 +46,9 @@ const TableContentEditor = ({ data = {}, onClose }) => {
       {({ submitForm, isSubmitting }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
           <AsideModal
-            header={data?.id || "Add entry"}
+            header={
+              data?.[table_data?.table?.display_name || "id"] || "Add entry"
+            }
             onClose={onClose}
             onSubmit={submitForm}
             loading={isSubmitting}

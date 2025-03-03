@@ -1,10 +1,11 @@
 import Pill from "components/Pill";
+import FormikUsers from "components/formik/FormikUsers";
 import FormikInput from "components/formik/FormikInput";
 import FormikSelect from "components/formik/FormikSelect";
 import FormikDateTime from "components/formik/FormikDateTime";
 import FormikTextarea from "components/formik/FormikTextarea";
+import FormikJsonInput from "components/formik/FormikJsonInput";
 import FormikPhotoInput from "components/formik/FormikPhotoInput";
-import FormikUsers from "components/formik/FormikUsers";
 import FormikRefEntryTable from "components/formik/FormikRefEntryTable";
 
 const tableInputRender = (item, display_name) => {
@@ -72,6 +73,8 @@ const tableInputRender = (item, display_name) => {
           )}
         />
       );
+    case "json":
+      return <FormikJsonInput label={item?.name} name={item?.slug} />;
     case "user":
       return <FormikUsers label={item?.name} name={item?.slug} />;
     case "media":

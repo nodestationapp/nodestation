@@ -112,6 +112,7 @@ const FormContent = () => {
       {!!preview_modal && (
         <PreviewModal
           {...preview_modal}
+          displayName={data?.table?.display_name}
           updateTableEntry={updateTableEntry}
           onClose={() => setPreviewModal(null)}
         />

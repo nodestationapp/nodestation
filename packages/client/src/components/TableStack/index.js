@@ -7,6 +7,7 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import cx from "classnames";
+import ReactJsonView from "@microlink/react-json-view";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import React, { useEffect, useMemo, useState } from "react";
 
@@ -40,12 +41,12 @@ import { useTableWrapper } from "context/client/table-wrapper";
 import {
   EyeIcon,
   PlusIcon,
+  BoltIcon,
   TrashIcon,
   EyeSlashIcon,
   Cog6ToothIcon,
   ListBulletIcon,
   EllipsisHorizontalIcon,
-  BoltIcon,
 } from "@heroicons/react/24/outline";
 
 const mainClass = "table-stack";
@@ -62,7 +63,16 @@ const table_value_type = (item, cell, meta, tableSchema) => {
     case "media":
       return <Media data={value} />;
     case "json":
-      return <span>{JSON.stringify(value)}</span>;
+      return (
+        <ReactJsonView
+          name={null}
+          theme="ocean"
+          collapsed={true}
+          enableClipboard={false}
+          displayDataTypes={false}
+          src={!!value ? JSON.parse(value) : {}}
+        />
+      );
     case "select":
       return (
         <StatusChip

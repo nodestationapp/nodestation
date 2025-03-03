@@ -58,15 +58,19 @@ const value_render = (type, value) => {
   }
 };
 
-const PreviewModal = ({ data, type, fields, onClose, updateTableEntry }) => {
+const PreviewModal = ({
+  data,
+  type,
+  fields,
+  displayName,
+  onClose,
+  updateTableEntry,
+}) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  // const { updateIncomeForm } = useForm();
 
   const [loading, setLoading] = useState(false);
   const [delete_modal, setDeleteModal] = useState(false);
-
-  const main_label = fields?.find((item) => !!item?.show_as_main)?.slug;
 
   useEffect(() => {
     (async function () {
@@ -109,7 +113,7 @@ const PreviewModal = ({ data, type, fields, onClose, updateTableEntry }) => {
   return (
     <>
       <AsideModal
-        header={data?.data?.[main_label]}
+        header={data?.[displayName]}
         onSubmit={onSubmit}
         reject_label="Close"
         loading={loading}
