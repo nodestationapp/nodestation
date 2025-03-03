@@ -1,26 +1,42 @@
 import { useState } from "react";
-import { Form, Formik } from "formik";
+import { useLocation } from "react-router-dom";
 
 import Button from "components/Button";
 import KeyViewer from "components/KeyViewer";
 import IconButton from "components/IconButton";
-import SettingsForm from "components/SettingsForm";
-import SectionHeader from "components/SectionHeader";
-import ArchiveFormModal from "../components/ArchiveTableModal";
-import DashboardContentLayout from "components/layouts/DashboardContentLayout";
+import ArchiveTableModal from "./components/ArchiveTableModal";
+import TableSettingsEditor from "components/TableSettingsEditor";
 
 import { useTable } from "context/client/table";
-
-import { CircleStackIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { TrashIcon, CircleStackIcon } from "@heroicons/react/24/outline";
 
 const TableSettingsContent = () => {
-  const { data, id, loading, updateTable } = useTable();
+  const { pathname } = useLocation();
+  const { data } = useTable();
 
   const [archive_modal, setArchiveModal] = useState(false);
 
-  console.log(id);
-
   const table = data?.table;
+  const mainTablePath = pathname.split("/").slice(0, 3).join("/");
+
+  const toolbar = ({ dirty, isSubmitting, submitForm }) => ({
+    menu: [
+      {
+        label: "Entries",
+        href: mainTablePath,
+      },
+    ],
+    action: [
+      <IconButton
+        size="small"
+        onClick={() => setArchiveModal(table)}
+        icon={<TrashIcon color="#FF3636" />}
+      />,
+      <Button disabled={!!!dirty} loading={!!isSubmitting} onClick={submitForm}>
+        Save <KeyViewer data={["⌘", "S"]} />
+      </Button>,
+    ],
+  });
 
   const breadcrumps = [
     {
@@ -29,7 +45,7 @@ const TableSettingsContent = () => {
     },
     {
       label: table?.name,
-      href: `/tables/${table?.id}`,
+      href: mainTablePath,
     },
     {
       label: "Settings",
@@ -42,7 +58,7 @@ const TableSettingsContent = () => {
       items: [
         {
           name: "name",
-          disabled: id !== "new",
+          disabled: true,
           placeholder: "Table name",
         },
       ],
@@ -72,78 +88,22 @@ const TableSettingsContent = () => {
     },
   ];
 
-  const onSubmit = async (values, setSubmitting, resetForm) => {
-    try {
-      await updateTable(values);
-
-      resetForm({ values });
-    } catch (err) {
-      setSubmitting(false);
-      console.error(err);
-    }
+  const formInitialValues = {
+    name: table?.name,
+    fields: table?.fields || [],
+    display_name: table?.display_name || null,
   };
-
-  const toolbar = ({ dirty, isSubmitting, submitForm }) => ({
-    menu: [
-      {
-        label: "Entries",
-        href: `/tables/${id}`,
-      },
-    ],
-    action: [
-      <IconButton
-        size="small"
-        onClick={() => setArchiveModal(table)}
-        icon={<TrashIcon color="#FF3636" />}
-      />,
-      <Button disabled={!!!dirty} loading={!!isSubmitting} onClick={submitForm}>
-        Save <KeyViewer data={["⌘", "S"]} />
-      </Button>,
-    ],
-  });
 
   return (
     <>
-      <Formik
-        initialValues={{
-          name: table?.name,
-          display_name: table?.display_name || null,
-          fields: table?.fields || [],
-          status: table?.status || "active",
-          settings: {
-            send_email_admin: {
-              active: table?.settings?.send_email_admin?.active || false,
-              value: table?.settings?.send_email_admin?.value,
-            },
-            auto_responder: {
-              active: table?.settings?.auto_responder?.active || false,
-              value: table?.settings?.auto_responder?.value,
-            },
-          },
-        }}
-        enableReinitialize={true}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          onSubmit(values, setSubmitting, resetForm);
-        }}
-      >
-        {({ submitForm, isSubmitting, dirty }) => (
-          <Form autoComplete="off" style={{ width: "100%" }}>
-            <DashboardContentLayout
-              loading={!!loading}
-              breadcrumps={breadcrumps}
-              toolbar={toolbar({ submitForm, isSubmitting, dirty })}
-            >
-              <SectionHeader
-                title="Settings"
-                subtitle="Manage your table settings"
-              />
-              <SettingsForm data={settings_data} />
-            </DashboardContentLayout>
-          </Form>
-        )}
-      </Formik>
+      <TableSettingsEditor
+        settings={settings_data}
+        breadcrumps={breadcrumps}
+        toolbar={toolbar}
+        form={formInitialValues}
+      />
       {!!archive_modal && (
-        <ArchiveFormModal
+        <ArchiveTableModal
           data={archive_modal}
           onClose={() => setArchiveModal(false)}
         />

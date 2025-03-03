@@ -179,7 +179,7 @@ const TableStack = ({
         enableSorting: !!setSort,
         size: preferences?.content?.[item?.slug] || item?.width,
         accessorFn: (row) => row?.[item?.slug],
-        header: () => <span className="light">{item?.value}</span>,
+        header: () => <span className="light">{item?.name}</span>,
         cell: (cell) =>
           table_value_type(item, cell, meta?.[cell?.row?.index], tableSchema),
       })),
@@ -323,7 +323,7 @@ const TableStack = ({
               actionAlwaysVisible={true}
               options={columns?.map((item) => ({
                 value: item?.slug,
-                label: item?.value,
+                label: item?.name,
                 disabled: columnVisibility?.[item?.slug] === false,
               }))}
               onChange={(value) => onChangeColumnOrder(value)}
@@ -377,7 +377,6 @@ const TableStack = ({
       >
         <Toolbar
           data={!!toolbarData ? toolbar : null}
-          columns={columns}
           filters={filters}
           tableSchema={tableSchema}
           setFilters={setFilters}

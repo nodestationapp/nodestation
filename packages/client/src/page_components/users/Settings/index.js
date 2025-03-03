@@ -1,17 +1,28 @@
-import { Form, Formik } from "formik";
+import TableSettingsEditor from "components/TableSettingsEditor";
 
+import { useTable } from "context/client/table";
+import { UsersIcon } from "@heroicons/react/24/outline";
 import Button from "components/Button";
 import KeyViewer from "components/KeyViewer";
-import SettingsForm from "components/SettingsForm";
-import SectionHeader from "components/SectionHeader";
-import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
-import { useUsers } from "context/client/users";
+const UsersSettingsContent = () => {
+  const { data } = useTable();
 
-import { UsersIcon } from "@heroicons/react/24/outline";
+  const table = data?.table;
 
-const TableSettingsContent = () => {
-  const { settings, loading, updateAuth } = useUsers();
+  const toolbar = ({ dirty, isSubmitting, submitForm }) => ({
+    menu: [
+      {
+        label: "Entries",
+        href: "/authentication",
+      },
+    ],
+    action: [
+      <Button disabled={!!!dirty} loading={!!isSubmitting} onClick={submitForm}>
+        Save <KeyViewer data={["⌘", "S"]} />
+      </Button>,
+    ],
+  });
 
   const breadcrumps = [
     {
@@ -23,18 +34,6 @@ const TableSettingsContent = () => {
       label: "Settings",
     },
   ];
-
-  const onSubmit = async (values, setSubmitting, resetForm) => {
-    try {
-      await updateAuth(values);
-
-      resetForm({ values });
-      setSubmitting(false);
-    } catch (err) {
-      setSubmitting(false);
-      console.error(err);
-    }
-  };
 
   const settings_data = [
     {
@@ -48,49 +47,19 @@ const TableSettingsContent = () => {
     },
   ];
 
-  const toolbar = ({ dirty, isSubmitting, submitForm }) => ({
-    menu: [
-      {
-        label: "Entries",
-        href: `/authentication`,
-      },
-    ],
-    action: [
-      <Button disabled={!!!dirty} loading={!!isSubmitting} onClick={submitForm}>
-        Save <KeyViewer data={["⌘", "S"]} />
-      </Button>,
-    ],
-  });
+  const formInitialValues = {
+    name: "auth",
+    fields: table?.fields || [],
+  };
 
   return (
-    <>
-      <Formik
-        initialValues={{
-          fields: settings?.fields || [],
-        }}
-        enableReinitialize={true}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          onSubmit(values, setSubmitting, resetForm);
-        }}
-      >
-        {({ submitForm, isSubmitting, dirty }) => (
-          <Form autoComplete="off" style={{ width: "100%" }}>
-            <DashboardContentLayout
-              toolbar={toolbar({ submitForm, isSubmitting, dirty })}
-              breadcrumps={breadcrumps}
-              loading={!!loading}
-            >
-              <SectionHeader
-                title="Settings"
-                subtitle="Manage your authentication settings"
-              />
-              <SettingsForm data={settings_data} />
-            </DashboardContentLayout>
-          </Form>
-        )}
-      </Formik>
-    </>
+    <TableSettingsEditor
+      toolbar={toolbar}
+      settings={settings_data}
+      form={formInitialValues}
+      breadcrumps={breadcrumps}
+    />
   );
 };
 
-export default TableSettingsContent;
+export default UsersSettingsContent;

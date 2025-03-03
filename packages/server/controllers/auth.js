@@ -182,7 +182,7 @@ const deleteUserAuth = async (req, res) => {
     const files = fs.getFiles();
     const auth = files?.find((item) => item?.id?.toString() === "auth");
 
-    await knex(auth?.slug).where({ id }).del();
+    await knex(auth?.table).where({ id }).del();
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

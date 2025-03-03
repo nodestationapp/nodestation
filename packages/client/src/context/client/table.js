@@ -6,9 +6,11 @@ import api from "libs/api";
 
 const TableContext = createContext();
 
-const TableProvider = ({ type, children }) => {
+const TableProvider = ({ children }) => {
   const { pathname } = useLocation();
   let { id } = useParams();
+
+  const type = pathname?.split("/")?.[1];
 
   if (pathname?.startsWith("/authentication")) {
     id = "auth";
@@ -25,9 +27,11 @@ const TableProvider = ({ type, children }) => {
 
   const updateTable = (values) =>
     new Promise(async (resolve, reject) => {
-      console.log(values);
       try {
-        await api.put(`/tables/${id}`, { ...values });
+        await api.put(`/tables/${id}`, {
+          ...values,
+          type: data?.table?.type || type,
+        });
 
         tableRefetch();
 

@@ -69,11 +69,9 @@ const upsertEntry = async ({
       const data = removeUndefinedProperties(formatted_body);
 
       if (entry_id) {
-        await knex(schema?.slug || schema?.id)
-          .where({ id: entry_id })
-          .update(data);
+        await knex(schema?.table).where({ id: entry_id }).update(data);
       } else {
-        await knex(schema?.slug || schema?.id).insert(data);
+        await knex(schema?.table).insert(data);
       }
 
       resolve(true);

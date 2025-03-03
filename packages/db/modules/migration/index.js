@@ -59,40 +59,37 @@ export default async () => {
   const tables = fs.getFiles(["tables"]);
   let auth = files?.find((item) => item?.id?.toString() === "auth");
 
-  auth = { ...auth, slug: "nodestation_users" };
-  forms = forms
-    ?.map((item) => ({ ...item, slug: item?.id }))
-    ?.map((item) => ({
-      ...item,
-      fields: [
-        ...item?.fields,
-        {
-          name: "Is read",
-          type: "boolean",
-          slug: "is_read",
-        },
-        {
-          name: "Archived",
-          type: "boolean",
-          slug: "archived",
-        },
-        {
-          name: "Created at",
-          type: "boolean",
-          default: "now()",
-          slug: "created_at",
-        },
-      ],
-    }));
+  forms = forms?.map((item) => ({
+    ...item,
+    fields: [
+      ...item?.fields,
+      {
+        name: "Is read",
+        type: "boolean",
+        slug: "is_read",
+      },
+      {
+        name: "Archived",
+        type: "boolean",
+        slug: "archived",
+      },
+      {
+        name: "Created at",
+        type: "boolean",
+        default: "now()",
+        slug: "created_at",
+      },
+    ],
+  }));
 
   let all_tables = [...tables, auth, ...forms];
 
   for await (const item of all_tables) {
     let fileColumns = item?.fields;
-    let dbColumns = await knex(item?.slug).columnInfo();
+    let dbColumns = await knex(item?.table).columnInfo();
 
     //ADD OR MODIFY
-    const hasTable = await knex.schema.hasTable(item?.slug);
+    const hasTable = await knex.schema.hasTable(item?.table);
 
     if (!!hasTable) {
       fileColumns = fileColumns.filter((item) => item?.primary_key !== true);
@@ -100,7 +97,7 @@ export default async () => {
     }
 
     await knex.schema?.[!!hasTable ? "alterTable" : "createTable"]?.(
-      item?.slug,
+      item?.table,
       (table) => {
         for (const schema of fileColumns) {
           createOrModifyColumn({ table, schema, dbColumns });
@@ -114,7 +111,7 @@ export default async () => {
     );
 
     if (columnsToRemove.length > 0) {
-      await knex.schema.alterTable(item?.slug, (table) => {
+      await knex.schema.alterTable(item?.table, (table) => {
         columnsToRemove.forEach((col) => {
           table.dropColumn(col);
         });

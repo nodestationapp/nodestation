@@ -16,7 +16,7 @@ const TableToolbarRender = (
   }, {});
 
   switch (type) {
-    case "auth":
+    case "authentication":
       return {
         menu: [
           {
@@ -48,7 +48,7 @@ const TableToolbarRender = (
           },
         ],
         settingsButtonHandler: `/forms/${id}/settings`,
-        newButtonHandler: () => setAddTableModal(true),
+        // newButtonHandler: () => setAddTableModal(true),
       };
     default:
       return {

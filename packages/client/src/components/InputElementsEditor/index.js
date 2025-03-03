@@ -3,7 +3,6 @@ import "./styles.scss";
 import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 
-import Card from "components/Card";
 import List from "components/List";
 import CreateFieldModal from "components/CreateFieldModal";
 import TransparentButton from "components/TransparentButton";
@@ -40,43 +39,29 @@ const InputElementsEditor = () => {
     setFieldValue("fields", temp);
   };
 
-  const formatted_fields =
-    values?.fields?.length > 0
-      ? [
-          {
-            items: [
-              ...values?.fields?.map((item, index) => ({
-                ...item,
-                name: item?.name,
-                locked: item?.locked,
-                onclick: () => setAddFieldModal({ data: item, index }),
-                onRemoveClick: () => onRemove(index),
-              })),
-            ],
-            draggable: true,
-          },
-        ]
-      : [];
+  const formatted_fields = values?.fields?.map((item, index) => ({
+    ...item,
+    name: item?.name,
+    onclick: () => setAddFieldModal({ data: item, index }),
+    onRemoveClick: () => onRemove(index),
+  }));
 
   return (
     <>
-      <Card title="Input elements">
-        <div className={mainClass}>
-          <List
-            type="forms_field"
-            data={formatted_fields}
-            onOrderChange={(value) => setFieldValue("fields", value)}
+      <div className={mainClass}>
+        <List
+          type="forms_field"
+          data={formatted_fields}
+          onOrderChange={(value) => setFieldValue("fields", value)}
+        />
+        <div className={`${mainClass}__action`}>
+          <TransparentButton
+            onClick={() => setAddFieldModal(true)}
+            icon={<PlusIcon />}
+            label="Add field"
           />
-          <div className={`${mainClass}__action`}>
-            {/* <Button onClick={() => setAddFieldModal(true)}>Add field</Button> */}
-            <TransparentButton
-              onClick={() => setAddFieldModal(true)}
-              icon={<PlusIcon />}
-              label="Add field"
-            />
-          </div>
         </div>
-      </Card>
+      </div>
       {!!add_field_modal && (
         <CreateFieldModal
           index={add_field_modal?.index}

@@ -29,7 +29,7 @@ const checkEntryExist = (body, entry_id) => {
     is_file = files?.find((item) => item?.name === body?.name);
   }
 
-  if (is_file?.id === entry_id) {
+  if (is_file?.table === entry_id || is_file?.id === entry_id) {
     is_file = false;
   }
 

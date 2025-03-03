@@ -1,10 +1,12 @@
+import TableProvider from "context/client/table";
 import UsersContent from "page_components/users/Content";
-import UsersProvider from "context/client/users";
 
-const Users = () => (
-  <UsersProvider>
-    <UsersContent />
-  </UsersProvider>
-);
+const Users = () => {
+  return (
+    <TableProvider>
+      <UsersContent />
+    </TableProvider>
+  );
+};
 
 export default Users;

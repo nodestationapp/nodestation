@@ -15,7 +15,8 @@ const AddTableModal = ({ type, onClose }) => {
     try {
       const table = await api.post("/tables", { ...values, type });
 
-      navigate(`/tables/${table?.id}/settings`);
+      const typeEndpoint = type === "form" ? "forms" : "tables";
+      navigate(`/${typeEndpoint}/${table?.id}/settings`);
 
       queryClient.refetchQueries("tables");
 
@@ -25,6 +26,8 @@ const AddTableModal = ({ type, onClose }) => {
       setSubmitting(false);
     }
   };
+
+  const inputLabel = type === "form" ? "Form name" : "Table name";
 
   return (
     <Formik
@@ -45,7 +48,7 @@ const AddTableModal = ({ type, onClose }) => {
             loading={isSubmitting}
           >
             <div className="form">
-              <FormikInput name="name" label="Table name" />
+              <FormikInput name="name" label={inputLabel} />
             </div>
           </Modal>
         </Form>

@@ -15,7 +15,7 @@ import activeEmailChecker from "libs/helpers/activeEmailChecker";
 
 const mainClass = "forms__extra-settings";
 
-const ExtraSettings = () => {
+const ExtraTableSettings = () => {
   const { emails } = useForm();
   const { values } = useFormikContext();
   const { email_settings } = useEmails();
@@ -116,4 +116,4 @@ const ExtraSettings = () => {
   );
 };
 
-export default ExtraSettings;
+export default ExtraTableSettings;

@@ -7,9 +7,9 @@ import EmailProviders from "components/EmailProviders";
 import FormikInput from "components/formik/FormikInput";
 import FormikSelect from "components/formik/FormikSelect";
 import ChangePasswordForm from "components/ChangePasswordForm";
+import InputElementsEditor from "components/InputElementsEditor";
 
-import ExtraSettings from "page_components/forms/Settings/components/ExtraSettings";
-import InputElementsEditor from "page_components/forms/Settings/components/InputElementsEditor";
+import ExtraTableSettings from "components/ExtraTableSettings";
 
 const mainClass = "settings-form";
 
@@ -18,7 +18,7 @@ const input_type_render = (type, item) => {
     case "input_editor":
       return <InputElementsEditor />;
     case "form_extras":
-      return <ExtraSettings />;
+      return <ExtraTableSettings />;
     case "email_providers":
       return <EmailProviders />;
     case "media_providers":

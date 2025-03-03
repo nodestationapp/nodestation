@@ -1,10 +1,12 @@
+import TableProvider from "context/client/table";
 import FormContent from "page_components/forms/CurrentContent";
-import FormProvider from "context/client/form";
 
-const Form = ({ archived }) => (
-  <FormProvider archived={archived}>
-    <FormContent />
-  </FormProvider>
-);
+const Form = () => {
+  return (
+    <TableProvider>
+      <FormContent />
+    </TableProvider>
+  );
+};
 
 export default Form;

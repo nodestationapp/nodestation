@@ -1,10 +1,12 @@
-import TableContent from "page_components/tables/CurrentContent";
 import TableProvider from "context/client/table";
+import TablesContent from "page_components/tables/CurrentContent";
 
-const Table = ({ type, archived }) => (
-  <TableProvider type={type} archived={archived}>
-    <TableContent />
-  </TableProvider>
-);
+const Tables = () => {
+  return (
+    <TableProvider>
+      <TablesContent />
+    </TableProvider>
+  );
+};
 
-export default Table;
+export default Tables;

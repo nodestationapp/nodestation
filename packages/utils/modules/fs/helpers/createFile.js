@@ -1,19 +1,22 @@
 import fs from "fs";
 import path from "path";
+import slugify from "slugify";
 
 import rootPath from "#modules/rootPath.js";
 
+import removeEmptyKeys from "./removeEmptyKeys.js";
 import checkEntryExist from "../helpers/checkEntryExists.js";
 import generateCustomId from "../helpers/generateCustomId.js";
 import folderNameParser from "../helpers/folderNameParser.js";
 import generateServer from "../helpers/generateServer/index.js";
-import removeEmptyKeys from "./removeEmptyKeys.js";
 
-const createFile = async (body, entry_id) =>
+const createFile = async ({ body, entry_id, type }) =>
   new Promise(async (resolve, reject) => {
-    const id = entry_id || generateCustomId(body?.type);
+    const id = entry_id || generateCustomId(type);
 
-    const folder = folderNameParser(body?.type);
+    console.log(id);
+
+    const folder = folderNameParser(type);
     if (!!!folder) {
       return reject("Invalid folder");
     }
@@ -32,13 +35,17 @@ const createFile = async (body, entry_id) =>
     delete body.type;
 
     if (!!body?.fields) {
+      const slug = slugify(body?.name, {
+        replacement: "_",
+        lower: true,
+      });
+
       body = {
         ...body,
+        table: type === "tbl" ? slug : id === "auth" ? "nodestation_users" : id,
         fields: removeEmptyKeys(body?.fields),
       };
     }
-
-    console.log(body);
 
     const jsonContent = JSON.stringify(body, null, 2);
     fs.writeFileSync(

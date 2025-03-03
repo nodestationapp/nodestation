@@ -1,10 +1,10 @@
 import UserSettingsContent from "page_components/users/Settings";
-import UsersProvider from "context/client/users";
+import TableProvider from "context/client/table";
 
 const UserSettings = () => (
-  <UsersProvider>
+  <TableProvider>
     <UserSettingsContent />
-  </UsersProvider>
+  </TableProvider>
 );
 
 export default UserSettings;

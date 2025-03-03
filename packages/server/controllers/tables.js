@@ -93,20 +93,8 @@ const createTable = async (req, res) => {
   const body = req?.body;
 
   try {
-    const slug = slugify(body?.name, {
-      replacement: "_",
-      lower: true,
-    });
-
-    // TODO
     const formatted_body = {
       ...body,
-      ...(body?.type !== "form"
-        ? {
-            slug,
-          }
-        : {}),
-      type: body?.type || "tbl",
       fields: [
         {
           name: "ID",
@@ -115,20 +103,13 @@ const createTable = async (req, res) => {
           primary_key: true,
           default: "generate_id()",
         },
-        // {
-        //   name: "ID",
-        //   slug: "id",
-        //   type: "id",
-        //   required: true,
-        //   read_only: true,
-        //   origin: "system",
-        //   primary_key: true,
-        //   default: "generate_id()",
-        // },
       ],
     };
 
-    const id = await fs.createFile(formatted_body);
+    const id = await fs.createFile({
+      body: formatted_body,
+      type: body?.type,
+    });
 
     await createSchema();
 
@@ -144,18 +125,11 @@ const updateTable = async (req, res) => {
   const body = req?.body;
 
   try {
-    const slug = slugify(body?.name, {
-      replacement: "_",
-      lower: true,
+    await fs.createFile({
+      body: body,
+      entry_id: id,
+      type: body?.type,
     });
-
-    const formatted_body = {
-      ...body,
-      slug,
-      type: "tbl",
-    };
-
-    await fs.createFile(formatted_body, id);
 
     await createSchema();
 
@@ -176,7 +150,7 @@ const deleteTable = async (req, res) => {
     );
 
     await fs.deleteFile(id);
-    await knex.schema.dropTable(table?.slug);
+    await knex.schema.dropTable(table?.table);
 
     return res.status(200).json({ status: "ok" });
   } catch (error) {
@@ -235,7 +209,7 @@ const deleteTableEntries = async (req, res) => {
       (item) => item?.id?.toString() === id?.toString()
     );
 
-    await knex(table?.slug).where({ id: entry_id }).del();
+    await knex(table?.table).where({ id: entry_id }).del();
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

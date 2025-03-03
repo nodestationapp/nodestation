@@ -101,7 +101,7 @@ const Menu = () => {
           <div className={`${mainClass}__menu__items__header`}>
             <span>Tables</span>
             <IconButton
-              onClick={() => setAddTableModal(true)}
+              onClick={() => setAddTableModal("tbl")}
               size="small"
               icon={<PlusIcon />}
             />

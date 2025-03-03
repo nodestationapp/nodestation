@@ -23,6 +23,10 @@ import SettingsSecurity from "pages/client/settings/security";
 
 import EditorLayout from "components/layouts/EditorLayout";
 import MediaSettings from "pages/client/media/settings";
+import Users from "pages/client/users";
+import Form from "pages/client/forms/current";
+import FormSettings from "pages/client/forms/settings";
+import UserSettings from "pages/client/users/settings";
 
 const clientRoutes = () => {
   return (
@@ -37,17 +41,17 @@ const clientRoutes = () => {
         </Route>
         <Route path="/forms">
           <Route index element={<Forms />} />
-          <Route path=":id" element={<Table type="forms" />} />
+          <Route path=":id" element={<Form />} />
           <Route path=":id/archived" element={<Table archived />} />
-          <Route path=":id/settings" element={<TableSettings />} />
+          <Route path=":id/settings" element={<FormSettings />} />
         </Route>
         <Route path="/media">
           <Route index element={<Media />} />
           <Route path=":id" element={<MediaSettings />} />
         </Route>
         <Route path="/authentication">
-          <Route index element={<Table type="auth" />} />
-          <Route path="settings" element={<TableSettings />} />
+          <Route index element={<Users />} />
+          <Route path="settings" element={<UserSettings />} />
         </Route>
         <Route path="/tables">
           <Route path=":id" element={<Table />} />
