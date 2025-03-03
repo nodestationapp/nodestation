@@ -43,7 +43,7 @@ const applyFilters = (query, filters, table) => {
 
         value?.forEach((element) => {
           const data = {
-            key: `${table?.slug}.${key}`,
+            key: `${table?.table}.${key}`,
             type,
             value: element,
             originalValue: value,

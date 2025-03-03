@@ -3,7 +3,7 @@ import TableStack from "components/TableStack";
 import { useTable } from "context/client/table";
 import { useLocation } from "react-router-dom";
 
-const TableReader = ({ rowClick, selectAction, newButton }) => {
+const TableReader = ({ rowClick, selectAction, newButton, meta }) => {
   const { pathname } = useLocation();
   const { data, id, loading, saveTableTransaction } = useTable();
 
@@ -26,6 +26,7 @@ const TableReader = ({ rowClick, selectAction, newButton }) => {
     <TableStack
       tableId={id}
       data={entries}
+      meta={meta}
       filtering={true}
       toolbar={toolbar}
       loading={loading}

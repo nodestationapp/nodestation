@@ -1,5 +1,3 @@
-import slugify from "slugify";
-
 import { fs } from "@nstation/utils";
 import { knex, createSchema, queryBuilder } from "@nstation/db";
 
@@ -36,6 +34,7 @@ const parseJSONFields = (array) => {
 
 const getTable = async (req, res) => {
   let { id } = req?.params;
+  let query = req?.query || {};
 
   try {
     let preferences = await knex("nodestation_preferences").where({
@@ -76,10 +75,18 @@ const getTable = async (req, res) => {
       );
     }
 
+    const filters = [
+      ...(preferences?.filters || []),
+      ...Object.keys(query)?.map((item) => ({
+        field: item,
+        value: query?.[item],
+      })),
+    ];
+
     const entries = await queryBuilder({
       table,
+      filters,
       sort: preferences?.sort?.[0],
-      filters: preferences?.filters,
     });
 
     return res.status(200).json({ table, entries, columns, preferences });
@@ -95,6 +102,7 @@ const createTable = async (req, res) => {
   try {
     const formatted_body = {
       ...body,
+      display_name: "id",
       fields: [
         {
           name: "ID",

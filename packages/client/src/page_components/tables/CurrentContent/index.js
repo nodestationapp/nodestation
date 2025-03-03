@@ -5,10 +5,10 @@ import TableContentEditor from "./components/TableContentEditor";
 import ArchiveTableEntryModal from "./components/ArchiveTableEntryModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
+import { useTable } from "context/client/table";
+
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { CircleStackIcon } from "@heroicons/react/24/outline";
-
-import { useTable } from "context/client/table";
 
 const TablesContent = () => {
   const { data } = useTable();

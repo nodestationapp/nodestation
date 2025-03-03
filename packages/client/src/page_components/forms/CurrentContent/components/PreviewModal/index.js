@@ -58,7 +58,7 @@ const value_render = (type, value) => {
   }
 };
 
-const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
+const PreviewModal = ({ data, type, fields, onClose, updateTableEntry }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   // const { updateIncomeForm } = useForm();
@@ -71,6 +71,7 @@ const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
   useEffect(() => {
     (async function () {
       if (!!data?.meta?.disabled) return;
+      updateTableEntry(data?.id, { is_read: 1 });
       // readHandler(data?.meta?.id, 0);
     })();
     // eslint-disable-next-line
@@ -138,7 +139,7 @@ const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
       >
         <div className={mainClass}>
           {fields?.map((item, index) => {
-            if (!!!data?.row?.[item?.slug]) return null;
+            if (item?.type === "id") return;
 
             return (
               <div
@@ -149,13 +150,13 @@ const PreviewModal = ({ data, type, fields, onClose, readHandler }) => {
                 })}
               >
                 <span>{item?.name}:</span>
-                {value_render(item?.type, data?.row?.[item?.slug])}
+                {value_render(item?.type, data?.[item?.slug])}
               </div>
             );
           })}
           <div className={`${mainClass}__item`}>
             <span>Created at:</span>
-            <span>{moment.unix(data?.meta?.created_at)?.format("lll")}</span>
+            <span>{moment.unix(data?.created_at)?.format("lll")}</span>
           </div>
         </div>
       </AsideModal>

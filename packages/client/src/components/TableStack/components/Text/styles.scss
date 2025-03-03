@@ -18,10 +18,10 @@
             text-decoration: underline;
         }
     }
-  
-    // svg{
-    //   height: 18px;
-    //   width: 18px;
-    //   opacity: 0.5;
-    // }
+
+    &--empty{
+        span{
+            text-decoration: unset;
+        }
+    }
 }

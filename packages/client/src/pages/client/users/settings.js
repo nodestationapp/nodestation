@@ -2,7 +2,7 @@ import UserSettingsContent from "page_components/users/Settings";
 import TableProvider from "context/client/table";
 
 const UserSettings = () => (
-  <TableProvider>
+  <TableProvider id="auth">
     <UserSettingsContent />
   </TableProvider>
 );

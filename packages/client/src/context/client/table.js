@@ -1,20 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { createContext, useContext, useMemo } from "react";
 
 import api from "libs/api";
 
 const TableContext = createContext();
 
-const TableProvider = ({ children }) => {
+const TableProvider = ({ id, children }) => {
   const { pathname } = useLocation();
-  let { id } = useParams();
 
   const type = pathname?.split("/")?.[1];
-
-  if (pathname?.startsWith("/authentication")) {
-    id = "auth";
-  }
 
   const {
     data,

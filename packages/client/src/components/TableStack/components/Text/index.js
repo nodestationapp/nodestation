@@ -3,12 +3,10 @@ import "./styles.scss";
 import cx from "classnames";
 
 import { LockClosedIcon, LinkIcon } from "@heroicons/react/24/outline";
-// import { useNavigate } from "react-router-dom";
 
 const mainClass = "table__text";
 
 const Text = ({ tableSchema, locked, value, column }) => {
-  // const navigate = useNavigate();
   const isRelation = !!tableSchema?.find((element) => element?.slug === column)
     ?.relation;
 
@@ -19,12 +17,12 @@ const Text = ({ tableSchema, locked, value, column }) => {
 
   return (
     <div
-      // onClick={onRelationClick}
       className={cx(mainClass, {
         [`${mainClass}--is-relation`]: !!isRelation,
+        [`${mainClass}--empty`]: !!!value,
       })}
     >
-      {!!isRelation && (
+      {!!isRelation && !!value && (
         <div className={`${mainClass}__relation-icon`}>
           <LinkIcon />
         </div>

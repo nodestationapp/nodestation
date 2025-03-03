@@ -17,7 +17,7 @@ const UsersInput = ({ value, name, label, onChange, size, noArrow }) => {
         setSelectValue(value);
       } else {
         const data = await fetchData(undefined, value);
-        setSelectValue(data?.[0]);
+        setSelectValue(data?.entries?.[0]);
       }
     })();
     // eslint-disable-next-line
@@ -26,13 +26,13 @@ const UsersInput = ({ value, name, label, onChange, size, noArrow }) => {
   const fetchData = async (value, id) => {
     try {
       const data = await api.get(
-        `/auth?${queryString.stringify({
+        `/tables/auth?${queryString.stringify({
           id,
           first_name: value,
         })}`
       );
 
-      setUsers(data);
+      setUsers(data?.entries);
 
       return data;
     } catch (err) {

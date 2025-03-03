@@ -3,7 +3,7 @@ import UsersContent from "page_components/users/Content";
 
 const Users = () => {
   return (
-    <TableProvider>
+    <TableProvider id="auth">
       <UsersContent />
     </TableProvider>
   );

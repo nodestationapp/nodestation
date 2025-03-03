@@ -14,8 +14,6 @@ const createFile = async ({ body, entry_id, type }) =>
   new Promise(async (resolve, reject) => {
     const id = entry_id || generateCustomId(type);
 
-    console.log(id);
-
     const folder = folderNameParser(type);
     if (!!!folder) {
       return reject("Invalid folder");
