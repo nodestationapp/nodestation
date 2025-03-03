@@ -16,7 +16,6 @@ import {
 
 import validate from "#libs/validation/validate.js";
 import createTableSchema from "#libs/validation/tables/createTableSchema.js";
-import addTableEntrySchema from "#libs/validation/tables/addTableEntrySchema.js";
 
 const router = express.Router();
 

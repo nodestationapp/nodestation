@@ -6,18 +6,61 @@ import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import ArchiveTableEntryModal from "page_components/tables/components/ArchiveTableEntryModal";
 
-import { TrashIcon } from "@heroicons/react/24/outline";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import {
+  TrashIcon,
+  EnvelopeIcon,
+  // ArchiveBoxIcon,
+  EnvelopeOpenIcon,
+  PaperAirplaneIcon,
+  // ArchiveBoxArrowDownIcon,
+} from "@heroicons/react/24/outline";
 
 import { useTable } from "context/client/table";
+import { useTableWrapper } from "context/client/table-wrapper";
+
+const checkIsReadValue = (entries, selected) => {
+  let rows = [];
+  Object.keys(selected)?.forEach((item) => {
+    rows.push(entries[item]);
+  });
+
+  let currentIsRead = null;
+  const firstValue = rows[0]?.is_read;
+  const allSame = rows?.every((item) => item?.is_read === firstValue);
+
+  if (!!allSame) {
+    currentIsRead = !!firstValue;
+  }
+
+  return currentIsRead;
+};
 
 const FormContent = () => {
   const { data, updateTableEntry } = useTable();
+  const { table, selectedRows } = useTableWrapper();
 
   const [preview_modal, setPreviewModal] = useState(null);
   const [archive_entry_modal, setArchiveEntryModal] = useState(false);
 
+  const isReadSelected = checkIsReadValue(data?.entries, selectedRows);
+
   const selectAction = [
+    {
+      icon: !!isReadSelected ? (
+        <EnvelopeIcon color="#F0F1F3" />
+      ) : isReadSelected === null ? null : (
+        <EnvelopeOpenIcon color="#F0F1F3" />
+      ),
+      onClick: () => onReadHandler(),
+    },
+    // {
+    //   icon: !!true ? (
+    //     <ArchiveBoxIcon color="#F0F1F3" />
+    //   ) : (
+    //     <ArchiveBoxArrowDownIcon color="#F0F1F3" />
+    //   ),
+    //   // onClick: () => onArchiveHandler(),
+    // },
     {
       icon: <TrashIcon color="#FF3636" />,
       onClick: () => setArchiveEntryModal(true),
@@ -38,6 +81,22 @@ const FormContent = () => {
     disabled: item?.is_read,
   }));
 
+  const onReadHandler = async () => {
+    try {
+      const itemsToRead = table.getSelectedRowModel()?.rows;
+
+      for await (const row of itemsToRead) {
+        updateTableEntry(row?.original?.id, {
+          is_read: !!isReadSelected ? 0 : 1,
+        });
+      }
+
+      table.setRowSelection({});
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <DashboardContentLayout breadcrumps={breadcrumps}>
       <TableView
@@ -48,10 +107,7 @@ const FormContent = () => {
         }
       />
       {!!archive_entry_modal && (
-        <ArchiveTableEntryModal
-          data={archive_entry_modal}
-          onClose={() => setArchiveEntryModal(false)}
-        />
+        <ArchiveTableEntryModal onClose={() => setArchiveEntryModal(false)} />
       )}
       {!!preview_modal && (
         <PreviewModal

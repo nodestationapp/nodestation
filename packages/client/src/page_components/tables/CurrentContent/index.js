@@ -37,6 +37,7 @@ const TablesContent = () => {
     <DashboardContentLayout breadcrumps={breadcrumps}>
       <TableReader
         selectAction={selectAction}
+        newButton={() => setContentEditor(true)}
         rowClick={(row) => setContentEditor(row)}
       />
       {!!archive_entry_modal && (

@@ -128,8 +128,7 @@ const TableStack = ({
 }) => {
   const [isResizing, setIsResizing] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const { setTable } = useTableWrapper();
+  const { setTable, selectedRows, setSelectedRows } = useTableWrapper();
 
   const [sort, setSort] = useState(null);
   const [filters, setFilters] = useState(null);
