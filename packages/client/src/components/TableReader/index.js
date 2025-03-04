@@ -5,18 +5,18 @@ import { useLocation } from "react-router-dom";
 
 const TableReader = ({ rowClick, selectAction, newButton, meta }) => {
   const { pathname } = useLocation();
-  const { data, id, loading, saveTableTransaction } = useTable();
+  const { data, id, loading, view, saveTableTransaction } = useTable();
 
   const table = data?.table;
+  const views = data?.views;
   const entries = data?.entries || [];
 
   const toolbar = {
-    menu: [
-      {
-        label: "Entries",
-        href: pathname,
-      },
-    ],
+    menu:
+      views?.map((item) => ({
+        label: item?.name,
+        href: `${pathname}?v=${item?.id}`,
+      })) || [],
     selectAction,
     settingsButtonHandler: `${pathname}/settings`,
     newButtonHandler: newButton,
@@ -25,6 +25,7 @@ const TableReader = ({ rowClick, selectAction, newButton, meta }) => {
   return (
     <TableStack
       tableId={id}
+      view={view}
       data={entries}
       meta={meta}
       filtering={true}

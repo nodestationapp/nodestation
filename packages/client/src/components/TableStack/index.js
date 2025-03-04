@@ -122,6 +122,7 @@ const TableStack = ({
   meta,
   columns,
   alert,
+  view,
   filtering,
   preferences,
   hideHeader,
@@ -146,7 +147,7 @@ const TableStack = ({
   const [columnVisibility, setColumnVisibility] = useState([]);
 
   useEffect(() => {
-    if (!!!preferences) return;
+    // if (!!!preferences) return;
 
     setFiltersExpanded(preferences?.filtersToggle);
     setColumnVisibility(preferences?.visibility);
@@ -155,7 +156,7 @@ const TableStack = ({
     setFilters(preferences?.filters || [{ field: null, value: null }]);
     setSelectedRows([]);
     // eslint-disable-next-line
-  }, [tableId, loading]);
+  }, [tableId, loading, view]);
 
   const formatted_columns = useMemo(
     () => [
@@ -385,6 +386,7 @@ const TableStack = ({
         })}
       >
         <Toolbar
+          tableId={tableId}
           data={!!toolbarData ? toolbar : null}
           filters={filters}
           tableSchema={tableSchema}

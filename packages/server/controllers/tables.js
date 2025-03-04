@@ -34,12 +34,19 @@ const parseJSONFields = (array) => {
 
 const getTable = async (req, res) => {
   let { id } = req?.params;
-  let query = req?.query || {};
+  let { view, ...rest } = req?.query || {};
 
   try {
+    let views = await knex("nodestation_preferences")
+      .where({
+        table_id: id,
+      })
+      .orderBy("created_at", "asc");
+
     let preferences = await knex("nodestation_preferences").where({
-      table_id: id,
+      id: view,
     });
+
     preferences = parseJSONFields(preferences)?.[0];
 
     const auth = fs.getFiles();
@@ -77,7 +84,7 @@ const getTable = async (req, res) => {
 
     const filters = [
       ...(preferences?.filters || []),
-      ...Object.keys(query)?.map((item) => ({
+      ...Object.keys(rest)?.map((item) => ({
         field: item,
         value: query?.[item],
       })),
@@ -89,7 +96,9 @@ const getTable = async (req, res) => {
       sort: preferences?.sort?.[0],
     });
 
-    return res.status(200).json({ table, entries, columns, preferences });
+    return res
+      .status(200)
+      .json({ table, entries, columns, preferences, views });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
@@ -117,6 +126,12 @@ const createTable = async (req, res) => {
     const id = await fs.createFile({
       body: formatted_body,
       type: body?.type,
+    });
+
+    await knex("nodestation_preferences").insert({
+      table_id: id,
+      name: "Entries",
+      uid: req?.user?.id,
     });
 
     await createSchema();

@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "react-router-dom";
+import queryString from "query-string";
+
+import { useLocation, useParams } from "react-router-dom";
 import { createContext, useContext, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import api from "libs/api";
 
@@ -8,6 +11,8 @@ const TableContext = createContext();
 
 const TableProvider = ({ id, children }) => {
   const { pathname } = useLocation();
+  const [searchParams] = useSearchParams();
+  const view = searchParams.get("v");
 
   const type = pathname?.split("/")?.[1];
 
@@ -16,8 +21,13 @@ const TableProvider = ({ id, children }) => {
     isLoading: loading,
     refetch: tableRefetch,
   } = useQuery({
-    queryKey: ["tables", id],
-    queryFn: () => api.get(`/tables/${id}`),
+    queryKey: ["tables", id, view],
+    queryFn: () =>
+      api.get(
+        `/tables/${id}?${queryString.stringify({
+          view,
+        })}`
+      ),
   });
 
   const updateTable = (values) =>
@@ -97,6 +107,7 @@ const TableProvider = ({ id, children }) => {
   const saveTableTransaction = async (values) => {
     await api.post("/preferences", {
       table_id: id,
+      view,
       ...values,
     });
 
@@ -108,6 +119,7 @@ const TableProvider = ({ id, children }) => {
       data,
       id,
       type,
+      view,
       loading,
       updateTable,
       updateTableEntry,
@@ -117,7 +129,7 @@ const TableProvider = ({ id, children }) => {
       saveTableTransaction,
     };
     // eslint-disable-next-line
-  }, [data, id, loading]);
+  }, [data, id, loading, view]);
 
   return (
     <TableContext.Provider value={value}>{children}</TableContext.Provider>

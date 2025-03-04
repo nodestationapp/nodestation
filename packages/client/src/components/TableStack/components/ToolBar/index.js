@@ -3,10 +3,13 @@ import "./styles.scss";
 import Filters from "./components/Filters";
 import Submenu from "./components/Submenu";
 import IconButton from "components/IconButton";
+import AddTableViewModal from "./components/AddTableViewModal";
+import { useState } from "react";
 
 const mainClass = "table__toolbar";
 
 const Toolbar = ({
+  tableId,
   data,
   selectedRows = [],
   filters,
@@ -15,7 +18,12 @@ const Toolbar = ({
   tableSchema,
   filtersExpanded,
 }) => {
+  const [view_modal, setViewModal] = useState(false);
   const selectedLength = Object.keys(selectedRows).length;
+
+  const onAddView = () => {
+    setViewModal(true);
+  };
 
   return (
     <div className={mainClass}>
@@ -40,7 +48,11 @@ const Toolbar = ({
                 </div>
               </div>
             ) : (
-              <>{!!data?.menu && <Submenu data={data?.menu} />}</>
+              <>
+                {!!data?.menu && (
+                  <Submenu data={data?.menu} onAddView={onAddView} />
+                )}
+              </>
             )}
           </div>
           <div className={`${mainClass}__aside`}>{data?.action}</div>
@@ -52,6 +64,12 @@ const Toolbar = ({
           setFilters={setFilters}
           tableSchema={tableSchema}
           saveTransaction={saveTransaction}
+        />
+      )}
+      {!!view_modal && (
+        <AddTableViewModal
+          tableId={tableId}
+          onClose={() => setViewModal(false)}
         />
       )}
     </div>

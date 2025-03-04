@@ -3,10 +3,15 @@ import "./styles.scss";
 import classnames from "classnames";
 import { Link, useLocation } from "react-router-dom";
 
+import IconButton from "components/IconButton";
+import { PlusIcon } from "@heroicons/react/24/outline";
+
 const mainClass = "table__toolbar__menu";
 
-const Submenu = ({ data }) => {
-  const { pathname } = useLocation();
+const Submenu = ({ data, onAddView }) => {
+  const { pathname, search } = useLocation();
+
+  const currentPathname = pathname + search;
 
   return (
     <div className={mainClass}>
@@ -19,7 +24,7 @@ const Submenu = ({ data }) => {
             key={index}
             className={classnames(`${mainClass}__item`, {
               [`${mainClass}__item--active`]:
-                pathname === href || variant === "label",
+                currentPathname === href || variant === "label",
             })}
           >
             {label}
@@ -27,8 +32,9 @@ const Submenu = ({ data }) => {
           </Component>
         );
       })}
-
-      <div className={`${mainClass}__active-bar`}></div>
+      {!!onAddView && (
+        <IconButton onClick={onAddView} size="small" icon={<PlusIcon />} />
+      )}
     </div>
   );
 };

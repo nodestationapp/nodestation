@@ -129,7 +129,8 @@ const createSchema = async () => {
   );
   if (!savedPreferencesTableExists) {
     await knex.schema.createTable("nodestation_preferences", (table) => {
-      table.increments("id").primary();
+      table.string("id").primary().defaultTo(knex.fn.uuid());
+      table.string("name").nullable();
       table.string("uid").nullable();
       table.string("sort").nullable();
       table.string("order").nullable();
@@ -139,7 +140,14 @@ const createSchema = async () => {
       table.string("filtersToggle").nullable();
       table.string("table_id").nullable();
       table.bigInteger("updated_at").nullable();
-      table.bigInteger("created_at").nullable();
+      table
+        .bigInteger("created_at")
+        .nullable()
+        .defaultTo(
+          knex.client.config.client === "pg"
+            ? knex.raw("EXTRACT(EPOCH FROM NOW())::BIGINT")
+            : knex.raw("(strftime('%s', 'now') * 1)")
+        );
     });
   }
 

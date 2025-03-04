@@ -50,7 +50,7 @@ const upsertPreferences = async (req, res) => {
     const currentDate = Date.now();
 
     let preference = await knex("nodestation_preferences")
-      .where({ table_id: body?.table_id })
+      .where({ table_id: body?.table_id, id: body?.view })
       .first();
 
     if (!!preference) {
@@ -60,9 +60,9 @@ const upsertPreferences = async (req, res) => {
 
       await knex("nodestation_preferences")
         .where({
+          id: body?.view,
           table_id: body?.table_id,
         })
-
         .update({
           uid: req?.user?.id,
           ...(!!body?.hasOwnProperty("sort")
@@ -125,4 +125,36 @@ const upsertPreferences = async (req, res) => {
   }
 };
 
-export { getPreferences, upsertPreferences };
+const createTableView = async (req, res) => {
+  const { name, table, view } = req?.body;
+
+  try {
+    let preferences = await knex("nodestation_preferences").where({
+      id: view,
+      table_id: table,
+    });
+
+    preferences = parseJSONFields(preferences)?.[0];
+
+    await knex("nodestation_preferences").insert({
+      name,
+      uid: req?.user?.id,
+      table_id: table,
+      visibility: !!preferences?.visibility
+        ? JSON.stringify(preferences?.visibility)
+        : null,
+      order: !!preferences?.order ? JSON.stringify(preferences?.order) : null,
+      content: !!preferences?.content
+        ? JSON.stringify(preferences?.content)
+        : null,
+      // created_at: currentDate,
+    });
+
+    return res.status(200).json({ status: "ok" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+export { getPreferences, upsertPreferences, createTableView };
