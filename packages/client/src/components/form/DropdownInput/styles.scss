@@ -95,7 +95,6 @@
     padding: 5px;
 
     input{
-      padding: 5px 0 10px;
       background-color: #3C414B;
       border: none;
       font-size: 13px;
@@ -105,6 +104,18 @@
     
     .button{
       width: 100%;
+    }
+
+    &__input{
+      padding: 5px 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      .icon-button{
+        margin-right: 5px;
+        flex-shrink: 0;
+      }
     }
   }
 
@@ -146,6 +157,15 @@
   &--light{
     button{
       background-color: #383E48;
+    }
+  }
+
+  &--right{
+    .dropdown-input {
+      &__content{
+        right: unset;
+        left: -10px;
+      }
     }
   }
 }

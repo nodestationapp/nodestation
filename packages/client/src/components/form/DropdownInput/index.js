@@ -3,11 +3,13 @@ import "./styles.scss";
 import classnames from "classnames";
 import { useState, useRef } from "react";
 
+import Button from "components/Button";
+
 import useOnScreen from "libs/helpers/useOnScreen";
 import useClickOutside from "libs/helpers/useClickOutside";
 
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import Button from "components/Button";
+import { ChevronDownIcon, TrashIcon } from "@heroicons/react/24/outline";
+import IconButton from "components/IconButton";
 
 const mainClass = "dropdown-input";
 
@@ -24,9 +26,15 @@ const DropdownInput = ({
   variant,
   noArrow,
   validate,
+  CustomButton,
+  position,
+  preventSelectOpen,
+  onDelete,
 }) => {
   const [input_value, setInputValue] = useState(value);
   const [error, setError] = useState(false);
+
+  console.log(input_value);
 
   const [select_open, setSelectOpen] = useState(false);
 
@@ -42,7 +50,9 @@ const DropdownInput = ({
   const onChangeHandler = () => {
     setError(false);
 
-    const isValid = validate(input_value, { seconds: true });
+    const isValid = !!validate
+      ? validate(input_value, { seconds: true })
+      : true;
 
     if (!!!isValid) {
       setError(true);
@@ -65,6 +75,7 @@ const DropdownInput = ({
         [`${mainClass}--error`]: !!error,
         [`${mainClass}--empty`]: !!!value,
         [`${mainClass}--filled`]: !!value,
+        [`${mainClass}--${position}`]: !!position,
         [`${mainClass}--${variant}`]: !!variant,
       })}
     >
@@ -74,21 +85,43 @@ const DropdownInput = ({
           {!!required && <span>*</span>}
         </label>
       )}
-      <button
-        ref={button_ref}
-        type="button"
-        onClick={() => setSelectOpen((prev) => !prev)}
-      >
-        <span>{value || placeholder}</span>
-        {!!!noArrow && <ChevronDownIcon />}
-      </button>
+      {!!CustomButton ? (
+        <div
+          ref={button_ref}
+          onClick={
+            !!preventSelectOpen
+              ? () => {}
+              : () => setSelectOpen((prev) => !prev)
+          }
+        >
+          <CustomButton active={select_open} />
+        </div>
+      ) : (
+        <button
+          ref={button_ref}
+          type="button"
+          onClick={() => setSelectOpen((prev) => !prev)}
+        >
+          <span>{value || placeholder}</span>
+          {!!!noArrow && <ChevronDownIcon />}
+        </button>
+      )}
       {select_open && (
         <div className={`${mainClass}__content`}>
-          <input
-            value={input_value}
-            placeholder="Type expression..."
-            onChange={(e) => setInputValue(e.target.value)}
-          />
+          <div className={`${mainClass}__content__input`}>
+            <input
+              value={input_value}
+              placeholder={placeholder || "Type expression..."}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+            {!!onDelete && (
+              <IconButton
+                onClick={onDelete}
+                size="small"
+                icon={<TrashIcon />}
+              />
+            )}
+          </div>
           <Button size="small" onClick={onChangeHandler}>
             Submit
           </Button>

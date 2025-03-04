@@ -350,6 +350,7 @@ const TableStack = ({
             />,
           ]
         : []),
+
       ...(!!toolbarData?.deleteHandler
         ? [
             <IconButtonMenu
@@ -386,6 +387,7 @@ const TableStack = ({
         })}
       >
         <Toolbar
+          view={view}
           tableId={tableId}
           data={!!toolbarData ? toolbar : null}
           filters={filters}

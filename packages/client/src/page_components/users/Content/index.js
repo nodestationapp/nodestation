@@ -9,8 +9,8 @@ import TableContentEditor from "page_components/tables/CurrentContent/components
 import { TrashIcon, UsersIcon } from "@heroicons/react/24/outline";
 
 const UsersContent = () => {
-  const [archive_entry_modal, setArchiveEntryModal] = useState(false);
   const [content_editor, setContentEditor] = useState(null);
+  const [archive_entry_modal, setArchiveEntryModal] = useState(false);
 
   const selectAction = [
     {

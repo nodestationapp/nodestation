@@ -157,4 +157,47 @@ const createTableView = async (req, res) => {
   }
 };
 
-export { getPreferences, upsertPreferences, createTableView };
+const updateTableView = async (req, res) => {
+  const { id } = req?.params;
+  const { name } = req?.body;
+
+  try {
+    await knex("nodestation_preferences")
+      .where({
+        id,
+      })
+      .update({
+        name,
+      });
+
+    return res.status(200).json({ status: "ok" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+const removeTableView = async (req, res) => {
+  const { id } = req?.params;
+
+  try {
+    await knex("nodestation_preferences")
+      .where({
+        id,
+      })
+      .del();
+
+    return res.status(200).json({ status: "ok" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+export {
+  getPreferences,
+  upsertPreferences,
+  createTableView,
+  updateTableView,
+  removeTableView,
+};
