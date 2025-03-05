@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import queryString from "query-string";
 
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { createContext, useContext, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 

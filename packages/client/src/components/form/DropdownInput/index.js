@@ -34,8 +34,6 @@ const DropdownInput = ({
   const [input_value, setInputValue] = useState(value);
   const [error, setError] = useState(false);
 
-  console.log(input_value);
-
   const [select_open, setSelectOpen] = useState(false);
 
   const ref = useRef();

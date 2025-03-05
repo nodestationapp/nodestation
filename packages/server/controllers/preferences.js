@@ -136,21 +136,22 @@ const createTableView = async (req, res) => {
 
     preferences = parseJSONFields(preferences)?.[0];
 
-    await knex("nodestation_preferences").insert({
-      name,
-      uid: req?.user?.id,
-      table_id: table,
-      visibility: !!preferences?.visibility
-        ? JSON.stringify(preferences?.visibility)
-        : null,
-      order: !!preferences?.order ? JSON.stringify(preferences?.order) : null,
-      content: !!preferences?.content
-        ? JSON.stringify(preferences?.content)
-        : null,
-      // created_at: currentDate,
-    });
+    const createPreference = await knex("nodestation_preferences")
+      .insert({
+        name,
+        uid: req?.user?.id,
+        table_id: table,
+        visibility: !!preferences?.visibility
+          ? JSON.stringify(preferences?.visibility)
+          : null,
+        order: !!preferences?.order ? JSON.stringify(preferences?.order) : null,
+        content: !!preferences?.content
+          ? JSON.stringify(preferences?.content)
+          : null,
+      })
+      .returning("id");
 
-    return res.status(200).json({ status: "ok" });
+    return res.status(200).json({ id: createPreference?.[0]?.id });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });

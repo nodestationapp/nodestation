@@ -65,7 +65,7 @@ const Menu = () => {
     ...tables?.map((item) => ({
       icon: <CircleStackIcon />,
       label: item?.name,
-      href: `/tables/${item?.id}`,
+      href: `/tables/${item?.id}?v=${item?.view}`,
     })),
   ];
 

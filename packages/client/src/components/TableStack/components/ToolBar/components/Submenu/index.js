@@ -1,8 +1,8 @@
 import "./styles.scss";
 
 import classnames from "classnames";
-import { Link, useLocation } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import IconButton from "components/IconButton";
 import DropdownInput from "components/form/DropdownInput";
@@ -15,17 +15,20 @@ const mainClass = "table__toolbar__menu";
 
 const Submenu = ({ data, tableId, view }) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { pathname, search } = useLocation();
 
   const currentPathname = pathname + search;
 
   const onAddView = async (name) => {
     try {
-      await api.post("/preferences/create", {
+      const create = await api.post("/preferences/create", {
         name,
         table: tableId,
         view,
       });
+
+      navigate(`${pathname}?v=${create?.id}`);
 
       queryClient.refetchQueries("tables");
     } catch (err) {

@@ -6,8 +6,16 @@ import upsertEntry from "#libs/upsertEntry.js";
 const getAllTables = async (_, res) => {
   try {
     const tables = fs.getFiles(["tables"]);
+    const preferences = await knex("nodestation_preferences")
+      .select()
+      .orderBy("created_at", "asc");
 
-    return res.status(200).json(tables);
+    const formatted_tables = tables?.map((item) => ({
+      ...item,
+      view: preferences?.find((element) => element?.table_id === item?.id)?.id,
+    }));
+
+    return res.status(200).json(formatted_tables);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });

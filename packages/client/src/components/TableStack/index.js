@@ -142,9 +142,10 @@ const TableStack = ({
   const { setTable, selectedRows, setSelectedRows } = useTableWrapper();
 
   const [sort, setSort] = useState(null);
-  const [filters, setFilters] = useState([{ field: null, value: null }]);
   const [columnOrder, setColumnOrder] = useState(null);
   const [columnVisibility, setColumnVisibility] = useState([]);
+  const [columnSizes, setColumnSizes] = useState({});
+  const [filters, setFilters] = useState([{ field: null, value: null }]);
 
   useEffect(() => {
     // if (!!!preferences) return;
@@ -154,6 +155,7 @@ const TableStack = ({
     setColumnOrder(preferences?.order);
     setSort(preferences?.sort || null);
     setFilters(preferences?.filters || [{ field: null, value: null }]);
+    setColumnSizes(preferences?.content);
     setSelectedRows([]);
     // eslint-disable-next-line
   }, [tableId, loading, view]);
@@ -187,7 +189,7 @@ const TableStack = ({
       ...columns.map((item) => ({
         id: item?.slug,
         enableSorting: !!setSort,
-        size: preferences?.content?.[item?.slug] || item?.width,
+        size: columnSizes?.[item?.slug] || item?.width,
         accessorFn: (row) => row?.[item?.slug],
         header: () => <span className="light">{item?.name}</span>,
         cell: (cell) =>
@@ -195,8 +197,16 @@ const TableStack = ({
       })),
     ],
     // eslint-disable-next-line
-    [columns]
+    [columns, columnSizes]
   );
+
+  const columnWidths = useMemo(() => {
+    return formatted_columns.reduce((acc, item) => {
+      acc[item.id] = item.size || 100;
+      return acc;
+    }, {});
+    // eslint-disable-next-line
+  }, [formatted_columns, columnSizes]);
 
   const table = useReactTable({
     data: data,
@@ -207,6 +217,7 @@ const TableStack = ({
     },
     state: {
       sorting: sort,
+      columnSizing: columnWidths,
       columnOrder: columnOrder?.map((item) => item),
       rowSelection: selectedRows,
       columnVisibility: columnVisibility,
@@ -221,6 +232,10 @@ const TableStack = ({
     enableColumnResizing: !!!fullWidth,
     getCoreRowModel: getCoreRowModel(),
     onRowSelectionChange: setSelectedRows,
+    onColumnSizingChange: (sizes) => {
+      const size = sizes();
+      setColumnSizes((prev) => ({ ...prev, ...size }));
+    },
   });
 
   useEffect(() => {
@@ -425,7 +440,7 @@ const TableStack = ({
                             key={header.id}
                             className={`${mainClass}__header__col`}
                             style={{
-                              width: header.getSize(),
+                              width: columnWidths?.[header.id],
                               flex: !!formatted_columns?.[index]?.size
                                 ? "unset"
                                 : !!fullWidth
@@ -487,7 +502,7 @@ const TableStack = ({
                             key={cell.id}
                             className={`${mainClass}__body__col`}
                             style={{
-                              width: cell.column.getSize(),
+                              width: columnWidths?.[cell.column.id],
                               flex: !!formatted_columns?.[index]?.size
                                 ? "unset"
                                 : !!fullWidth

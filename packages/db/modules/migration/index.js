@@ -1,5 +1,6 @@
 import knex from "../knex.js";
 import { fs } from "../../../utils/index.js";
+import createPreferencesIfNotExist from "../createPreferencesIfNotExist.js";
 
 const typesMap = {
   id: "string",
@@ -117,5 +118,7 @@ export default async () => {
         });
       });
     }
+
+    await createPreferencesIfNotExist(item?.id);
   }
 };
