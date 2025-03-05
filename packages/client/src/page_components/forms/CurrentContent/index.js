@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import TableView from "components/TableReader";
+import TableReader from "components/TableReader";
 import PreviewModal from "./components/PreviewModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
@@ -99,7 +99,7 @@ const FormContent = () => {
 
   return (
     <DashboardContentLayout breadcrumps={breadcrumps}>
-      <TableView
+      <TableReader
         meta={meta}
         selectAction={selectAction}
         rowClick={(row) =>

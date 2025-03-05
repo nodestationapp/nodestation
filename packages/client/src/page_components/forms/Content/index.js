@@ -51,6 +51,7 @@ const FormsContent = () => {
     <DashboardContentLayout breadcrumps={breadcrumps}>
       <TableStack
         fullWidth
+        hideHeader
         toolbar={toolbar}
         data={forms}
         tableId="nodestation_forms"

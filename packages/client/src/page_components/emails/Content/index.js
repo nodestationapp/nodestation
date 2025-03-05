@@ -32,8 +32,15 @@ const EmailsContent = () => {
   ];
 
   const toolbar = {
+    menu: [
+      {
+        label: "Templates",
+        href: `/emails`,
+      },
+    ],
     hideColumnOrder: true,
     newButtonHandler: () => setEmailEditor("new"),
+    settingsButtonHandler: `/emails/settings`,
     selectAction: [
       {
         icon: <TrashIcon color="#FF3636" />,
@@ -50,6 +57,7 @@ const EmailsContent = () => {
     <DashboardContentLayout breadcrumps={breadcrumps}>
       <TableStack
         fullWidth
+        hideHeader
         meta={meta}
         data={emails}
         toolbar={toolbar}
