@@ -58,6 +58,7 @@ const DropdownInput = ({
     }
 
     onChange({ target: { name, value: input_value } });
+    setInputValue("");
     setSelectOpen(false);
   };
 

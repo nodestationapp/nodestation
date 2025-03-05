@@ -13,7 +13,7 @@ import api from "libs/api";
 
 const mainClass = "table__toolbar__menu";
 
-const Submenu = ({ data, tableId, view }) => {
+const Submenu = ({ data, tableId, view, noEditableView }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
@@ -71,7 +71,7 @@ const Submenu = ({ data, tableId, view }) => {
             value={label}
             onChange={(e) => onUpdateView(e?.target?.value)}
             onDelete={onDeleteView}
-            preventSelectOpen={!!!active}
+            preventSelectOpen={!!!active || !!noEditableView}
             CustomButton={() => (
               <Component
                 to={href}
@@ -87,15 +87,19 @@ const Submenu = ({ data, tableId, view }) => {
           />
         );
       })}
-      {!!onAddView && (
-        <DropdownInput
-          placeholder="View name"
-          position="right"
-          onChange={(e) => onAddView(e?.target?.value)}
-          CustomButton={({ active }) => (
-            <IconButton active={active} size="small" icon={<PlusIcon />} />
+      {!!!noEditableView && (
+        <>
+          {!!onAddView && (
+            <DropdownInput
+              placeholder="View name"
+              position="right"
+              onChange={(e) => onAddView(e?.target?.value)}
+              CustomButton={({ active }) => (
+                <IconButton active={active} size="small" icon={<PlusIcon />} />
+              )}
+            />
           )}
-        />
+        </>
       )}
     </div>
   );

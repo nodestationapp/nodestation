@@ -24,7 +24,11 @@ const mainClass = "dashboard-layout-sidebar";
 
 const Menu = () => {
   const { forms_count } = useApp();
-  const { tables = [], setAddTableModal } = useOrganization();
+  const { tables = [], setAddTableModal, preferences } = useOrganization();
+
+  const auth_preferences = preferences?.find(
+    (item) => item?.table_id === "auth"
+  );
 
   const menu_items = [
     {
@@ -52,7 +56,7 @@ const Menu = () => {
     {
       icon: <UsersIcon />,
       label: "Authentication",
-      href: "/authentication",
+      href: `/authentication?v=${auth_preferences?.id}`,
     },
     {
       icon: <AtSymbolIcon />,

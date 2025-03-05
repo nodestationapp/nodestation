@@ -13,6 +13,7 @@ const Toolbar = ({
   selectedRows = [],
   filters,
   saveTransaction,
+  noEditableView,
   setFilters,
   tableSchema,
   filtersExpanded,
@@ -44,7 +45,12 @@ const Toolbar = ({
             ) : (
               <>
                 {!!data?.menu && (
-                  <Submenu tableId={tableId} data={data?.menu} view={view} />
+                  <Submenu
+                    tableId={tableId}
+                    data={data?.menu}
+                    view={view}
+                    noEditableView={data?.noEditableView}
+                  />
                 )}
               </>
             )}

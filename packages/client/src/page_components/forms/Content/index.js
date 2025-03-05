@@ -5,9 +5,9 @@ import ArchiveFormModal from "../components/ArchiveFormModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useForms } from "context/client/forms";
+import { useOrganization } from "context/organization";
 
 import { PaperAirplaneIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { useOrganization } from "context/organization";
 
 const breadcrumps = [
   {
@@ -19,7 +19,7 @@ const breadcrumps = [
 const FormsContent = () => {
   const navigate = useNavigate();
   const { forms, loading, archive_modal, setArchiveModal } = useForms();
-  const { setAddTableModal } = useOrganization();
+  const { setAddTableModal, preferences } = useOrganization();
 
   const columns = [
     {
@@ -37,6 +37,7 @@ const FormsContent = () => {
         href: `/forms`,
       },
     ],
+    noEditableView: true,
     hideColumnOrder: true,
     newButtonHandler: () => setAddTableModal("form"),
     selectAction: [
@@ -56,7 +57,13 @@ const FormsContent = () => {
         tableId="nodestation_forms"
         columns={columns}
         loading={loading}
-        rowClick={(row) => navigate(`/forms/${row?.row?.id}`)}
+        rowClick={(row) => {
+          const preference = preferences?.find(
+            (item) => item?.table_id === row?.row?.id
+          )?.id;
+
+          navigate(`/forms/${row?.row?.id}?v=${preference}`);
+        }}
       />
       {!!archive_modal && (
         <ArchiveFormModal type="list" onClose={() => setArchiveModal(null)} />
