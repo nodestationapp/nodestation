@@ -37,7 +37,6 @@ const FormsContent = () => {
         href: `/forms`,
       },
     ],
-    noEditableView: true,
     hideColumnOrder: true,
     newButtonHandler: () => setAddTableModal("form"),
     selectAction: [

@@ -67,6 +67,7 @@ const CronsList = () => {
             menu: [{ label: "Crons", variant: "label" }],
             hideColumnOrder: true,
           }}
+          hideHeader
           data={formatted_crons}
           columns={columns}
           disabledSelect={true}

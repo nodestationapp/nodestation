@@ -41,6 +41,7 @@ const MiddlewaresList = () => {
       >
         <TableStack
           fullWidth
+          hideHeader
           data={middlewares}
           toolbar={{
             menu: [{ label: "Middlewares", variant: "label" }],

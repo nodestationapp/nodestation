@@ -152,6 +152,7 @@ const EndpointsList = () => {
                 </div> */}
                   <TableStack
                     fullWidth
+                    hideHeader
                     toolbar={toolbar}
                     disabledSelect={true}
                     data={item?.items}

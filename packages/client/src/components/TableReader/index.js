@@ -18,6 +18,7 @@ const TableReader = ({ rowClick, selectAction, newButton, meta }) => {
         href: `${pathname}?v=${item?.id}`,
       })) || [],
     selectAction,
+    customizableView: true,
     settingsButtonHandler: `${pathname}/settings`,
     newButtonHandler: newButton,
   };

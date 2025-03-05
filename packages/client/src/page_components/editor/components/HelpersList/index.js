@@ -43,6 +43,7 @@ const HelpersList = () => {
         <TableStack
           fullWidth
           data={helpers}
+          hideHeader
           toolbar={{
             menu: [{ label: "Helpers", variant: "label" }],
             hideColumnOrder: true,

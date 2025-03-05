@@ -131,7 +131,6 @@ const TableStack = ({
   rowAction,
   tableSchema,
   disabledSelect,
-  noEditableView,
   loading = false,
   saveTransaction,
   fullWidth = false,
@@ -302,7 +301,7 @@ const TableStack = ({
 
   const toolbar = {
     menu: toolbarData?.menu,
-    noEditableView: toolbarData?.noEditableView,
+    customizableView: toolbarData?.customizableView,
     action: [
       ...(!!filtering
         ? [
@@ -410,7 +409,6 @@ const TableStack = ({
           setFilters={setFilters}
           tableSchema={tableSchema}
           selectedRows={selectedRows}
-          noEditableView={noEditableView}
           saveTransaction={saveTransaction}
           data={!!toolbarData ? toolbar : null}
           filtersExpanded={alwaysFiltersExpanded || filtersExpanded}
