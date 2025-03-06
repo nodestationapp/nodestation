@@ -51,11 +51,15 @@ const getTable = async (req, res) => {
       })
       .orderBy("created_at", "asc");
 
-    let preferences = await knex("nodestation_preferences").where({
-      id: view,
-    });
+    let preferences;
 
-    preferences = parseJSONFields(preferences)?.[0];
+    if (!!view) {
+      preferences = await knex("nodestation_preferences").where({
+        id: view,
+      });
+
+      preferences = parseJSONFields(preferences)?.[0];
+    }
 
     const auth = fs.getFiles();
     let tables = fs.getFiles(["tables", "forms"]);
@@ -94,7 +98,7 @@ const getTable = async (req, res) => {
       ...(preferences?.filters || []),
       ...Object.keys(rest)?.map((item) => ({
         field: item,
-        value: query?.[item],
+        value: req?.query?.[item],
       })),
     ];
 

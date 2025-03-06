@@ -50,6 +50,7 @@
         display: flex;
         align-items: center;
         flex-shrink: 0;
+        gap: 10px;
 
         > svg{
           height: 18px;
@@ -59,10 +60,6 @@
             stroke: #4B4F55;
           }
         }
-      }
-
-      .icon-button{
-        margin-right: 10px;
       }
 
       &__wrapper{

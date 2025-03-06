@@ -34,6 +34,7 @@ const FilterItem = ({
         slug: item?.slug,
         type: item?.type,
         options: item?.options,
+        relation: item?.relation,
         onClick: () => onFilterSelect(item?.slug),
       };
     })

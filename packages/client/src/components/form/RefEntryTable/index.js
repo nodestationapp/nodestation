@@ -21,6 +21,8 @@ const RefEntryTable = ({
   const [entries, setEntries] = useState([]);
   const [selectValue, setSelectValue] = useState(null);
 
+  const display_name = tables?.find((item) => item?.id === table)?.display_name;
+
   useEffect(() => {
     (async function () {
       if (!!!value) return;
@@ -28,25 +30,26 @@ const RefEntryTable = ({
       if (value?.id) {
         setSelectValue(value);
       } else {
-        const data = await fetchData(value);
+        const data = await fetchData(undefined, value);
         setSelectValue({
           id: data?.id,
-          label: data?.name,
+          label: data?.[display_name],
         });
       }
     })();
     // eslint-disable-next-line
   }, []);
 
-  const fetchData = async (id) => {
+  const fetchData = async (value, id) => {
     try {
-      const data = await api.get(`/tables/${table}`);
+      const data = await api.get(`/tables/${table}?${display_name}=${value}`);
+      const entry_data = await api.get(`/tables/${table}?id=${id}`);
 
       if (!!!id) {
         setEntries(data?.entries);
       }
 
-      return data?.table;
+      return entry_data?.entries?.[0];
     } catch (err) {
       console.error(err);
     }
@@ -56,8 +59,6 @@ const RefEntryTable = ({
     id: selectValue?.id,
     label: selectValue?.label,
   };
-
-  const display_name = tables?.find((item) => item?.id === table)?.display_name;
 
   const options = entries
     ?.map((item) => ({

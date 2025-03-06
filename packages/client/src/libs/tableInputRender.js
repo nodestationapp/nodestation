@@ -102,7 +102,6 @@ const tableInputRender = (item, display_name) => {
           name={item?.slug}
           label={item?.name}
           table={item?.relation}
-          display_name={display_name}
         />
       ) : (
         <FormikInput

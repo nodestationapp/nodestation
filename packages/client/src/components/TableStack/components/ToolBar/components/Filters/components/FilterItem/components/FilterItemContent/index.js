@@ -8,6 +8,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import Select from "components/form/Select";
 import FilterDate from "./components/Date";
 import UsersInput from "components/form/Users";
+import RefEntryTable from "components/form/RefEntryTable";
 
 const mainClass = "table__filter-item";
 
@@ -25,7 +26,15 @@ const filterInputRender = (column, onChangeHandler, value) => {
     case "text":
     case "numeric":
     case "json":
-      return (
+      return column?.relation ? (
+        <RefEntryTable
+          value={value}
+          size="small"
+          noArrow={true}
+          table={column?.relation}
+          onChange={(e) => onChangeHandler(e.target.value)}
+        />
+      ) : (
         <Input
           value={value}
           placeholder="Type a value"
