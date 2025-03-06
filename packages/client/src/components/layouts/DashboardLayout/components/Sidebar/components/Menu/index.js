@@ -66,11 +66,19 @@ const Menu = () => {
   ];
 
   const tables_menu_items = [
-    ...tables?.map((item) => ({
-      icon: <CircleStackIcon />,
-      label: item?.name,
-      href: `/tables/${item?.id}?v=${item?.view}`,
-    })),
+    ...tables?.map((item) => {
+      const table_preference =
+        preferences?.find(
+          (element) => element?.table_id === item?.id && !!element?.last_viewed
+        )?.id ||
+        preferences?.find((element) => element?.table_id === item?.id)?.id;
+
+      return {
+        icon: <CircleStackIcon />,
+        label: item?.name,
+        href: `/tables/${item?.id}?v=${table_preference}`,
+      };
+    }),
   ];
 
   return (

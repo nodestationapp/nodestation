@@ -7,15 +7,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import IconButton from "components/IconButton";
 import DropdownInput from "components/form/DropdownInput";
 
-import { PlusIcon } from "@heroicons/react/24/outline";
-
 import api from "libs/api";
+
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 const mainClass = "table__toolbar__menu";
 
 const Submenu = ({ data, tableId, view, customizableView }) => {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { pathname, search } = useLocation();
 
   const currentPathname = pathname + search;

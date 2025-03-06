@@ -10,10 +10,18 @@ const getAllTables = async (_, res) => {
       .select()
       .orderBy("created_at", "asc");
 
-    const formatted_tables = tables?.map((item) => ({
-      ...item,
-      view: preferences?.find((element) => element?.table_id === item?.id)?.id,
-    }));
+    const formatted_tables = tables?.map((item) => {
+      const view =
+        preferences?.find(
+          (element) => element?.table_id === item?.id && !!element?.last_viewed
+        )?.id ||
+        preferences?.find((element) => element?.table_id === item?.id)?.id;
+
+      return {
+        ...item,
+        view,
+      };
+    });
 
     return res.status(200).json(formatted_tables);
   } catch (err) {
@@ -59,6 +67,22 @@ const getTable = async (req, res) => {
       });
 
       preferences = parseJSONFields(preferences)?.[0];
+
+      await knex("nodestation_preferences")
+        .where({
+          table_id: id,
+        })
+        .update({
+          last_viewed: null,
+        });
+
+      await knex("nodestation_preferences")
+        .where({
+          id: view,
+        })
+        .update({
+          last_viewed: 1,
+        });
     }
 
     const auth = fs.getFiles();

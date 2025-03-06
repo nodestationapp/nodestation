@@ -1,20 +1,33 @@
-import { useQuery } from "@tanstack/react-query";
 import queryString from "query-string";
-
-import { useLocation } from "react-router-dom";
-import { createContext, useContext, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { createContext, useContext, useEffect, useMemo } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import api from "libs/api";
+import { useOrganization } from "context/organization";
 
 const TableContext = createContext();
 
 const TableProvider = ({ id, children }) => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
+  const { preferences } = useOrganization();
+
   const view = searchParams.get("v");
 
   const type = pathname?.split("/")?.[1];
+
+  useEffect(() => {
+    const table_preference =
+      preferences?.find((item) => item?.table_id === id && !!item?.last_viewed)
+        ?.id || preferences?.find((item) => item?.table_id === id)?.id;
+
+    if (!pathname?.includes("/settings") && !!!view) {
+      navigate(`${pathname}?v=${table_preference}`);
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const {
     data,
@@ -28,6 +41,7 @@ const TableProvider = ({ id, children }) => {
           view,
         })}`
       ),
+    enabled: !!view,
   });
 
   const updateTable = (values) =>

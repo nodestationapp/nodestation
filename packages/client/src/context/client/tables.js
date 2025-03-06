@@ -1,11 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext, useEffect, useMemo } from "react";
 
 import api from "libs/api";
+import { useLocation } from "react-router-dom";
 
 const TablesContext = createContext();
 
 const TablesProvider = ({ children }) => {
+  const { pathname } = useLocation();
+
   const { isLoading: loading, data: tables } = useQuery({
     queryKey: ["client_tables"],
     queryFn: () => api.get("/tables"),
