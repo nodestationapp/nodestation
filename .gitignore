@@ -2,6 +2,7 @@
 .nodestation/
 /src/
 dist/
+build/
 
 # DATABASE
 .db/

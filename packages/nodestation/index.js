@@ -1,16 +1,12 @@
 #!/usr/bin/env node
 
-import "dotenv/config";
+import entry from "./entry.js";
+import builder from "./build.js";
 
-import { server } from "@nstation/utils";
+if (process.argv[2] === "build") {
+  builder();
+}
 
-(async () => {
-  try {
-    const timeStart = new Date();
-
-    await server.create();
-    await server.start(timeStart);
-  } catch (err) {
-    console.error(err);
-  }
-})();
+if (process.argv[2] === "start" || process.argv[2] === "dev") {
+  entry(process.argv[2]);
+}

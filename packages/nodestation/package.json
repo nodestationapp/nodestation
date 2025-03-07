@@ -26,5 +26,8 @@
     "@nstation/server": "^1.13.1",
     "@nstation/utils": "^1.13.1",
     "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.0"
   }
 }

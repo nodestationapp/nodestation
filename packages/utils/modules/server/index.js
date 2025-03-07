@@ -7,9 +7,7 @@ import buildingServer from "./helpers/buildingServer/index.js";
 const create = async () => {
   try {
     if (!process?.env?.PORT) {
-      console.info(
-        `Error: The environment variable PORT is not set.\nRefer to the documentation for supported database clients.`
-      );
+      console.info(`Error: The environment variable PORT is not set.`);
       process.exit(1);
     }
 
@@ -21,16 +19,12 @@ const create = async () => {
     }
 
     if (!process?.env?.PUBLIC_URL) {
-      console.info(
-        `Error: The environment variable PUBLIC_URL is not set.\nRefer to the documentation for supported database clients.`
-      );
+      console.info(`Error: The environment variable PUBLIC_URL is not set`);
       process.exit(1);
     }
 
     if (!process?.env?.TOKEN_SECRET) {
-      console.info(
-        `Error: The environment variable TOKEN_SECRET is not set.\nRefer to the documentation for supported database clients.`
-      );
+      console.info(`Error: The environment variable TOKEN_SECRET is not set.`);
       process.exit(1);
     }
 

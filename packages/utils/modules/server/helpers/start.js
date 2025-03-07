@@ -34,22 +34,45 @@ ${chalk.cyan("Server URL:")}           http://localhost:${process.env.PORT}`;
 // ${chalk.underline("Documentation:")}
 // ${chalk.cyan("https://docs.example.com")}`;
 
-export default async (timeStart) => {
+export default async (timeStart, type) => {
   try {
-    const cwd = path.join(rootPath, "node_modules", "@nstation", "server");
+    let cwd;
 
-    cli.runCommand({
-      cmd: "nodemon",
-      args: [
-        "--watch",
-        path.join(rootPath, ".nodestation"),
-        "--delay",
-        "10ms",
-        "--quiet",
-        "index.js",
-      ],
-      __dirname: cwd,
-    });
+    console.log(type === "dev");
+    if (type === "dev") {
+      cwd = path.join(rootPath, "node_modules", "@nstation", "server");
+
+      cli.runCommand({
+        cmd: "nodemon",
+        args: [
+          "--watch",
+          path.join(rootPath, ".nodestation"),
+          "--delay",
+          "10ms",
+          "--quiet",
+          "index.js",
+        ],
+        __dirname: cwd,
+      });
+
+      cli.runCommand({
+        cmd: "npm",
+        args: [
+          "--prefix",
+          path.join("node_modules", "@nstation", "client"),
+          "start",
+        ],
+        __dirname: rootPath,
+      });
+    } else {
+      cwd = path.join(rootPath, "build");
+
+      cli.runCommand({
+        cmd: "node",
+        args: ["index.js"],
+        __dirname: cwd,
+      });
+    }
 
     const timeEnd = new Date();
     const executionTime = timeEnd - timeStart;

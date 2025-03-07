@@ -18,10 +18,11 @@
   "scripts": {
     "test": "vitest",
     "release": "release-it",
-    "start": "node ./packages/nodestation/index.js",
-    "dev": "npm run dev:server & npm run dev:client",
-    "build": "npm --prefix ./packages/client run build",
+    "dev": "nodestation dev",
+    "start": "nodestation start",
+    "build": "nodestation build",
     "dev:client": "npm --prefix ./packages/client start",
+    "build:client": "npm --prefix ./packages/client run build",
     "dev:server": "nodemon ./packages/nodestation/index.js --watch ./packages/server"
   },
   "devDependencies": {
@@ -42,7 +43,7 @@
       "release": true
     },
     "hooks": {
-      "before:release": "npm run build"
+      "before:release": "npm run build:client"
     },
     "plugins": {
       "@release-it/conventional-changelog": {
@@ -72,9 +73,5 @@
         ]
       }
     }
-  },
-  "dependencies": {
-    "morgan": "^1.10.0",
-    "winston": "^3.17.0"
   }
 }

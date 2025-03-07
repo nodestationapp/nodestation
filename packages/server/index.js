@@ -1,3 +1,5 @@
+// import "dotenv/config";
+
 import NStation from "./libs/server/index.js";
 
 const nodestation = new NStation({
