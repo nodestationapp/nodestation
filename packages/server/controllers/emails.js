@@ -16,12 +16,7 @@ const createEmail = async (req, res) => {
   const body = req?.body;
 
   try {
-    const formatted_body = {
-      ...body,
-      type: "em",
-    };
-
-    const id = await fs.createFile(formatted_body);
+    const id = await fs.createFile({ body, type: "em" });
 
     return res.status(200).json(id);
   } catch (err) {
@@ -31,19 +26,11 @@ const createEmail = async (req, res) => {
 };
 
 const updateEmail = async (req, res) => {
-  const { id } = req?.params;
   const body = req?.body;
+  const { id } = req?.params;
 
   try {
-    const emails = fs.getFiles(["emails"]);
-    const email = emails?.find((item) => item?.id === id);
-
-    const formatted_body = {
-      ...email,
-      ...body,
-    };
-
-    await fs.updateFile(id, formatted_body);
+    await fs.createFile({ body, type: "em", entry_id: id });
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

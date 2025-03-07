@@ -8,17 +8,6 @@ import folderNameParser from "./helpers/folderNameParser.js";
 import generateServer from "./helpers/generateServer/index.js";
 import removeUploadedFile from "./helpers/removeUploadedFile/index.js";
 
-const updateFile = async (id, body) =>
-  new Promise(async (resolve, reject) => {
-    try {
-      await createFile(body, id);
-
-      return resolve(true);
-    } catch (err) {
-      return reject(err);
-    }
-  });
-
 const deleteFile = async (id) =>
   new Promise(async (resolve, reject) => {
     try {
@@ -37,7 +26,6 @@ const deleteFile = async (id) =>
 export default {
   getFiles,
   createFile,
-  updateFile,
   deleteFile,
   generateServer,
   removeUploadedFile,

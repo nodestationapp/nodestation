@@ -15,7 +15,7 @@ const createEditor = async (req, res) => {
   const body = req?.body;
 
   try {
-    const id = await fs.createFile(body);
+    const id = await fs.createFile({ body, type: "ep" });
 
     return res.status(200).json({ id, name: body?.name, type: body?.type });
   } catch (err) {
@@ -29,7 +29,7 @@ const updateEditor = async (req, res) => {
   const { id } = req?.params;
 
   try {
-    await fs.updateFile(id, body);
+    await fs.createFile({ body, type: "ep", entry_id: id });
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {
