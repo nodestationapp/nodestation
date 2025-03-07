@@ -10,6 +10,7 @@ import DropdownInput from "components/form/DropdownInput";
 import api from "libs/api";
 
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { useOrganization } from "context/organization";
 
 const mainClass = "table__toolbar__menu";
 
@@ -17,6 +18,7 @@ const Submenu = ({ data, tableId, view, customizableView }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { pathname, search } = useLocation();
+  const { updatePreferences } = useOrganization();
 
   const currentPathname = pathname + search;
 
@@ -60,7 +62,7 @@ const Submenu = ({ data, tableId, view, customizableView }) => {
 
   return (
     <div className={mainClass}>
-      {data?.map(({ label, href, icon, variant }, index) => {
+      {data?.map(({ id, label, href, icon, variant }, index) => {
         const active = currentPathname === href || variant === "label";
         const Component = href ? Link : "span";
 
@@ -71,11 +73,12 @@ const Submenu = ({ data, tableId, view, customizableView }) => {
             value={label}
             onChange={(e) => onUpdateView(e?.target?.value)}
             onDelete={onDeleteView}
-            preventSelectOpen={!!!active || !!!customizableView}
+            preventSelectOpen={!active || !customizableView}
             CustomButton={() => (
               <Component
                 to={href}
                 key={index}
+                onClick={() => updatePreferences(id)}
                 className={classnames(`${mainClass}__item`, {
                   [`${mainClass}__item--active`]: active,
                 })}

@@ -41,7 +41,7 @@ const TableProvider = ({ id, children }) => {
           view,
         })}`
       ),
-    enabled: !!view,
+    enabled: !!view || pathname?.includes("/settings"),
   });
 
   const updateTable = (values) =>
