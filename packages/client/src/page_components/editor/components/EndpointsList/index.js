@@ -1,11 +1,12 @@
 import "./styles.scss";
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { flattenTree } from "react-accessible-treeview";
 
 import Button from "components/Button";
 import TableStack from "components/TableStack";
 import IconButton from "components/IconButton";
+import ContentEditorModal from "../ContentEditorModal";
 import NoItemsFound from "components/List/components/NoItemsFound";
 import ArchiveEndpointModal from "./components/ArchiveEndpointModal";
 import EditorContentLayout from "components/layouts/EditorContentLayout";
@@ -19,18 +20,24 @@ import {
 } from "@heroicons/react/24/outline";
 
 const EndpointsList = () => {
-  const navigate = useNavigate();
-  const { editor } = useEditor();
+  const { editor, setEditorModal, editor_modal } = useEditor();
 
   const [archive_modal, setArchiveModal] = useState(false);
 
-  const endpoints = editor?.filter((item) => item?.type === "ep");
+  const endpoints = editor?.find((item) => item?.name === "endpoints");
+
+  let flatten_endpoints = flattenTree(endpoints);
+  flatten_endpoints.splice(0, 1);
+  flatten_endpoints.sort((a, b) => a.parent - b.parent);
 
   let groups = [];
-  endpoints?.forEach((item) => {
-    let group_name = item?.name?.split("/")?.[1];
+  flatten_endpoints?.forEach((item) => {
+    let group_name = item?.metadata?.path?.split("/")?.[2];
 
     const index = groups?.findIndex((item) => item?.group === group_name);
+
+    if (group_name === item?.name) return;
+    if (!!item?.children?.length) return;
 
     if (index === -1) {
       groups?.push({
@@ -52,40 +59,6 @@ const EndpointsList = () => {
     },
   ];
 
-  const fields = [
-    {
-      sort_key: "path",
-      key: "name",
-      value: "Name",
-    },
-    {
-      key: "icon",
-      sort_key: "status",
-      value: "Status",
-    },
-    {
-      key: "icon",
-      sort_key: "auth",
-      value: "Authentication",
-    },
-    {
-      key: "icon",
-      sort_key: "middlewares",
-      value: "Middlewares",
-    },
-    {
-      key: "icon",
-      sort_key: "parser",
-      value: "Parser",
-    },
-  ];
-
-  const all_sections = groups?.map((item) => ({
-    keys: [...fields],
-    group: item?.group,
-    items: item?.items,
-  }));
-
   const columns = [
     {
       key: "name",
@@ -93,24 +66,24 @@ const EndpointsList = () => {
       slug: "endpoint_name",
       type: "endpoint_name",
     },
-    {
-      key: "status",
-      value: "Status",
-      slug: "status",
-      type: "status",
-    },
-    {
-      key: "authentication",
-      type: "icon",
-      slug: "authentication",
-      value: "Authentication",
-    },
-    {
-      key: "middlewares",
-      type: "icon",
-      slug: "middlewares",
-      value: "Middlewares",
-    },
+    // {
+    //   key: "status",
+    //   value: "Status",
+    //   slug: "status",
+    //   type: "status",
+    // },
+    // {
+    //   key: "authentication",
+    //   type: "icon",
+    //   slug: "authentication",
+    //   value: "Authentication",
+    // },
+    // {
+    //   key: "middlewares",
+    //   type: "icon",
+    //   slug: "middlewares",
+    //   value: "Middlewares",
+    // },
   ];
 
   return (
@@ -124,11 +97,11 @@ const EndpointsList = () => {
           </Button>
         }
       >
-        {all_sections?.length === 0 ? (
+        {groups?.length === 0 ? (
           <NoItemsFound />
         ) : (
           <>
-            {all_sections?.map((item, index) => {
+            {groups?.map((item, index) => {
               const toolbar = {
                 menu: [
                   {
@@ -166,9 +139,7 @@ const EndpointsList = () => {
                         icon={<TrashIcon color="#FF3636" />}
                       />
                     )}
-                    rowClick={({ row }) =>
-                      navigate(`/editor/endpoints${row?.name}/${row?.id}`)
-                    }
+                    rowClick={({ row }) => setEditorModal(row)}
                   />
                 </div>
               );
@@ -180,6 +151,12 @@ const EndpointsList = () => {
         <ArchiveEndpointModal
           data={archive_modal}
           onClose={() => setArchiveModal(null)}
+        />
+      )}
+      {!!editor_modal && (
+        <ContentEditorModal
+          data={editor_modal}
+          onClose={() => setEditorModal(false)}
         />
       )}
     </>

@@ -13,6 +13,7 @@ const EditorProvider = ({ children }) => {
   const queryClient = useQueryClient();
 
   const [has_errors, setHasErrors] = useState(false);
+  const [editor_modal, setEditorModal] = useState(false);
 
   const query = new URLSearchParams(search);
   const query_type = query.get("type");
@@ -90,8 +91,8 @@ const EditorProvider = ({ children }) => {
   const value = useMemo(() => {
     return {
       id: entry_id,
-      editor: editor?.editor,
-      groups: editor?.groups,
+      editor,
+      groups: [],
       current_entry,
       query_type,
       loading,
@@ -101,6 +102,8 @@ const EditorProvider = ({ children }) => {
       has_errors,
       setHasErrors,
       settings,
+      editor_modal,
+      setEditorModal,
     };
     // eslint-disable-next-line
   }, [
@@ -111,6 +114,7 @@ const EditorProvider = ({ children }) => {
     loading,
     has_errors,
     settings,
+    editor_modal,
   ]);
 
   if (!!loading) return null;

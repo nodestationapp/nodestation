@@ -1,14 +1,11 @@
 .title-input{
   display: flex;
   align-items: center;
-  background-color: #262D35;
   border: none;
-  height: 44px;
   border-bottom: 1px solid #3C414B;
+  padding: 10px 0;
 
-  &--method{
-    height: 50px;
-  }
+
 
   .method-select{
     padding-right: 10px;
@@ -27,7 +24,7 @@
   }
 
   input{
-    background-color: #262D35;
+    background-color: #21252B;
     border: none;
     color: #fff;
     font-size: 14px;

@@ -44,11 +44,10 @@
         .select{
           &__content{
             > button{
-              background-color: #262D35;
               border: none;
   
               &:hover{
-                background-color: #30353D;
+                background-color: #262D35;
               }
             }
           }
@@ -59,11 +58,10 @@
           height: 100%;
 
           > button{
-            background-color: #262D35;
             border: none;
 
             &:hover{
-              background-color: #30353D;
+              background-color: #262D35;
             }
           }
         }

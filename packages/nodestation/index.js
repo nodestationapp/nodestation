@@ -8,7 +8,7 @@ import { server } from "@nstation/utils";
   try {
     const timeStart = new Date();
 
-    await server.create();
+    // await server.create();
     await server.start(timeStart);
   } catch (err) {
     console.error(err);

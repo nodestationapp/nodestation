@@ -1,88 +1,11 @@
 .editor-content{
-    display: flex;
-    height: calc(100vh - 52px);
-    position: relative;
+    margin-top: -20px;
+    width: 100%;
 
-    &__left{
-        flex: 1;
-        display: flex;
-        overflow: auto;
-    }
+    &:hover{
 
-    &__right{
-        width: 380px;
-        background-color: #272D34;
-        border-left: 1px solid #3C414B;
-        flex-shrink: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        position: relative;
-        transition: all ease 0.4s;
-
-        &__wrapper{
-            padding: 0 15px;
-        }
-
-        &__title{
-            padding: 0 15px;
-        }
-
-        &:hover{
-
-            .editor-content__right__resize{
-                display: flex;
-            }
-        }
-
-        &--fixed{
-            position: fixed;
-            top: 52px;
-            right: 0;
-            bottom: 0;
-            transform: translateX(95.8%);
-
-            .editor-content__right__resize{
-                display: flex;
-
-                svg{
-                    transform: rotate(0deg);
-                }
-            }
-
-            &:hover{
-                transform: translateX(0);
-            }
-        }
-
-        &__resize{
-            background-color: #30353D;
-            border: 1px solid #3C414B;
-            height: 22px;
-            width: 22px;
-            border-radius: 50%;
-            position: absolute;
-            left: 0px;
-            top: 25px;
-            transform: translateX(-50%);
+        .editor-content__right__resize{
             display: flex;
-            align-items: center;
-            justify-content: center;
-            display: none;
-
-            &:hover{
-                background-color: #3C414B;
-            }
-
-            svg{
-                height: 14px;
-                width: 14px;
-                transform: rotate(180deg);
-
-                path{
-                    stroke-width: 2px;
-                }
-            }
         }
     }
 

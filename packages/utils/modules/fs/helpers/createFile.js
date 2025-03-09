@@ -1,60 +1,24 @@
-import fs from "fs";
 import path from "path";
-import slugify from "slugify";
+import { promises as fs } from "fs";
 
 import rootPath from "#modules/rootPath.js";
 
-import removeEmptyKeys from "./removeEmptyKeys.js";
-import checkEntryExist from "../helpers/checkEntryExists.js";
-import generateCustomId from "../helpers/generateCustomId.js";
-import folderNameParser from "../helpers/folderNameParser.js";
-import generateServer from "../helpers/generateServer/index.js";
-
-const createFile = async ({ body, entry_id, type }) =>
+const createFile = async ({ content, path: file_path }) =>
   new Promise(async (resolve, reject) => {
-    const id = entry_id || generateCustomId(type);
+    try {
+      const directory = path.join(rootPath, file_path);
 
-    const folder = folderNameParser(type);
-    if (!!!folder) {
-      return reject("Invalid folder");
+      await fs.mkdir(path.dirname(directory), { recursive: true });
+      await fs.writeFile(directory, content, { flag: "wx" });
+    } catch (err) {
+      if (err.code === "EEXIST") {
+        return reject({ error: "File already exist." });
+      }
     }
 
-    const file_exist = checkEntryExist(body, entry_id);
-    if (!!file_exist) {
-      return reject({ error: "File already exist" });
-    }
+    // generateServer();
 
-    const directory = path.join(rootPath, "src", folder);
-
-    if (!!!fs.existsSync(directory)) {
-      fs.mkdirSync(directory, { recursive: true });
-    }
-
-    delete body.type;
-
-    if (!!body?.fields) {
-      const slug = slugify(body?.name, {
-        replacement: "_",
-        lower: true,
-      });
-
-      body = {
-        ...body,
-        table: type === "tbl" ? slug : id === "auth" ? "nodestation_users" : id,
-        fields: removeEmptyKeys(body?.fields),
-      };
-    }
-
-    const jsonContent = JSON.stringify(body, null, 2);
-    fs.writeFileSync(
-      path.join(rootPath, "src", folder, `${id}.json`),
-      jsonContent,
-      "utf8"
-    );
-
-    generateServer();
-
-    return resolve(id);
+    return resolve("ok");
   });
 
 export default createFile;

@@ -1,5 +1,7 @@
-import { Formik, Form } from "formik";
+import "./styles.scss";
 
+import { Formik, Form } from "formik";
+import AsideModal from "components/AsideModal";
 import FormikSaveListener from "components/formik/FormikSaveListener";
 
 import editorSchema from "libs/validations/editorSchema";
@@ -7,35 +9,25 @@ import editorFormikRender from "libs/helpers/editorFormikRender";
 import editorOptionsRender from "libs/helpers/editorOptionsRender";
 import editorTitleInputRender from "libs/helpers/editorTitleInputRender";
 
-import { useEditor } from "context/client/editor";
+const mainClass = "content-editor-modal";
 
-const mainClass = "editor-content";
-
-const ContentEditor = ({ data, onSubmit, type = "ep" }) => {
-  const { editor, id } = useEditor();
-
-  const current_editor = editor?.find((item) => item?.id === id);
-
+const ContentEditorModal = ({ data, type = "ep", onClose }) => {
   const onSubmitHandler = async (values, setSubmitting, resetForm) => {
     try {
-      await onSubmit(values, setSubmitting, resetForm);
+      // await onSubmit(values, setSubmitting, resetForm);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const initial_values = editorFormikRender(type, current_editor);
+  const initial_values = editorFormikRender(type, data);
   const editor_options = editorOptionsRender(type);
   const title_input = editorTitleInputRender(type);
 
-  const key = !!data ? data?.id : type;
-
   return (
     <Formik
-      key={[key, id]}
       validateOnChange
       initialValues={initial_values}
-      enableReinitialize={true}
       validationSchema={editorSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         onSubmitHandler(values, setSubmitting, resetForm);
@@ -43,15 +35,24 @@ const ContentEditor = ({ data, onSubmit, type = "ep" }) => {
     >
       {({ submitForm, isSubmitting, dirty, errors }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
-          <div className={mainClass}>
-            <div className={`${mainClass}__title`}>{title_input}</div>
-            <div className={`${mainClass}__wrapper`}>{editor_options}</div>
-          </div>
-          <FormikSaveListener disabled={!dirty} />
+          <AsideModal
+            header={
+              !!data?.id ? `${data?.first_name} ${data?.last_name}` : "Add user"
+            }
+            onClose={onClose}
+            onSubmit={submitForm}
+            loading={isSubmitting}
+          >
+            <div className={mainClass}>
+              <div className={`${mainClass}__title`}>{title_input}</div>
+              <div className={`${mainClass}__wrapper`}>{editor_options}</div>
+            </div>
+            <FormikSaveListener disabled={!dirty} />
+          </AsideModal>
         </Form>
       )}
     </Formik>
   );
 };
 
-export default ContentEditor;
+export default ContentEditorModal;

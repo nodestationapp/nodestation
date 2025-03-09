@@ -1,17 +1,21 @@
 import "./styles.scss";
 import MethodSelect from "components/MethodSelect";
-import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 const mainClass = "table__user-endpoint-name";
 
 const EndpointName = ({ data }) => {
+  const method = data?.metadata?.path?.split("/")?.pop();
+
+  const path = data?.metadata?.path?.split("/");
+  path.splice(0, 2);
+  path.pop();
+
+  const formatted_path = path?.join("/");
+
   return (
     <div className={mainClass}>
-      <MethodSelect method={data?.options?.method} read_only />
-      <span>
-        {data?.name}
-        {data?.error && <ExclamationCircleIcon />}
-      </span>
+      <MethodSelect method={method} read_only />
+      <span>/{formatted_path}</span>
     </div>
   );
 };

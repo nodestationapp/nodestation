@@ -13,9 +13,7 @@ const router = express.Router();
 router
   .route("/")
   .get(authMiddleware(["admin"]), getAllEditor)
-  .post(authMiddleware(["admin"]), createEditor);
-router
-  .route("/:id")
+  .post(authMiddleware(["admin"]), createEditor)
   .put(authMiddleware(["admin"]), updateEditor)
   .delete(authMiddleware(["admin"]), deleteEditor);
 

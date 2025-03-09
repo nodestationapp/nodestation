@@ -1,10 +1,17 @@
-import { fs } from "@nstation/utils";
+import path from "path";
+import { promises as fs_promise } from "fs";
+import { fs, rootPath } from "@nstation/utils";
+
+import editorDefaultContent from "#libs/editorDefaultContent.js";
 
 const getAllEditor = async (_, res) => {
   try {
-    let files = fs.getFiles(["endpoints", "crons", "helpers", "middlewares"]);
+    let endpoints = fs.getFiles(["endpoints"]);
+    let crons = fs.getFiles(["crons"]);
 
-    return res.status(200).json({ editor: files });
+    const files = [...endpoints, ...crons];
+
+    return res.status(200).json(files);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
@@ -14,8 +21,13 @@ const getAllEditor = async (_, res) => {
 const createEditor = async (req, res) => {
   const body = req?.body;
 
+  const content = editorDefaultContent(body);
+
   try {
-    const id = await fs.createFile({ body, type: "ep" });
+    const id = await fs.createFile({
+      content,
+      path: `${path.join(`/src_new`, body?.path)}.js`,
+    });
 
     return res.status(200).json({ id, name: body?.name, type: body?.type });
   } catch (err) {
@@ -26,10 +38,42 @@ const createEditor = async (req, res) => {
 
 const updateEditor = async (req, res) => {
   const body = req?.body;
-  const { id } = req?.params;
 
   try {
-    await fs.createFile({ body, type: "ep", entry_id: id });
+    const file_path = path.join(rootPath, `/src_new`, body?.path) + ".js";
+    const file_content = await fs_promise.readFile(file_path, "utf8");
+    if (!file_content) {
+      throw new Error("File not found");
+    }
+
+    let content;
+    if (body?.properties) {
+      content = file_content;
+      for (const [key, value] of Object.entries(body?.properties)) {
+        if (value) {
+          const regex = new RegExp(`@${key} .*`, "g");
+
+          if (!content.match(regex)) {
+            if (content.includes("*/")) {
+              content = content.replace("*/", `* @${key} ${value}\n */`);
+            } else {
+              content = `/**\n * @${key} ${value}\n */\n\n${content}`;
+            }
+            continue;
+          }
+
+          content = content.replace(regex, `@${key} ${value}`);
+        }
+      }
+    }
+
+    await fs.updateFile({
+      content,
+      path: `${path.join(`/src_new`, body?.path)}.js`,
+      ...(body?.new_path && {
+        new_path: `${path.join(`/src_new`, body?.new_path)}.js`,
+      }),
+    });
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {
@@ -39,10 +83,10 @@ const updateEditor = async (req, res) => {
 };
 
 const deleteEditor = async (req, res) => {
-  const { id } = req?.params;
+  const body = req?.body;
 
   try {
-    await fs.deleteFile(id);
+    await fs.deleteFile(`${path.join(`/src_new`, body?.path)}.js`);
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {
