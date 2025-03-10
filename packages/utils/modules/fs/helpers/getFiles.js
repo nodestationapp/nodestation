@@ -3,26 +3,22 @@ import path from "path";
 
 import rootPath from "#modules/rootPath.js";
 
-const getFiles = (folders = []) => {
+const getFiles = (folders = [], options = {}) => {
   let files = [];
-  const srcPath = path.join(rootPath, "src_new");
+  const srcPath = path.join(rootPath, options?.rootFolder || "src_new");
 
   const traverseDirectory = (folderPath, relativePath = "") => {
     const items = fs.readdirSync(folderPath, { withFileTypes: true });
     const children = [];
 
-    console.log(items);
+    const rootFolder = options?.rootFolder || "src_new";
 
     items.forEach((item) => {
       const itemPath = path.join(folderPath, item.name);
-      const itemRelativePath = path.join(
-        "/",
-        relativePath,
-        item.name.replace(".js", "")
-      );
-      const name = item.name.replace(".js", "");
+      const itemRelativePath = path.join("/", relativePath, item.name);
+      let name = item.name;
 
-      const fullPath = itemPath.split("src_new/")[1];
+      const fullPath = itemPath.split(rootFolder + "/")[1];
       const type = fullPath ? fullPath.split("/")[0] : null;
 
       if (item.isDirectory()) {
@@ -36,10 +32,13 @@ const getFiles = (folders = []) => {
         };
         children.push(folder);
       } else {
+        const content = fs.readFileSync(itemPath, "utf8");
+
         children.push({
           name,
           metadata: {
             type,
+            content,
             path: itemRelativePath,
           },
         });
@@ -62,37 +61,6 @@ const getFiles = (folders = []) => {
           children: traverseDirectory(folderPath, folder),
         };
         files.push(folderStructure);
-      }
-    });
-
-    files.forEach((folder) => {
-      if (folder.children) {
-        folder.children.sort((a, b) => {
-          if ((!a.children && !b.children) || (a.children && b.children)) {
-            return a.name.localeCompare(b.name);
-          }
-          if (a.children && !b.children) return -1;
-          if (!a.children && b.children) return 1;
-          return 0;
-        });
-
-        if (folder.children.length > 0) {
-          folder.children.forEach((child) => {
-            if (child.children && child.children.length > 0) {
-              child.children.sort((a, b) => {
-                if (
-                  (!a.children && !b.children) ||
-                  (a.children && b.children)
-                ) {
-                  return a.name.localeCompare(b.name);
-                }
-                if (a.children && !b.children) return -1;
-                if (!a.children && b.children) return 1;
-                return 0;
-              });
-            }
-          });
-        }
       }
     });
 

@@ -36,12 +36,11 @@ const ContentEditorModal = ({ data, type = "ep", onClose }) => {
       {({ submitForm, isSubmitting, dirty, errors }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
           <AsideModal
-            header={
-              !!data?.id ? `${data?.first_name} ${data?.last_name}` : "Add user"
-            }
             onClose={onClose}
+            submit_label="Save"
             onSubmit={submitForm}
             loading={isSubmitting}
+            header={data?.name || "Add user"}
           >
             <div className={mainClass}>
               <div className={`${mainClass}__title`}>{title_input}</div>

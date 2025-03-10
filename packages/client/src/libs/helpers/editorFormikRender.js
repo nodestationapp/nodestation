@@ -4,15 +4,12 @@ const formik_render = (type, data) => {
       return {
         type: "ep",
         name: data?.name || "/",
-        status: data?.status || "active",
-        content:
-          data?.content ||
-          `export default async (req, res) => {\n  try{\n    //your code here\n    return res.status(200).json({ status: "ok" });\n  }catch(err){\n    console.log(err);\n    return res.status(500).json({ error: "Something went wrong" });  \n  }\n}`,
-        options: {
-          middlewares: data?.options?.middlewares || [],
-          parser: data?.options?.parser || "json",
-          auth: data?.options?.auth || [],
-          method: data?.options?.method || "post",
+        method: data?.metadata?.method || "post",
+        properties: {
+          status: data?.metadata?.properties?.status || "active",
+          middlewares: data?.metadata?.properties?.middlewares || [],
+          parser: data?.metadata?.properties?.parser || "json",
+          auth: data?.metadata?.properties?.auth || [],
         },
       };
     case "cron":

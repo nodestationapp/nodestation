@@ -35,8 +35,8 @@ const TitleInput = ({ label, name, type, placeholder }) => {
     >
       {type === "method" && (
         <MethodSelect
-          method={values?.options?.method}
-          onChange={(value) => setFieldValue("options.method", value)}
+          method={values?.method}
+          onChange={(value) => setFieldValue("method", value)}
         />
       )}
       {!!label && <label>{label}</label>}

@@ -7,11 +7,11 @@ import editorDefaultContent from "#libs/editorDefaultContent.js";
 const getAllEditor = async (_, res) => {
   try {
     let endpoints = fs.getFiles(["endpoints"]);
-    let crons = fs.getFiles(["crons"]);
+    // let crons = fs.getFiles(["crons"]);
 
-    const files = [...endpoints, ...crons];
+    const formatted_endpoints = traverseAndModifyMetadata(endpoints?.[0]);
 
-    return res.status(200).json(files);
+    return res.status(200).json(formatted_endpoints);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
@@ -94,5 +94,41 @@ const deleteEditor = async (req, res) => {
     return res.status(500).json(err);
   }
 };
+
+function traverseAndModifyMetadata(directory) {
+  const modifiedStructure = [];
+
+  directory.children.forEach((item) => {
+    let properties = {};
+
+    if (item.metadata.type === "endpoints") {
+      const path = item?.metadata?.path?.split("/");
+      path.splice(0, 2);
+      path.pop();
+
+      item.metadata.method = item.name.replace(".js", "");
+      item.name = `/${path?.join("/")}`;
+
+      const propertyMatch = item?.metadata?.content?.match(/\* @(\w+) (.*)/g);
+      if (propertyMatch) {
+        propertyMatch.forEach((match) => {
+          const [_, key, value] = match.match(/\* @(\w+) (.*)/);
+          properties[key] = value === "[]" ? [] : value;
+        });
+      }
+
+      item.metadata.properties = properties;
+      delete item?.metadata?.content;
+    }
+
+    if (item.children && item.children.length > 0) {
+      item.children = traverseAndModifyMetadata(item);
+    }
+
+    modifiedStructure.push(item);
+  });
+
+  return modifiedStructure;
+}
 
 export { getAllEditor, createEditor, updateEditor, deleteEditor };

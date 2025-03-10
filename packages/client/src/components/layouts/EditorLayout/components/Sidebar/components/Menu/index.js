@@ -128,7 +128,7 @@ const Menu = () => {
                     <FolderIcon height={18} width={18} />
                   ) : (
                     <FileIcon
-                      filename={element.name}
+                      filename={element?.metadata?.method}
                       type={element?.metadata?.type}
                     />
                   )}

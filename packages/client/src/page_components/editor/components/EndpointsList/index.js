@@ -24,7 +24,9 @@ const EndpointsList = () => {
 
   const [archive_modal, setArchiveModal] = useState(false);
 
-  const endpoints = editor?.find((item) => item?.name === "endpoints");
+  const endpoints = {
+    children: editor,
+  };
 
   let flatten_endpoints = flattenTree(endpoints);
   flatten_endpoints.splice(0, 1);

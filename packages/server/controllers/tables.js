@@ -86,7 +86,10 @@ const getTable = async (req, res) => {
     }
 
     const auth = fs.getFiles();
-    let tables = fs.getFiles(["tables", "forms"]);
+    let tables = fs.getFiles(["tables", "forms"], {
+      rootFolder: "src",
+    });
+
     const authTable = auth?.find((item) => item?.id?.toString() === "auth");
     tables.push(authTable);
 
