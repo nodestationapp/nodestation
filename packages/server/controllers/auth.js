@@ -8,7 +8,7 @@ import {
 } from "@nstation/auth";
 import bcrypt from "bcryptjs";
 import { fs } from "@nstation/utils";
-import { knex, createSchema, queryBuilder } from "@nstation/db";
+import { knex, createSchema } from "@nstation/db";
 
 import upsertEntry from "#libs/upsertEntry.js";
 
@@ -53,10 +53,9 @@ const authLogin = async (req, res) => {
 
 const getSettingsAuth = async (_, res) => {
   try {
-    const files = fs.getFiles();
-    const auth = files?.find((item) => item?.id?.toString() === "auth");
+    const files = fs.getFiles(`/schemas/auth.json`);
 
-    return res.status(200).json({ fields: auth?.fields });
+    return res.status(200).json({ fields: files?.[0]?.content?.fields });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });

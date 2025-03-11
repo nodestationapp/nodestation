@@ -33,10 +33,11 @@ const upsertEntry = async ({
       }
     }
 
-    const allSchemas = !!type
-      ? fs.getFiles(["tables", "forms"])
-      : fs.getFiles();
-    const schema = allSchemas?.find((item) => item?.id?.toString() === id);
+    const allSchemas =
+      type === "tables"
+        ? fs.getFiles(["/schemas/tables/**/*.json", "/schemas/forms/**/*.json"])
+        : fs.getFiles("/schemas/auth.json");
+    const schema = allSchemas?.find((item) => item?.id === id);
     let schemaFields = schema?.fields;
 
     schemaFields = [...schemaFields, ...extraFields];

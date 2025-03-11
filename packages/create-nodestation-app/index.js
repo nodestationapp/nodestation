@@ -82,9 +82,11 @@ const authSchema = JSON.parse(
       path.join(projectPath, "package.json"),
       JSON.stringify(packageJson, null, 2)
     );
-    await fs_promise.mkdir(path.join(projectPath, "src"), { recursive: true });
+    await fs_promise.mkdir(path.join(projectPath, "schemas"), {
+      recursive: true,
+    });
     await fs_promise.writeFile(
-      path.join(projectPath, "src", "auth.json"),
+      path.join(projectPath, "schemas", "auth.json"),
       JSON.stringify(authSchema, null, 2)
     );
     let spinner;

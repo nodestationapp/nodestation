@@ -1,6 +1,7 @@
 # TEMP
 .nodestation/
-/src/
+src/
+schemas/
 dist/
 
 # DATABASE

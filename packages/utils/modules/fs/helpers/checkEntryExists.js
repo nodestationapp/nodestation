@@ -9,7 +9,7 @@ const checkEntryExist = (body, entry_id) => {
   let files = [];
 
   const folders = [folderNameParser(body?.type)];
-  const srcPath = path.join(rootPath, "src");
+  const srcPath = path.join(rootPath, "schemas");
 
   for (const folder of folders) {
     const folderPath = path.join(srcPath, folder);

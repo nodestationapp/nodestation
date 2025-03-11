@@ -1,4 +1,5 @@
 import path from "path";
+import { glob } from "glob";
 import { promises as fs_promise } from "fs";
 import { fs, rootPath } from "@nstation/utils";
 
@@ -6,12 +7,8 @@ import editorDefaultContent from "#libs/editorDefaultContent.js";
 
 const getAllEditor = async (_, res) => {
   try {
-    let endpoints = fs.getFiles(["endpoints"]);
-    // let crons = fs.getFiles(["crons"]);
-
-    const formatted_endpoints = traverseAndModifyMetadata(endpoints?.[0]);
-
-    return res.status(200).json(formatted_endpoints);
+    let endpoints = fs.getFiles("/schemas/endpoints/**/*.js");
+    return res.status(200).json(endpoints);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
@@ -26,7 +23,7 @@ const createEditor = async (req, res) => {
   try {
     const id = await fs.createFile({
       content,
-      path: `${path.join(`/src_new`, body?.path)}.js`,
+      path: `${path.join(`/src`, body?.path)}.js`,
     });
 
     return res.status(200).json({ id, name: body?.name, type: body?.type });
@@ -40,7 +37,7 @@ const updateEditor = async (req, res) => {
   const body = req?.body;
 
   try {
-    const file_path = path.join(rootPath, `/src_new`, body?.path) + ".js";
+    const file_path = path.join(rootPath, `/src`, body?.path) + ".js";
     const file_content = await fs_promise.readFile(file_path, "utf8");
     if (!file_content) {
       throw new Error("File not found");
@@ -69,9 +66,9 @@ const updateEditor = async (req, res) => {
 
     await fs.updateFile({
       content,
-      path: `${path.join(`/src_new`, body?.path)}.js`,
+      path: `${path.join(`/src`, body?.path)}.js`,
       ...(body?.new_path && {
-        new_path: `${path.join(`/src_new`, body?.new_path)}.js`,
+        new_path: `${path.join(`/src`, body?.new_path)}.js`,
       }),
     });
 
@@ -86,7 +83,7 @@ const deleteEditor = async (req, res) => {
   const body = req?.body;
 
   try {
-    await fs.deleteFile(`${path.join(`/src_new`, body?.path)}.js`);
+    await fs.deleteFile(`${path.join(`/src`, body?.path)}.js`);
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {
@@ -95,10 +92,13 @@ const deleteEditor = async (req, res) => {
   }
 };
 
-function traverseAndModifyMetadata(directory) {
+function traverseAndModifyMetadataGlob(pattern) {
   const modifiedStructure = [];
 
-  directory.children.forEach((item) => {
+  const files = glob.sync(pattern);
+
+  files.forEach((file) => {
+    const item = fs.readFileSync(file, "utf8");
     let properties = {};
 
     if (item.metadata.type === "endpoints") {
@@ -119,10 +119,6 @@ function traverseAndModifyMetadata(directory) {
 
       item.metadata.properties = properties;
       delete item?.metadata?.content;
-    }
-
-    if (item.children && item.children.length > 0) {
-      item.children = traverseAndModifyMetadata(item);
     }
 
     modifiedStructure.push(item);

@@ -92,6 +92,7 @@ const TableSettingsContent = () => {
     name: table?.name,
     fields: table?.fields || [],
     display_name: table?.display_name || null,
+    table: table?.table || null,
   };
 
   return (

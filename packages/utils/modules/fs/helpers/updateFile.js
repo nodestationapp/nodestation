@@ -6,7 +6,7 @@ import rootPath from "#modules/rootPath.js";
 const updateFile = async ({ content, path: file_path, new_path }) =>
   new Promise(async (resolve, reject) => {
     if (!!content) {
-      await fs.writeFile(path.join(rootPath, file_path), content);
+      await fs.writeFile(path.join(rootPath, file_path), content, "utf8");
     }
 
     if (!!new_path) {

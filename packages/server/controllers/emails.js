@@ -3,7 +3,7 @@ import { knex } from "@nstation/db";
 
 const getAllEmails = async (req, res) => {
   try {
-    const emails = fs.getFiles(["emails"]);
+    const emails = fs.getFiles("/schemas/emails/**/*.json");
 
     return res.status(200).json(emails);
   } catch (err) {
@@ -15,8 +15,15 @@ const getAllEmails = async (req, res) => {
 const createEmail = async (req, res) => {
   const body = req?.body;
 
+  console.log(body);
+
   try {
-    const id = await fs.createFile({ body, type: "em" });
+    const id = await fs.createFile({
+      content,
+      path: `${path.join(`/schemas`, body?.path)}.json`,
+    });
+
+    // const id = await fs.createFile({ body, type: "em" });
 
     return res.status(200).json(id);
   } catch (err) {
@@ -30,7 +37,12 @@ const updateEmail = async (req, res) => {
   const { id } = req?.params;
 
   try {
-    await fs.createFile({ body, type: "em", entry_id: id });
+    console.log(id);
+
+    await fs.updateFile({
+      content: JSON.stringify(body, null, 2),
+      path: `/schemas/emails/${id}.json`,
+    });
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

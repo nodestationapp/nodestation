@@ -3,33 +3,6 @@ import { knex, createSchema, queryBuilder } from "@nstation/db";
 
 import upsertEntry from "#libs/upsertEntry.js";
 
-const getAllTables = async (_, res) => {
-  try {
-    const tables = fs.getFiles(["tables"]);
-    const preferences = await knex("nodestation_preferences")
-      .select()
-      .orderBy("created_at", "asc");
-
-    const formatted_tables = tables?.map((item) => {
-      const view =
-        preferences?.find(
-          (element) => element?.table_id === item?.id && !!element?.last_viewed
-        )?.id ||
-        preferences?.find((element) => element?.table_id === item?.id)?.id;
-
-      return {
-        ...item,
-        view,
-      };
-    });
-
-    return res.status(200).json(formatted_tables);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "Something went wrong" });
-  }
-};
-
 const safeJSONParse = (input) => {
   try {
     return JSON.parse(input);
@@ -46,6 +19,35 @@ const parseJSONFields = (array) => {
       })
     );
   });
+};
+
+const getAllTables = async (_, res) => {
+  try {
+    let tables = fs.getFiles(`/schemas/tables/**/*.json`);
+
+    const preferences = await knex("nodestation_preferences")
+      .select()
+      .orderBy("created_at", "asc");
+
+    const formatted_tables = tables?.map((item) => {
+      const view =
+        preferences?.find(
+          (element) => element?.table_id === item?.id && !!element?.last_viewed
+        )?.id ||
+        preferences?.find((element) => element?.table_id === item?.id)?.id;
+
+      return {
+        ...item,
+        id: item?.id,
+        view,
+      };
+    });
+
+    return res.status(200).json(formatted_tables);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
 };
 
 const getTable = async (req, res) => {
@@ -85,17 +87,13 @@ const getTable = async (req, res) => {
         });
     }
 
-    const auth = fs.getFiles();
-    let tables = fs.getFiles(["tables", "forms"], {
-      rootFolder: "src",
-    });
+    let tables = fs.getFiles([
+      `/schemas/auth.json`,
+      `/schemas/forms/**/*.json`,
+      `/schemas/tables/**/*.json`,
+    ]);
 
-    const authTable = auth?.find((item) => item?.id?.toString() === "auth");
-    tables.push(authTable);
-
-    const table = tables?.find(
-      (item) => item?.id?.toString() === id?.toString()
-    );
+    const table = tables?.find((item) => item?.id === id);
 
     let columns = table?.fields;
     if (id === "auth") {
@@ -187,11 +185,18 @@ const updateTable = async (req, res) => {
   const body = req?.body;
 
   try {
-    await fs.createFile({
-      body: body,
-      entry_id: id,
-      type: body?.type,
+    // await fs.updateFile("auth", formatted_body);
+
+    await fs.updateFile({
+      content: JSON.stringify(body),
+      path: `/schemas/tables/${id}.json`,
     });
+
+    // await fs.createFile({
+    //   body: body,
+    //   entry_id: id,
+    //   type: body?.type,
+    // });
 
     await createSchema();
 
@@ -248,7 +253,7 @@ const updateTableEntry = async (req, res) => {
 
   try {
     await upsertEntry({
-      type: id !== "auth" ? "tables" : null,
+      type: id === "auth" ? "auth" : "tables",
       id,
       body,
       files,

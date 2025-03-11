@@ -1,70 +1,96 @@
 import fs from "fs";
 import path from "path";
+import { glob } from "glob";
 
 import rootPath from "#modules/rootPath.js";
 
-const getFiles = (folders = [], options = {}) => {
-  let files = [];
-  const srcPath = path.join(rootPath, options?.rootFolder || "src_new");
+const getFileProperties = (content) => {
+  let properties = {};
 
-  const traverseDirectory = (folderPath, relativePath = "") => {
-    const items = fs.readdirSync(folderPath, { withFileTypes: true });
-    const children = [];
-
-    const rootFolder = options?.rootFolder || "src_new";
-
-    items.forEach((item) => {
-      const itemPath = path.join(folderPath, item.name);
-      const itemRelativePath = path.join("/", relativePath, item.name);
-      let name = item.name;
-
-      const fullPath = itemPath.split(rootFolder + "/")[1];
-      const type = fullPath ? fullPath.split("/")[0] : null;
-
-      if (item.isDirectory()) {
-        const folder = {
-          name,
-          metadata: {
-            type: "folder",
-            path: itemRelativePath,
-          },
-          children: traverseDirectory(itemPath, itemRelativePath),
-        };
-        children.push(folder);
-      } else {
-        const content = fs.readFileSync(itemPath, "utf8");
-
-        children.push({
-          name,
-          metadata: {
-            type,
-            content,
-            path: itemRelativePath,
-          },
-        });
-      }
+  const propertyMatch = content?.match(/\* @(\w+) (.*)/g);
+  if (propertyMatch) {
+    propertyMatch.forEach((match) => {
+      const [_, key, value] = match.match(/\* @(\w+) (.*)/);
+      properties[key] = value === "[]" ? [] : value;
     });
+  }
 
-    return children;
-  };
+  return properties;
+};
+
+const getFiles = (pattern) => {
+  let files = [];
 
   try {
-    folders.forEach((folder) => {
-      const folderPath = path.join(srcPath, folder);
+    if (Array.isArray(pattern)) {
+      pattern = pattern?.map((item) => path.join(rootPath, item));
+    } else {
+      pattern = path.join(rootPath, pattern);
+    }
 
-      if (fs.existsSync(folderPath)) {
-        const folderStructure = {
-          name: folder,
-          metadata: {
-            type: "folder",
-          },
-          children: traverseDirectory(folderPath, folder),
-        };
-        files.push(folderStructure);
+    const items = glob.sync(pattern, { nodir: true });
+
+    items.forEach((item, index) => {
+      const name = path.basename(item)?.split(".")?.[0];
+      let content = fs.readFileSync(item, "utf8");
+
+      let dataToPush = null;
+
+      if (path.basename(item).endsWith(".json")) {
+        dataToPush = { id: name, ...JSON.parse(content) };
+      } else if (path.basename(item).endsWith(".js")) {
+        const properties = getFileProperties(content);
+        dataToPush = { id: index + 1, properties };
+      }
+
+      if (!!dataToPush) {
+        files.push(dataToPush);
       }
     });
 
-    files.sort((a, b) => a.name.localeCompare(b.name));
+    // folders.forEach((folder) => {
+    //   const folderPath = path.join(srcPath, folder);
+    //   const isFile = folderPath.includes(".");
+
+    //   if (fs.existsSync(folderPath)) {
+    //     const pattern = isFile ? folderPath : path.join(folderPath, "**/*");
+    //     const items = glob.sync(pattern, { nodir: true });
+
+    //     const children = items.map((itemPath) => {
+    //       const itemRelativePath = path.relative(srcPath, itemPath);
+    //       const name = path.basename(itemPath);
+    //       let content = fs.readFileSync(itemPath, "utf8");
+    //       if (name.endsWith(".json")) {
+    //         try {
+    //           content = JSON.parse(content);
+    //         } catch (parseError) {
+    //           console.error(`Error parsing JSON file: ${itemPath}`, parseError);
+    //         }
+    //       }
+    //       const type = itemRelativePath.split(path.sep)[0];
+
+    //       return {
+    //         name,
+    //         metadata: {
+    //           type,
+    //           content,
+    //           path: itemRelativePath,
+    //         },
+    //       };
+    //     });
+
+    //     const folderStructure = {
+    //       name: folder,
+    //       metadata: {
+    //         type: isFile ? "file" : "folder",
+    //       },
+    //       children: isFile ? null : children,
+    //     };
+    //     files.push(folderStructure);
+    //   }
+    // });
+
+    // files.sort((a, b) => a?.id?.localeCompare(b?.id));
   } catch (error) {
     console.error("Error reading directory structure:", error);
     throw error;

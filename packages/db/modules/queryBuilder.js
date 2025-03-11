@@ -109,10 +109,8 @@ export default async ({ table, filters, sort, pagination }) => {
     }
 
     if (!!item?.relation) {
-      const tables = fs.getFiles(["tables"]);
-      const ref_table = tables?.find(
-        (element) => element?.id?.toString() === item?.relation
-      );
+      const tables = fs.getFiles(`/schemas/tables/${item?.relation}.json`);
+      const ref_table = tables?.[0];
 
       query = query
         .leftJoin(

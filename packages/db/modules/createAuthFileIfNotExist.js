@@ -104,7 +104,7 @@ export default async () => {
         },
       ],
     };
-    if (!!!fs_sys.existsSync(path.join(rootPath, "src", "auth.json"))) {
+    if (!!!fs_sys.existsSync(path.join(rootPath, "schemas", "auth.json"))) {
       await fs.updateFile("auth", body);
     }
   } catch (error) {
