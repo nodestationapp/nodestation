@@ -23,8 +23,8 @@ function transformData(data, settings) {
               ...media,
               url:
                 settings?.active === "local"
-                  ? `${process.env.PUBLIC_URL}${media.url}`
-                  : media.url,
+                  ? `${process.env.PUBLIC_URL}${media?.url}`
+                  : media?.url,
             };
           } else {
             transformedItem[parent][nestedKey] = value;
@@ -35,12 +35,6 @@ function transformData(data, settings) {
       } else {
         transformedItem[key] = value;
       }
-
-      // transformedItem = mediaParser(
-      //   { slug: "photo", type: "media" },
-      //   [transformedItem],
-      //   settings
-      // );
     }
 
     return transformedItem;
@@ -72,7 +66,7 @@ function mediaParser(fields, objects, settings) {
 }
 
 export default async ({ table, filters, sort, pagination }) => {
-  let query = knex(table?.id);
+  let query = knex(table?.id === "auth" ? "nodestation_users" : table?.id);
 
   if (!!filters) {
     query = query.modify(applyFilters, filters, table);

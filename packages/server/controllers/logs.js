@@ -30,7 +30,7 @@ const getLogs = async (req, res) => {
 
     const data = await queryBuilder({
       table: {
-        table: "nodestation_logs",
+        id: "nodestation_logs",
         fields: [
           {
             name: "Level",

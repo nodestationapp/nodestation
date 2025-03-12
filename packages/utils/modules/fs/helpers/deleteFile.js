@@ -2,7 +2,7 @@ import path from "path";
 import { promises as fs } from "fs";
 
 import rootPath from "#modules/rootPath.js";
-
+import generateServer from "./generateServer/index.js";
 const deleteFile = async (file_path) =>
   new Promise(async (resolve, reject) => {
     try {
@@ -17,7 +17,7 @@ const deleteFile = async (file_path) =>
         await fs.rmdir(sourceDir);
       }
 
-      // generateServer();
+      generateServer();
 
       return resolve();
     } catch (err) {

@@ -1,8 +1,10 @@
+import fs from "fs";
+
+import rootPath from "#modules/rootPath.js";
 import getFiles from "#modules/fs/helpers/getFiles.js";
 import createFile from "#modules/fs/helpers/createFile.js";
 
 const activationEmailTemplate = {
-  type: "em",
   locked: true,
   status: "active",
   action: "activation-email",
@@ -12,7 +14,6 @@ const activationEmailTemplate = {
 };
 
 const passwordResetTemplate = {
-  type: "em",
   locked: true,
   status: "active",
   action: "password-reset",
@@ -23,13 +24,24 @@ const passwordResetTemplate = {
 
 export default async () => {
   try {
-    const emails = getFiles(["emails"]);
+    const emails = getFiles(`/schemas/emails/**/*.json`);
+
+    if (!fs.existsSync(`${rootPath}/schemas/emails`)) {
+      fs.mkdirSync(`${rootPath}/schemas/emails`);
+    }
+
     if (!!!emails?.find((item) => item?.action === "activation-email")) {
-      // await createFile(activationEmailTemplate);
+      await createFile({
+        content: activationEmailTemplate,
+        path: `/schemas/emails/activation-email.json`,
+      });
     }
 
     if (!!!emails?.find((item) => item?.action === "password-reset")) {
-      // await createFile(passwordResetTemplate);
+      await createFile({
+        content: passwordResetTemplate,
+        path: `/schemas/emails/password-reset.json`,
+      });
     }
   } catch (err) {
     console.error(err);

@@ -39,6 +39,7 @@ const TableProvider = ({ id, children }) => {
       api.get(
         `/tables/${id}?${queryString.stringify({
           view,
+          type: type !== "authentication" ? type : undefined,
         })}`
       ),
     enabled: !!view || pathname?.includes("/settings"),

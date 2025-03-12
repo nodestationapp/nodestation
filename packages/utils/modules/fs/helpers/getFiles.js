@@ -37,7 +37,11 @@ const getFiles = (pattern) => {
       let dataToPush = null;
 
       if (path.basename(item).endsWith(".json")) {
-        dataToPush = { id: name, ...JSON.parse(content) };
+        const parts = item.split("/schemas/");
+
+        const schemaPath = parts.length > 1 ? `/schemas/${parts[1]}` : null;
+
+        dataToPush = { id: name, schema: schemaPath, ...JSON.parse(content) };
       } else if (path.basename(item).endsWith(".js")) {
         const properties = getFileProperties(content);
         dataToPush = { id: index + 1, properties };

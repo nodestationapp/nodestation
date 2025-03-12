@@ -1,3 +1,5 @@
+import slugify from "slugify";
+
 import { fs } from "@nstation/utils";
 import { knex } from "@nstation/db";
 
@@ -15,15 +17,15 @@ const getAllEmails = async (req, res) => {
 const createEmail = async (req, res) => {
   const body = req?.body;
 
+  const slug = slugify(body?.name, { lower: true, replacement: "-" });
+
   try {
-    const id = await fs.createFile({
-      content,
-      path: `${path.join(`/schemas`, body?.path)}.json`,
+    await fs.createFile({
+      content: body,
+      path: `/schemas/emails/${slug}.json`,
     });
 
-    // const id = await fs.createFile({ body, type: "em" });
-
-    return res.status(200).json(id);
+    return res.status(200).json(slug);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
@@ -51,7 +53,7 @@ const deleteEmail = async (req, res) => {
   const { id } = req?.params;
 
   try {
-    await fs.deleteFile(id);
+    await fs.deleteFile(`/schemas/emails/${id}.json`);
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

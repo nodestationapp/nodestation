@@ -33,11 +33,16 @@ const TablesContent = () => {
     },
   ];
 
+  const new_entry_schema = data?.table?.fields?.reduce((obj, item) => {
+    obj[item.slug] = null;
+    return obj;
+  }, {});
+
   return (
     <DashboardContentLayout breadcrumps={breadcrumps}>
       <TableReader
         selectAction={selectAction}
-        newButton={() => setContentEditor(true)}
+        newButton={() => setContentEditor(new_entry_schema)}
         rowClick={(row) => setContentEditor(row)}
       />
       {!!archive_entry_modal && (

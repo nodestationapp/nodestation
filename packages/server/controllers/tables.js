@@ -53,7 +53,7 @@ const getAllTables = async (_, res) => {
 
 const getTable = async (req, res) => {
   let { id } = req?.params;
-  let { view, ...rest } = req?.query || {};
+  let { view, type, ...rest } = req?.query || {};
 
   try {
     let views = await knex("nodestation_preferences")
@@ -88,13 +88,9 @@ const getTable = async (req, res) => {
         });
     }
 
-    let tables = fs.getFiles([
-      `/schemas/auth.json`,
-      `/schemas/forms/**/*.json`,
-      `/schemas/tables/**/*.json`,
-    ]);
+    let tables = fs.getFiles(`/schemas/${type ? `${type}/` : ""}${id}.json`);
 
-    const table = tables?.find((item) => item?.id === id);
+    let table = tables?.[0];
 
     let columns = table?.fields;
     if (id === "auth") {
@@ -118,6 +114,8 @@ const getTable = async (req, res) => {
           item?.slug !== "photo" &&
           item?.slug !== "password"
       );
+
+      table.id = "nodestation_users";
     }
 
     const filters = [
@@ -266,12 +264,7 @@ const deleteTableEntries = async (req, res) => {
   const { id, entry_id } = req?.params;
 
   try {
-    const tables = id !== "auth" ? fs.getFiles(["tables"]) : fs.getFiles();
-    const table = tables?.find(
-      (item) => item?.id?.toString() === id?.toString()
-    );
-
-    await knex(table?.table).where({ id: entry_id }).del();
+    await knex(id).where({ id: entry_id }).del();
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {
