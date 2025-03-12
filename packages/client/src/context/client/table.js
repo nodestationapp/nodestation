@@ -48,10 +48,16 @@ const TableProvider = ({ id, children }) => {
   const updateTable = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.put(`/tables/${id}`, {
-          ...values,
-          type: data?.table?.type || type,
-        });
+        if (type === "authentication") {
+          delete values?.name;
+        }
+
+        await api.put(
+          `/tables/${id}?${queryString.stringify({
+            type: type !== "authentication" ? type : undefined,
+          })}`,
+          values
+        );
 
         tableRefetch();
 

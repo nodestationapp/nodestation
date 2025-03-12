@@ -17,7 +17,11 @@ const createFile = async ({ content, path: file_path }) =>
       }
 
       await fs.mkdir(path.dirname(directory), { recursive: true });
-      await fs.writeFile(directory, file_content, { flag: "wx" });
+
+      await fs.writeFile(directory, file_content, {
+        flag: "wx",
+        encoding: "utf8",
+      });
     } catch (err) {
       if (err.code === "EEXIST") {
         return reject({ error: "File already exist." });

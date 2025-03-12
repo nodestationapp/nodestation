@@ -182,13 +182,14 @@ const createTable = async (req, res) => {
 };
 
 const updateTable = async (req, res) => {
-  const { id } = req?.params;
   const body = req?.body;
+  const { id } = req?.params;
+  const { type } = req?.query;
 
   try {
     await fs.updateFile({
-      content: JSON.stringify(body),
-      path: `/schemas/tables/${id}.json`,
+      content: body,
+      path: `/schemas/${type ? `${type}/` : ""}${id}.json`,
     });
 
     await createSchema();

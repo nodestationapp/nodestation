@@ -5,8 +5,15 @@ import rootPath from "#modules/rootPath.js";
 
 const updateFile = async ({ content, path: file_path, new_path }) =>
   new Promise(async (resolve, reject) => {
-    if (!!content) {
-      await fs.writeFile(path.join(rootPath, file_path), content, "utf8");
+    const path_extension = path.extname(file_path).slice(1);
+    let file_content = content;
+
+    if (!!file_content) {
+      if (path_extension === "json") {
+        file_content = JSON.stringify(file_content, null, 2);
+      }
+
+      await fs.writeFile(path.join(rootPath, file_path), file_content, "utf8");
     }
 
     if (!!new_path) {
@@ -28,8 +35,6 @@ const updateFile = async ({ content, path: file_path, new_path }) =>
         }
       }
     }
-
-    // generateServer();
 
     return resolve("ok");
   });
