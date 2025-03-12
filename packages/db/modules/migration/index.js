@@ -88,10 +88,10 @@ export default async () => {
 
   for await (const item of all_tables) {
     let fileColumns = item?.fields;
-    let dbColumns = await knex(item?.table).columnInfo();
+    let dbColumns = await knex(item?.id).columnInfo();
 
     //ADD OR MODIFY
-    const hasTable = await knex.schema.hasTable(item?.table);
+    const hasTable = await knex.schema.hasTable(item?.id);
 
     if (!!hasTable) {
       fileColumns = fileColumns.filter((item) => item?.primary_key !== true);
@@ -99,7 +99,7 @@ export default async () => {
     }
 
     await knex.schema?.[!!hasTable ? "alterTable" : "createTable"]?.(
-      item?.table,
+      item?.id,
       (table) => {
         for (const schema of fileColumns) {
           createOrModifyColumn({ table, schema, dbColumns });
@@ -113,7 +113,7 @@ export default async () => {
     );
 
     if (columnsToRemove.length > 0) {
-      await knex.schema.alterTable(item?.table, (table) => {
+      await knex.schema.alterTable(item?.id, (table) => {
         columnsToRemove.forEach((col) => {
           table.dropColumn(col);
         });

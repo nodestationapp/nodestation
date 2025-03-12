@@ -15,8 +15,6 @@ const getAllEmails = async (req, res) => {
 const createEmail = async (req, res) => {
   const body = req?.body;
 
-  console.log(body);
-
   try {
     const id = await fs.createFile({
       content,
@@ -37,8 +35,6 @@ const updateEmail = async (req, res) => {
   const { id } = req?.params;
 
   try {
-    console.log(id);
-
     await fs.updateFile({
       content: JSON.stringify(body, null, 2),
       path: `/schemas/emails/${id}.json`,

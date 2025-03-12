@@ -72,7 +72,7 @@ function mediaParser(fields, objects, settings) {
 }
 
 export default async ({ table, filters, sort, pagination }) => {
-  let query = knex(table?.table);
+  let query = knex(table?.id);
 
   if (!!filters) {
     query = query.modify(applyFilters, filters, table);
@@ -96,11 +96,11 @@ export default async ({ table, filters, sort, pagination }) => {
       query = query
         .leftJoin(
           "nodestation_users",
-          `${table?.table}.${item?.slug}`,
+          `${table?.id}.${item?.slug}`,
           "nodestation_users.id"
         )
         .select(
-          `${table?.table}.*`,
+          `${table?.id}.*`,
           `nodestation_users.id as ${item?.slug}.id`,
           `nodestation_users.first_name as ${item?.slug}.first_name`,
           `nodestation_users.last_name as ${item?.slug}.last_name`,
@@ -114,14 +114,14 @@ export default async ({ table, filters, sort, pagination }) => {
 
       query = query
         .leftJoin(
-          ref_table?.table,
-          `${table?.table}.${item?.slug}`,
-          `${ref_table?.table}.id`
+          ref_table?.id,
+          `${table?.id}.${item?.slug}`,
+          `${ref_table?.id}.id`
         )
         .select(
-          `${table?.table}.*`,
-          `${ref_table?.table}.id as ${item?.slug}.id`,
-          `${ref_table?.table}.${ref_table?.display_name} as ${item?.slug}.label`
+          `${table?.id}.*`,
+          `${ref_table?.id}.id as ${item?.slug}.id`,
+          `${ref_table?.id}.${ref_table?.display_name} as ${item?.slug}.label`
         );
     }
   });

@@ -25,11 +25,11 @@ export default async () => {
   try {
     const emails = getFiles(["emails"]);
     if (!!!emails?.find((item) => item?.action === "activation-email")) {
-      await createFile(activationEmailTemplate);
+      // await createFile(activationEmailTemplate);
     }
 
     if (!!!emails?.find((item) => item?.action === "password-reset")) {
-      await createFile(passwordResetTemplate);
+      // await createFile(passwordResetTemplate);
     }
   } catch (err) {
     console.error(err);

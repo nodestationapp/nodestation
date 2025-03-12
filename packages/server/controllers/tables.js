@@ -1,3 +1,4 @@
+import slugify from "slugify";
 import { fs } from "@nstation/utils";
 import { knex, createSchema, queryBuilder } from "@nstation/db";
 
@@ -147,7 +148,7 @@ const createTable = async (req, res) => {
 
   try {
     const formatted_body = {
-      ...body,
+      name: body?.name,
       display_name: "id",
       fields: [
         {
@@ -160,20 +161,22 @@ const createTable = async (req, res) => {
       ],
     };
 
-    const id = await fs.createFile({
-      body: formatted_body,
-      type: body?.type,
+    const slug = slugify(body?.name, { lower: true, replacement: "-" });
+
+    await fs.createFile({
+      content: formatted_body,
+      path: `/schemas/tables/${slug}.json`,
     });
 
     await knex("nodestation_preferences").insert({
-      table_id: id,
+      table_id: body?.name,
       name: "Entries",
       uid: req?.user?.id,
     });
 
     await createSchema();
 
-    return res.status(200).json({ id });
+    return res.status(200).json({ id: slug });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Something went wrong" });
@@ -185,18 +188,10 @@ const updateTable = async (req, res) => {
   const body = req?.body;
 
   try {
-    // await fs.updateFile("auth", formatted_body);
-
     await fs.updateFile({
       content: JSON.stringify(body),
       path: `/schemas/tables/${id}.json`,
     });
-
-    // await fs.createFile({
-    //   body: body,
-    //   entry_id: id,
-    //   type: body?.type,
-    // });
 
     await createSchema();
 
