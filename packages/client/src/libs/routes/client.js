@@ -28,6 +28,8 @@ import Form from "pages/client/forms/current";
 import FormSettings from "pages/client/forms/settings";
 import UserSettings from "pages/client/users/settings";
 
+import Endpoints from "pages/client/endpoints";
+
 const clientRoutes = () => {
   return (
     <>
@@ -38,6 +40,9 @@ const clientRoutes = () => {
           <Route path="settings">
             <Route index element={<EmailSettings />} />
           </Route>
+        </Route>
+        <Route path="/endpoints">
+          <Route index element={<Endpoints />} />
         </Route>
         <Route path="/forms">
           <Route index element={<Forms />} />

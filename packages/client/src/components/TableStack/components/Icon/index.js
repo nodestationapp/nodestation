@@ -9,12 +9,12 @@ const getIcon = (data, slug) => {
   switch (slug) {
     case "authentication":
       return {
-        active: !!data?.options?.auth?.length,
+        active: !!data?.properties?.authentication?.length,
         icon: <LockClosedIcon />,
       };
     case "middlewares":
       return {
-        active: !!data?.options?.middlewares?.length,
+        active: !!data?.properties?.middlewares?.length,
         icon: <ShieldCheckIcon />,
       };
     default:

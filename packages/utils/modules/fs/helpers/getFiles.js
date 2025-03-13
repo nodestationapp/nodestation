@@ -18,6 +18,13 @@ const getFileProperties = (content) => {
   return properties;
 };
 
+function extractDynamicPath(path) {
+  const parts = path.split("/").filter(Boolean);
+  if (parts.length < 2 || parts[0] !== "endpoints") return null;
+
+  return "/" + parts.slice(1, -1).join("/");
+}
+
 const getFiles = (pattern) => {
   let files = [];
 
@@ -30,7 +37,7 @@ const getFiles = (pattern) => {
 
     const items = glob.sync(pattern, { nodir: true });
 
-    items.forEach((item, index) => {
+    items.forEach((item) => {
       const name = path.basename(item)?.split(".")?.[0];
       let content = fs.readFileSync(item, "utf8");
 
@@ -51,11 +58,7 @@ const getFiles = (pattern) => {
           name,
           content,
           properties,
-          metadata: {
-            method: name,
-            type: parts?.[1]?.split("/")?.[0],
-          },
-          path: schemaPath,
+          path: extractDynamicPath(schemaPath),
         };
       }
 

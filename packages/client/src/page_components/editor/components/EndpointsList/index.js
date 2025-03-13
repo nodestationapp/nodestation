@@ -1,7 +1,6 @@
 import "./styles.scss";
 
 import { useState } from "react";
-import { flattenTree } from "react-accessible-treeview";
 
 import Button from "components/Button";
 import TableStack from "components/TableStack";
@@ -9,37 +8,28 @@ import IconButton from "components/IconButton";
 import ContentEditorModal from "../ContentEditorModal";
 import NoItemsFound from "components/List/components/NoItemsFound";
 import ArchiveEndpointModal from "./components/ArchiveEndpointModal";
-import EditorContentLayout from "components/layouts/EditorContentLayout";
+import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useEditor } from "context/client/editor";
 
 import {
   PlusIcon,
-  Square3Stack3DIcon,
   TrashIcon,
+  Square3Stack3DIcon,
 } from "@heroicons/react/24/outline";
 
 const EndpointsList = () => {
-  const { setEditorModal, editor_modal } = useEditor();
+  const { editor, setEditorModal, editor_modal } = useEditor();
 
   const [archive_modal, setArchiveModal] = useState(false);
 
-  // const endpoints = {
-  //   children: editor,
-  // };
-
-  let flatten_endpoints = flattenTree([]);
-  flatten_endpoints.splice(0, 1);
-  flatten_endpoints.sort((a, b) => a.parent - b.parent);
-
   let groups = [];
-  flatten_endpoints?.forEach((item) => {
-    let group_name = item?.metadata?.path?.split("/")?.[2];
+  editor?.forEach((item) => {
+    let group_name = item?.path?.split("/")?.[1];
 
     const index = groups?.findIndex((item) => item?.group === group_name);
 
     if (group_name === item?.name) return;
-    if (!!item?.children?.length) return;
 
     if (index === -1) {
       groups?.push({
@@ -56,8 +46,8 @@ const EndpointsList = () => {
 
   const breadcrumps = [
     {
-      icon: <Square3Stack3DIcon />,
       label: "Endpoints",
+      icon: <Square3Stack3DIcon />,
     },
   ];
 
@@ -74,23 +64,23 @@ const EndpointsList = () => {
     //   slug: "status",
     //   type: "status",
     // },
-    // {
-    //   key: "authentication",
-    //   type: "icon",
-    //   slug: "authentication",
-    //   value: "Authentication",
-    // },
-    // {
-    //   key: "middlewares",
-    //   type: "icon",
-    //   slug: "middlewares",
-    //   value: "Middlewares",
-    // },
+    {
+      key: "authentication",
+      type: "icon",
+      slug: "authentication",
+      value: "Authentication",
+    },
+    {
+      key: "middlewares",
+      type: "icon",
+      slug: "middlewares",
+      value: "Middlewares",
+    },
   ];
 
   return (
     <>
-      <EditorContentLayout
+      <DashboardContentLayout
         breadcrumps={breadcrumps}
         with_padding
         action={
@@ -117,14 +107,6 @@ const EndpointsList = () => {
               };
               return (
                 <div key={index} className={`endpoints_table_section`}>
-                  {/* <div className="endpoints_table_section__header">
-                  <LabelChanger
-                    data={{
-                      id: item?.group,
-                      label: item?.group,
-                    }}
-                  />
-                </div> */}
                   <TableStack
                     fullWidth
                     hideHeader
@@ -148,7 +130,7 @@ const EndpointsList = () => {
             })}
           </>
         )}
-      </EditorContentLayout>
+      </DashboardContentLayout>
       {!!archive_modal && (
         <ArchiveEndpointModal
           data={archive_modal}

@@ -6,8 +6,8 @@ const mainClass = "table__user-endpoint-name";
 const EndpointName = ({ data }) => {
   return (
     <div className={mainClass}>
-      <MethodSelect method={data?.metadata?.method} read_only />
-      <span>{data?.name}</span>
+      <MethodSelect method={data?.name} read_only />
+      <span>{data?.path}</span>
     </div>
   );
 };

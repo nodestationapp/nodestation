@@ -38,10 +38,15 @@ const Menu = () => {
     },
     {
       icon: <Square3Stack3DIcon />,
-      label: "Editor",
-      href: "/editor",
-      external: true,
+      label: "Endpoints",
+      href: "/endpoints",
     },
+    // {
+    //   icon: <Square3Stack3DIcon />,
+    //   label: "Editor",
+    //   href: "/editor",
+    //   external: true,
+    // },
     {
       icon: <PaperAirplaneIcon />,
       label: "Forms",
