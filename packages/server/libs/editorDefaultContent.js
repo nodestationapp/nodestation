@@ -15,7 +15,7 @@ export default async (req, res) => {
     //your code here
     return res.status(200).json({ status: "ok" });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
   }
 };`;
@@ -30,7 +30,7 @@ export default async () => {
   try{
     //your code here
   }catch(err){
-    console.log(err);
+    console.error(err);
   }
 }`;
     case "helpers":
@@ -38,7 +38,7 @@ export default async () => {
   try{
     //your code here
   }catch(err){
-    console.log(err);
+    console.error(err);
   }
 }`;
     case "middlewares":

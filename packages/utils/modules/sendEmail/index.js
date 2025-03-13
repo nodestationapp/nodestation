@@ -50,6 +50,8 @@ const sendEmail = async (template, options) => {
 
   await emailProvider({ template, options, settings });
 
+  // TODO: add logger
+
   // await logger({
   //   level: "success",
   //   source: {

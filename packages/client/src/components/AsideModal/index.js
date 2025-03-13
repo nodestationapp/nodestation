@@ -69,12 +69,16 @@ const AsideModal = ({
       })}
     >
       <div className={`${mainClass}__dialog`}>
-        <div className={`${mainClass}__dialog__header`}>
-          <span>{header}</span>
-          <Tooltip text={<KeyViewer variant="dark" no_margin data={["Esc"]} />}>
-            <IconButton icon={<XMarkIcon />} onClick={onCloseHandler} />
-          </Tooltip>
-        </div>
+        {header && (
+          <div className={`${mainClass}__dialog__header`}>
+            <span>{header}</span>
+            <Tooltip
+              text={<KeyViewer variant="dark" no_margin data={["Esc"]} />}
+            >
+              <IconButton icon={<XMarkIcon />} onClick={onCloseHandler} />
+            </Tooltip>
+          </div>
+        )}
         <PerfectScrollbar
           options={{
             wheelPropagation: true,

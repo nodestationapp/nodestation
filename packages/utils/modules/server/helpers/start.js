@@ -31,6 +31,8 @@ ${chalk.cyan("Server URL:")}           http://localhost:${process.env.PORT}`;
   console.info(boxedMessage);
 };
 
+// TODO: add documentation
+
 // ${chalk.underline("Documentation:")}
 // ${chalk.cyan("https://docs.example.com")}`;
 

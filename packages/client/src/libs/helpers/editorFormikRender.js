@@ -1,15 +1,15 @@
 const formik_render = (type, data) => {
   switch (type) {
-    case "ep":
+    case "endpoints":
       return {
-        type: "ep",
-        name: data?.name || "/",
-        method: data?.metadata?.method || "post",
+        type: "endpoints",
+        name: data?.path || "/",
+        method: data?.name || "post",
         properties: {
-          status: data?.metadata?.properties?.status || "active",
-          middlewares: data?.metadata?.properties?.middlewares || [],
-          parser: data?.metadata?.properties?.parser || "json",
-          auth: data?.metadata?.properties?.auth || [],
+          status: data?.properties?.status || "active",
+          middlewares: data?.properties?.middlewares || [],
+          parser: data?.properties?.parser || "json",
+          auth: data?.properties?.auth || [],
         },
       };
     case "cron":
@@ -19,7 +19,7 @@ const formik_render = (type, data) => {
         status: data?.status || "active",
         content:
           data?.content ||
-          `export default async () => {\n  try{\n    //your code here\n  }catch(err){\n    console.log(err);\n  }\n}`,
+          `export default async () => {\n  try{\n    //your code here\n  }catch(err){\n    console.error(err);\n  }\n}`,
         options: {
           schedule: data?.options?.schedule,
           timezone: data?.options?.timezone,
@@ -32,7 +32,7 @@ const formik_render = (type, data) => {
         name: data?.name || "",
         content:
           data?.content ||
-          `export default async () => {\n  try{\n    //your code here\n  }catch(err){\n    console.log(err);\n  }\n}`,
+          `export default async () => {\n  try{\n    //your code here\n  }catch(err){\n    console.error(err);\n  }\n}`,
       };
     case "mid":
       return {

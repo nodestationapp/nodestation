@@ -3,7 +3,7 @@ import EndpointOptions from "page_components/editor/CurrentContent/components/Co
 
 const options_render = (type) => {
   switch (type) {
-    case "ep":
+    case "endpoints":
       return <EndpointOptions />;
     case "cron":
       return <CronOptions />;

@@ -59,10 +59,6 @@ const Menu = () => {
     }
   };
 
-  // const data = flattenTree({
-  //   children: editor,
-  // });
-
   const data = flattenTree({
     children: editor,
   });

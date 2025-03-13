@@ -10,9 +10,11 @@ const Text = ({ tableSchema, locked, value, column }) => {
   const isRelation = !!tableSchema?.find((element) => element?.slug === column)
     ?.relation;
 
+  // TODO: add relation click
+
   // const onRelationClick = (e) => {
   //   e.stopPropagation();
-  //   navigate("/tables/tbl_m7bzna16i6jkvzxn");
+  //   navigate("/tables/{table}");
   // };
 
   return (

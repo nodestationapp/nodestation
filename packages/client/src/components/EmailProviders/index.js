@@ -24,6 +24,8 @@ const EmailProviders = () => {
 
   const email_active = activeEmailChecker(email_settings);
 
+  // TODO: add sendgrid
+
   const email_type_data = [
     {
       icon: <InboxStackIcon height={20} width={20} />,

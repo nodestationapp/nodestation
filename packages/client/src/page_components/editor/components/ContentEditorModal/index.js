@@ -11,7 +11,7 @@ import editorTitleInputRender from "libs/helpers/editorTitleInputRender";
 
 const mainClass = "content-editor-modal";
 
-const ContentEditorModal = ({ data, type = "ep", onClose }) => {
+const ContentEditorModal = ({ data, type = "endpoints", onClose }) => {
   const onSubmitHandler = async (values, setSubmitting, resetForm) => {
     try {
       // await onSubmit(values, setSubmitting, resetForm);
@@ -40,7 +40,7 @@ const ContentEditorModal = ({ data, type = "ep", onClose }) => {
             submit_label="Save"
             onSubmit={submitForm}
             loading={isSubmitting}
-            header={data?.name || "Add user"}
+            // header={data?.path || "Add user"}
           >
             <div className={mainClass}>
               <div className={`${mainClass}__title`}>{title_input}</div>

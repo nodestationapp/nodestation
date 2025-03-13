@@ -2,7 +2,7 @@ import TitleInput from "components/TitleInput";
 
 const title_render = (type) => {
   switch (type) {
-    case "ep":
+    case "endpoints":
       return <TitleInput type="method" name="name" />;
     case "cron":
       return <TitleInput name="name" label="Name:" />;

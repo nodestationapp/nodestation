@@ -44,6 +44,8 @@ const FormContent = () => {
 
   const isReadSelected = checkIsReadValue(data?.entries, selectedRows);
 
+  // TODO: add archive handler
+
   const selectAction = [
     {
       icon: !!isReadSelected ? (

@@ -81,17 +81,6 @@ const DetailsModal = ({ data, onClose }) => {
         },
       ],
     },
-    // {
-    //   label: "Response",
-    //   icon: <ArrowTrendingDownIcon />,
-    //   items: [
-    //     {
-    //       type: "json",
-    //       label: "Body",
-    //       value: data?.res?.body,
-    //     },
-    //   ],
-    // },
   ];
 
   return (

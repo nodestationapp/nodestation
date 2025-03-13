@@ -45,6 +45,8 @@ const sendForm = async (req, res) => {
       ],
     });
 
+    // TODO: add auto responder
+
     // if (!!form?.settings?.auto_responder?.active) {
     //   const email =
     //     formatted_body?.[form?.settings?.auto_responder?.email_field];

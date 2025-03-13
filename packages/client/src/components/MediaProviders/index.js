@@ -39,24 +39,12 @@ const MediaProviders = () => {
       ready: media_active?.aws,
       active: media_settings?.active === "aws",
     },
-    // {
-    //   icon: <GoogleLogo />,
-    //   value: "google",
-    //   ready: media_active?.google,
-    //   active: media_settings?.active === "google",
-    // },
     {
       icon: <DigitalOceanLogo />,
       value: "digitalocean",
       ready: media_active?.digitalocean,
       active: media_settings?.active === "digitalocean",
     },
-    // {
-    //   icon: <WasabiLogo />,
-    //   value: "wasabi",
-    //   ready: media_active?.wasabi,
-    //   active: media_settings?.active === "wasabi",
-    // },
   ];
 
   const onChangeHandler = (e) => {
