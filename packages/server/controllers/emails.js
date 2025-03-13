@@ -25,7 +25,7 @@ const createEmail = async (req, res) => {
       path: `/schemas/emails/${slug}.json`,
     });
 
-    return res.status(200).json(slug);
+    return res.status(200).json({ id: slug });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
@@ -38,7 +38,7 @@ const updateEmail = async (req, res) => {
 
   try {
     await fs.updateFile({
-      content: JSON.stringify(body, null, 2),
+      content: body,
       path: `/schemas/emails/${id}.json`,
     });
 

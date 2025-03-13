@@ -25,6 +25,7 @@ const EmailContentEditor = ({ id, onClose, setId }) => {
         await api.put(`/emails/${id}`, { ...values });
       } else {
         id = await api.post("/emails", { ...values });
+        id = id?.id;
       }
 
       setId(id);
