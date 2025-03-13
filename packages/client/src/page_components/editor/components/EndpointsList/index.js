@@ -20,15 +20,15 @@ import {
 } from "@heroicons/react/24/outline";
 
 const EndpointsList = () => {
-  const { editor, setEditorModal, editor_modal } = useEditor();
+  const { setEditorModal, editor_modal } = useEditor();
 
   const [archive_modal, setArchiveModal] = useState(false);
 
-  const endpoints = {
-    children: editor,
-  };
+  // const endpoints = {
+  //   children: editor,
+  // };
 
-  let flatten_endpoints = flattenTree(endpoints);
+  let flatten_endpoints = flattenTree([]);
   flatten_endpoints.splice(0, 1);
   flatten_endpoints.sort((a, b) => a.parent - b.parent);
 

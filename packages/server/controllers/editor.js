@@ -5,10 +5,47 @@ import { fs, rootPath } from "@nstation/utils";
 
 import editorDefaultContent from "#libs/editorDefaultContent.js";
 
+function buildTree(files) {
+  const root = [];
+  let id = 1;
+
+  files.forEach((file) => {
+    const parts = file.path.split("/").filter(Boolean); // Rozdziel ścieżkę na segmenty
+    let currentLevel = root;
+
+    parts.forEach((part, index) => {
+      let existingNode = currentLevel.find((node) => node.name === part);
+
+      if (!existingNode) {
+        existingNode = {
+          id,
+          name: part,
+          children: [],
+        };
+
+        if (index === parts.length - 1) {
+          Object.assign(existingNode, file); // Jeśli to plik, dodaj jego dane
+          delete existingNode.children; // Pliki nie mają children
+        }
+
+        currentLevel.push(existingNode);
+      }
+
+      currentLevel = existingNode.children || [];
+      id++;
+    });
+  });
+
+  return root;
+}
+
 const getAllEditor = async (_, res) => {
   try {
-    let endpoints = fs.getFiles("/schemas/endpoints/**/*.js");
-    return res.status(200).json(endpoints);
+    let endpoints = fs.getFiles("/src/**/*");
+
+    const newendpoint = buildTree(endpoints);
+
+    return res.status(200).json(newendpoint);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
