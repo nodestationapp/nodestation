@@ -51,50 +51,6 @@ const getFiles = (pattern) => {
         files.push(dataToPush);
       }
     });
-
-    // folders.forEach((folder) => {
-    //   const folderPath = path.join(srcPath, folder);
-    //   const isFile = folderPath.includes(".");
-
-    //   if (fs.existsSync(folderPath)) {
-    //     const pattern = isFile ? folderPath : path.join(folderPath, "**/*");
-    //     const items = glob.sync(pattern, { nodir: true });
-
-    //     const children = items.map((itemPath) => {
-    //       const itemRelativePath = path.relative(srcPath, itemPath);
-    //       const name = path.basename(itemPath);
-    //       let content = fs.readFileSync(itemPath, "utf8");
-    //       if (name.endsWith(".json")) {
-    //         try {
-    //           content = JSON.parse(content);
-    //         } catch (parseError) {
-    //           console.error(`Error parsing JSON file: ${itemPath}`, parseError);
-    //         }
-    //       }
-    //       const type = itemRelativePath.split(path.sep)[0];
-
-    //       return {
-    //         name,
-    //         metadata: {
-    //           type,
-    //           content,
-    //           path: itemRelativePath,
-    //         },
-    //       };
-    //     });
-
-    //     const folderStructure = {
-    //       name: folder,
-    //       metadata: {
-    //         type: isFile ? "file" : "folder",
-    //       },
-    //       children: isFile ? null : children,
-    //     };
-    //     files.push(folderStructure);
-    //   }
-    // });
-
-    // files.sort((a, b) => a?.id?.localeCompare(b?.id));
   } catch (error) {
     console.error("Error reading directory structure:", error);
     throw error;

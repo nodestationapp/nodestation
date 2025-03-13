@@ -5,8 +5,6 @@ import { fs, rootPath } from "../../utils/index.js";
 export default async () => {
   try {
     const body = {
-      table: "nodestation_users",
-      slug: "nodestation_users",
       fields: [
         {
           name: "ID",

@@ -16,7 +16,8 @@ const TableProvider = ({ id, children }) => {
 
   const view = searchParams.get("v");
 
-  const type = pathname?.split("/")?.[1];
+  let type = pathname?.split("/")?.[1];
+  type = type !== "authentication" ? type : undefined;
 
   useEffect(() => {
     const table_preference =
@@ -39,7 +40,7 @@ const TableProvider = ({ id, children }) => {
       api.get(
         `/tables/${id}?${queryString.stringify({
           view,
-          type: type !== "authentication" ? type : undefined,
+          type,
         })}`
       ),
     enabled: !!view || pathname?.includes("/settings"),
@@ -54,7 +55,7 @@ const TableProvider = ({ id, children }) => {
 
         await api.put(
           `/tables/${id}?${queryString.stringify({
-            type: type !== "authentication" ? type : undefined,
+            type,
           })}`,
           values
         );
@@ -70,7 +71,11 @@ const TableProvider = ({ id, children }) => {
   const deleteTable = () =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.delete(`/tables/${id}`);
+        await api.delete(
+          `/tables/${id}?${queryString.stringify({
+            type,
+          })}`
+        );
 
         resolve();
       } catch (err) {

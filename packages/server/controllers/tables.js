@@ -143,6 +143,7 @@ const getTable = async (req, res) => {
 
 const createTable = async (req, res) => {
   const body = req?.body;
+  const { type } = req?.query;
 
   try {
     const formatted_body = {
@@ -163,11 +164,11 @@ const createTable = async (req, res) => {
 
     await fs.createFile({
       content: formatted_body,
-      path: `/schemas/tables/${slug}.json`,
+      path: `/schemas/${type}/${slug}.json`,
     });
 
     await knex("nodestation_preferences").insert({
-      table_id: body?.name,
+      table_id: slug,
       name: "Entries",
       uid: req?.user?.id,
     });
@@ -203,6 +204,7 @@ const updateTable = async (req, res) => {
 
 const deleteTable = async (req, res) => {
   const { id } = req?.params;
+  const { type } = req?.query;
 
   try {
     const tables = fs.getFiles(["tables"]);
@@ -210,8 +212,8 @@ const deleteTable = async (req, res) => {
       (item) => item?.id?.toString() === id?.toString()
     );
 
-    await fs.deleteFile(id);
-    await knex.schema.dropTable(table?.table);
+    await fs.deleteFile(`/schemas/${type ? `${type}/` : ""}${id}.json`);
+    await knex.schema.dropTable(id);
 
     return res.status(200).json({ status: "ok" });
   } catch (error) {

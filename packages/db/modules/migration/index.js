@@ -56,10 +56,13 @@ function createOrModifyColumn({ table, schema, dbColumns }) {
 
 export default async () => {
   let forms = fs.getFiles("/schemas/forms/**/*.json");
-  const tables = fs.getFiles([
-    "/schemas/tables/**/*.json",
-    "/schemas/auth.json",
-  ]);
+  let auth = fs.getFiles("/schemas/auth.json");
+  const tables = fs.getFiles(["/schemas/tables/**/*.json"]);
+
+  auth = {
+    ...auth?.[0],
+    id: "nodestation_users",
+  };
 
   forms = forms?.map((item) => ({
     ...item,
@@ -84,7 +87,7 @@ export default async () => {
     ],
   }));
 
-  let all_tables = [...tables, ...forms];
+  let all_tables = [...tables, ...forms, auth];
 
   for await (const item of all_tables) {
     let fileColumns = item?.fields;

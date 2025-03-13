@@ -25,7 +25,7 @@ const ArchiveFormModal = ({ data, type, onClose }) => {
         : itemsToDelete?.map((item) => item?.original?.id);
 
       for await (const item of entry_ids) {
-        await api.delete(`/forms/${item}`);
+        await api.delete(`/tables/${item}?type=forms`);
       }
 
       if (type === "list") {

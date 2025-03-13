@@ -13,10 +13,9 @@ const AddTableModal = ({ type, onClose }) => {
 
   const onSubmit = async (values, setSubmitting, setErrors) => {
     try {
-      const table = await api.post("/tables", { ...values, type });
+      const table = await api.post(`/tables?type=${type}`, { ...values });
 
-      const typeEndpoint = type === "form" ? "forms" : "tables";
-      navigate(`/${typeEndpoint}/${table?.id}/settings`);
+      navigate(`/${type}/${table?.id}/settings`);
 
       queryClient.refetchQueries("tables");
 

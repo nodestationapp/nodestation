@@ -38,7 +38,7 @@ const FormsContent = () => {
       },
     ],
     hideColumnOrder: true,
-    newButtonHandler: () => setAddTableModal("form"),
+    newButtonHandler: () => setAddTableModal("forms"),
     selectAction: [
       {
         icon: <TrashIcon color="#FF3636" />,
