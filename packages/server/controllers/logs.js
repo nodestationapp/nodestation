@@ -24,7 +24,7 @@ const getLogs = async (req, res) => {
 
   try {
     let preferences = await knex("nodestation_preferences").where({
-      table_id: "logs",
+      table_id: "nodestation_logs",
     });
     preferences = parseJSONFields(preferences)?.[0];
 

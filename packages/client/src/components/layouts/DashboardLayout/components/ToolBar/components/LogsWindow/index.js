@@ -25,9 +25,9 @@ const mainClass = "logs-window";
 
 const LogsWindowContent = ({ onClose }) => {
   const { getUserData } = useApp();
+  const [cookies, setCookie] = useCookies(["logs_maximize"]);
   const { logs, fetchNextPage, saveTableTransaction, preferences, loading } =
     useLogs();
-  const [cookies, setCookie] = useCookies(["logs_maximize"]);
 
   const [details_modal, setDetailsModal] = useState(null);
 
@@ -195,7 +195,7 @@ const LogsWindowContent = ({ onClose }) => {
             data={logs}
             loading={!!loading}
             filtering={true}
-            tableId="logs"
+            tableId="nodestation_logs"
             preferences={preferences}
             tableSchema={tableSchema}
             columns={columns}

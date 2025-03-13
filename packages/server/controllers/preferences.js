@@ -50,7 +50,10 @@ const upsertPreferences = async (req, res) => {
     const currentDate = Date.now();
 
     let preference = await knex("nodestation_preferences")
-      .where({ table_id: body?.table_id, id: body?.view })
+      .where({
+        table_id: body?.table_id,
+        ...(!!body?.view ? { id: body?.view } : {}),
+      })
       .first();
 
     if (!!preference) {
@@ -60,7 +63,7 @@ const upsertPreferences = async (req, res) => {
 
       await knex("nodestation_preferences")
         .where({
-          id: body?.view,
+          ...(!!body?.view ? { id: body?.view } : {}),
           table_id: body?.table_id,
         })
         .update({

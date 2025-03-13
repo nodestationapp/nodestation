@@ -20,7 +20,7 @@ const LogsProvider = ({ children }) => {
 
   const saveTableTransaction = async (values) => {
     await api.post("/preferences", {
-      table_id: "logs",
+      table_id: "nodestation_logs",
       ...values,
     });
 
