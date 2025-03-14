@@ -8,15 +8,29 @@ import editorSchema from "libs/validations/editorSchema";
 import editorFormikRender from "libs/helpers/editorFormikRender";
 import editorOptionsRender from "libs/helpers/editorOptionsRender";
 import editorTitleInputRender from "libs/helpers/editorTitleInputRender";
+import { useEditor } from "context/client/editor";
 
 const mainClass = "content-editor-modal";
 
 const ContentEditorModal = ({ data, type = "endpoints", onClose }) => {
-  const onSubmitHandler = async (values, setSubmitting, resetForm) => {
+  const { updateEntry } = useEditor();
+
+  const onSubmitHandler = async (values, setSubmitting) => {
     try {
-      // await onSubmit(values, setSubmitting, resetForm);
+      const path = `${type}${data?.path}/${data?.name}`;
+      const new_path = `${values?.type}${values?.name}/${values?.method}`;
+
+      const formatted_values = {
+        path,
+        ...(path !== new_path && { new_path }),
+        properties: values?.properties,
+      };
+
+      await updateEntry(formatted_values);
+      onClose();
     } catch (err) {
       console.error(err);
+      setSubmitting(false);
     }
   };
 
@@ -33,14 +47,14 @@ const ContentEditorModal = ({ data, type = "endpoints", onClose }) => {
         onSubmitHandler(values, setSubmitting, resetForm);
       }}
     >
-      {({ submitForm, isSubmitting, dirty, errors }) => (
+      {({ submitForm, isSubmitting, dirty }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
           <AsideModal
             onClose={onClose}
             submit_label="Save"
             onSubmit={submitForm}
             loading={isSubmitting}
-            // header={data?.path || "Add user"}
+            submit_keys={["⌘", "S"]}
           >
             <div className={mainClass}>
               <div className={`${mainClass}__title`}>{title_input}</div>

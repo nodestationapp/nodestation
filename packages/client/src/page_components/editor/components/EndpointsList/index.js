@@ -132,9 +132,9 @@ const EndpointsList = () => {
                     fullWidth
                     hideHeader
                     toolbar={toolbar}
-                    disabledSelect={true}
-                    data={item?.items}
                     columns={columns}
+                    data={item?.items}
+                    disabledSelect={true}
                     tableSchema={tableSchema}
                     rowAction={({ row }) => (
                       <IconButton

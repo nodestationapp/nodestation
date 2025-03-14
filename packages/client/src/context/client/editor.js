@@ -55,10 +55,7 @@ const EditorProvider = ({ children }) => {
   const updateEntry = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.put(`/editor/${entry_id}`, {
-          ...values,
-          options: { ...values?.options },
-        });
+        await api.put(`/editor`, values);
 
         editorRefetch();
 
