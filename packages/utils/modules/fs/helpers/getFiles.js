@@ -4,6 +4,21 @@ import { glob } from "glob";
 
 import rootPath from "#modules/rootPath.js";
 
+function parseInput(input) {
+  if (typeof input !== "string") return input;
+
+  input = input.trim();
+
+  if (input.startsWith("[") && input.endsWith("]")) {
+    const content = input.slice(1, -1).trim();
+    if (!content) return [];
+
+    return content.split(",").map((item) => item.trim());
+  }
+
+  return input;
+}
+
 const getFileProperties = (content) => {
   let properties = {};
 
@@ -11,7 +26,7 @@ const getFileProperties = (content) => {
   if (propertyMatch) {
     propertyMatch.forEach((match) => {
       const [_, key, value] = match.match(/\* @(\w+) (.*)/);
-      properties[key] = value === "[]" ? [] : value;
+      properties[key] = parseInput(value);
     });
   }
 

@@ -7,7 +7,7 @@ const editorDefaultContent = (body) => {
  * @status ${body?.properties?.status || "active"}
  * @parser ${body?.properties?.parser || "json"}
  * @middlewares ${body?.properties?.middlewares || "[]"}
- * @authentication ${body?.properties?.authentication || "[]"}
+ * @auth ${body?.properties?.auth || "[]"}
  */
 
 export default async (req, res) => {

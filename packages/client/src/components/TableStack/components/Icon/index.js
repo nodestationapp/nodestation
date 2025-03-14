@@ -7,9 +7,9 @@ const mainClass = "table__icon";
 
 const getIcon = (data, slug) => {
   switch (slug) {
-    case "authentication":
+    case "auth":
       return {
-        active: !!data?.properties?.authentication?.length,
+        active: !!data?.properties?.auth?.length,
         icon: <LockClosedIcon />,
       };
     case "middlewares":

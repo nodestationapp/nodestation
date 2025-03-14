@@ -65,9 +65,9 @@ const EndpointsList = () => {
       type: "select",
     },
     {
-      key: "authentication",
+      key: "auth",
       type: "icon",
-      slug: "authentication",
+      slug: "auth",
       value: "Authentication",
     },
     {
