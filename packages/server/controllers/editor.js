@@ -60,7 +60,11 @@ const updateEditor = async (req, res) => {
             continue;
           }
 
-          content = content.replace(regex, `@${key} ${value}`);
+          if (Array.isArray(value)) {
+            content = content.replace(regex, `@${key} [${value.join(", ")}]`);
+          } else {
+            content = content.replace(regex, `@${key} ${value}`);
+          }
         }
       }
     }

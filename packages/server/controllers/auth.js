@@ -55,7 +55,7 @@ const getSettingsAuth = async (_, res) => {
   try {
     const files = fs.getFiles(`/schemas/auth.json`);
 
-    return res.status(200).json({ fields: files?.[0]?.content?.fields });
+    return res.status(200).json({ fields: files?.[0]?.fields });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
