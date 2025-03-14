@@ -58,12 +58,12 @@ const EndpointsList = () => {
       slug: "endpoint_name",
       type: "endpoint_name",
     },
-    // {
-    //   key: "status",
-    //   value: "Status",
-    //   slug: "status",
-    //   type: "status",
-    // },
+    {
+      key: "status",
+      value: "Status",
+      slug: "status",
+      type: "select",
+    },
     {
       key: "authentication",
       type: "icon",
@@ -75,6 +75,27 @@ const EndpointsList = () => {
       type: "icon",
       slug: "middlewares",
       value: "Middlewares",
+    },
+  ];
+
+  const tableSchema = [
+    {
+      name: "Status",
+      slug: "status",
+      type: "select",
+      options: [
+        {
+          color: "26,213,152",
+          label: "Active",
+          value: "active",
+        },
+        {
+          color: "249,63,62",
+          label: "Inactive",
+          value: "inactive",
+        },
+      ],
+      variant: "status",
     },
   ];
 
@@ -114,6 +135,7 @@ const EndpointsList = () => {
                     disabledSelect={true}
                     data={item?.items}
                     columns={columns}
+                    tableSchema={tableSchema}
                     rowAction={({ row }) => (
                       <IconButton
                         onClick={(e) => {

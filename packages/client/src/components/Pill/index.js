@@ -20,7 +20,15 @@ const Pill = ({
       onClick={onclick}
       type="button"
       disabled={readOnly}
-      style={!!color ? { backgroundColor: color, color: textColor } : {}}
+      style={
+        !!color
+          ? {
+              backgroundColor:
+                variant === "status" ? `rgba(${color}, 0.2)` : color,
+              color: `rgba(${textColor}, 1)`,
+            }
+          : {}
+      }
       className={cx(mainClass, {
         [`${mainClass}--active`]: !!active,
         [`${mainClass}--${variant}`]: !!variant,

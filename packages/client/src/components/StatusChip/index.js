@@ -4,17 +4,19 @@ import Pill from "components/Pill";
 const mainClass = "status-chip";
 
 const StatusChip = ({ field, status, tableSchema }) => {
-  const schemaOptions = tableSchema?.find(
-    (item) => item?.slug === field
-  )?.options;
+  const schemaOptions = tableSchema?.find((item) => item?.slug === field);
 
-  const selectedStatus = !!status ? status?.split(",") : [];
+  let values =
+    schemaOptions?.variant === "status"
+      ? [status?.properties?.status]
+      : status?.split(",");
 
+  console.log(values);
   return (
     <div className={mainClass}>
-      {selectedStatus?.map((item, index) => {
-        const selectedOption = schemaOptions?.find(
-          (element) => element?.label === item
+      {values?.map((item, index) => {
+        const selectedOption = schemaOptions?.options?.find(
+          (element) => element?.value === item
         );
 
         return (
@@ -22,7 +24,12 @@ const StatusChip = ({ field, status, tableSchema }) => {
             key={index}
             label={selectedOption?.label}
             color={selectedOption?.color}
-            textColor="#F0F1F3"
+            textColor={
+              schemaOptions?.variant === "status"
+                ? selectedOption?.color
+                : "#F0F1F3"
+            }
+            variant={schemaOptions?.variant}
           />
         );
       })}

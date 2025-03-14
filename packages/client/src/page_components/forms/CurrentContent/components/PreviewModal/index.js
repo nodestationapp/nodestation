@@ -145,7 +145,7 @@ const PreviewModal = ({
       >
         <div className={mainClass}>
           {fields?.map((item, index) => {
-            if (item?.type === "id") return;
+            if (item?.type === "id") return null;
 
             return (
               <div
