@@ -22,15 +22,15 @@ const createFile = async ({ content, path: file_path }) =>
         flag: "wx",
         encoding: "utf8",
       });
+
+      generateServer();
+
+      return resolve("ok");
     } catch (err) {
       if (err.code === "EEXIST") {
         return reject({ error: "File already exist." });
       }
     }
-
-    generateServer();
-
-    return resolve("ok");
   });
 
 export default createFile;
