@@ -1,9 +1,11 @@
+
+
 .logged-user{
-    border-top: 1px solid #3C414B;
+    border-top: 1px solid var(--secondary-light);
     padding: 0 10px;
     display: flex;
     justify-content: space-between;
-    background-color: #8A6FF1; 
+    background-color: var(--primary-color); 
     height: 30px;
 
     &__left{
@@ -35,7 +37,7 @@
                     }
 
                     path{
-                        fill: #fff;
+                        fill: var(--text-light);
                     }
                 }
             }
@@ -60,7 +62,7 @@
 
         .icon-button{
             &::before {
-                background-color: rgba(#fff, 0.15);
+                background-color: rgb(var(--text-light-rgb), 0.15);
             }
         }
     }

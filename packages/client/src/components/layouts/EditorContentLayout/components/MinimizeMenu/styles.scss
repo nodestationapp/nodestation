@@ -1,6 +1,8 @@
+
+
 .minimize-menu{
     padding: 0 5px;
-    background-color: #272D34;
+    background-color: var(--secondary-dark);
     display: flex;
     align-items: center;
     gap: 10px;
@@ -20,14 +22,14 @@
         border-radius: 5px;
 
         &__separator{
-            background-color: #3C414B;
+            background-color: var(--secondary-light);
             height: 28px;
             width: 1px;
             display: flex;
         }
 
         &--active,&:hover{
-            background-color: #3C414B;
+            background-color: var(--secondary-light);
 
             .minimize-menu__item__remove{
                 display: flex;
@@ -43,13 +45,13 @@
             justify-content: center;
 
             svg{
-                color: #F0F1F3;
+                color: var(--text-light);
             }
 
             &__ep-icon{
                 height: 10px;
                 width: 10px;
-                background-color: red;
+                background-color: var(--error);
                 border-radius: 2px;
             }
         }
@@ -68,14 +70,14 @@
 
         &__remove{
             position: absolute;
-            background-color: red;
+            background-color: var(--error);
             display: flex;
             align-items: center;
             justify-content: center;
             width: 25px;
             height: 100%;
             right: 0;
-            background-color: #3C414B;
+            background-color: var(--secondary-light);
             display: none;
 
             button{

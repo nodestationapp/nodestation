@@ -1,10 +1,10 @@
-@import "styles/variables.scss";
+
 
 .button {
   $self: &;
   padding: 0 12px;
-  background-color: #8A6FF1;
-  color: #fff;
+  background-color: var(--primary-color);
+  color: var(--text-light);
   height: 32px;
   border-radius: 5px;
   width: fit-content;
@@ -20,7 +20,7 @@
     width: 18px;
 
     path {
-      fill: #fff;
+      fill: var(--text-light);
     }
   }
 
@@ -35,8 +35,8 @@
 
   &--transparent-gray {
     background-color: transparent;
-    border: 1px solid #4F5762;
-    color: #AEB3BD;
+    border: 1px solid var(--text-dark);
+    color: var(--text-dark);
 
     &:hover {
       filter: brightness(1.2);
@@ -46,78 +46,78 @@
   &--no-border {
     background-color: transparent;
     border: none;
-    color: #ACB1BB;
+    color: var(--text-dark);
 
     .loader__progress {
       &::before {
-        border-color: $primary-color;
+        border-color: var(--primary-color);
       }
     }
 
     svg {
       path {
-        stroke: #ACB1BB;
+        stroke: var(--text-dark);
         fill: transparent;
       }
     }
 
     &:hover {
       filter: brightness(1);
-      background-color: #2F3841;
+      background-color: rgba(var(--text-dark), 0.2);
     }
   }
 
   &--transparent {
     background-color: transparent;
     border: none;
-    color: #d3d3d3;
+    color: var(--text-light);
     filter: none !important;
   }
 
   &--no-border-grey {
     background-color: transparent;
     border: none;
-    color: #d3d3d3;
+    color: var(--text-light);
 
     .loader__progress {
       &::before {
-        border-color: $primary-color;
+        border-color: var(--primary-color);
       }
     }
 
     svg {
       path {
-        fill: $primary-color;
+        fill: var(--primary-color);
       }
     }
 
     &:hover {
-      color: #ff0000;
+      color: var(--error);
     }
   }
 
   &--no-border-error {
     background-color: transparent;
     border: none;
-    color: #ff0000;
+    color: var(--error);
     pointer-events: none;
 
     .loader__progress {
       &::before {
-        border-color: $primary-color;
+        border-color: var(--primary-color);
       }
     }
 
     svg {
       path {
-        fill: $primary-color;
+        fill: var(--primary-color);
       }
     }
   }
 
   &--grey {
     background-color: #e1e6eb;
-    color: $text-color;
+    color: var(--background-light);
 
     &:hover {
       filter: brightness(1.03);
@@ -125,12 +125,12 @@
   }
 
   &--active {
-    background-color: $primary-color;
-    color: #fff !important;
+    background-color: var(--primary-color);
+    color: var(--text-light) !important;
 
     &:hover {
-      background-color: $primary-color;
-      color: #fff !important;
+      background-color: var(--primary-color);
+      color: var(--text-light) !important;
     }
   }
 
@@ -165,17 +165,16 @@
 
   &--disabled {
     cursor: auto;
-    background-color: #3a3a3e;
-    color: #6a6a74;
+    background-color: var(--secondary-light);
+    color: var(--text-dark);
 
     .key-viewer{
       &__item{
-        background-color: #414146;
-        color: #6a6a74;
+        opacity: 0.8;
       }
 
       span{
-        color: #6a6a74;
+        color: var(--text-dark);
       }
     }
 
@@ -199,6 +198,6 @@
   }
 
   &--error {
-    background-color: #F93F3E;
+    background-color: var(--error);
   }
 }

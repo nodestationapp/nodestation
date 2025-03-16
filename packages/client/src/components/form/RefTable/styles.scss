@@ -1,4 +1,4 @@
-@import "styles/variables.scss";
+
 
 .select {
   font-size: 14px;
@@ -17,20 +17,20 @@
       margin-left: -5px;
       margin-bottom: 5px;
       padding: 0 5px;
-      color: #AEB3BD;
+      color: var(--text-dark);
       font-size: 13px;
       position: absolute;
       left: 15px;
       top: 50%;
       transform: translateY(-50%);
       z-index: 10;
-      background-color: #21252B;
+      background-color: var(--background-light);
       transition: all ease 0.2s;
       pointer-events: none;
       font-size: 14px;
   
       span{
-        color: #AEB3BD;
+        color: var(--text-dark);
       }
     }
 
@@ -43,13 +43,13 @@
       justify-content: space-between;
       align-items: center;
       background-color: transparent;
-      border: 1px solid #4B4F55;
-      color: #fff;
+      border: 1px solid var(--border-light);
+      color: var(--text-light);
   
       > svg{
         height: 18px;
         width: 18px;
-        color: #4B4F55;
+        color: var(--border-light);
       }
   
       span {
@@ -89,11 +89,11 @@
     position: absolute;
     top: calc(100% + 10px);
     right: 0;
-    background-color: #3C414B;
+    background-color: var(--secondary-light);
     border-radius: 5px;
     min-width: 100%;
     max-height: 242px;
-    box-shadow: 0px 4px 6px -3px rgba(#000, 0.2);
+    box-shadow: 0px 4px 6px -3px rgb(var(--black-rgb), 0.2);
     z-index: -100;
 
     &__action{
@@ -110,13 +110,13 @@
       justify-content: flex-start !important;
       text-align: left;
       padding: 0 10px;
-      color: $text-color;
+      color: var(--background-light);
       font-size: 14px;
       line-height: 14px;
       font-weight: 400;
       width: 100%;
       gap: 15px;
-      color: #fff;
+      color: var(--text-light);
       border-radius: 5px;
       height: 35px;
 
@@ -144,11 +144,7 @@
       }
 
       &:hover {
-        background-color: #30353D;
-      }
-
-      &--selected {
-        background-color: #2a2b31;
+        background-color: var(--secondary-light);
       }
     }
   }
@@ -156,7 +152,7 @@
   &__error {
     display: block;
     margin-top: 5px;
-    color: #F93F3E;
+    color: var(--error);
     font-size: 13px;
   }
 
@@ -165,13 +161,13 @@
     z-index: 1000;
 
     > button {
-      border-color: #757980;
+      border-color: var(--border-light);
 
       > svg {
         transform: rotate(-180deg);
 
         path{
-          stroke: #757980;
+          stroke: var(--border-light);
         }
       }
     }
@@ -181,7 +177,7 @@
     .select{
       &__content{
         > button {
-          border-color: rgba(#F93F3E, 0.8);
+          border-color: rgba(var(--error), 0.8);
         }
       }
     }
@@ -189,17 +185,7 @@
 
   &--selected {
     > span {
-      color: #ececf1;
-    }
-  }
-
-  &--empty{
-    > button {
-
-span{
-
-  color: #656F7D;
-}
+      color: var(--text-light);
     }
   }
 
@@ -223,11 +209,5 @@ span{
   &--disabled {
     opacity: 0.5;
     pointer-events: none;
-  }
-
-  &--light{
-    button{
-      background-color: #383E48;
-    }
   }
 }

@@ -1,3 +1,5 @@
+
+
 .email-content__settings{
     &__grid{
         display: flex;
@@ -9,8 +11,8 @@
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            background-color: #2A2E34;
-            border: 1px solid #3C414B;
+            background-color: var(--secondary-dark);
+            border: 1px solid var(--secondary-light);
             border-radius: 10px;
             max-width: 220px;
             width: 100%;
@@ -22,7 +24,7 @@
             }
 
             &:hover{
-                background-color: #3C414B;
+                background-color: var(--secondary-light);
             }
 
             svg{

@@ -1,14 +1,14 @@
 .card{
   border-radius: 10px;
-  background-color: #30353D;
-  border: 1px solid #3C414B;
+  background-color: var(--secondary-light);
+  border: 1px solid var(--secondary-light);
 
   &__header{
     padding: 0 15px;
     display: flex;
     align-items: center;
     height: 52px;
-    border-bottom: 1px solid #3C414B;
+    border-bottom: 1px solid var(--secondary-light);
 
     h2{
       font-size: 14px;

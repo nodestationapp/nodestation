@@ -1,8 +1,10 @@
+
+
 .pill {
   padding: 0px 6px;
   height: 25px;
   background-color: transparent;
-  color: #F0F1F3;
+  color: var(--text-light);
   font-weight: 400;
   font-size: 13px;
   display: flex;
@@ -15,7 +17,7 @@
 
   &--rounded{
     border-radius: 80px;
-    border: 1px solid #3C414B;
+    border: 1px solid var(--secondary-light);
   }
 
   &--read-only{
@@ -33,18 +35,18 @@
   }
 
   &:hover{
-    background-color: rgba(#fff, 0.05);
+    background-color: rgb(var(--text-light-rgb), 0.05);
   }
 
   &--active{
-    color: #8A6FF1;
+    color: var(--primary-color);
     gap: 6px;
-    border-color: #8A6FF1;
-    background-color: rgba(#8A6FF1, 0.15);
+    border-color: var(--primary-color);
+    background-color: rgba(var(--primary-color), 0.15);
 
     svg{
       path{
-        fill: #8A6FF1;
+        fill: var(--primary-color);
       }
     }
   }
@@ -52,9 +54,5 @@
   &--small{
     height: 22px;
     padding: 0 5px;
-  }
-
-  &--status{
-    
   }
 }

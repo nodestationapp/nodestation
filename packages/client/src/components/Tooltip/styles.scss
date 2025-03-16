@@ -1,3 +1,5 @@
+
+
 .tooltip {
     $self: &;
     display: flex;
@@ -12,7 +14,7 @@
       top: calc(100% + 15px);
       left: 50%;
       transform: translateX(-50%);
-      background-color: #F0F1F3;
+      background-color: var(--text-light);
       border-radius: 8px;
       z-index: 30;
       opacity: 0;
@@ -22,7 +24,7 @@
       animation-delay: 0.2s;
   
       span {
-        color: #000 !important;
+        color: var(--black) !important;
         font-size: 12px !important;
         white-space: nowrap !important;
         display: flex;
@@ -39,14 +41,14 @@
         height: 0;
         border-style: solid;
         border-width: 0 6px 6px 6px;
-        border-color: transparent transparent #F0F1F3 transparent;
+        border-color: transparent transparent var(--text-light) transparent;
       }
     }
   
     &--warning {
       #{ $self }__content {
         span {
-          color: #ea3a3d !important;
+          color: var(--error) !important;
         }
       }
     }

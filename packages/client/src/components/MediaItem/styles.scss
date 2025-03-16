@@ -1,7 +1,9 @@
+
+
 .media-item{
   padding: 10px;
-  background-color: #30353D;
-  border: 1px solid #3C414B;
+  background-color: var(--secondary-dark);
+  border: 1px solid var(--border-light);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -16,7 +18,7 @@
   }
 
   &--dark{
-    background-color: #2A2E34;
+    background-color: var(--secondary-dark);
     pointer-events: none;
   }
 
@@ -47,12 +49,12 @@
       justify-content: center;
       height: 100%;
       width: 100%;
-      background-color: #2A2E34;
+      background-color: var(--secondary-dark);
 
       svg{
         height: 35px;
         width: 35px;
-        color: #ACB1BB;
+        color: var(--text-dark);
       }
     }
   }
@@ -99,7 +101,7 @@
       padding: 4px 8px;
       border-radius: 8px;
       background-color: #525964;
-      color: #F0F1F3;
+      color: var(--text-light);
       display: flex;
       justify-content: center;
       align-items: center;

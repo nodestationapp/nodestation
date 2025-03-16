@@ -1,3 +1,5 @@
+
+
 .table-stack{
 flex: 1;
 display: flex;
@@ -12,7 +14,7 @@ flex-direction: column;
 
     &__row{
       display: flex;
-      border-bottom: 1px solid #3C414B;
+      border-bottom: 1px solid var(--secondary-light);
       width: fit-content;
       height: 40px;
       min-width: 100%;
@@ -24,7 +26,7 @@ flex-direction: column;
       position: relative;
       align-items: center;
       gap: 5px;
-      border-right: 1px solid #3C414B;
+      border-right: 1px solid var(--secondary-light);
       height: 40px;
       min-width: 40px;
 
@@ -48,7 +50,7 @@ flex-direction: column;
         gap: 16px;
         display: flex;
         align-items: center;
-        color: #647082;
+        color: var(--text-dark);
         font-size: 13px;
       }
 
@@ -57,7 +59,7 @@ flex-direction: column;
         top: 0;
         height: 100%;
         width: 5px;
-        background-color: rgba(#8A6FF1, 0.4);
+        background-color: rgba(var(--primary-color), 0.4);
         cursor: col-resize;
         user-select: none;
         touch-action: none;
@@ -68,7 +70,7 @@ flex-direction: column;
         }
       
         &.isResizing{
-          background-color: rgba(#8A6FF1, 0.4);
+          background-color: rgba(var(--primary-color), 0.4);
           opacity: 1;
         }
       
@@ -83,7 +85,7 @@ flex-direction: column;
   &__body{
     &__row{
       display: flex;
-      border-bottom: 1px solid #3C414B;
+      border-bottom: 1px solid var(--secondary-light);
       width: fit-content;
       height: 40px;
       min-width: 100%;
@@ -134,7 +136,7 @@ flex-direction: column;
 
       &:hover{
         cursor: pointer;
-        background-color: #262A30;
+        background-color: rgb(var(--secondary-light-rgb), 0.3);
 
         .table-stack{
           &__body{
@@ -163,7 +165,7 @@ flex-direction: column;
       padding: 0 10px;
       display: flex;
       align-items: center;
-      border-right: 1px solid #3C414B;
+      border-right: 1px solid var(--secondary-light);
       white-space: nowrap;
       overflow: hidden;        
       text-overflow: ellipsis;
@@ -200,8 +202,8 @@ flex-direction: column;
           cursor: pointer;
 
           &:hover{
-            background-color: #262A30;
-            border-bottom: 1px solid #3C414B;
+            background-color: rgb(var(--secondary-light-rgb), 0.3);
+            border-bottom: 1px solid var(--secondary-light);
     
             .table__sort{
               display: flex;

@@ -1,3 +1,5 @@
+
+
 .dashboard-layout__avatar{
   display: flex;
   align-items: center;
@@ -11,17 +13,17 @@
   }
 
   &:hover{
-    background-color: #2F3841;
+    background-color: rgb(var(--secondary-light-rgb), 0.3);
 
     span{
-      color: #F0F1F3;
+      color: var(--text-light);
     }
 
     .dashboard-layout__avatar{
       &__image{
         svg{
           rect{
-            fill: #2A2E34 !important;
+            fill: var(--secondary-dark) !important;
           }
         }
       }
@@ -39,7 +41,7 @@
     &__icon{
       height: 30px;
       width: 30px;
-      background-color: #45515D;
+      background-color: var(--secondary-light);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -47,7 +49,7 @@
       svg{
         height: 18px !important;
         width: 18px !important;
-        color: #8999AD;
+        color: var(--text-dark);
       }
     }
 
@@ -62,7 +64,7 @@
       width: 100%;
 
       rect{
-        fill: rgba(#2A2E34, 0.6) !important;
+        fill: rgba(var(--secondary-dark), 0.6) !important;
       }
     }
   }
@@ -75,7 +77,7 @@
     gap: 2px;
 
     small{
-      color: #ACB1BB;
+      color: var(--text-dark);
     }
 
     span{
@@ -91,11 +93,11 @@
     .dashboard-layout__avatar{
       &__text{
         span{
-          color: #F0F1F3;
+          color: var(--text-light);
         }
 
         small{
-          color: #ACB1BB;
+          color: var(--text-dark);
         }
       }
     }

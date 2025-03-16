@@ -1,3 +1,5 @@
+
+
 .key-viewer{
   margin-left: 10px;
   display: flex;
@@ -10,7 +12,7 @@
 
   &__item{
     padding: 0 3px;
-    background-color: rgba(#fff, 0.1);
+    background-color: rgb(var(--text-light-rgb), 0.1);
     min-width: 20px;
     width: fit-content;
     height: 16px;
@@ -24,6 +26,6 @@
   span{
     font-size: 12px;
     font-weight: 500;
-    color: #fff;
+    color: var(--text-light);
   }
 }

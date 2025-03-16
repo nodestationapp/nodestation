@@ -1,3 +1,5 @@
+
+
 .input {
   $self: &;
   position: relative;
@@ -6,7 +8,7 @@
     margin-left: -5px;
     display: block;
     padding: 0 5px;
-    color: #AEB3BD;
+    color: var(--text-dark);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -15,13 +17,13 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
-    background-color: #171A1F;
+    background-color: var(--auth-background);
     transition: all ease 0.2s;
     pointer-events: none;
     font-size: 14px;
 
     span{
-      color: #AEB3BD;
+      color: var(--text-dark);
     }
 
     a{
@@ -48,12 +50,12 @@
       height: 100%;
       width: 100%;
       background-color: transparent;
-      border: 1px solid #4B4F55;
+      border: 1px solid var(--border-light);
       color: #F0F1F3;
       font-weight: 400;
 
       &:focus {
-        border-color: #757980;
+        border-color: var(--text-dark);
       }
     }
 
@@ -78,7 +80,7 @@
 
   &--active {
     #{ $self }__content {
-      border-color: red;
+      border-color: var(--error);
     }
   }
 
@@ -94,14 +96,14 @@
     #{ $self } {
       &__content {
         input {
-          border-color: rgba(#F93F3E, 0.8);
+          border-color: rgba(var(--error), 0.8);
         }
       }
 
       &__error {
         display: block;
         margin-top: 5px;
-        color: #F93F3E;
+        color: var(--error);
         font-size: 13px;
       }
     }
@@ -109,24 +111,24 @@
 
   &--light{
     label{
-      background-color: #21252B;
+      background-color: var(--background-light);
     }
     
     input{
       background-color: transparent;
-      border: 1px solid #4B4F55;
+      border: 1px solid var(--border-light);
     }
   }
 
   &--dark{
     label{
-      background-color: #21252B;
+      background-color: var(--background-light);
     }
     
     input{
       background-color: transparent;
 
-      border-color: #757980;
+      border-color: var(--border-light);
     }
   }
 

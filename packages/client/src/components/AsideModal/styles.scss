@@ -1,3 +1,5 @@
+
+
 .aside-modal{
   padding: 15px;
   position: fixed;
@@ -18,8 +20,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    background-color: #21252B;
-    border: 1px solid #2C2F32;
+    background-color: var(--background-light);
+    border: 1px solid var(--border-dark);
     transform: translateX(100%);
     transition: transform ease 0.3s;
     border-radius: 10px;
@@ -35,19 +37,11 @@
       padding: 0 15px;
       flex-shrink: 0;
       z-index: 100000;
-      background-color: #21252B;
-      border-bottom: 1px solid #3C414B;
+      border-bottom: 1px solid var(--border-light);
 
       .tooltip{
         -webkit-app-region: no-drag;
       }
-
-      .icon-button{
-        &::before {
-            background-color: rgba(#fff, 0.15);
-        }
-      } 
-    
     }
 
     &__content{
@@ -58,20 +52,20 @@
 
       .input{
         label{
-          background-color: #21252B;
+          background-color: var(--background-light);
         }
       }
     }
 
     &__actions{
       width: 100%;
-      background-color: #272D34;
+      background-color: var(--secondary-dark);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 15px;
       flex-shrink: 0;
-      border-top: 1px solid #3C414B;
+      border-top: 1px solid var(--border-light);
 
       &__custom{
         display: flex;
@@ -142,7 +136,7 @@
   }
 
   &__backdrop{
-    background-color: rgba(#000000, 0.5);
+    background-color: rgb(var(--black-rgb), 0.5);
     position: fixed;
     top: 0;
     left: 0;

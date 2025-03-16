@@ -1,3 +1,5 @@
+
+
 .splash-screen{
   height: 100vh;
   width: 100%;
@@ -11,7 +13,7 @@
     border-radius: 50%;
     display: inline-block;
     position: relative;
-    background: linear-gradient(0deg, rgba(#8A6FF1, 0.2) 33%, #8A6FF1 100%);
+    background: linear-gradient(0deg, rgba(var(--primary-color), 0.2) 33%, var(--primary-color) 100%);
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
 
@@ -25,7 +27,7 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: #21252B;
+      background: var(--background-light);
     }
   }
 }

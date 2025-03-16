@@ -1,3 +1,5 @@
+
+
 .email-content-editor{
     display: flex;
     flex-direction: column;
@@ -22,7 +24,6 @@
         height: 45px;
         display: flex;
         align-items: center;
-        border-top: 1px solid #535965;
     }
 
     .cm-theme{
@@ -35,20 +36,13 @@
 
     &__right{
         width: 380px;
-        background-color: #2A2E34;
+        background-color: var(--secondary-dark);
         padding: 15px;
-        border-left: 1px solid #3C414B;
+        border-left: 1px solid var(--secondary-light);
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
         gap: 3px;
-
-        .input{
-            margin-bottom: 8px;
-            label{
-                color: #868F9D;
-            }
-        }
     }
 
     &__loading{

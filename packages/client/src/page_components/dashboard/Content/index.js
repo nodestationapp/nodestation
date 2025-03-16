@@ -21,15 +21,12 @@ const DashboardContent = () => {
   return (
     <DashboardContentLayout breadcrumps={breadcrumps}>
       <div className={mainClass}>
-        {/* <div className={`${mainClass}__col`}>
-          <UsageWidget />
-        </div> */}
         <div className={`${mainClass}__placeholder`}>
           <h1>Welcome {user?.first_name} 👋</h1>
           <span>
             Get familiar with dashboard, here are some ways to get started.
           </span>
-          <Button>Documentation</Button>
+          <Button disabled>Documentation</Button>
         </div>
       </div>
     </DashboardContentLayout>

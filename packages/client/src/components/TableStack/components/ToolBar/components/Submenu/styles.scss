@@ -1,3 +1,5 @@
+
+
 .table__toolbar__menu{
   padding-left: 7.5px;
   display: flex;
@@ -8,7 +10,7 @@
     display: flex;
     align-items: center;
     position: relative;
-    color: #ACB1BB;
+    color: var(--text-dark);
     font-weight: 500;
     gap: 5px;
     white-space: nowrap;
@@ -20,7 +22,7 @@
 
     &::before{
       content: "";
-      background-color: rgba(#fff, 0.05);
+      background-color: rgb(var(--text-light-rgb), 0.05);
       height: 30px;
       width: calc(100% + 15px);
       position: absolute;
@@ -32,7 +34,7 @@
     }
 
     &:hover{
-      color: #F0F1F3;
+      color: var(--text-light);
 
       &::before{
         display: flex;
@@ -40,7 +42,7 @@
     }
 
     &--active{
-      color: #F0F1F3;
+      color: var(--text-light);
 
       &::before{
         display: flex;

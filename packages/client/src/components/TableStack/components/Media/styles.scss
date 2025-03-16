@@ -1,3 +1,5 @@
+
+
 .table__user-media{
   display: flex;
   align-items: center;
@@ -13,7 +15,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #30353E;
+      background-color: var(--secondary-light);
       height: 100%;
       width: 100%;
 
@@ -22,7 +24,7 @@
         width: 18px;
 
         path{
-          stroke: #647282;
+          stroke: var(--text-dark);
         }
       }
     }

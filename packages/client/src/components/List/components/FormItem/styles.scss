@@ -1,8 +1,10 @@
+
+
 .list__form-item{
   $self: &;
   height: 54px;
-  background-color: #30353D;
-  border-bottom: 1px solid #3C414B;
+  background-color: var(--secondary-dark);
+  border-bottom: 1px solid var(--secondary-light);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,7 +45,7 @@
 
       &__unread{
         padding: 0 3px;
-        background-color: #7F78F1;
+        background-color: var(--primary-color);
         min-width: 15px;
         height: 15px;
         display: flex;

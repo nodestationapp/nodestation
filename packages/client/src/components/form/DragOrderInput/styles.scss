@@ -1,6 +1,6 @@
 .dragOrderInput{
   padding-top: 15px;
-  border-top: 1px solid #4B4F55;
+  border-top: 1px solid var(--text-dark);
 
   &__content{
     min-height: 30px;
@@ -8,7 +8,7 @@
     height: 100%;
     width: 100%;
     background-color: transparent;
-    color: #F0F1F3;
+    color: var(--text-light);
     font-weight: 400;
 
     &__header{
@@ -21,7 +21,7 @@
     > span{
       display: block;
       font-size: 14px;
-      color: #AEB3BD;
+      color: var(--text-dark);
       font-weight: 400;
     }
 

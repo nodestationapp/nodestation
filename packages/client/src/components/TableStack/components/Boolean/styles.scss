@@ -1,9 +1,11 @@
+
+
 .table__boolean{
   display: flex;
   align-items: center;
   padding: 6px;
-  background-color: #30353E;
-  color: #fff;
+  background-color: var(--secondary-light);
+  color: var(--text-light);
   border-radius: 5px;
 
   > span{

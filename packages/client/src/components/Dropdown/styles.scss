@@ -1,3 +1,5 @@
+
+
 .dropdown {
   $self: &;
   position: relative;
@@ -6,11 +8,11 @@
     &--active{
 
       button{
-        background-color: rgba(#fff, 0.05);
+        background-color: rgb(var(--text-light-rgb), 0.05);
 
         svg{
           rect{
-            fill: #30353D !important;
+            fill: var(--secondary-light) !important;
           }
         }
       }
@@ -21,7 +23,7 @@
     position: absolute;
     top: calc(100% + 7px);
     right: 0;
-    box-shadow: 0px 4px 6px -3px rgba(#000, 0.2);
+    box-shadow: 0px 4px 6px -3px rgb(var(--black-rgb), 0.2);
     z-index: 10;
   }
 

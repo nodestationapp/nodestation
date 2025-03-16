@@ -1,11 +1,11 @@
 
-@import "styles/variables.scss";
+
 
 .transparent-button {
   padding: 5px 10px;
   display: flex;
   align-items: center;
-  color: #8A6FF1;
+  color: var(--primary-color);
   border-radius: 5px;
 
   svg {
@@ -14,12 +14,12 @@
     width: 15px;
 
     path {
-      fill: #8A6FF1;
+      fill: var(--primary-color);
     }
   }
 
   &:hover {
-    background-color: rgba(#8A6FF1, 0.2);
+    background-color: rgba(var(--primary-color), 0.2);
   }
 
   &--uppercase {

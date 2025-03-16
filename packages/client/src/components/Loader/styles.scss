@@ -1,3 +1,5 @@
+
+
 .loader {
   $self: &;
   display: flex;
@@ -16,7 +18,7 @@
       position: absolute;
       inset: 0px;
       border-radius: 50%;
-      border: 2px solid #fff;
+      border: 2px solid var(--text-light);
       animation: prixClipFix 2s linear infinite;
     }
   }
@@ -24,7 +26,7 @@
   &--dark{
     #{ $self }__progress {
       &::before {
-        border-color: #000;
+        border-color: var(--black);
       }
     }
   }

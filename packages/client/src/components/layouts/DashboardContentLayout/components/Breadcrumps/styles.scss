@@ -1,3 +1,5 @@
+
+
 .dashboard-content-layout__breadcrumps{
   display: flex;
 
@@ -13,11 +15,11 @@
       svg{
         height: 18px;
         width: 18px;
-        color: #ACB1BB;
+        color: var(--text-dark);
       }
 
       span{
-        color: #ACB1BB;
+        color: var(--text-dark);
       }
 
 
@@ -28,12 +30,12 @@
       &:hover{
         svg{
           path{
-            stroke: #F0F1F3;
+            stroke: var(--text-light);
           }
         }
 
         span{
-          color: #F0F1F3;
+          color: var(--text-light);
         }
       }
     }
@@ -44,7 +46,7 @@
       svg{
         height: 18px;
         width: 18px;
-        color: #ACB1BB;
+        color: var(--text-dark);
       }
     }
 

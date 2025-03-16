@@ -1,4 +1,4 @@
-@import "styles/variables.scss";
+
 
 .add-media__drag-and-drop {
   &__content {
@@ -20,7 +20,7 @@
       width: 18px;
 
       path{
-        stroke: #F0F1F3
+        stroke: var(--text-light)
       }
     }
   }
@@ -31,6 +31,6 @@
 
   span {
     margin: 15px 0 20px;
-    color: #F0F1F3;
+    color: var(--text-light);
   }
 }

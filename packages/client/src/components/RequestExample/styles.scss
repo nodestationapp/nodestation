@@ -1,8 +1,7 @@
 .request-example{
   display: flex;
   flex-direction: column;
-  background-color: #25292F;
-  border: 1px solid #3C414B;
+  border: 1px solid var(--secondary-light);
   padding: 10px;
   border-radius: 5px;
   width: 100%;
@@ -15,7 +14,7 @@
     gap: 10px;
     flex: 1;
     cursor: pointer;
-    border-bottom: 1px solid #3C414B;
+    border-bottom: 1px solid var(--secondary-light);
     position: relative;
     width: 100%;
 
@@ -23,7 +22,6 @@
       padding: 0 10px;
       position: absolute;
       right: 0;
-      background-color: #25292F;
     }
 
     &__url{
@@ -45,7 +43,7 @@
     svg{
       height: 18px;
       width: 18px;
-      color: #F0F1F3;
+      color: var(--text-light);
     }
   }
 

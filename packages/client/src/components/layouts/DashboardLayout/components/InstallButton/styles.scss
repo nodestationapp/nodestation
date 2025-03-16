@@ -1,6 +1,6 @@
 .install-button{
     padding: 5px 10px;
-    background-color: red;
+    background-color: var(--error);
     position: fixed;
     bottom: 0;
     left: 325px;
@@ -10,8 +10,8 @@
     justify-content: center;
     align-items: center;
     gap: 7px;
-    background-color: #30353D;
-    border: 1px solid #3C414B;
+    background-color: var(--secondary-light);
+    border: 1px solid var(--secondary-light);
     z-index: 900;
 
     span{
@@ -25,6 +25,6 @@
     svg{
         height: 20px;
         width: 20px;
-        color: #fff;
+        color: var(--text-light);
     }
 }

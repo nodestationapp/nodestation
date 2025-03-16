@@ -1,8 +1,10 @@
+
+
 .title-input{
   display: flex;
   align-items: center;
   border: none;
-  border-bottom: 1px solid #3C414B;
+  border-bottom: 1px solid var(--secondary-light);
   padding: 10px 0;
 
 
@@ -20,13 +22,12 @@
 
   label{
     margin-right: 5px;
-    color: #868F9D;
   }
 
   input{
-    background-color: #21252B;
+    background-color: var(--background-light);
     border: none;
-    color: #fff;
+    color: var(--text-light);
     font-size: 14px;
     font-weight: 500;
     flex: 1;

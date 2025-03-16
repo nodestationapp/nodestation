@@ -12,7 +12,7 @@
     border-radius: 5px;
 
     &--active,&:hover{
-        background-color: #2F3841;
+        background-color: var(--secondary-light-rgb);
 
         .entry-icon-name__remove{
             display: flex;
@@ -29,7 +29,7 @@
 
     &--button{
         padding: 0 7px;
-        background-color: #3C414B;
+        background-color: var(--secondary-light);
 
         &:hover{
             filter: brightness(1.1)
@@ -45,13 +45,13 @@
         justify-content: center;
 
         svg{
-            color: #F0F1F3;
+            color: var(--text-light);
         }
 
         &__ep-icon{
             height: 10px;
             width: 10px;
-            background-color: red;
+            background-color: var(--error);
             border-radius: 2px;
         }
     }
@@ -70,14 +70,14 @@
 
     &__remove{
         position: absolute;
-        background-color: red;
+        background-color: var(--error);
         display: flex;
         align-items: center;
         justify-content: center;
         width: 25px;
         height: 100%;
         right: 0;
-        background-color: #2F3841;
+        background-color: var(--secondary-light-rgb);
         display: none;
 
         button{

@@ -3,7 +3,7 @@
   position: relative;
 
   > button{
-    background-color: #009E77;
+    background-color: var(--success);
     width: fit-content;
     border-radius: 5px !important;
     height: 26px;
@@ -45,7 +45,7 @@
     &__list{
       position: absolute;
       top: 35px;
-      background-color: red;
+      background-color: var(--error);
       width: 100%;
       border-radius: 5px;
       overflow: hidden;
@@ -78,18 +78,18 @@
     &--transparent{
       &.method-select--delete{
           button{
-            background-color: rgba(#F93F3E, 0.2) !important;
+            background-color: rgba(var(--error), 0.2) !important;
             span{
-              color: #F93F3E;
+              color: var(--error);
             }
           }
       }
 
       &.method-select--post{
         button{
-          background-color: rgba(#009E77, 0.2) !important;
+          background-color: rgba(var(--success), 0.2) !important;
           span{
-            color: #009E77;
+            color: var(--success);
           }
         }
       }

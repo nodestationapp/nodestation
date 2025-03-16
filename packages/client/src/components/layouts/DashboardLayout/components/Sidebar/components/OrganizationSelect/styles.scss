@@ -3,7 +3,6 @@
   flex-direction: column;
   padding: 10px 0;
   background-color: #2F3841;
-  border: 1px solid #2b3441;
   border-radius: 10px;
   overflow: hidden;
 
@@ -13,7 +12,7 @@
     padding: 0 15px;
 
     small{
-      color: #ACB1BB;
+      color: var(--text-dark);
     }
   }
 
@@ -36,7 +35,7 @@
 
       &__text{
         span{
-          color: #F0F1F3 !important;
+          color: var(--text-light) !important;
         }
       }
 

@@ -1,5 +1,5 @@
 .server-control{
-    border-top: 1px solid #3C414B;
+    border-top: 1px solid var(--secondary-light);
     padding: 0 10px;
     display: flex;
     justify-content: space-between;
@@ -20,7 +20,7 @@
             > svg{
                 height: 14px;
                 width: 14px;
-                color: #fff;
+                color: var(--text-light);
             }
 
             .loader{
@@ -50,17 +50,17 @@
 
         .icon-button{
             &::before {
-                background-color: rgba(#fff, 0.15);
+                background-color: rgb(var(--text-light-rgb), 0.15);
             }
         }
     }
 
     &--2{
-        background-color: #009E77; 
+        background-color: var(--success); 
      }
 
      &--3{
-        background-color: #7368F0; 
+        background-color: var(--primary-color); 
      }
 
      &--4{

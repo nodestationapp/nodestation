@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   width: fit-content;
-  background-color: #30353D;
+  background-color: var(--secondary-light);
   padding: 5px 5px;
   border-radius: 5px;
 
@@ -16,16 +16,16 @@
   }
 
   &:focus-within{
-    background-color: #3C414B;
+    background-color: var(--secondary-light);
 
     .icon-button{
       svg{
-        color: #F0F1F3;
+        color: var(--text-light);
       }
     }
 
     span{
-      color: #F0F1F3;
+      color: var(--text-light);
     }
   }
 

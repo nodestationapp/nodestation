@@ -1,8 +1,10 @@
+
+
 .list__form-incoming-item{
   $self: &;
   height: 54px;
-  background-color: #30353D;
-  border-bottom: 1px solid #3C414B;
+  background-color: var(--secondary-dark);
+  border-bottom: 1px solid var(--secondary-light);
   display: flex;
   align-items: center;
   justify-content: space-between;

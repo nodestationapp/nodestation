@@ -1,6 +1,5 @@
 .title-bar__searcher{
   padding: 0 7px;
-  background-color: #50545D;
   border-radius: 5px;
   height: 28px;
   width: 380px;
@@ -18,6 +17,6 @@
   svg{
     height: 17px;
     width: 17px;
-    color: #F0F1F3;
+    color: var(--text-light);
   }
 }

@@ -1,3 +1,5 @@
+
+
 .preview-modal{
     display: flex;
     flex-direction: column;
@@ -36,18 +38,18 @@
                 display: flex;
                 align-items: center;
                 gap: 10px;
-                border: 1px solid #3C414B;
+                border: 1px solid var(--secondary-light);
                 border-radius: 5px;
 
                 &:hover{
-                    background-color: #3C414B;
+                    background-color: var(--secondary-light);
                 }
                 
                 &__icon{
                     svg{
                         height: 18px;
                         width: 18px;
-                        color: #fff;
+                        color: var(--text-light);
                     }
                 }
 
@@ -65,7 +67,7 @@
                     small{
                         display: flex;
                         align-items: center;
-                        color: #AEB3BD;
+                        color: var(--text-dark);
                         gap: 3px;
                         font-weight: 400;
                         font-size: 12px;

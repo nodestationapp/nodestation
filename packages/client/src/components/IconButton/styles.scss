@@ -1,4 +1,4 @@
-@import "styles/variables.scss";
+
 
 .icon-button {
   position: relative;
@@ -15,7 +15,7 @@
     left: 50%;
     display: flex;
     transform: translate(-50%, -50%);
-    background-color: rgba(#fff, 0.05);
+    background-color: rgb(var(--text-light-rgb), 0.05);
     height: 32px;
     width: 32px;
     border-radius: 6px;
@@ -45,13 +45,13 @@
     justify-content: center;
     height: 16px;
     min-width: 16px;
-    background-color: $color-purple;
+    background-color: var(--primary-color);
 
     span {
       display: block;
       font-weight: 600;
       font-size: 11px;
-      color: #fff;
+      color: var(--text-light);
     }
   }
 
@@ -88,26 +88,26 @@
   &--filled {
     &::before {
       opacity: 1;
-      background-color: #30353D;
-      border: 1px solid #3C414B;
+      background-color: var(--secondary-light);
+      border: 1px solid var(--secondary-light);
     }
   }
 
   &--error {
     &::before {
-      background-color: rgba(#E30D0D, 0.1);
+      background-color: rgb(var(--error-rgb), 0.1);
     }
 
     svg {
       path{
-        fill: #E30D0D
+        fill: var(--error);
       }
     }
 
     &:hover{
       svg{
         path{
-          fill: #E30D0D
+          fill: var(--error);
         }
       }
     }

@@ -5,7 +5,7 @@
 
 
   label {
-    color: #AEB3BD;
+    color: var(--text-dark);
     line-height: 20px;
     display: block;
     position: relative;
@@ -24,8 +24,8 @@
 
     &:checked {
       ~ .checkmark {
-        border-color: #7F78F1;
-        background-color: #7F78F1;
+        border-color: var(--primary-color);
+        background-color: var(--primary-color);
         &::after {
           left: calc(100% - 10px);
         }
@@ -41,7 +41,7 @@
     width: 40px;
     border-radius: 20px;
     background-color: transparent;
-    border: 1px solid #4B4F55;
+    border: 1px solid var(--border-light);
     transition: border-color ease 0.2s, background-color ease 0.2s;
 
     &::after {
@@ -54,7 +54,7 @@
       height: 11px;
       width: 11px;
       border-radius: 50%;
-      background-color: #F0F1F3;
+      background-color: var(--text-light);
     }
   }
 

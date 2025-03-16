@@ -1,10 +1,12 @@
+
+
 .alert{
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 15px;
-  background-color: rgba(#FFD10C, 0.15);
+  background-color: rgb(var(--warning-rgb), 0.15);
   border-radius: 5px;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -15,7 +17,7 @@
     gap: 10px;
 
     span{
-      color: #FFD20A;
+      color: var(--warning);
     }
 
     svg{
@@ -26,10 +28,10 @@
   }
 
   .button{
-    color: #FFD20A;
+    color: var(--warning);
 
     &:hover{
-      background-color: rgba(#FFD20A, 0.1);
+      background-color: rgb(var(--warning-rgb), 0.1);
     }
   }
 }

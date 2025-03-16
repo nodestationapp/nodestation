@@ -1,11 +1,13 @@
+
+
 .breadcrump-skeleton{
   border-radius: 5px;
   height: 15px;
   width: 75px;
   display: flex;
   align-items: center;
-  background: linear-gradient(to right, #30353D, #5E6067 50%, #30353D 80%),
-  #30353D;
+  background: linear-gradient(to right, var(--secondary-dark), var(--secondary-light) 50%, var(--secondary-dark) 80%),
+  var(--secondary-dark);
   background-repeat: repeat-y;
   background-size: 50px 100%;
   background-position: -50px 0;

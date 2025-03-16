@@ -1,3 +1,5 @@
+
+
 .logs-window{
     position: fixed;
     left: 285px;
@@ -6,8 +8,8 @@
     z-index: 10000;
     display: flex;
     flex-direction: column;
-    border: 1px solid #3C414B;
-    background-color: #1B2023;
+    border: 1px solid var(--secondary-light);
+    background-color: var(--background-dark);
     border-radius: 10px;
     height: 340px;
 
@@ -16,7 +18,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid #3C414B;
+        border-bottom: 1px solid var(--secondary-light);
         height: 45px;
 
         &__actions{
@@ -33,12 +35,12 @@
             padding: 3px 0;
             position: sticky;
             top: 0;
-            background-color: #1B2023;
+            background-color: var(--background-dark);
             z-index: 100;
         }
 
         .table-stack__body__row{
-            border-top: 1px solid #3C414B;
+            border-top: 1px solid var(--secondary-light);
             border-bottom: none;
         }
     }
@@ -51,7 +53,7 @@
         &__section{
             strong{
                 margin-bottom: 10px;
-                color: #ACB1BB;
+                color: var(--text-dark);
                 font-weight: 600;
                 text-transform: uppercase;
                 font-size: 13px;

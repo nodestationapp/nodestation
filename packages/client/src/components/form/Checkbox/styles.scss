@@ -1,3 +1,5 @@
+
+
 .checkbox {
   display: flex;
   position: relative;
@@ -8,7 +10,7 @@
 
   label {
     margin-left: 0px;
-    color: #F0F1F3;
+    color: var(--text-light);
     line-height: 16px;
     display: block;
     position: relative;
@@ -26,8 +28,8 @@
 
     &:checked {
       ~ .checkmark {
-        background-color: #7F78F1;
-        border-color: #7F78F1;
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
 
         &::after {
           transform: translate(-50%, -50%) rotate(45deg) scale(1);
@@ -43,8 +45,8 @@
     height: 18px;
     width: 18px;
     border-radius: 5px;
-    background-color: #2A2E34;
-    border: 1px solid #3C414B;
+    background-color: var(--secondary-dark);
+    border: 1px solid var(--secondary-light);
     transition: background-color ease 0.2s, border-color ease 0.2s;
 
     &::after {
@@ -56,14 +58,14 @@
       transition: transform ease 0.2s;
       height: 8px;
       width: 5px;
-      border-bottom: 2px solid #F0F1F3;
-      border-right: 2px solid #F0F1F3;
+      border-bottom: 2px solid var(--text-light);
+      border-right: 2px solid var(--text-light);
     }
   }
 
   &--error {
     .checkmark {
-      border-color: red;
+      border-color: var(--error);
     }
   }
 
