@@ -32,38 +32,29 @@ const HelpersList = () => {
 
   return (
     <>
-      <EditorContentLayout
-        with_padding
-        action={
-          <Button href="/editor/new?type=fn" icon={<PlusIcon />}>
-            New
-          </Button>
+      <TableStack
+        fullWidth
+        data={helpers}
+        hideHeader
+        toolbar={{
+          menu: [{ label: "Helpers", variant: "label" }],
+          hideColumnOrder: true,
+        }}
+        columns={columns}
+        disabledSelect={true}
+        rowClick={({ row }) =>
+          navigate(`/editor/helpers${row?.slug}/${row?.id}`)
         }
-      >
-        <TableStack
-          fullWidth
-          data={helpers}
-          hideHeader
-          toolbar={{
-            menu: [{ label: "Helpers", variant: "label" }],
-            hideColumnOrder: true,
-          }}
-          columns={columns}
-          disabledSelect={true}
-          rowClick={({ row }) =>
-            navigate(`/editor/helpers${row?.slug}/${row?.id}`)
-          }
-          rowAction={({ row }) => (
-            <IconButton
-              onClick={(e) => {
-                e.stopPropagation();
-                setArchiveModal(row);
-              }}
-              icon={<TrashIcon color="#FF3636" />}
-            />
-          )}
-        />
-      </EditorContentLayout>
+        rowAction={({ row }) => (
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              setArchiveModal(row);
+            }}
+            icon={<TrashIcon color="#FF3636" />}
+          />
+        )}
+      />
       {!!archive_modal && (
         <ArchiveHelperModal
           data={archive_modal}

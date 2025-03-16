@@ -45,14 +45,6 @@
   &--center {
     margin: 0 auto;
   }
-
-  &--blue {
-    #{ $self }__progress {
-      &::before {
-        border-color: #2222cc;
-      }
-    }
-  }
 }
 
 @keyframes rotate {

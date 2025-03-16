@@ -85,7 +85,7 @@
       }
 
       small{
-        color: #87909E;
+        color: var(--text-dark);
         font-weight: 400;
       }
     }
@@ -94,23 +94,6 @@
       svg{
         height: 22px;
         width: 22px;
-      }
-    }
-
-    &__type{
-      padding: 4px 8px;
-      border-radius: 8px;
-      background-color: #525964;
-      color: var(--text-light);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-transform: uppercase;
-
-      small{
-        font-size: 12px;
-      font-weight: 600;
-
       }
     }
   }

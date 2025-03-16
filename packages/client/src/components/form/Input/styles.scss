@@ -51,7 +51,7 @@
       width: 100%;
       background-color: transparent;
       border: 1px solid var(--border-light);
-      color: #F0F1F3;
+      color: var(--text-light);
       font-weight: 400;
 
       &:focus {
@@ -134,7 +134,7 @@
 
   &--id{
     input{
-      background-color: #868F9D;
+      background-color: var(--text-dark);
     }
   }
 
@@ -147,7 +147,7 @@
     label{
       padding: 0;
       margin: 0;
-      color: #868F9D;
+      color: var(--text-dark);
     }
 
     .input {

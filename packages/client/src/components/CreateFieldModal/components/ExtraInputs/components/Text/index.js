@@ -35,9 +35,9 @@ const Text = ({ locked }) => {
         options={variant_options}
       />
       {values?.variant === "short" ? (
-        <FormikInput label="Default value" name="default" variant="light" />
+        <FormikInput label="Default value" name="default" />
       ) : (
-        <FormikTextarea label="Default value" name="default" variant="light" />
+        <FormikTextarea label="Default value" name="default" />
       )}
       <FormikSwitch label="Required" name="required" disabled={locked} />
     </>

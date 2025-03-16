@@ -53,38 +53,27 @@ const CronsList = () => {
 
   return (
     <>
-      <EditorContentLayout
-        with_padding
-        action={
-          <Button href="/editor/new?type=cron" icon={<PlusIcon />}>
-            New
-          </Button>
-        }
-      >
-        <TableStack
-          fullWidth
-          toolbar={{
-            menu: [{ label: "Crons", variant: "label" }],
-            hideColumnOrder: true,
-          }}
-          hideHeader
-          data={formatted_crons}
-          columns={columns}
-          disabledSelect={true}
-          rowClick={({ row }) =>
-            navigate(`/editor/crons${row?.slug}/${row?.id}`)
-          }
-          rowAction={({ row }) => (
-            <IconButton
-              onClick={(e) => {
-                e.stopPropagation();
-                setArchiveModal(row);
-              }}
-              icon={<TrashIcon color="#FF3636" />}
-            />
-          )}
-        />
-      </EditorContentLayout>
+      <TableStack
+        fullWidth
+        toolbar={{
+          menu: [{ label: "Crons", variant: "label" }],
+          hideColumnOrder: true,
+        }}
+        hideHeader
+        data={formatted_crons}
+        columns={columns}
+        disabledSelect={true}
+        rowClick={({ row }) => navigate(`/editor/crons${row?.slug}/${row?.id}`)}
+        rowAction={({ row }) => (
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              setArchiveModal(row);
+            }}
+            icon={<TrashIcon color="#FF3636" />}
+          />
+        )}
+      />
       {!!archive_modal && (
         <ArchiveCronModal
           data={archive_modal}

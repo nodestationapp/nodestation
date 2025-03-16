@@ -18,7 +18,7 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        color: #868F9D;
+        color: var(--text-dark);
 
         svg{
           flex-shrink: 0;
@@ -38,7 +38,7 @@
         cursor: pointer;
 
         span{
-          color: #868F9D;
+          color: var(--text-dark);
         }
 
         .select{
@@ -47,7 +47,7 @@
               border: none;
   
               &:hover{
-                background-color: #262D35;
+                background-color: var(--secondary-dark);
               }
             }
           }
@@ -61,7 +61,7 @@
             border: none;
 
             &:hover{
-              background-color: #262D35;
+              background-color: var(--secondary-dark);
             }
           }
         }

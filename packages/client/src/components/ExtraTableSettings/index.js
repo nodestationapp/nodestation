@@ -37,36 +37,34 @@ const ExtraTableSettings = () => {
   }));
 
   return (
-    <>
-      {/* <Card title="Additional settings"> */}
-      <div className={mainClass}>
-        <div className={`${mainClass}__items`}>
-          <FormikSwitchAccordion
-            label="Send e-mail to admins"
-            name="settings.send_email_admin.active"
-            content={
-              <>
-                {!!!email_active && (
-                  <Alert
-                    text="To send email messages, you must first configure your settings."
-                    action={
-                      <Button variant="transparent" href="/emails/settings">
-                        Configure
-                      </Button>
-                    }
-                  />
-                )}
-                <FormikSelect
-                  label="Template"
-                  name="settings.send_email_admin.value"
-                  options={formatted_emails}
-                  disabled={!!!email_active}
+    <div className={mainClass}>
+      <div className={`${mainClass}__items`}>
+        <FormikSwitchAccordion
+          label="Send e-mail to admins"
+          name="settings.send_email_admin.active"
+          content={
+            <>
+              {!!!email_active && (
+                <Alert
+                  text="To send email messages, you must first configure your settings."
+                  action={
+                    <Button variant="transparent" href="/emails/settings">
+                      Configure
+                    </Button>
+                  }
                 />
-              </>
-            }
-          />
+              )}
+              <FormikSelect
+                label="Template"
+                name="settings.send_email_admin.value"
+                options={formatted_emails}
+                disabled={!!!email_active}
+              />
+            </>
+          }
+        />
 
-          {/* <FormikSwitchAccordion
+        {/* <FormikSwitchAccordion
               label="Function after receiving the message"
               name="settings.function_after.active"
               content={
@@ -77,42 +75,40 @@ const ExtraTableSettings = () => {
                 />
               }
             /> */}
-          <FormikSwitchAccordion
-            label="Auto responder"
-            name="settings.auto_responder.active"
-            content={
-              <>
-                {!!!email_active && (
-                  <Alert
-                    text="To send email messages, you must first configure your settings."
-                    action={
-                      <Button variant="transparent" href="/emails/settings">
-                        Configure
-                      </Button>
-                    }
-                  />
-                )}
-                <div className={`${mainClass}__auto-responder`}>
-                  <FormikSelect
-                    label="Email address field"
-                    disabled={!!!email_active}
-                    name="settings.auto_responder.email_field"
-                    options={auto_responder_fields}
-                  />
-                  <FormikSelect
-                    label="Template"
-                    name="settings.auto_responder.value"
-                    disabled={!!!email_active}
-                    options={formatted_emails}
-                  />
-                </div>
-              </>
-            }
-          />
-        </div>
+        <FormikSwitchAccordion
+          label="Auto responder"
+          name="settings.auto_responder.active"
+          content={
+            <>
+              {!!!email_active && (
+                <Alert
+                  text="To send email messages, you must first configure your settings."
+                  action={
+                    <Button variant="transparent" href="/emails/settings">
+                      Configure
+                    </Button>
+                  }
+                />
+              )}
+              <div className={`${mainClass}__auto-responder`}>
+                <FormikSelect
+                  label="Email address field"
+                  disabled={!!!email_active}
+                  name="settings.auto_responder.email_field"
+                  options={auto_responder_fields}
+                />
+                <FormikSelect
+                  label="Template"
+                  name="settings.auto_responder.value"
+                  disabled={!!!email_active}
+                  options={formatted_emails}
+                />
+              </div>
+            </>
+          }
+        />
       </div>
-      {/* </Card> */}
-    </>
+    </div>
   );
 };
 

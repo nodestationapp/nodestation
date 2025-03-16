@@ -58,7 +58,6 @@ const InputElementsEditor = () => {
 
   return (
     <>
-      {/* <Card title="Input elements"> */}
       <div className={mainClass}>
         <List
           type="forms_field"
@@ -74,7 +73,6 @@ const InputElementsEditor = () => {
           />
         </div>
       </div>
-      {/* </Card> */}
       {!!add_field_modal && (
         <CreateFieldModal
           index={add_field_modal?.index}

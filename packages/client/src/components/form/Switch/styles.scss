@@ -60,7 +60,7 @@
 
   &--error {
     .checkmark {
-      border-color: #d65252;
+      border-color: var(--error);
     }
   }
 

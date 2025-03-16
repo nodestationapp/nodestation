@@ -31,38 +31,29 @@ const MiddlewaresList = () => {
 
   return (
     <>
-      <EditorContentLayout
-        with_padding
-        action={
-          <Button href="/editor/new?type=mid" icon={<PlusIcon />}>
-            Add middleware
-          </Button>
+      <TableStack
+        fullWidth
+        hideHeader
+        data={middlewares}
+        toolbar={{
+          menu: [{ label: "Middlewares", variant: "label" }],
+          hideColumnOrder: true,
+        }}
+        columns={columns}
+        disabledSelect={true}
+        rowClick={({ row }) =>
+          navigate(`/editor/middlewares${row?.slug}/${row?.id}`)
         }
-      >
-        <TableStack
-          fullWidth
-          hideHeader
-          data={middlewares}
-          toolbar={{
-            menu: [{ label: "Middlewares", variant: "label" }],
-            hideColumnOrder: true,
-          }}
-          columns={columns}
-          disabledSelect={true}
-          rowClick={({ row }) =>
-            navigate(`/editor/middlewares${row?.slug}/${row?.id}`)
-          }
-          rowAction={({ row }) => (
-            <IconButton
-              onClick={(e) => {
-                e.stopPropagation();
-                setArchiveModal(row);
-              }}
-              icon={<TrashIcon color="#FF3636" />}
-            />
-          )}
-        />
-      </EditorContentLayout>
+        rowAction={({ row }) => (
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              setArchiveModal(row);
+            }}
+            icon={<TrashIcon color="#FF3636" />}
+          />
+        )}
+      />
       {!!archive_modal && (
         <ArchiveMiddlewareModal
           data={archive_modal}
