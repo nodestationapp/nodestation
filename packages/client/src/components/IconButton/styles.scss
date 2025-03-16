@@ -81,7 +81,7 @@
 
   &--light{
     &::before {
-      background-color: #555A64;
+      background-color: rgb(var(--text-light-rgb), 0.05);
     }
   }
 
@@ -93,21 +93,21 @@
     }
   }
 
-  &--error {
+  &--red {
     &::before {
-      background-color: rgb(var(--error-rgb), 0.1);
+      background-color: rgb(var(--red-rgb), 0.1);
     }
 
     svg {
       path{
-        fill: var(--error);
+        fill: var(--red);
       }
     }
 
     &:hover{
       svg{
         path{
-          fill: var(--error);
+          fill: var(--red);
         }
       }
     }

@@ -26,7 +26,7 @@ const DashboardContent = () => {
           <span>
             Get familiar with dashboard, here are some ways to get started.
           </span>
-          <Button disabled>Documentation</Button>
+          <Button>Documentation</Button>
         </div>
       </div>
     </DashboardContentLayout>

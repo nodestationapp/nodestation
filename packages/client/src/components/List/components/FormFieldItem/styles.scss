@@ -4,7 +4,7 @@
   $self: &;
   height: 53px;
   background-color: var(--secondary-light);
-  border-bottom: 1px solid #535965;
+  border-bottom: 1px solid var(--secondary-light-separator);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -12,8 +12,8 @@
   cursor: pointer;
 
   &:hover {
-    filter: brightness(1.1);
     text-decoration: none;
+    background-color: var(--secondary-light-hover);
 
     #{ $self }__actions {
       display: flex;
@@ -46,8 +46,9 @@
       flex-direction: column;
 
       small{
-        color: #647182;
+        margin-top: 2px;
         font-size: 12px;
+        color: var(--text-dark);
       }
     }
   }

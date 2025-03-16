@@ -58,9 +58,9 @@
     }
   }
 
-  &--error {
+  &--red {
     .checkmark {
-      border-color: var(--error);
+      border-color: var(--red);
     }
   }
 

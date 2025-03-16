@@ -37,10 +37,10 @@
     }
   }
 
-  &--error{
+  &--red{
     .dropdown-input{
       &__content{
-        border: 1px solid rgba(var(--error), 0.6);
+        border: 1px solid rgba(var(--red), 0.6);
       }
     }
   }

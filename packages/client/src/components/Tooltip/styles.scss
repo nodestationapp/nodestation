@@ -45,10 +45,10 @@
       }
     }
   
-    &--warning {
+    &--yellow {
       #{ $self }__content {
         span {
-          color: var(--error) !important;
+          color: var(--red) !important;
         }
       }
     }

@@ -144,7 +144,7 @@
       }
 
       &:hover {
-        background-color: var(--secondary-light);
+        background-color: var(--secondary-light-hover);
       }
     }
   }
@@ -152,7 +152,7 @@
   &__error {
     display: block;
     margin-top: 5px;
-    color: var(--error);
+    color: var(--red);
     font-size: 13px;
   }
 
@@ -160,24 +160,27 @@
     position: relative;
     z-index: 1000;
 
-    > button {
-      border-color: var(--secondary-light);
-
-      > svg {
-        transform: rotate(-180deg);
-
-        path{
-          stroke: var(--secondary-light);
+    .select__content{
+      > button {
+        border-color: var(--text-dark);
+  
+        > svg {
+          transform: rotate(-180deg);
+  
+          path{
+            stroke: var(--text-dark);
+          }
         }
       }
     }
+
   }
 
-  &--error {
+  &--red {
     .select{
       &__content{
         > button {
-          border-color: rgba(var(--error), 0.8);
+          border-color: rgba(var(--red), 0.8);
         }
       }
     }

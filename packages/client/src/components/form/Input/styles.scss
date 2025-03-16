@@ -80,7 +80,7 @@
 
   &--active {
     #{ $self }__content {
-      border-color: var(--error);
+      border-color: var(--red);
     }
   }
 
@@ -92,18 +92,18 @@
     }
   }
 
-  &--error {
+  &--red {
     #{ $self } {
       &__content {
         input {
-          border-color: rgba(var(--error), 0.8);
+          border-color: rgba(var(--red), 0.8);
         }
       }
 
       &__error {
         display: block;
         margin-top: 5px;
-        color: var(--error);
+        color: var(--red);
         font-size: 13px;
       }
     }
@@ -139,7 +139,7 @@
   }
 
   &--transparent-border{
-    border-bottom: 1px solid #535965;
+    border-bottom: 1px solid var(--secondary-light-separator);
     display: flex;
     align-items: center;
     gap: 5px;

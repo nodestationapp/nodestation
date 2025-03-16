@@ -35,11 +35,11 @@
     }
 
     &--action{
-      color: var(--success);
+      color: var(--green);
     }
 
-    &--warning {
-      color: var(--error);
+    &--yellow {
+      color: var(--red);
     }
   }
 

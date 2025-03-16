@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 15px;
-  background-color: rgb(var(--warning-rgb), 0.15);
+  background-color: rgb(var(--yellow-rgb), 0.15);
   border-radius: 5px;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -17,7 +17,7 @@
     gap: 10px;
 
     span{
-      color: var(--warning);
+      color: var(--yellow);
     }
 
     svg{
@@ -28,10 +28,10 @@
   }
 
   .button{
-    color: var(--warning);
+    color: var(--yellow);
 
     &:hover{
-      background-color: rgb(var(--warning-rgb), 0.1);
+      background-color: rgb(var(--yellow-rgb), 0.1);
     }
   }
 }

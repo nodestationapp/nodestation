@@ -51,7 +51,7 @@
         &__ep-icon{
             height: 10px;
             width: 10px;
-            background-color: var(--error);
+            background-color: var(--red);
             border-radius: 2px;
         }
     }
@@ -70,7 +70,7 @@
 
     &__remove{
         position: absolute;
-        background-color: var(--error);
+        background-color: var(--red);
         display: flex;
         align-items: center;
         justify-content: center;

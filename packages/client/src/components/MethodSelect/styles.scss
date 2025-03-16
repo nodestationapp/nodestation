@@ -3,7 +3,7 @@
   position: relative;
 
   > button{
-    background-color: var(--success);
+    background-color: var(--green);
     width: fit-content;
     border-radius: 5px !important;
     height: 26px;
@@ -45,7 +45,7 @@
     &__list{
       position: absolute;
       top: 35px;
-      background-color: var(--error);
+      background-color: var(--red);
       width: 100%;
       border-radius: 5px;
       overflow: hidden;
@@ -78,36 +78,36 @@
     &--transparent{
       &.method-select--delete{
           button{
-            background-color: rgba(var(--error), 0.2) !important;
+            background-color: rgba(var(--red), 0.2) !important;
             span{
-              color: var(--error);
+              color: var(--red);
             }
           }
       }
 
       &.method-select--post{
         button{
-          background-color: rgba(var(--success), 0.2) !important;
+          background-color: rgba(var(--green), 0.2) !important;
           span{
-            color: var(--success);
+            color: var(--green);
           }
         }
       }
 
       &.method-select--get{
         button{
-          background-color: rgba(#1191FF, 0.2) !important;
+          background-color: rgba(var(--blue-rgb), 0.2) !important;
           span{
-            color: #1191FF;
+            color: var(--blue);
           }
         }
       }
 
       &.method-select--put{
         button{
-          background-color: rgba(#E97500, 0.2) !important;
+          background-color: rgba(var(--orange-rgb), 0.2) !important;
           span{
-            color: #E97500;
+            color: var(--orange);
           }
         }
       }

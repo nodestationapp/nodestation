@@ -92,14 +92,14 @@
     }
 
     &:hover {
-      color: var(--error);
+      color: var(--red);
     }
   }
 
   &--no-border-error {
     background-color: transparent;
     border: none;
-    color: var(--error);
+    color: var(--red);
     pointer-events: none;
 
     .loader__progress {
@@ -116,12 +116,8 @@
   }
 
   &--grey {
-    background-color: #e1e6eb;
     color: var(--background-light);
-
-    &:hover {
-      filter: brightness(1.03);
-    }
+    background-color: var(--text-light);
   }
 
   &--active {
@@ -150,7 +146,7 @@
     &:hover {
       &::before {
         content: "";
-        background-color: #2b2b34;
+        background-color: rgb(var(--text-light-rgb), 0.05);
         position: absolute;
         left: 50%;
         top: 50%;
@@ -193,11 +189,11 @@
     height: 38px;
   }
 
-  &--success {
-    background-color: #00d621;
+  &--green {
+    background-color: var(--green);
   }
 
-  &--error {
-    background-color: var(--error);
+  &--red {
+    background-color: var(--red);
   }
 }

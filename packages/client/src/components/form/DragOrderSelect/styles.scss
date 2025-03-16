@@ -218,7 +218,7 @@
   &__error {
     display: block;
     margin-top: 5px;
-    color: var(--error);
+    color: var(--red);
     font-size: 13px;
   }
 
@@ -238,10 +238,10 @@
     }
   }
 
-  &--error {
+  &--red {
     > button {
-      box-shadow: 0 0 0 4px rgba(var(--error), 0.1);
-      border-color: rgba(var(--error), 0.8);
+      box-shadow: 0 0 0 4px rgba(var(--red), 0.1);
+      border-color: rgba(var(--red), 0.8);
     }
   }
 
