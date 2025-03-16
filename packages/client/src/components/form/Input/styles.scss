@@ -50,7 +50,7 @@
       height: 100%;
       width: 100%;
       background-color: transparent;
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--secondary-light);
       color: var(--text-light);
       font-weight: 400;
 
@@ -116,7 +116,7 @@
     
     input{
       background-color: transparent;
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--secondary-light);
     }
   }
 
@@ -128,7 +128,7 @@
     input{
       background-color: transparent;
 
-      border-color: var(--border-light);
+      border-color: var(--secondary-light);
     }
   }
 

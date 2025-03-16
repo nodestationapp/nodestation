@@ -42,7 +42,7 @@
       height: 100%;
       width: 100%;
       background-color: transparent;
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--secondary-light);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -85,7 +85,7 @@
         &__content{
           svg{
             path{
-              color: var(--border-light);
+              color: var(--secondary-light);
             }
           }
         }

@@ -42,7 +42,7 @@
       justify-content: space-between;
       align-items: center;
       background-color: transparent;
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--secondary-light);
       color: var(--text-light);
       cursor:text;
 
@@ -57,7 +57,7 @@
           width: 18px;
 
           path{
-            stroke: var(--border-light);
+            stroke: var(--secondary-light);
           }
         }
       }
@@ -119,10 +119,10 @@
     }
 
     @keyframes l5 {
-      0%  {box-shadow: 11px 0 var(--border-light), -11px 0 var(--border-light)40; background: var(--border-light) }
-      33% {box-shadow: 11px 0 var(--border-light), -11px 0 var(--border-light)40; background: var(--border-light)40}
-      66% {box-shadow: 11px 0 var(--border-light)40, -11px 0 var(--border-light); background: var(--border-light)40}
-      100%{box-shadow: 11px 0 var(--border-light)40, -11px 0 var(--border-light); background: var(--border-light) }
+      0%  {box-shadow: 11px 0 var(--secondary-light), -11px 0 var(--secondary-light)40; background: var(--secondary-light) }
+      33% {box-shadow: 11px 0 var(--secondary-light), -11px 0 var(--secondary-light)40; background: var(--secondary-light)40}
+      66% {box-shadow: 11px 0 var(--secondary-light)40, -11px 0 var(--secondary-light); background: var(--secondary-light)40}
+      100%{box-shadow: 11px 0 var(--secondary-light)40, -11px 0 var(--secondary-light); background: var(--secondary-light) }
     }
   }
 
@@ -189,13 +189,13 @@
     z-index: 1000;
 
     .async-select__content__button {
-      border-color: var(--border-light);
+      border-color: var(--secondary-light);
 
       > svg {
         transform: rotate(-180deg);
 
         path{
-          stroke: var(--border-light);
+          stroke: var(--secondary-light);
         }
       }
     }

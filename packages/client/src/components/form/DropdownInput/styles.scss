@@ -54,13 +54,13 @@
     justify-content: space-between;
     align-items: center;
     background-color: transparent;
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--secondary-light);
     color: var(--text-light);
 
     > svg{
       height: 18px;
       width: 18px;
-      color: var(--border-light);
+      color: var(--secondary-light);
     }
 
     span {
@@ -125,13 +125,13 @@
     z-index: 1000;
 
     > button {
-      border-color: var(--border-light);
+      border-color: var(--secondary-light);
 
       > svg {
         transform: rotate(-180deg);
 
         path{
-          stroke: var(--border-light);
+          stroke: var(--secondary-light);
         }
       }
     }

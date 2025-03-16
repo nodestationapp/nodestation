@@ -1,9 +1,7 @@
-
-
 :root{
   --black: #000000;
-  --auth-background: #171A1F;
   --black-rgb: 0,0,0;
+  --auth-background: #171A1F;
   --background-light: #21252B;
   --background-dark: #1B2023;
   --primary-color: #8A6FF1;
@@ -11,16 +9,15 @@
   --secondary-dark: #272D34;
   --secondary-light: #3C414B;
   --secondary-light-rgb: 60,65,75;
-  --border-dark: #2C2F32;
-  --border-light: #3C414B;
   --text-light: #F0F1F3;
   --text-light-rgb: 240,241,243;
-  --text-dark: #647082;
+  --text-dark: #80899B;
   --error: #FF0000;
   --error-rgb: 255,0,0;
   --success: #1AD598;
   --warning: #FFD10C;
   --warning-rgb: 255,209,12;
+  --neon-green: #53F875;
 }
 
 * {

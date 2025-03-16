@@ -41,7 +41,7 @@
     width: 40px;
     border-radius: 20px;
     background-color: transparent;
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--secondary-light);
     transition: border-color ease 0.2s, background-color ease 0.2s;
 
     &::after {

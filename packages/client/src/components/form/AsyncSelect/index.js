@@ -156,9 +156,7 @@ const AsyncSelect = ({
               type="text"
               ref={input_ref}
               value={inputValue}
-              placeholder={
-                !!value?.label ? value?.label : !!select_open ? "Select..." : ""
-              }
+              placeholder={!!value?.label ? value?.label : ""}
               onChange={(e) => onInputValueChange(e?.target?.value)}
               onKeyDown={onKeyDown}
             />

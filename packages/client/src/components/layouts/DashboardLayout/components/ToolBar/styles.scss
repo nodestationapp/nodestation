@@ -31,10 +31,10 @@
       color: var(--text-dark);
 
       &.active{
-        color: var(--success);
+        color: var(--neon-green);
 
         svg{
-          color: var(--success);
+          color: var(--neon-green);
         }
       }
   
@@ -45,11 +45,9 @@
       }
   
       &:hover{
-        background-color: var(--secondary-light);
+        background-color: rgb(var(--secondary-light-rgb), 0.3);
       }
     }
 
   }
-
-
 }

@@ -41,7 +41,7 @@
       height: 100%;
       width: 100%;
       background-color: transparent;
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--secondary-light);
       color: var(--text-light);
       font-weight: 400;
       transition: all ease 0.2s;
@@ -56,7 +56,7 @@
   &--light{
     input{
       background-color: transparent;
-      border: 1px solid #4B4F55;
+      border: 1px solid var(--secondary-light);
     }
   }
 
