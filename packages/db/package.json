@@ -1,6 +1,6 @@
 {
   "name": "@nstation/db",
-  "version": "1.13.1",
+  "version": "1.14.0",
   "main": "index.js",
   "type": "module",
   "license": "MIT",
