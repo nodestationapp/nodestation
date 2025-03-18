@@ -26,11 +26,9 @@
     "start": "nodemon ./index.js --watch ../server"
   },
   "dependencies": {
+    "esbuild": "0.25.0",
     "@nstation/server": "^1.14.6",
     "@nstation/utils": "^1.14.6",
     "dotenv": "^16.4.7"
-  },
-  "devDependencies": {
-    "esbuild": "0.25.0"
   }
 }
