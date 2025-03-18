@@ -40,7 +40,6 @@ export default async (timeStart, type) => {
   try {
     let cwd;
 
-    console.log(type === "dev");
     if (type === "dev") {
       cwd = path.join(rootPath, "node_modules", "@nstation", "server");
 

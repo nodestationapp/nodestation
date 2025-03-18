@@ -1,7 +1,7 @@
 {
   "fields": [
     {
-      "name": "id",
+      "name": "ID",
       "slug": "id",
       "type": "id",
       "required": true,
@@ -9,6 +9,20 @@
       "primary_key": true,
       "read_only": true,
       "default": "generate_id()"
+    },
+    {
+      "name": "First name",
+      "slug": "first_name",
+      "type": "text",
+      "origin": "system",
+      "required": true
+    },
+    {
+      "name": "Last name",
+      "slug": "last_name",
+      "type": "text",
+      "origin": "system",
+      "required": true
     },
     {
       "name": "Email",
@@ -25,18 +39,25 @@
       "required": true
     },
     {
-      "name": "First name",
-      "slug": "first_name",
-      "type": "text",
+      "name": "Status",
+      "slug": "status",
+      "type": "select",
+      "options": [
+        {
+          "color": "#566E39",
+          "label": "active",
+          "value": "active"
+        },
+        {
+          "color": "#6E3B39",
+          "label": "inactive",
+          "value": "inactive"
+        }
+      ],
+      "default": "inactive",
       "origin": "system",
-      "required": true
-    },
-    {
-      "name": "Last name",
-      "slug": "last_name",
-      "type": "text",
-      "origin": "system",
-      "required": true
+      "required": true,
+      "variant": "single_select"
     },
     {
       "name": "Photo",
@@ -54,47 +75,16 @@
         {
           "color": "#65396E",
           "label": "admin",
-          "id": 1,
-          "value": 1
+          "value": "admin"
         },
         {
           "color": "#396A6E",
           "label": "client",
-          "id": 2,
-          "value": 2
+          "value": "client"
         }
       ],
       "default": "client",
-      "primary_key": ""
-    },
-    {
-      "name": "Status",
-      "slug": "status",
-      "type": "select",
-      "options": [
-        {
-          "color": "#566E39",
-          "label": "active",
-          "id": 1,
-          "value": 1
-        },
-        {
-          "color": "#6E3B39",
-          "label": "inactive",
-          "id": 2,
-          "value": 2
-        },
-        {
-          "color": "#6E5B39",
-          "label": "suspended",
-          "id": 3,
-          "value": 3
-        }
-      ],
-      "default": "inactive",
-      "origin": "system",
-      "required": true,
-      "primary_key": ""
+      "variant": "single_select"
     },
     {
       "name": "Created at",

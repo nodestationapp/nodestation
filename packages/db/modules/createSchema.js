@@ -140,6 +140,7 @@ const createSchema = async () => {
       table.string("filtersToggle").nullable();
       table.string("table_id").nullable();
       table.bigInteger("updated_at").nullable();
+      table.string("last_viewed").nullable();
       table
         .bigInteger("created_at")
         .nullable()

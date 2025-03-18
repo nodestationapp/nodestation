@@ -80,11 +80,14 @@ const upsertEntry = async ({
 
       const data = removeUndefinedProperties(formatted_body);
 
+      const table_name =
+        schema?.id === "auth" ? "nodestation_users" : schema?.id;
+
       if (entry_id) {
-        await knex(schema?.id).where({ id: entry_id }).update(data);
+        await knex(table_name).where({ id: entry_id }).update(data);
       } else {
         delete data?.id;
-        await knex(schema?.id).insert(data);
+        await knex(table_name).insert(data);
       }
 
       resolve(true);
