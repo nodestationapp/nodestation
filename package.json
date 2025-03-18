@@ -1,6 +1,6 @@
 {
   "name": "@nodestation/root",
-  "version": "1.14.5",
+  "version": "1.14.6",
   "main": "index.js",
   "type": "module",
   "license": "MIT",

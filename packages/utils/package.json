@@ -1,6 +1,6 @@
 {
   "name": "@nstation/utils",
-  "version": "1.14.5",
+  "version": "1.14.6",
   "main": "index.js",
   "type": "module",
   "license": "MIT",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.717.0",
-    "@nstation/db": "^1.14.5",
+    "@nstation/db": "^1.14.6",
     "axios": "^1.7.9",
     "boxen": "^8.0.1",
     "chalk": "^5.3.0",
