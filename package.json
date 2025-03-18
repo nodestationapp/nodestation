@@ -21,6 +21,7 @@
     "dev": "nodestation dev",
     "start": "nodestation start",
     "build": "nodestation build",
+    "dev:watch": "nodestation dev --watch",
     "dev:client": "npm --prefix ./packages/client start",
     "build:client": "npm --prefix ./packages/client run build",
     "dev:server": "nodemon ./packages/nodestation/index.js --watch ./packages/server"

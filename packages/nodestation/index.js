@@ -8,5 +8,7 @@ if (process.argv[2] === "build") {
 }
 
 if (process.argv[2] === "start" || process.argv[2] === "dev") {
-  entry(process.argv[2]);
+  entry(process.argv[2], process.argv[3]);
 }
+
+//how to get flag for example i want npm run dev --watch

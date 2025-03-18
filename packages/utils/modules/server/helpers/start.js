@@ -36,7 +36,7 @@ ${chalk.cyan("Server URL:")}           http://localhost:${process.env.PORT}`;
 // ${chalk.underline("Documentation:")}
 // ${chalk.cyan("https://docs.example.com")}`;
 
-export default async (timeStart, type) => {
+export default async (timeStart, type, flag) => {
   try {
     let cwd;
 
@@ -45,26 +45,21 @@ export default async (timeStart, type) => {
 
       cli.runCommand({
         cmd: "nodemon",
-        args: [
-          "--watch",
-          path.join(rootPath, ".nodestation"),
-          "--delay",
-          "10ms",
-          "--quiet",
-          "index.js",
-        ],
+        args: ["--watch", path.join(rootPath, "src"), "--quiet", "index.js"],
         __dirname: cwd,
       });
 
-      cli.runCommand({
-        cmd: "npm",
-        args: [
-          "--prefix",
-          path.join("node_modules", "@nstation", "client"),
-          "start",
-        ],
-        __dirname: rootPath,
-      });
+      if (flag === "--watch") {
+        cli.runCommand({
+          cmd: "npm",
+          args: [
+            "--prefix",
+            path.join("node_modules", "@nstation", "client"),
+            "start",
+          ],
+          __dirname: rootPath,
+        });
+      }
     } else {
       cwd = path.join(rootPath, "build");
 

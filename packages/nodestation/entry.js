@@ -3,14 +3,14 @@
 import "dotenv/config";
 import { server } from "@nstation/utils";
 
-const entry = async (type) => {
+const entry = async (type, flag) => {
   try {
     const timeStart = new Date();
 
     if (type === "dev") {
       await server.create();
     }
-    await server.start(timeStart, type);
+    await server.start(timeStart, type, flag);
   } catch (err) {
     console.error(err);
   }
