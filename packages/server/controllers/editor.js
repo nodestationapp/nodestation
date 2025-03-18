@@ -39,9 +39,6 @@ const updateEditor = async (req, res) => {
   try {
     const file_path = path.join(rootPath, `/src`, body?.path) + ".js";
     const file_content = await fs_promise.readFile(file_path, "utf8");
-    if (!file_content) {
-      throw new Error("File not found");
-    }
 
     let content;
     if (body?.properties) {
