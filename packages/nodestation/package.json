@@ -14,7 +14,10 @@
     "email": "ceo@nodestation.app"
   },
   "files": [
-    "./index.js"
+    "./index.js",
+    "./build.js",
+    "./entry.js",
+    "./start.js"
   ],
   "bin": {
     "nodestation": "./index.js"
