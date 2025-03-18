@@ -103,7 +103,7 @@ export default async ({ table, filters, sort, pagination }) => {
     }
 
     if (!!item?.relation) {
-      const tables = fs.getFiles(`/schemas/tables/${item?.relation}.json`);
+      const tables = fs.getFiles(`/src/schemas/tables/${item?.relation}.json`);
       const ref_table = tables?.[0];
 
       query = query

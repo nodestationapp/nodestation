@@ -24,23 +24,23 @@ const passwordResetTemplate = {
 
 export default async () => {
   try {
-    const emails = getFiles(`/schemas/emails/**/*.json`);
+    const emails = getFiles(`/src/schemas/emails/**/*.json`);
 
-    if (!fs.existsSync(`${rootPath}/schemas/emails`)) {
-      fs.mkdirSync(`${rootPath}/schemas/emails`);
+    if (!fs.existsSync(`${rootPath}/src/schemas/emails`)) {
+      fs.mkdirSync(`${rootPath}/src/schemas/emails`);
     }
 
     if (!!!emails?.find((item) => item?.action === "activation-email")) {
       await createFile({
         content: activationEmailTemplate,
-        path: `/schemas/emails/activation-email.json`,
+        path: `/src/schemas/emails/activation-email.json`,
       });
     }
 
     if (!!!emails?.find((item) => item?.action === "password-reset")) {
       await createFile({
         content: passwordResetTemplate,
-        path: `/schemas/emails/password-reset.json`,
+        path: `/src/schemas/emails/password-reset.json`,
       });
     }
   } catch (err) {

@@ -1,5 +1,4 @@
 import path from "path";
-import { glob } from "glob";
 import { promises as fs_promise } from "fs";
 import { fs, rootPath } from "@nstation/utils";
 
@@ -87,8 +86,6 @@ const updateEditor = async (req, res) => {
 const deleteEditor = async (req, res) => {
   const body = req?.body;
 
-  console.log(body);
-
   try {
     await fs.deleteFile(`${path.join(`/src`, body?.path)}.js`);
 
@@ -98,40 +95,5 @@ const deleteEditor = async (req, res) => {
     return res.status(500).json(err);
   }
 };
-
-function traverseAndModifyMetadataGlob(pattern) {
-  const modifiedStructure = [];
-
-  const files = glob.sync(pattern);
-
-  files.forEach((file) => {
-    const item = fs.readFileSync(file, "utf8");
-    let properties = {};
-
-    if (item.metadata.type === "endpoints") {
-      const path = item?.metadata?.path?.split("/");
-      path.splice(0, 2);
-      path.pop();
-
-      item.metadata.method = item.name.replace(".js", "");
-      item.name = `/${path?.join("/")}`;
-
-      const propertyMatch = item?.metadata?.content?.match(/\* @(\w+) (.*)/g);
-      if (propertyMatch) {
-        propertyMatch.forEach((match) => {
-          const [_, key, value] = match.match(/\* @(\w+) (.*)/);
-          properties[key] = value === "[]" ? [] : value;
-        });
-      }
-
-      item.metadata.properties = properties;
-      delete item?.metadata?.content;
-    }
-
-    modifiedStructure.push(item);
-  });
-
-  return modifiedStructure;
-}
 
 export { getAllEditor, createEditor, updateEditor, deleteEditor };

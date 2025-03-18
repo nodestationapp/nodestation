@@ -59,8 +59,8 @@ const getFiles = (pattern) => {
       let dataToPush = null;
 
       if (path.basename(item).endsWith(".json")) {
-        const parts = item.split("/schemas/");
-        const schemaPath = parts.length > 1 ? `/schemas/${parts[1]}` : null;
+        const parts = item.split("/src/schemas/");
+        const schemaPath = parts.length > 1 ? `/src/schemas/${parts[1]}` : null;
 
         dataToPush = { id: name, schema: schemaPath, ...JSON.parse(content) };
       } else if (path.basename(item).endsWith(".js")) {

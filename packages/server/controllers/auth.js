@@ -53,7 +53,7 @@ const authLogin = async (req, res) => {
 
 const getSettingsAuth = async (_, res) => {
   try {
-    const files = fs.getFiles(`/schemas/auth.json`);
+    const files = fs.getFiles(`/src/schemas/auth.json`);
 
     return res.status(200).json({ fields: files?.[0]?.fields });
   } catch (err) {

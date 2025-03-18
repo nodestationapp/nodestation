@@ -24,7 +24,7 @@ const parseJSONFields = (array) => {
 
 const getAllTables = async (_, res) => {
   try {
-    let tables = fs.getFiles(`/schemas/tables/**/*.json`);
+    let tables = fs.getFiles(`/src/schemas/tables/**/*.json`);
 
     const preferences = await knex("nodestation_preferences")
       .select()
@@ -88,7 +88,9 @@ const getTable = async (req, res) => {
         });
     }
 
-    let tables = fs.getFiles(`/schemas/${type ? `${type}/` : ""}${id}.json`);
+    let tables = fs.getFiles(
+      `/src/schemas/${type ? `${type}/` : ""}${id}.json`
+    );
 
     let table = tables?.[0];
 
@@ -164,7 +166,7 @@ const createTable = async (req, res) => {
 
     await fs.createFile({
       content: formatted_body,
-      path: `/schemas/${type}/${slug}.json`,
+      path: `/src/schemas/${type}/${slug}.json`,
     });
 
     await knex("nodestation_preferences").insert({
@@ -190,7 +192,7 @@ const updateTable = async (req, res) => {
   try {
     await fs.updateFile({
       content: body,
-      path: `/schemas/${type ? `${type}/` : ""}${id}.json`,
+      path: `/src/schemas/${type ? `${type}/` : ""}${id}.json`,
     });
 
     await createSchema();
@@ -212,7 +214,7 @@ const deleteTable = async (req, res) => {
       (item) => item?.id?.toString() === id?.toString()
     );
 
-    await fs.deleteFile(`/schemas/${type ? `${type}/` : ""}${id}.json`);
+    await fs.deleteFile(`/src/schemas/${type ? `${type}/` : ""}${id}.json`);
     await knex.schema.dropTable(id);
 
     return res.status(200).json({ status: "ok" });

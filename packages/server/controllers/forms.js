@@ -3,7 +3,7 @@ import { knex } from "@nstation/db";
 
 const getForms = async (_, res) => {
   try {
-    const forms = fs.getFiles("/schemas/forms/**/*.json");
+    const forms = fs.getFiles("/src/schemas/forms/**/*.json");
 
     let formatted_forms = [];
     for await (const item of forms) {

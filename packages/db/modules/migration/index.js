@@ -55,9 +55,9 @@ function createOrModifyColumn({ table, schema, dbColumns }) {
 }
 
 export default async () => {
-  let forms = fs.getFiles("/schemas/forms/**/*.json");
-  let auth = fs.getFiles("/schemas/auth.json");
-  const tables = fs.getFiles(["/schemas/tables/**/*.json"]);
+  let forms = fs.getFiles("/src/schemas/forms/**/*.json");
+  let auth = fs.getFiles("/src/schemas/auth.json");
+  const tables = fs.getFiles(["/src/schemas/tables/**/*.json"]);
 
   auth = {
     ...auth?.[0],
