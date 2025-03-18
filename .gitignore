@@ -3,6 +3,7 @@
 src/
 schemas/
 dist/
+build/
 
 # DATABASE
 .db/

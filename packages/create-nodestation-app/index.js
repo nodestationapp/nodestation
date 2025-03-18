@@ -60,17 +60,19 @@ const authSchema = JSON.parse(
       version: "0.1.0",
       type: "module",
       scripts: {
+        dev: "nodestation dev",
         start: "nodestation start",
+        build: "nodestation build",
       },
     };
-    const envJson = {
+    const env = {
       PORT: 3000,
       DATABASE_CLIENT: "sqlite",
       PUBLIC_URL: "http://localhost:3000",
       DATABASE_PATH: answers?.provider?.url,
       TOKEN_SECRET: crypto.randomBytes(64).toString("hex"),
     };
-    const envString = Object.entries(envJson)
+    const envString = Object.entries(env)
       .map(([key, value]) => `${key}=${value}`)
       .join("\n");
     const projectPath = path.resolve(answers.name);
