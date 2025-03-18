@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 
+import path from "path";
 import * as esbuild from "esbuild";
+import { rootPath } from "@nstation/utils";
 
 const builder = () => {
   esbuild
     .build({
-      entryPoints: ["./packages/server/index.js"],
-      outdir: "./build",
+      entryPoints: [
+        path.join(rootPath, "node_modules", "@nstation", "server", "index.js"),
+      ],
+      outdir: path.join(rootPath, "build"),
       platform: "node",
       minify: true,
       bundle: true,
