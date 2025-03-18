@@ -4,13 +4,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import Modal from "components/Modal";
 
 import api from "libs/api";
-import { useOrganization } from "context/organization";
-import { useTableWrapper } from "context/client/table-wrapper";
 
 const ArchiveEndpointModal = ({ data, onClose }) => {
-  const { table } = useTableWrapper();
   const queryClient = useQueryClient();
-  const { removeMinimizeHandler } = useOrganization();
 
   const [loading, setLoading] = useState(false);
 
@@ -18,12 +14,12 @@ const ArchiveEndpointModal = ({ data, onClose }) => {
     setLoading(true);
 
     try {
-      await api.delete(`/editor/${data?.id}`);
+      await api.delete("/editor", {
+        data: {
+          path: `/endpoints${data?.path}/${data?.name}`,
+        },
+      });
       queryClient.refetchQueries({ queryKey: ["editor"] });
-
-      removeMinimizeHandler(data?.id);
-      table.setRowSelection({});
-
       onClose();
     } catch (err) {
       setLoading(false);

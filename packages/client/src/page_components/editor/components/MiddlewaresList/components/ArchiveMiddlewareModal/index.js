@@ -8,7 +8,6 @@ import { useOrganization } from "context/organization";
 
 const ArchiveMiddlewareModal = ({ data, onClose }) => {
   const queryClient = useQueryClient();
-  const { removeMinimizeHandler } = useOrganization();
 
   const [loading, setLoading] = useState(false);
 
@@ -18,8 +17,6 @@ const ArchiveMiddlewareModal = ({ data, onClose }) => {
     try {
       await api.delete(`/editor/${data?.id}`);
       queryClient.refetchQueries({ queryKey: ["editor"] });
-
-      removeMinimizeHandler(data?.id);
 
       onClose();
     } catch (err) {

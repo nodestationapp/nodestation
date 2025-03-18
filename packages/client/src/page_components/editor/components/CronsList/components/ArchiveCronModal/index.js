@@ -4,11 +4,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import Modal from "components/Modal";
 
 import api from "libs/api";
-import { useOrganization } from "context/organization";
 
 const ArchiveCronModal = ({ data, onClose }) => {
   const queryClient = useQueryClient();
-  const { removeMinimizeHandler } = useOrganization();
 
   const [loading, setLoading] = useState(false);
 
@@ -18,8 +16,6 @@ const ArchiveCronModal = ({ data, onClose }) => {
     try {
       await api.delete(`/editor/${data?.id}`);
       queryClient.refetchQueries({ queryKey: ["editor"] });
-
-      removeMinimizeHandler(data?.id);
 
       onClose();
     } catch (err) {

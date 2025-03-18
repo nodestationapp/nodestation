@@ -87,6 +87,8 @@ const updateEditor = async (req, res) => {
 const deleteEditor = async (req, res) => {
   const body = req?.body;
 
+  console.log(body);
+
   try {
     await fs.deleteFile(`${path.join(`/src`, body?.path)}.js`);
 

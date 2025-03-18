@@ -17,7 +17,6 @@ const ArchiveTableModal = ({ data, onClose }) => {
     setLoading(true);
 
     const next = tables?.filter((item) => item?.id !== data?.id)?.[0];
-
     const redirect = !!next ? `/tables/${next?.id}` : "/";
 
     try {
