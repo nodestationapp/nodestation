@@ -58,7 +58,7 @@
             "section": "Bug Fixes"
           },
           {
-            "type": "chore",
+            "type": "chore(deps)",
             "section": "Chores"
           },
           {
