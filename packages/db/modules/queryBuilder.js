@@ -19,13 +19,15 @@ function transformData(data, settings) {
         if (!!item?.[`${parent}.id`]) {
           if (nestedKey === "photo") {
             let media = !!value ? JSON.parse(value) : null;
-            transformedItem[parent][nestedKey] = {
-              ...media,
-              url:
-                settings?.active === "local"
-                  ? `${process.env.PUBLIC_URL}${media?.url}`
-                  : media?.url,
-            };
+            transformedItem[parent][nestedKey] = !!media?.url
+              ? {
+                  ...media,
+                  url:
+                    settings?.active === "local"
+                      ? `${process.env.PUBLIC_URL}${media?.url}`
+                      : media?.url,
+                }
+              : null;
           } else {
             transformedItem[parent][nestedKey] = value;
           }
@@ -49,13 +51,15 @@ function mediaParser(fields, objects, settings) {
       if (type === "media") {
         try {
           let media = JSON.parse(obj[key]);
-          obj[key] = {
-            ...media,
-            url:
-              settings?.active === "local"
-                ? `${process.env.PUBLIC_URL}${media.url}`
-                : media.url,
-          };
+          obj[key] = media.url
+            ? {
+                ...media,
+                url:
+                  settings?.active === "local"
+                    ? `${process.env.PUBLIC_URL}${media.url}`
+                    : media.url,
+              }
+            : null;
         } catch (e) {
           obj[key] = null;
         }
