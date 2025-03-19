@@ -26,13 +26,13 @@ const FilterDate = ({ value = [], onChange }) => {
   return (
     <div className={mainClass}>
       <Input
-        variant="dark"
+        variant="brighter"
         value={value_from}
         type="datetime-local"
         onChange={(e) => onChangeHandler(e.target.value, 0)}
       />
       <Input
-        variant="dark"
+        variant="brighter"
         value={value_to}
         onChange={(e) => onChangeHandler(e.target.value, 1)}
         type="datetime-local"

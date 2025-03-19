@@ -5,7 +5,15 @@ import AsyncSelect from "components/form/AsyncSelect";
 
 import api from "libs/api";
 
-const UsersInput = ({ value, name, label, onChange, size, noArrow }) => {
+const UsersInput = ({
+  value,
+  name,
+  label,
+  onChange,
+  size,
+  noArrow,
+  variant,
+}) => {
   const [users, setUsers] = useState([]);
   const [selectValue, setSelectValue] = useState(null);
 
@@ -60,6 +68,7 @@ const UsersInput = ({ value, name, label, onChange, size, noArrow }) => {
 
   return (
     <AsyncSelect
+      variant={variant}
       name={name}
       label={label}
       value={current_value}
@@ -71,7 +80,7 @@ const UsersInput = ({ value, name, label, onChange, size, noArrow }) => {
         setSelectValue(value);
         onChange({ target: { name, value: value?.id || null } });
       }}
-      placeholder="Type a value"
+      placeholder="Select"
     />
   );
 };

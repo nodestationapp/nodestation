@@ -42,8 +42,10 @@ const RefEntryTable = ({
 
   const fetchData = async (value, id) => {
     try {
-      const data = await api.get(`/tables/${table}?${display_name}=${value}`);
-      const entry_data = await api.get(`/tables/${table}?id=${id}`);
+      const data = await api.get(
+        `/tables/${table}?type=tables&${display_name}=${value}`
+      );
+      const entry_data = await api.get(`/tables/${table}?type=tables&id=${id}`);
 
       if (!!!id) {
         setEntries(data?.entries);
@@ -80,7 +82,6 @@ const RefEntryTable = ({
         setSelectValue(value);
         onChange({ target: { name, value: value?.id || null } });
       }}
-      placeholder="Type a value"
     />
   );
 };

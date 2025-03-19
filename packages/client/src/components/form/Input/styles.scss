@@ -120,6 +120,17 @@
     }
   }
 
+  &--brighter{
+    input{
+      background-color: transparent;
+      border: 1px solid var(--text-dark);
+
+      &::placeholder{
+        color: var(--text-dark);
+      }
+    }
+  }
+
   &--dark{
     label{
       background-color: var(--background-light);

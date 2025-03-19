@@ -1,14 +1,14 @@
 import "./styles.scss";
 
 import Input from "components/form/Input";
+import FilterDate from "./components/Date";
+import Select from "components/form/Select";
+import UsersInput from "components/form/Users";
 import IconButton from "components/IconButton";
 import FilterSelectInput from "./components/Select";
+import RefEntryTable from "components/form/RefEntryTable";
 
 import { TrashIcon } from "@heroicons/react/24/outline";
-import Select from "components/form/Select";
-import FilterDate from "./components/Date";
-import UsersInput from "components/form/Users";
-import RefEntryTable from "components/form/RefEntryTable";
 
 const mainClass = "table__filter-item";
 
@@ -29,7 +29,7 @@ const filterInputRender = (column, onChangeHandler, value) => {
       return column?.relation ? (
         <RefEntryTable
           value={value}
-          size="small"
+          size="tiny"
           noArrow={true}
           table={column?.relation}
           onChange={(e) => onChangeHandler(e.target.value)}
@@ -37,6 +37,7 @@ const filterInputRender = (column, onChangeHandler, value) => {
       ) : (
         <Input
           value={value}
+          variant="brighter"
           placeholder="Type a value"
           onChange={(e) => onChangeHandler(e.target.value)}
         />
@@ -52,8 +53,9 @@ const filterInputRender = (column, onChangeHandler, value) => {
       return (
         <UsersInput
           value={value}
-          size="small"
+          size="tiny"
           noArrow={true}
+          variant="brighter"
           onChange={(e) => onChangeHandler(e.target.value)}
         />
       );

@@ -32,6 +32,7 @@ const AsyncSelect = ({
   noArrow,
   getData,
   size,
+  placeholder,
 }) => {
   const is_error = !!!hideError && touched && !!error;
   const [inputValue, setInputValue] = useState("");
@@ -156,7 +157,7 @@ const AsyncSelect = ({
               type="text"
               ref={input_ref}
               value={inputValue}
-              placeholder={!!value?.label ? value?.label : ""}
+              placeholder={!!value?.label ? value?.label : placeholder}
               onChange={(e) => onInputValueChange(e?.target?.value)}
               onKeyDown={onKeyDown}
             />

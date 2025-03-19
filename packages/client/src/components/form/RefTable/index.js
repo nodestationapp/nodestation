@@ -57,17 +57,16 @@ const RefTable = ({ value, name, label, onChange, size, noArrow }) => {
   return (
     <AsyncSelect
       name={name}
-      label={label}
-      value={current_value}
-      options={options}
       size={size}
-      getData={fetchData}
+      label={label}
+      options={options}
       noArrow={noArrow}
+      getData={fetchData}
+      value={current_value}
       onChange={(value) => {
         setSelectValue(value);
         onChange({ target: { name, value: value?.id || null } });
       }}
-      placeholder="Type a value"
     />
   );
 };
