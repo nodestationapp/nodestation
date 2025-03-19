@@ -10,6 +10,10 @@ const updateFile = async ({ content, path: file_path, new_path }) =>
 
     if (!!file_content) {
       if (path_extension === "json") {
+        file_content = Object.fromEntries(
+          Object.entries(content).filter(([_, value]) => value !== null)
+        );
+
         file_content = JSON.stringify(file_content, null, 2);
       }
 

@@ -40,6 +40,8 @@ const EmailContentEditor = ({ id, onClose, setId }) => {
   return (
     <Formik
       initialValues={{
+        locked: selected_email?.locked || null,
+        action: selected_email?.action || null,
         name: selected_email?.name || "",
         subject: selected_email?.subject || "",
         content: selected_email?.content || "",

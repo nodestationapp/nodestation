@@ -13,7 +13,11 @@ const createFile = async ({ content, path: file_path }) =>
       let file_content = content;
 
       if (path_extension === "json") {
-        file_content = JSON.stringify(content, null, 2);
+        const formatted_content = Object.fromEntries(
+          Object.entries(content).filter(([_, value]) => value !== null)
+        );
+
+        file_content = JSON.stringify(formatted_content, null, 2);
       }
 
       await fs.mkdir(path.dirname(directory), { recursive: true });
