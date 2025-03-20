@@ -1,6 +1,6 @@
 {
   "name": "nodestation",
-  "version": "1.14.10",
+  "version": "1.14.12",
   "main": "index.js",
   "type": "module",
   "license": "MIT",
@@ -27,8 +27,8 @@
   },
   "dependencies": {
     "esbuild": "0.25.0",
-    "@nstation/server": "^1.14.10",
-    "@nstation/utils": "^1.14.10",
+    "@nstation/server": "^1.14.12",
+    "@nstation/utils": "^1.14.12",
     "dotenv": "^16.4.7"
   }
 }
