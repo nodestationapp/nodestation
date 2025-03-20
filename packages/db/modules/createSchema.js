@@ -88,7 +88,7 @@ const createSchema = async () => {
       table.text("headers").nullable();
       table.text("body").nullable();
       table.integer("is_read").defaultTo(0);
-      table.integer("responseTime").nullable();
+      table.decimal("responseTime", 10, 0).nullable();
       table
         .bigInteger("created_at")
         .nullable()

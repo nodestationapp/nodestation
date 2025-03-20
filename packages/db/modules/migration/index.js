@@ -8,7 +8,7 @@ const typesMap = {
   select: "string",
   media: "text",
   numeric: "integer",
-  json: "json",
+  json: "text",
   boolean: "integer",
   date: "string",
   user: "string",
