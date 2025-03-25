@@ -2,5 +2,15 @@ import knex from "./modules/knex.js";
 import createSchema from "./modules/createSchema.js";
 import migration from "./modules/migration/index.js";
 import queryBuilder from "./modules/queryBuilder.js";
+import jsonStringify, {
+  singleJsonStringify,
+} from "./modules/utils/jsonStringify.js";
 
-export { knex, migration, createSchema, queryBuilder };
+export {
+  knex,
+  migration,
+  createSchema,
+  queryBuilder,
+  jsonStringify,
+  singleJsonStringify,
+};

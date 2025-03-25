@@ -72,12 +72,12 @@ const DetailsModal = ({ data, onClose }) => {
         {
           type: "json",
           label: "Body",
-          value: JSON.parse(data?.body),
+          value: data?.body,
         },
         {
           type: "json",
           label: "Headers",
-          value: JSON.parse(data?.headers),
+          value: data?.headers,
         },
       ],
     },

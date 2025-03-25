@@ -18,7 +18,11 @@ const TableContentEditor = ({ data = {}, onClose }) => {
         if (!!!values?.[item]?.size) {
           formData.append(
             item,
-            values?.[item]?.file || values?.[item]?.id || values?.[item]
+            values?.[item]?.file ||
+              values?.[item]?.id ||
+              (typeof values?.[item] === "object"
+                ? JSON.stringify(values?.[item])
+                : values?.[item])
           );
         }
       });

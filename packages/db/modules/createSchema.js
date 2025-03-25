@@ -29,18 +29,20 @@ const createSchema = async () => {
     await createSqliteFileIfNotExist();
   }
 
+  const jsonType = knex.client.config.client === "pg" ? "jsonb" : "text";
+
   const emailSettingsTableExists = await knex.schema.hasTable(
     "nodestation_email_settings"
   );
   if (!emailSettingsTableExists) {
     await knex.schema.createTable("nodestation_email_settings", (table) => {
       table.increments("id").primary();
-      table.string("smtp").nullable();
-      table.string("sendgrid").nullable();
-      table.string("mailchimp").nullable();
-      table.string("mailgun").nullable();
-      table.string("aws").nullable();
-      table.string("elastic").nullable();
+      table[jsonType]("smtp").nullable();
+      table[jsonType]("sendgrid").nullable();
+      table[jsonType]("mailchimp").nullable();
+      table[jsonType]("mailgun").nullable();
+      table[jsonType]("aws").nullable();
+      table[jsonType]("elastic").nullable();
       table.string("active").nullable();
     });
   }
@@ -51,10 +53,10 @@ const createSchema = async () => {
   if (!mediaSettingsTableExists) {
     await knex.schema.createTable("nodestation_media_settings", (table) => {
       table.increments("id").primary();
-      table.string("aws").nullable();
-      table.string("local").nullable();
-      table.string("digitalocean").nullable();
-      table.string("wasabi").nullable();
+      table[jsonType]("aws").nullable();
+      table[jsonType]("local").nullable();
+      table[jsonType]("digitalocean").nullable();
+      table[jsonType]("wasabi").nullable();
       table.string("active").nullable();
     });
 
@@ -85,8 +87,8 @@ const createSchema = async () => {
       table.text("status").nullable();
       table.text("res").nullable();
       table.text("ip").nullable();
-      table.text("headers").nullable();
-      table.text("body").nullable();
+      table[jsonType]("headers").nullable();
+      table[jsonType]("body").nullable();
       table.integer("is_read").defaultTo(0);
       table.decimal("responseTime", 10, 0).nullable();
       table
@@ -128,15 +130,17 @@ const createSchema = async () => {
     "nodestation_preferences"
   );
   if (!savedPreferencesTableExists) {
+    const type = knex.client.config.client === "pg" ? "jsonb" : "text";
+
     await knex.schema.createTable("nodestation_preferences", (table) => {
       table.string("id").primary().defaultTo(knex.fn.uuid());
       table.string("name").nullable();
       table.string("uid").nullable();
-      table.string("sort").nullable();
-      table.string("order").nullable();
-      table.string("content").nullable();
-      table.string("visibility").nullable();
-      table.string("filters").nullable();
+      table[type]("sort").nullable();
+      table[type]("order").nullable();
+      table[type]("content").nullable();
+      table[type]("visibility").nullable();
+      table[type]("filters").nullable();
       table.string("filtersToggle").nullable();
       table.string("table_id").nullable();
       table.bigInteger("updated_at").nullable();

@@ -1,36 +1,10 @@
-import { knex } from "@nstation/db";
-
-const safeJSONStringify = (input) => {
-  try {
-    return JSON.stringify(input);
-  } catch (error) {
-    return input;
-  }
-};
-
-const safeJSONParse = (input) => {
-  try {
-    return JSON.parse(input);
-  } catch (error) {
-    return input;
-  }
-};
-const parseJSONFields = (array) => {
-  return array.map((item) => {
-    return Object.fromEntries(
-      Object.entries(item).map(([key, value]) => {
-        const parsedValue = safeJSONParse(value);
-        return [key, parsedValue];
-      })
-    );
-  });
-};
+import { knex, singleJsonStringify } from "@nstation/db";
 
 const getPreferences = async (req, res) => {
   try {
-    let preferences = await knex("nodestation_preferences").select();
-
-    preferences = parseJSONFields(preferences);
+    let preferences = await knex("nodestation_preferences")
+      .select()
+      .jsonParser();
 
     return res.status(200).json(preferences);
   } catch (err) {
@@ -54,11 +28,10 @@ const upsertPreferences = async (req, res) => {
         table_id: body?.table_id,
         ...(!!body?.view ? { id: body?.view } : {}),
       })
-      .first();
+      .first()
+      .jsonParser();
 
     if (!!preference) {
-      preference = safeJSONParse(preference?.content);
-
       const content = { ...preference, ...body?.content };
 
       await knex("nodestation_preferences")
@@ -70,51 +43,51 @@ const upsertPreferences = async (req, res) => {
           uid: req?.user?.id,
           ...(!!body?.hasOwnProperty("sort")
             ? {
-                sort: safeJSONStringify(body?.sort),
+                sort: singleJsonStringify(body?.sort),
               }
             : {}),
           ...(!!body?.hasOwnProperty("order")
             ? {
-                order: safeJSONStringify(body?.order),
+                order: singleJsonStringify(body?.order),
               }
             : {}),
           ...(!!body?.hasOwnProperty("visibility")
             ? {
-                visibility: safeJSONStringify(body?.visibility),
+                visibility: singleJsonStringify(body?.visibility),
               }
             : {}),
           ...(!!body?.hasOwnProperty("filters")
             ? {
-                filters: safeJSONStringify(body?.filters),
+                filters: singleJsonStringify(body?.filters),
               }
             : {}),
           ...(!!body?.hasOwnProperty("filtersToggle")
             ? {
-                filtersToggle: safeJSONStringify(body?.filtersToggle),
+                filtersToggle: singleJsonStringify(body?.filtersToggle),
               }
             : {}),
 
-          content: safeJSONStringify(content),
+          content: singleJsonStringify(content),
           updated_at: currentDate,
         });
     } else {
       await knex("nodestation_preferences").insert({
         uid: req?.user?.id,
         table_id: body?.table_id,
-        content: safeJSONStringify(body?.content),
+        content: singleJsonStringify(body?.content),
         ...(!!body?.hasOwnProperty("sort")
           ? {
-              sort: safeJSONStringify(body?.sort),
+              sort: singleJsonStringify(body?.sort),
             }
           : {}),
         ...(!!body?.hasOwnProperty("order")
           ? {
-              order: safeJSONStringify(body?.order),
+              order: singleJsonStringify(body?.order),
             }
           : {}),
         ...(!!body?.hasOwnProperty("visibility")
           ? {
-              visibility: safeJSONStringify(body?.visibility),
+              visibility: singleJsonStringify(body?.visibility),
             }
           : {}),
         created_at: currentDate,
@@ -132,12 +105,13 @@ const createTableView = async (req, res) => {
   const { name, table, view } = req?.body;
 
   try {
-    let preferences = await knex("nodestation_preferences").where({
-      id: view,
-      table_id: table,
-    });
-
-    preferences = parseJSONFields(preferences)?.[0];
+    let preferences = await knex("nodestation_preferences")
+      .where({
+        id: view,
+        table_id: table,
+      })
+      .first()
+      .jsonParser();
 
     const createPreference = await knex("nodestation_preferences")
       .insert({
@@ -145,11 +119,13 @@ const createTableView = async (req, res) => {
         uid: req?.user?.id,
         table_id: table,
         visibility: !!preferences?.visibility
-          ? JSON.stringify(preferences?.visibility)
+          ? singleJsonStringify(preferences?.visibility)
           : null,
-        order: !!preferences?.order ? JSON.stringify(preferences?.order) : null,
+        order: !!preferences?.order
+          ? singleJsonStringify(preferences?.order)
+          : null,
         content: !!preferences?.content
-          ? JSON.stringify(preferences?.content)
+          ? singleJsonStringify(preferences?.content)
           : null,
       })
       .returning("id");

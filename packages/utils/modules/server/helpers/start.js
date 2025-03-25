@@ -45,7 +45,7 @@ export default async (timeStart, type, flag) => {
 
       cli.runCommand({
         cmd: "nodemon",
-        args: ["--watch", path.join(rootPath, "src"), "--quiet", "index.js"],
+        args: ["--watch", rootPath, "index.js"],
         __dirname: cwd,
       });
 

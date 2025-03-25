@@ -19,7 +19,8 @@ passport.use(
               id: jwtPayload.id,
               status: "active",
             })
-            .first();
+            .first()
+            .jsonParser();
         }
 
         return done(null, result);

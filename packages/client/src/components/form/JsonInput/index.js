@@ -4,18 +4,12 @@ const JsonInput = ({ label, name, value, onChange }) => {
   return (
     <div>
       <ReactJsonView
-        src={!!value ? JSON.parse(value) : {}}
+        src={value || {}}
         name={label}
         theme="ocean"
-        onEdit={(e) =>
-          onChange({ target: { name, value: JSON.stringify(e?.updated_src) } })
-        }
-        onAdd={(e) =>
-          onChange({ target: { name, value: JSON.stringify(e?.updated_src) } })
-        }
-        onDelete={(e) =>
-          onChange({ target: { name, value: JSON.stringify(e?.updated_src) } })
-        }
+        onEdit={(e) => onChange({ target: { name, value: e?.updated_src } })}
+        onAdd={(e) => onChange({ target: { name, value: e?.updated_src } })}
+        onDelete={(e) => onChange({ target: { name, value: e?.updated_src } })}
         enableClipboard={false}
         displayDataTypes={false}
         shouldCollapse={({ src }) => {

@@ -2,6 +2,7 @@ import path from "path";
 import { promises as fs } from "fs";
 
 import rootPath from "#modules/rootPath.js";
+import { singleJsonStringify } from "@nstation/db";
 import generateServer from "./generateServer/index.js";
 
 const createFile = async ({ content, path: file_path }) =>
@@ -17,7 +18,7 @@ const createFile = async ({ content, path: file_path }) =>
           Object.entries(content).filter(([_, value]) => value !== null)
         );
 
-        file_content = JSON.stringify(formatted_content, null, 2);
+        file_content = singleJsonStringify(formatted_content);
       }
 
       await fs.mkdir(path.dirname(directory), { recursive: true });

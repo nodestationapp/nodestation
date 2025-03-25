@@ -46,7 +46,7 @@ const getUserMe = async (req, res) => {
     const packageJson = JSON.parse(fileContent);
 
     const settings = await knex("nodestation_media_settings").first();
-    const userPhoto = !!user?.photo ? JSON.parse(user?.photo) : null;
+    const userPhoto = user?.photo || null;
 
     const formatted_user = {
       ...user,

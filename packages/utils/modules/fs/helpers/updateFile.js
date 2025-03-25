@@ -2,6 +2,7 @@ import path from "path";
 import { promises as fs } from "fs";
 
 import rootPath from "#modules/rootPath.js";
+import { singleJsonStringify } from "@nstation/db";
 
 const updateFile = async ({ content, path: file_path, new_path }) =>
   new Promise(async (resolve, reject) => {
@@ -14,7 +15,7 @@ const updateFile = async ({ content, path: file_path, new_path }) =>
           Object.entries(content).filter(([_, value]) => value !== null)
         );
 
-        file_content = JSON.stringify(file_content, null, 2);
+        file_content = singleJsonStringify(file_content);
       }
 
       await fs.writeFile(path.join(rootPath, file_path), file_content, "utf8");

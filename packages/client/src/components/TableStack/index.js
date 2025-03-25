@@ -70,7 +70,7 @@ const table_value_type = (item, cell, meta, tableSchema) => {
           collapsed={true}
           enableClipboard={false}
           displayDataTypes={false}
-          src={!!value ? JSON.parse(value) : {}}
+          src={value || {}}
         />
       );
     case "select":

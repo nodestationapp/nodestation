@@ -27,7 +27,7 @@ const Menu = () => {
   const { tables = [], setAddTableModal, preferences } = useOrganization();
 
   const auth_preferences = preferences?.find(
-    (item) => item?.table_id === "auth"
+    (item) => item?.table_id === "nodestation_users"
   );
 
   const menu_items = [

@@ -2,7 +2,14 @@ import pg from "pg";
 import path from "path";
 import knex from "knex";
 
+import jsonParser from "./utils/jsonParser.js";
 import rootPath from "../../utils/modules/rootPath.js";
+
+knex.QueryBuilder.extend("jsonParser", function () {
+  return this.then((result) => {
+    return jsonParser(result);
+  });
+});
 
 if (process?.env?.DATABASE_CLIENT === "postgresql") {
   pg.types.setTypeParser(20, (val) => {
@@ -38,4 +45,4 @@ const db = !!process.env.DATABASE_CLIENT
     })
   : null;
 
-export default db || null;
+export default db;

@@ -4,24 +4,6 @@ import { knex, createSchema, queryBuilder } from "@nstation/db";
 
 import upsertEntry from "#libs/upsertEntry.js";
 
-const safeJSONParse = (input) => {
-  try {
-    return JSON.parse(input);
-  } catch (error) {
-    return input;
-  }
-};
-const parseJSONFields = (array) => {
-  return array.map((item) => {
-    return Object.fromEntries(
-      Object.entries(item).map(([key, value]) => {
-        const parsedValue = safeJSONParse(value);
-        return [key, parsedValue];
-      })
-    );
-  });
-};
-
 const getAllTables = async (_, res) => {
   try {
     let tables = fs.getFiles(`/src/schemas/tables/**/*.json`);
@@ -65,11 +47,12 @@ const getTable = async (req, res) => {
     let preferences;
 
     if (!!view) {
-      preferences = await knex("nodestation_preferences").where({
-        id: view,
-      });
-
-      preferences = parseJSONFields(preferences)?.[0];
+      preferences = await knex("nodestation_preferences")
+        .where({
+          id: view,
+        })
+        .first()
+        .jsonParser();
 
       await knex("nodestation_preferences")
         .where({
@@ -88,14 +71,16 @@ const getTable = async (req, res) => {
         });
     }
 
+    const file_name = id === "nodestation_users" ? "auth" : id;
+
     let tables = fs.getFiles(
-      `/src/schemas/${type ? `${type}/` : ""}${id}.json`
+      `/src/schemas/${type ? `${type}/` : ""}${file_name}.json`
     );
 
     let table = tables?.[0];
 
     let columns = table?.fields;
-    if (id === "auth") {
+    if (id === "nodestation_users") {
       columns = !!columns
         ? [
             {
@@ -251,8 +236,8 @@ const updateTableEntry = async (req, res) => {
 
   try {
     await upsertEntry({
-      type: id === "auth" ? "auth" : "tables",
-      id,
+      type: id === "nodestation_users" ? "auth" : "tables",
+      id: id === "nodestation_users" ? "auth" : id,
       body,
       files,
       entry_id,

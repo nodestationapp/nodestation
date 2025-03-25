@@ -1,73 +1,9 @@
 import knex from "./knex.js";
 import { fs } from "@nstation/utils";
+
+import mediaParser from "./utils/mediaParser.js";
 import applyFilters from "./utils/applyFilters.js";
-
-function transformData(data, settings) {
-  return data.map((item) => {
-    const transformedItem = {};
-
-    for (const [key, value] of Object.entries(item)) {
-      if (key.includes(".")) {
-        const keys = key.split(".");
-        const parent = keys.shift();
-        const nestedKey = keys.join(".");
-
-        if (typeof transformedItem[parent] !== "object") {
-          transformedItem[parent] = {};
-        }
-
-        if (!!item?.[`${parent}.id`]) {
-          if (nestedKey === "photo") {
-            let media = !!value ? JSON.parse(value) : null;
-            transformedItem[parent][nestedKey] = !!media?.url
-              ? {
-                  ...media,
-                  url:
-                    settings?.active === "local"
-                      ? `${process.env.PUBLIC_URL}${media?.url}`
-                      : media?.url,
-                }
-              : null;
-          } else {
-            transformedItem[parent][nestedKey] = value;
-          }
-        } else {
-          transformedItem[parent] = null;
-        }
-      } else {
-        transformedItem[key] = value;
-      }
-    }
-
-    return transformedItem;
-  });
-}
-
-function mediaParser(fields, objects, settings) {
-  return objects.map((obj) => {
-    for (const key in obj) {
-      const type = fields?.find((item) => item?.slug === key)?.type;
-
-      if (type === "media") {
-        try {
-          let media = JSON.parse(obj[key]);
-          obj[key] = media.url
-            ? {
-                ...media,
-                url:
-                  settings?.active === "local"
-                    ? `${process.env.PUBLIC_URL}${media.url}`
-                    : media.url,
-              }
-            : null;
-        } catch (e) {
-          obj[key] = null;
-        }
-      }
-    }
-    return obj;
-  });
-}
+import transformRelations from "./utils/transformRelations.js";
 
 export default async ({ table, filters, sort, pagination }) => {
   let query = knex(table?.id === "auth" ? "nodestation_users" : table?.id);
@@ -124,10 +60,14 @@ export default async ({ table, filters, sort, pagination }) => {
     }
   });
 
-  const settings = await knex("nodestation_media_settings").first();
+  const settings = await knex("nodestation_media_settings")
+    .first()
+    .jsonParser();
+
+  query = query.jsonParser();
 
   query = query.then((items) => {
-    let formatted_items = transformData(items, settings);
+    let formatted_items = transformRelations(items, settings);
     formatted_items = mediaParser(table?.fields, formatted_items, settings);
     return formatted_items;
   });
