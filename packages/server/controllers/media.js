@@ -33,22 +33,28 @@ const addMedia = async (req, res) => {
   const files = req?.files;
 
   try {
+    const upload_ids = [];
+
     for await (const file of files) {
       const created_at = Date.now();
       const upload_path = !!file?.path
         ? extractUploadPath(file?.path)
         : file?.location;
 
-      await knex("nodestation_media").insert({
-        name: file?.originalname,
-        size: file?.size,
-        type: file?.mimetype,
-        url: upload_path,
-        created_at,
-      });
+      const upload = await knex("nodestation_media")
+        .insert({
+          name: file?.originalname,
+          size: file?.size,
+          type: file?.mimetype,
+          url: upload_path,
+          created_at,
+        })
+        .returning("id");
+
+      upload_ids.push(upload?.[0]?.id);
     }
 
-    return res.status(200).json({ status: "ok" });
+    return res.status(200).json({ ids: upload_ids });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });

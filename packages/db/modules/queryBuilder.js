@@ -1,11 +1,11 @@
 import knex from "./knex.js";
-import { fs } from "@nstation/utils";
 
 import mediaParser from "./utils/mediaParser.js";
 import applyFilters from "./utils/applyFilters.js";
+import populateRelations from "./utils/populateRelations.js";
 import transformRelations from "./utils/transformRelations.js";
 
-export default async ({ table, filters, sort, pagination }) => {
+export default async ({ table, filters, sort, pagination, populate }) => {
   let query = knex(table?.id === "auth" ? "nodestation_users" : table?.id);
 
   if (!!filters) {
@@ -25,40 +25,9 @@ export default async ({ table, filters, sort, pagination }) => {
     query = query.orderBy(field, method);
   }
 
-  table?.fields?.forEach((item) => {
-    if (item?.type === "user") {
-      query = query
-        .leftJoin(
-          "nodestation_users",
-          `${table?.id}.${item?.slug}`,
-          "nodestation_users.id"
-        )
-        .select(
-          `${table?.id}.*`,
-          `nodestation_users.id as ${item?.slug}.id`,
-          `nodestation_users.first_name as ${item?.slug}.first_name`,
-          `nodestation_users.last_name as ${item?.slug}.last_name`,
-          `nodestation_users.photo as ${item?.slug}.photo`
-        );
-    }
-
-    if (!!item?.relation) {
-      const tables = fs.getFiles(`/src/schemas/tables/${item?.relation}.json`);
-      const ref_table = tables?.[0];
-
-      query = query
-        .leftJoin(
-          ref_table?.id,
-          `${table?.id}.${item?.slug}`,
-          `${ref_table?.id}.id`
-        )
-        .select(
-          `${table?.id}.*`,
-          `${ref_table?.id}.id as ${item?.slug}.id`,
-          `${ref_table?.id}.${ref_table?.display_name} as ${item?.slug}.label`
-        );
-    }
-  });
+  if (!!populate) {
+    query = populateRelations(populate, query, table);
+  }
 
   const settings = await knex("nodestation_media_settings")
     .first()
@@ -67,8 +36,10 @@ export default async ({ table, filters, sort, pagination }) => {
   query = query.jsonParser();
 
   query = query.then((items) => {
+    console.log(items);
     let formatted_items = transformRelations(items, settings);
     formatted_items = mediaParser(table?.fields, formatted_items, settings);
+
     return formatted_items;
   });
 

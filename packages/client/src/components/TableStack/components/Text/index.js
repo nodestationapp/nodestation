@@ -3,12 +3,19 @@ import "./styles.scss";
 import cx from "classnames";
 
 import { LockClosedIcon, LinkIcon } from "@heroicons/react/24/outline";
+import { useOrganization } from "context/organization";
 
 const mainClass = "table__text";
 
 const Text = ({ tableSchema, locked, value, column }) => {
-  const isRelation = !!tableSchema?.find((element) => element?.slug === column)
-    ?.relation;
+  const { tables = [] } = useOrganization();
+
+  const isRelation = tableSchema?.find(
+    (element) => element?.slug === column
+  )?.relation;
+
+  const relation = tables?.find((element) => element?.id === isRelation);
+  const relationValue = value?.[relation?.display_name];
 
   // TODO: add relation click
 
@@ -29,7 +36,8 @@ const Text = ({ tableSchema, locked, value, column }) => {
           <LinkIcon />
         </div>
       )}
-      <span>{value?.label || value || "-"}</span> {locked && <LockClosedIcon />}
+      <span>{relationValue || value || "-"}</span>{" "}
+      {locked && <LockClosedIcon />}
     </div>
   );
 };

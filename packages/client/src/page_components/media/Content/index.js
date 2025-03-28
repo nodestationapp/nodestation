@@ -3,22 +3,21 @@ import "./styles.scss";
 import { useState } from "react";
 
 import Button from "components/Button";
-import MediaItem from "components/MediaItem";
+import TableStack from "components/TableStack";
 import IconButton from "components/IconButton";
 import AddAssetsModal from "../components/AddAssetsModal";
 import RemoveMediaModal from "../components/RemoveMediaModal";
-import NoItemsFound from "components/List/components/NoItemsFound";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useMedia } from "context/client/media";
 
 import {
+  ArrowTopRightOnSquareIcon,
   Cog6ToothIcon,
   PhotoIcon,
   PlusIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
-
-const mainClass = "media-content";
 
 const breadcrumps = [
   {
@@ -63,6 +62,27 @@ const MediaContent = () => {
     ],
   };
 
+  const columns = [
+    {
+      key: "media_name",
+      name: "Name",
+      slug: "media_name",
+      type: "media_name",
+    },
+    {
+      key: "created_at",
+      name: "Created at",
+      slug: "created_at",
+      type: "date",
+    },
+    {
+      key: "size",
+      name: "Size",
+      slug: "size",
+      type: "media_size",
+    },
+  ];
+
   return (
     <>
       <DashboardContentLayout
@@ -76,24 +96,32 @@ const MediaContent = () => {
         }
         submenu={submenu_data}
       >
-        {media?.length === 0 ? (
-          <NoItemsFound />
-        ) : (
-          <div className={mainClass}>
-            <div className={`${mainClass}__items`}>
-              {media?.map((item, index) => (
-                <MediaItem
-                  key={index}
-                  {...item}
-                  url={item?.url}
-                  onRemove={() =>
-                    setRemoveMediaModal({ id: item?.id, name: item?.name })
-                  }
-                />
-              ))}
-            </div>
-          </div>
-        )}
+        <TableStack
+          fullWidth
+          data={media}
+          tableId="nodestation_media"
+          columns={columns}
+          loading={loading}
+          rowSize="large"
+          rowAction={({ row }) => (
+            <>
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(row?.url, "_blank");
+                }}
+                icon={<ArrowTopRightOnSquareIcon />}
+              />
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setRemoveMediaModal({ id: row?.id, name: row?.name });
+                }}
+                icon={<TrashIcon color="#FF3636" />}
+              />
+            </>
+          )}
+        />
       </DashboardContentLayout>
       {!!add_media_modal && (
         <AddAssetsModal onClose={() => setAddMediaModal(false)} />

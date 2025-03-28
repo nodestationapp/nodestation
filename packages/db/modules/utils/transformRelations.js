@@ -1,41 +1,32 @@
-const transformRelations = (data, settings) => {
-  return data.map((item) => {
-    const transformedItem = {};
+function transformRelations(data, settings) {
+  return data.map((flatObject) => {
+    const nestedObject = {};
 
-    for (const [key, value] of Object.entries(item)) {
-      if (key.includes(".")) {
-        const keys = key.split(".");
-        const parent = keys.shift();
-        const nestedKey = keys.join(".");
+    for (const key in flatObject) {
+      const value = flatObject[key];
+      const keys = key.split(".");
 
-        if (typeof transformedItem[parent] !== "object") {
-          transformedItem[parent] = {};
+      let current = nestedObject;
+
+      keys.forEach((part, index) => {
+        if (!current[part]) {
+          current[part] = index === keys.length - 1 ? value : {};
         }
 
-        if (!!item?.[`${parent}.id`]) {
-          if (nestedKey === "photo") {
-            transformedItem[parent][nestedKey] = !!value?.url
-              ? {
-                  ...value,
-                  url:
-                    settings?.active === "local"
-                      ? `${process.env.PUBLIC_URL}${value?.url}`
-                      : value?.url,
-                }
-              : null;
-          } else {
-            transformedItem[parent][nestedKey] = value;
-          }
+        if (typeof current[part] !== "object") {
+          current[part] = {};
+        }
+
+        if (index === keys.length - 1) {
+          current[part] = value;
         } else {
-          transformedItem[parent] = null;
+          current = current[part];
         }
-      } else {
-        transformedItem[key] = value;
-      }
+      });
     }
 
-    return transformedItem;
+    return nestedObject;
   });
-};
+}
 
 export default transformRelations;

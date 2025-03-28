@@ -48,6 +48,8 @@ import {
   ListBulletIcon,
   EllipsisHorizontalIcon,
 } from "@heroicons/react/24/outline";
+import MediaName from "./components/MediaName";
+import MediaSize from "./components/MediaSize";
 
 const mainClass = "table-stack";
 
@@ -85,6 +87,8 @@ const table_value_type = (item, cell, meta, tableSchema) => {
       return <EmailSparklines data={value} />;
     case "badge_name":
       return <BadgeName data={value} />;
+    case "media_name":
+      return <MediaName data={value} />;
     case "endpoint_name":
       return <EndpointName data={value} />;
     case "new_message_name":
@@ -105,6 +109,8 @@ const table_value_type = (item, cell, meta, tableSchema) => {
       return <Boolean data={value} />;
     case "icon":
       return <Icon data={value} meta={item} />;
+    case "media_size":
+      return <MediaSize data={value} />;
     default:
       return (
         <Text
@@ -123,6 +129,7 @@ const TableStack = ({
   columns,
   alert,
   view,
+  rowSize,
   filtering,
   preferences,
   hideHeader,
@@ -400,6 +407,7 @@ const TableStack = ({
           [`${mainClass}--full-width`]: !!fullWidth,
           [`${mainClass}--disabled-select`]: !!disabledSelect,
           [`${mainClass}--sortable`]: !!setSort,
+          [`${mainClass}--${rowSize}`]: !!rowSize,
         })}
       >
         <Toolbar

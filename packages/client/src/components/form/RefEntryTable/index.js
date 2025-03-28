@@ -31,10 +31,8 @@ const RefEntryTable = ({
         setSelectValue(value);
       } else {
         const data = await fetchData(undefined, value);
-        setSelectValue({
-          id: data?.id,
-          label: data?.[display_name],
-        });
+
+        setSelectValue(data);
       }
     })();
     // eslint-disable-next-line
@@ -59,7 +57,7 @@ const RefEntryTable = ({
 
   const current_value = {
     id: selectValue?.id,
-    label: selectValue?.label,
+    label: selectValue?.label || selectValue?.[display_name],
   };
 
   const options = entries

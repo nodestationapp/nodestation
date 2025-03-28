@@ -112,6 +112,7 @@ flex-direction: column;
         top: 50%;
         right: 15px;
         transform: translateY(-50%);
+        gap: 15px;
         display: none;
       }
 
@@ -209,6 +210,17 @@ flex-direction: column;
               display: flex;
             }
           }
+        }
+      }
+    }
+  }
+
+  &--large{
+    .table-stack{
+
+      &__body{
+        &__row{
+          height: 55px;
         }
       }
     }
