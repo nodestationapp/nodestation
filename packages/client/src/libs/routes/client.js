@@ -17,13 +17,14 @@ import TableSettings from "pages/client/tables/settings";
 import SettingsGeneral from "pages/client/settings";
 import SettingsSecurity from "pages/client/settings/security";
 
-import MediaSettings from "pages/client/media/settings";
+// import MediaSettings from "pages/client/media/settings";
 import Users from "pages/client/users";
 import Form from "pages/client/forms/current";
 import FormSettings from "pages/client/forms/settings";
 import UserSettings from "pages/client/users/settings";
 
 import Endpoints from "pages/client/endpoints";
+import MediaSettings from "pages/client/media/settings";
 
 const clientRoutes = () => {
   return (

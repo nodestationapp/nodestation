@@ -4,7 +4,7 @@ import FilterItem from "./components/FilterItem";
 
 const mainClass = "table__filters";
 
-const Filters = ({ saveTransaction, filters, setFilters, tableSchema }) => {
+const Filters = ({ saveTransaction, filters, setFilters, columns }) => {
   const onRemoveHandler = (field) => {
     let temp = [...filters];
 
@@ -29,7 +29,7 @@ const Filters = ({ saveTransaction, filters, setFilters, tableSchema }) => {
           data={item}
           index={index}
           filters={filters}
-          columns={tableSchema}
+          columns={columns}
           setFilters={setFilters}
           onRemove={onRemoveHandler}
           saveTransaction={saveTransaction}

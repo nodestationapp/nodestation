@@ -7,7 +7,6 @@ const TableReader = ({ rowClick, selectAction, newButton, meta }) => {
   const { pathname } = useLocation();
   const { data, id, loading, view, saveTableTransaction } = useTable();
 
-  const table = data?.table;
   const views = data?.views;
   const entries = data?.entries || [];
 
@@ -33,7 +32,6 @@ const TableReader = ({ rowClick, selectAction, newButton, meta }) => {
       filtering={true}
       toolbar={toolbar}
       loading={loading}
-      tableSchema={table?.fields}
       columns={data?.columns || []}
       preferences={data?.preferences}
       rowClick={({ row }) => rowClick(row)}

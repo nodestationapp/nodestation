@@ -63,26 +63,7 @@ const EndpointsList = () => {
       value: "Status",
       slug: "status",
       type: "select",
-    },
-    {
-      key: "auth",
-      type: "icon",
-      slug: "auth",
-      value: "Authentication",
-    },
-    {
-      key: "middlewares",
-      type: "icon",
-      slug: "middlewares",
-      value: "Middlewares",
-    },
-  ];
-
-  const tableSchema = [
-    {
-      name: "Status",
-      slug: "status",
-      type: "select",
+      variant: "status",
       options: [
         {
           color: "26,213,152",
@@ -95,7 +76,18 @@ const EndpointsList = () => {
           value: "inactive",
         },
       ],
-      variant: "status",
+    },
+    {
+      key: "auth",
+      type: "icon",
+      slug: "auth",
+      value: "Authentication",
+    },
+    {
+      key: "middlewares",
+      type: "icon",
+      slug: "middlewares",
+      value: "Middlewares",
     },
   ];
 
@@ -135,7 +127,6 @@ const EndpointsList = () => {
                     columns={columns}
                     data={item?.items}
                     disabledSelect={true}
-                    tableSchema={tableSchema}
                     rowAction={({ row }) => (
                       <IconButton
                         onClick={(e) => {

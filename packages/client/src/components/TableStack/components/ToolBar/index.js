@@ -14,7 +14,7 @@ const Toolbar = ({
   filters,
   saveTransaction,
   setFilters,
-  tableSchema,
+  columns,
   filtersExpanded,
 }) => {
   const selectedLength = Object.keys(selectedRows).length;
@@ -61,7 +61,7 @@ const Toolbar = ({
         <Filters
           filters={filters}
           setFilters={setFilters}
-          tableSchema={tableSchema}
+          columns={columns}
           saveTransaction={saveTransaction}
         />
       )}

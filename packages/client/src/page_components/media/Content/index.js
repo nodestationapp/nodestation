@@ -10,7 +10,6 @@ import RemoveMediaModal from "../components/RemoveMediaModal";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useMedia } from "context/client/media";
-import mimeTypes from "libs/mime_types.json";
 
 import {
   ArrowTopRightOnSquareIcon,
@@ -39,12 +38,10 @@ const submenu_data = [
 ];
 
 const MediaContent = () => {
-  const { media, loading } = useMedia();
+  const { media, loading, saveTableTransaction } = useMedia();
 
   const [add_media_modal, setAddMediaModal] = useState(false);
   const [remove_media_modal, setRemoveMediaModal] = useState(false);
-
-  console.log(mimeTypes);
 
   const toolbar = {
     menu: [
@@ -76,8 +73,8 @@ const MediaContent = () => {
       key: "type",
       name: "Type",
       slug: "type",
-      type: "select",
-      width: 100,
+      type: "mime_type",
+      width: 120,
     },
     {
       key: "size",
@@ -92,27 +89,6 @@ const MediaContent = () => {
       slug: "created_at",
       type: "date",
       width: 260,
-    },
-  ];
-
-  const tableSchema = [
-    {
-      name: "Type",
-      slug: "type",
-      type: "select",
-      options: [
-        {
-          label: "Image",
-          value: "image/jpeg",
-          color: "#009E77",
-        },
-        {
-          label: "Image",
-          value: "image/png",
-          color: "#009E77",
-        },
-      ],
-      // variant: "status",
     },
   ];
 
@@ -134,9 +110,9 @@ const MediaContent = () => {
           data={media}
           tableId="nodestation_media"
           columns={columns}
-          tableSchema={tableSchema}
           loading={loading}
           rowSize="large"
+          saveTransaction={saveTableTransaction}
           rowAction={({ row }) => (
             <>
               <IconButton

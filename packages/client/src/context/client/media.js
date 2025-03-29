@@ -73,6 +73,16 @@ const MediaProvider = ({ children }) => {
       }
     });
 
+  const saveTableTransaction = async (values) => {
+    await api.post("/preferences", {
+      table_id: "nodestation_media",
+      view: null,
+      ...values,
+    });
+
+    refetchMedia();
+  };
+
   const value = useMemo(() => {
     return {
       media,
@@ -84,6 +94,7 @@ const MediaProvider = ({ children }) => {
       uploading_files,
       setUploadingFiles,
       updateMediaSettings,
+      saveTableTransaction,
     };
     // eslint-disable-next-line
   }, [

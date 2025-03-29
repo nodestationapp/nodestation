@@ -5,7 +5,7 @@ import applyFilters from "./utils/applyFilters.js";
 import populateRelations from "./utils/populateRelations.js";
 import transformRelations from "./utils/transformRelations.js";
 
-export default async ({ table, filters, sort, pagination, populate }) => {
+export default async ({ table, filters, sort, pagination }) => {
   let query = knex(table?.id === "auth" ? "nodestation_users" : table?.id);
 
   if (!!filters) {
@@ -25,9 +25,7 @@ export default async ({ table, filters, sort, pagination, populate }) => {
     query = query.orderBy(field, method);
   }
 
-  if (!!populate) {
-    query = populateRelations(populate, query, table);
-  }
+  query = populateRelations(query, table);
 
   const settings = await knex("nodestation_media_settings")
     .first()
@@ -36,7 +34,6 @@ export default async ({ table, filters, sort, pagination, populate }) => {
   query = query.jsonParser();
 
   query = query.then((items) => {
-    console.log(items);
     let formatted_items = transformRelations(items, settings);
     formatted_items = mediaParser(table?.fields, formatted_items, settings);
 

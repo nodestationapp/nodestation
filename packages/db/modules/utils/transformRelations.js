@@ -1,31 +1,41 @@
 function transformRelations(data, settings) {
-  return data.map((flatObject) => {
-    const nestedObject = {};
+  return data.map((item) => {
+    const transformedItem = {};
 
-    for (const key in flatObject) {
-      const value = flatObject[key];
-      const keys = key.split(".");
+    for (const [key, value] of Object.entries(item)) {
+      if (key.includes(".")) {
+        const keys = key.split(".");
+        const parent = keys.shift();
+        const nestedKey = keys.join(".");
 
-      let current = nestedObject;
-
-      keys.forEach((part, index) => {
-        if (!current[part]) {
-          current[part] = index === keys.length - 1 ? value : {};
+        if (typeof transformedItem[parent] !== "object") {
+          transformedItem[parent] = {};
         }
 
-        if (typeof current[part] !== "object") {
-          current[part] = {};
-        }
-
-        if (index === keys.length - 1) {
-          current[part] = value;
+        if (!!item?.[`${parent}.id`]) {
+          if (nestedKey === "photo") {
+            let media = !!value ? value : null;
+            transformedItem[parent][nestedKey] = !!media?.url
+              ? {
+                  ...media,
+                  url:
+                    settings?.active === "local"
+                      ? `${process.env.PUBLIC_URL}${media?.url}`
+                      : media?.url,
+                }
+              : null;
+          } else {
+            transformedItem[parent][nestedKey] = value;
+          }
         } else {
-          current = current[part];
+          transformedItem[parent] = null;
         }
-      });
+      } else {
+        transformedItem[key] = value;
+      }
     }
 
-    return nestedObject;
+    return transformedItem;
   });
 }
 

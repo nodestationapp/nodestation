@@ -117,10 +117,7 @@ const getTable = async (req, res) => {
       table,
       filters,
       sort: preferences?.sort?.[0],
-      populate: "*",
     });
-
-    console.log(entries?.[0]);
 
     return res
       .status(200)

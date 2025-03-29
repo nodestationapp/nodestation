@@ -3,15 +3,13 @@ import Pill from "components/Pill";
 
 const mainClass = "status-chip";
 
-const StatusChip = ({ field, status, tableSchema }) => {
-  const schemaOptions = tableSchema?.find((item) => item?.slug === field);
+const StatusChip = ({ field, status, columns }) => {
+  const schemaOptions = columns?.find((item) => item?.slug === field);
 
   let values =
     schemaOptions?.variant === "status"
       ? [status?.properties?.status]
       : status?.split(",");
-
-  console.log(schemaOptions);
 
   return (
     <div className={mainClass}>

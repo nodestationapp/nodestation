@@ -19,7 +19,10 @@ import Media from "./components/Media";
 import Level from "./components/Level";
 import Button from "components/Button";
 import Boolean from "./components/Boolean";
+import MimeType from "components/MimeType";
 import Toolbar from "./components/ToolBar";
+import MediaName from "./components/MediaName";
+import MediaSize from "./components/MediaSize";
 import LogSource from "./components/LogSource";
 import StatusChip from "components/StatusChip";
 import BadgeName from "./components/BadgeName";
@@ -48,12 +51,10 @@ import {
   ListBulletIcon,
   EllipsisHorizontalIcon,
 } from "@heroicons/react/24/outline";
-import MediaName from "./components/MediaName";
-import MediaSize from "./components/MediaSize";
 
 const mainClass = "table-stack";
 
-const table_value_type = (item, cell, meta, tableSchema) => {
+const table_value_type = (item, cell, meta, columns) => {
   const value = cell?.row?.original?.hasOwnProperty(item?.slug)
     ? cell?.row?.original?.[item?.slug]
     : cell?.row?.original;
@@ -76,13 +77,9 @@ const table_value_type = (item, cell, meta, tableSchema) => {
         />
       );
     case "select":
-      return (
-        <StatusChip
-          field={item?.slug}
-          status={value}
-          tableSchema={tableSchema}
-        />
-      );
+      return <StatusChip field={item?.slug} status={value} columns={columns} />;
+    case "mime_type":
+      return <MimeType data={value} />;
     case "email_sparklines":
       return <EmailSparklines data={value} />;
     case "badge_name":
@@ -114,7 +111,7 @@ const table_value_type = (item, cell, meta, tableSchema) => {
     default:
       return (
         <Text
-          tableSchema={tableSchema}
+          columns={columns}
           locked={meta?.locked}
           value={value}
           column={item?.slug}
@@ -136,7 +133,6 @@ const TableStack = ({
   rowClick,
   tableId,
   rowAction,
-  tableSchema,
   disabledSelect,
   loading = false,
   saveTransaction,
@@ -200,7 +196,7 @@ const TableStack = ({
         accessorFn: (row) => row?.[item?.slug],
         header: () => <span className="light">{item?.name}</span>,
         cell: (cell) =>
-          table_value_type(item, cell, meta?.[cell?.row?.index], tableSchema),
+          table_value_type(item, cell, meta?.[cell?.row?.index], columns),
       })),
     ],
     // eslint-disable-next-line
@@ -415,7 +411,7 @@ const TableStack = ({
           tableId={tableId}
           filters={filters}
           setFilters={setFilters}
-          tableSchema={tableSchema}
+          columns={columns}
           selectedRows={selectedRows}
           saveTransaction={saveTransaction}
           data={!!toolbarData ? toolbar : null}
