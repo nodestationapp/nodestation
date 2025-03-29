@@ -30,6 +30,10 @@ const createSchema = async () => {
   }
 
   const jsonType = knex.client.config.client === "pg" ? "jsonb" : "text";
+  const defaultNowDate =
+    knex.client.config.client === "pg"
+      ? knex.raw("EXTRACT(EPOCH FROM NOW())::BIGINT")
+      : knex.raw("(strftime('%s', 'now') * 1)");
 
   const emailSettingsTableExists = await knex.schema.hasTable(
     "nodestation_email_settings"
@@ -73,7 +77,7 @@ const createSchema = async () => {
       table.integer("size").nullable();
       table.string("type").nullable();
       table.string("url").nullable();
-      table.bigInteger("created_at").nullable();
+      table.bigInteger("created_at").nullable().defaultTo(defaultNowDate);
     });
   }
 
@@ -91,14 +95,7 @@ const createSchema = async () => {
       table[jsonType]("body").nullable();
       table.integer("is_read").defaultTo(0);
       table.decimal("responseTime", 10, 0).nullable();
-      table
-        .bigInteger("created_at")
-        .nullable()
-        .defaultTo(
-          knex.client.config.client === "pg"
-            ? knex.raw("EXTRACT(EPOCH FROM NOW())::BIGINT")
-            : knex.raw("(strftime('%s', 'now') * 1)")
-        );
+      table.bigInteger("created_at").nullable().defaultTo(defaultNowDate);
     });
   }
 
@@ -145,14 +142,7 @@ const createSchema = async () => {
       table.string("table_id").nullable();
       table.bigInteger("updated_at").nullable();
       table.string("last_viewed").nullable();
-      table
-        .bigInteger("created_at")
-        .nullable()
-        .defaultTo(
-          knex.client.config.client === "pg"
-            ? knex.raw("EXTRACT(EPOCH FROM NOW())::BIGINT")
-            : knex.raw("(strftime('%s', 'now') * 1)")
-        );
+      table.bigInteger("created_at").nullable().defaultTo(defaultNowDate);
     });
   }
 

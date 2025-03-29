@@ -36,7 +36,6 @@ const addMedia = async (req, res) => {
     const upload_ids = [];
 
     for await (const file of files) {
-      const created_at = Date.now();
       const upload_path = !!file?.path
         ? extractUploadPath(file?.path)
         : file?.location;
@@ -47,7 +46,6 @@ const addMedia = async (req, res) => {
           size: file?.size,
           type: file?.mimetype,
           url: upload_path,
-          created_at,
         })
         .returning("id");
 

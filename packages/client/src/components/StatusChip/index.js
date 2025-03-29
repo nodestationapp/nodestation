@@ -11,6 +11,8 @@ const StatusChip = ({ field, status, tableSchema }) => {
       ? [status?.properties?.status]
       : status?.split(",");
 
+  console.log(schemaOptions);
+
   return (
     <div className={mainClass}>
       {values?.map((item, index) => {
