@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Alert } from "@nstation/design-system";
 
-import Alert from "components/Alert";
-import Button from "components/Button";
 import TableStack from "components/TableStack";
 import ArchiveEmailModal from "../components/ArchiveEmailModal";
 import EmailContentEditor from "./components/EmailContentEditor";
@@ -19,6 +19,7 @@ const breadcrumps = [
 ];
 
 const EmailsContent = () => {
+  const navigate = useNavigate();
   const { emails, loading, archive_modal, setArchiveModal } = useEmails();
 
   const [email_editor, setEmailEditor] = useState(null);
@@ -66,11 +67,10 @@ const EmailsContent = () => {
         alert={
           <Alert
             text="To send email messages, you must first configure your settings."
-            action={
-              <Button variant="transparent" href="/emails/settings">
-                Configure
-              </Button>
-            }
+            action={{
+              label: "Configure",
+              onClick: () => navigate("/emails/settings"),
+            }}
           />
         }
         rowClick={(row) => setEmailEditor(row?.row?.id)}

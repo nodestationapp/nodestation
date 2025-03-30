@@ -21,11 +21,10 @@ const Button = ({
   size,
   active,
   external_href,
-  class_name,
   id,
 }) => {
   const ref = useRef();
-  const className = classnames(mainClass, class_name, {
+  const className = classnames(mainClass, {
     [`${mainClass}--icon-button`]: !!!children && icon,
     [`${mainClass}--full-width`]: !!fullWidth,
     [`${mainClass}--${variant}`]: !!variant,

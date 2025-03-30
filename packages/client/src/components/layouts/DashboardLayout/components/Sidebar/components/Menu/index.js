@@ -1,24 +1,13 @@
 import "./styles.scss";
 
 import { NavLink } from "react-router-dom";
+import { Icon } from "@nstation/design-system";
 
 import LoggedUser from "../LoggedUser";
 import IconButton from "components/IconButton";
 
 import { useApp } from "context/app";
 import { useOrganization } from "context/organization";
-
-import {
-  PlusIcon,
-  PhotoIcon,
-  UsersIcon,
-  AtSymbolIcon,
-  CircleStackIcon,
-  ChevronRightIcon,
-  PaperAirplaneIcon,
-  Square3Stack3DIcon,
-  PresentationChartBarIcon,
-} from "@heroicons/react/24/outline";
 
 const mainClass = "dashboard-layout-sidebar";
 
@@ -32,33 +21,33 @@ const Menu = () => {
 
   const menu_items = [
     {
-      icon: <PresentationChartBarIcon />,
+      icon: "PresentationChartBarIcon",
       label: "Dashboard",
       href: "/",
     },
     {
-      icon: <Square3Stack3DIcon />,
+      icon: "Square3Stack3DIcon",
       label: "Endpoints",
       href: "/endpoints",
     },
     {
-      icon: <PaperAirplaneIcon />,
+      icon: "PaperAirplaneIcon",
       label: "Forms",
       href: "/forms",
       count: forms_count,
     },
     {
-      icon: <PhotoIcon />,
+      icon: "PhotoIcon",
       label: "Media",
       href: "/media",
     },
     {
-      icon: <UsersIcon />,
+      icon: "UsersIcon",
       label: "Authentication",
       href: `/authentication?v=${auth_preferences?.id}`,
     },
     {
-      icon: <AtSymbolIcon />,
+      icon: "AtSymbolIcon",
       label: "Emails",
       href: "/emails",
     },
@@ -73,7 +62,7 @@ const Menu = () => {
         preferences?.find((element) => element?.table_id === item?.id)?.id;
 
       return {
-        icon: <CircleStackIcon />,
+        icon: "CircleStackIcon",
         label: item?.name,
         href: `/tables/${item?.id}?v=${table_preference}`,
       };
@@ -95,12 +84,12 @@ const Menu = () => {
               }
             >
               <span>
-                {icon}
+                {!!icon && <Icon name={icon} />}
                 {label}
               </span>
               {!!external && (
                 <div className={`${mainClass}__menu__items__item__external`}>
-                  {!!external && <ChevronRightIcon />}
+                  {!!external && <Icon name="ChevronRightIcon" />}
                 </div>
               )}
               {!!parseInt(count) && <small>{count}</small>}
@@ -114,7 +103,7 @@ const Menu = () => {
             <IconButton
               onClick={() => setAddTableModal("tables")}
               size="small"
-              icon={<PlusIcon />}
+              icon={<Icon name="PlusIcon" />}
             />
           </div>
           {tables_menu_items?.map(({ icon, label, href }, index) => (
@@ -128,7 +117,7 @@ const Menu = () => {
               }
             >
               <span>
-                {icon}
+                {!!icon && <Icon name={icon} />}
                 {label}
               </span>
             </NavLink>

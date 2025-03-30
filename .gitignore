@@ -26,3 +26,4 @@ docker-compose.yml
 
 #SYSTEM CONFIG
 .DS_Store
+*storybook.log

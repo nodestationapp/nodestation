@@ -1,6 +1,7 @@
 import "./styles.scss";
 
-import Button from "components/Button";
+import { Button } from "@nstation/design-system";
+
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { PresentationChartBarIcon } from "@heroicons/react/24/outline";
@@ -26,7 +27,7 @@ const DashboardContent = () => {
           <span>
             Get familiar with dashboard, here are some ways to get started.
           </span>
-          <Button>Documentation</Button>
+          <Button primary={true}>Documentation</Button>
         </div>
       </div>
     </DashboardContentLayout>
