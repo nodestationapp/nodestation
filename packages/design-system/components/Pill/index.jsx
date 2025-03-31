@@ -1,7 +1,7 @@
 import "./styles.scss";
 
-import PropTypes from "prop-types";
 import cx from "classnames";
+import Icon from "../Icon";
 
 const mainClass = "pill";
 
@@ -24,9 +24,8 @@ const Pill = ({
       style={
         !!color
           ? {
-              backgroundColor:
-                variant === "status" ? `rgba(${color}, 0.2)` : color,
-              color: `rgba(${textColor}, 1)`,
+              backgroundColor: color,
+              color: textColor,
             }
           : {}
       }
@@ -37,22 +36,10 @@ const Pill = ({
         [`${mainClass}--${size}`]: !!size,
       })}
     >
-      {icon}
+      {icon && <Icon name={icon} />}
       {label}
     </button>
   );
 };
 
 export default Pill;
-
-Pill.propTypes = {
-  label: PropTypes.string.isRequired,
-  onclick: PropTypes.func,
-  icon: PropTypes.node,
-  active: PropTypes.bool,
-  variant: PropTypes.string,
-  color: PropTypes.string,
-  textColor: PropTypes.string,
-  readOnly: PropTypes.bool,
-  size: PropTypes.string,
-};

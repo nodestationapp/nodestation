@@ -2,6 +2,7 @@ import "./styles.scss";
 
 import classnames from "classnames";
 import PropTypes from "prop-types";
+
 const mainClass = "input";
 
 const Input = ({

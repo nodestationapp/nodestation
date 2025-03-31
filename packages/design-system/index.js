@@ -6,5 +6,6 @@ import Input from "./components/form/Input/index.jsx";
 import Alert from "./components/Alert/index.jsx";
 import Checkbox from "./components/form/Checkbox/index.jsx";
 import Icon from "./components/Icon/index.jsx";
+import Pill from "./components/Pill/index.jsx";
 
-export { Button, Loader, Switch, Textarea, Input, Alert, Checkbox, Icon };
+export { Button, Loader, Switch, Textarea, Input, Alert, Checkbox, Icon, Pill };
