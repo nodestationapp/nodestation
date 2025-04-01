@@ -77,7 +77,10 @@
 
       &--active {
         background-color: rgb(var(--primary-color-rgb), 0.2);
-        
+
+        svg{
+          color: var(--primary-color);
+        }
   
         span {
           color: var(--primary-color);

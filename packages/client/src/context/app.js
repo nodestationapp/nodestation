@@ -2,13 +2,38 @@ import { io } from "socket.io-client";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import { useQueryClient } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  lazy,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
+import SplashScreen from "components/SplashScreen";
 import api from "libs/api";
 import EditorProvider from "./client/editor";
 import OrganizationProvider from "./organization";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
-import SplashScreen from "components/SplashScreen";
+
+import nstationConfig from "root/nstation.config.js";
+
+const config = nstationConfig();
+
+const plugins = Object.keys(config).map((key) => {
+  return {
+    ...config[key],
+    key: key,
+    path: !!config[key].href
+      ? config[key].href === "/"
+        ? ""
+        : `${config[key].href}/*`
+      : `/${key}/*`,
+    href: config[key].href || `/${key}`,
+    component: lazy(() => import(`plugins/${key}/client/index.jsx`)),
+  };
+});
 
 const AppContext = createContext();
 
@@ -181,9 +206,10 @@ const AppProvider = ({ children }) => {
       socket,
       logs_count,
       setLogsCount,
+      plugins,
     };
     // eslint-disable-next-line
-  }, [user, organizations, forms_count, is_admin, socket, logs_count]);
+  }, [user, organizations, forms_count, is_admin, socket, logs_count, plugins]);
 
   if (!!loading) return <SplashScreen />;
 

@@ -9,7 +9,7 @@ import { useApp } from "context/app";
 const mainClass = "dashboard-layout-sidebar";
 
 const Sidebar = () => {
-  const { user } = useApp();
+  const { user, plugins } = useApp();
 
   return (
     <>
@@ -19,7 +19,7 @@ const Sidebar = () => {
             button={<Avatar user={user?.project_name} type="organization" />}
           ></Dropdown>
         </div>
-        <Menu />
+        <Menu plugins={plugins} />
       </div>
     </>
   );

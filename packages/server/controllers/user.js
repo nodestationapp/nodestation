@@ -67,6 +67,7 @@ const getUserMe = async (req, res) => {
       logs_count,
       user: formatted_user,
       project_name: packageJson?.name,
+      plugins: req?.plugins,
     });
   } catch (err) {
     console.error(err);

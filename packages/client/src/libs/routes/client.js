@@ -1,36 +1,46 @@
 import { Route } from "react-router-dom";
 
 import DashboardLayout from "components/layouts/DashboardLayout";
-import AccountSettingsLayout from "components/layouts/AccountSettingsLayout";
+// import AccountSettingsLayout from "components/layouts/AccountSettingsLayout";
 
-import Dashboard from "pages/client";
+// import Emails from "pages/client/emails";
+// import EmailSettings from "pages/client/emails/settings";
 
-import Emails from "pages/client/emails";
-import EmailSettings from "pages/client/emails/settings";
-
-import Forms from "pages/client/forms";
-import Media from "pages/client/media";
+// import Forms from "pages/client/forms";
+// import Media from "pages/client/media";
 
 import Table from "pages/client/tables";
 import TableSettings from "pages/client/tables/settings";
 
-import SettingsGeneral from "pages/client/settings";
-import SettingsSecurity from "pages/client/settings/security";
+// import SettingsGeneral from "pages/client/settings";
+// import SettingsSecurity from "pages/client/settings/security";
 
+// // import MediaSettings from "pages/client/media/settings";
+// import Users from "pages/client/users";
+// import Form from "pages/client/forms/current";
+// import FormSettings from "pages/client/forms/settings";
+// import UserSettings from "pages/client/users/settings";
+
+// import Endpoints from "pages/client/endpoints";
 // import MediaSettings from "pages/client/media/settings";
-import Users from "pages/client/users";
-import Form from "pages/client/forms/current";
-import FormSettings from "pages/client/forms/settings";
-import UserSettings from "pages/client/users/settings";
 
-import Endpoints from "pages/client/endpoints";
-import MediaSettings from "pages/client/media/settings";
-
-const clientRoutes = () => {
+const clientRoutes = ({ plugins }) => {
   return (
     <Route element={<DashboardLayout />}>
-      <Route index element={<Dashboard />} />
-      <Route path="/emails">
+      {plugins.map((plugin) => {
+        return (
+          <Route
+            key={plugin.path}
+            path={plugin.path}
+            element={<plugin.component />}
+          />
+        );
+      })}
+      <Route path="/tables">
+        <Route path=":id" element={<Table />} />
+        <Route path=":id/settings" element={<TableSettings />} />
+      </Route>
+      {/* <Route path="/emails">
         <Route index element={<Emails />} />
         <Route path="settings">
           <Route index element={<EmailSettings />} />
@@ -60,8 +70,8 @@ const clientRoutes = () => {
       <Route element={<AccountSettingsLayout />} path="/settings">
         <Route index element={<SettingsGeneral />} />
         <Route path="security" element={<SettingsSecurity />} />
-        {/* <Route path="notifications" element={<SettingsNotifications />} /> */}
-      </Route>
+        <Route path="notifications" element={<SettingsNotifications />} />
+      </Route> */}
     </Route>
   );
 };

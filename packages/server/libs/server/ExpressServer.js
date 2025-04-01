@@ -9,12 +9,18 @@ import apiRoutes from "#routes/api.js";
 import allRoutes from "#routes/index.js";
 import loadRoutes from "#libs/server/loadRoutes.js";
 import cronsImport from "#libs/server/cronsImport.js";
+import PluginManager from "./plugins.js";
 
 cronsImport();
 
 class ExpressServer {
   constructor(config = {}) {
     this.loadRoutes = loadRoutes.bind(null, this);
+
+    const pluginManager = new PluginManager();
+    pluginManager.loadPlugins();
+
+    const backendPlugins = pluginManager.getBackendPlugins();
 
     this.app = express();
     this.app.set("trust proxy", "127.0.0.1");
@@ -23,6 +29,11 @@ class ExpressServer {
     this.server = http.createServer(this.app);
 
     io({ server: this.server, app: this.app });
+
+    this.app.use((req, res, next) => {
+      req.plugins = backendPlugins;
+      next();
+    });
 
     // MIDDLEWARES
     this.app.use(cors);
@@ -39,7 +50,7 @@ class ExpressServer {
     this.app.use("/admin/api", express.json(), allRoutes);
     this.app.use("/uploads", express.static(path.join(rootPath, "uploads")));
 
-    this.loadRoutes();
+    this.loadRoutes(backendPlugins);
 
     const clientPath = path.join(
       rootPath,

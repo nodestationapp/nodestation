@@ -6,52 +6,52 @@ import { Icon } from "@nstation/design-system";
 import LoggedUser from "../LoggedUser";
 import IconButton from "components/IconButton";
 
-import { useApp } from "context/app";
+// import { useApp } from "context/app";
 import { useOrganization } from "context/organization";
 
 const mainClass = "dashboard-layout-sidebar";
 
-const Menu = () => {
-  const { forms_count } = useApp();
+const Menu = ({ plugins }) => {
+  // const { forms_count } = useApp();
   const { tables = [], setAddTableModal, preferences } = useOrganization();
 
-  const auth_preferences = preferences?.find(
-    (item) => item?.table_id === "nodestation_users"
-  );
+  // const auth_preferences = preferences?.find(
+  //   (item) => item?.table_id === "nodestation_users"
+  // );
 
-  const menu_items = [
-    {
-      icon: "PresentationChartBarIcon",
-      label: "Dashboard",
-      href: "/",
-    },
-    {
-      icon: "Square3Stack3DIcon",
-      label: "Endpoints",
-      href: "/endpoints",
-    },
-    {
-      icon: "PaperAirplaneIcon",
-      label: "Forms",
-      href: "/forms",
-      count: forms_count,
-    },
-    {
-      icon: "PhotoIcon",
-      label: "Media",
-      href: "/media",
-    },
-    {
-      icon: "UsersIcon",
-      label: "Authentication",
-      href: `/authentication?v=${auth_preferences?.id}`,
-    },
-    {
-      icon: "AtSymbolIcon",
-      label: "Emails",
-      href: "/emails",
-    },
-  ];
+  // const menu_items = [
+  //   {
+  //     icon: "PresentationChartBarIcon",
+  //     label: "Dashboard",
+  //     href: "/",
+  //   },
+  //   {
+  //     icon: "Square3Stack3DIcon",
+  //     label: "Endpoints",
+  //     href: "/endpoints",
+  //   },
+  //   {
+  //     icon: "PaperAirplaneIcon",
+  //     label: "Forms",
+  //     href: "/forms",
+  //     count: forms_count,
+  //   },
+  //   {
+  //     icon: "PhotoIcon",
+  //     label: "Media",
+  //     href: "/media",
+  //   },
+  //   {
+  //     icon: "UsersIcon",
+  //     label: "Authentication",
+  //     href: `/authentication?v=${auth_preferences?.id}`,
+  //   },
+  //   {
+  //     icon: "AtSymbolIcon",
+  //     label: "Emails",
+  //     href: "/emails",
+  //   },
+  // ];
 
   const tables_menu_items = [
     ...tables?.map((item) => {
@@ -73,7 +73,7 @@ const Menu = () => {
     <div className={`${mainClass}__menu__container`}>
       <div className={`${mainClass}__menu`}>
         <div className={`${mainClass}__menu__items`}>
-          {menu_items?.map(({ icon, label, href, count, external }, index) => (
+          {plugins?.map(({ icon, title, href, count, external }, index) => (
             <NavLink
               key={index}
               to={href}
@@ -85,7 +85,7 @@ const Menu = () => {
             >
               <span>
                 {!!icon && <Icon name={icon} />}
-                {label}
+                {title}
               </span>
               {!!external && (
                 <div className={`${mainClass}__menu__items__item__external`}>
