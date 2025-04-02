@@ -2,7 +2,7 @@ import "./styles.scss";
 import cx from "classnames";
 
 import { ServerStackIcon } from "@heroicons/react/24/outline";
-import { ReactComponent as PlaceohlderIcon } from "assets/icons/profile-placeholder.svg";
+import PlaceohlderIcon from "assets/icons/profile-placeholder.svg";
 
 const mainClass = "dashboard-layout__avatar";
 

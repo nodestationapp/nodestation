@@ -9,7 +9,7 @@ import useOnScreen from "libs/helpers/useOnScreen";
 import useClickOutside from "libs/helpers/useClickOutside";
 
 import { ChevronDownIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { ReactComponent as ProfilePlaceholder } from "assets/icons/profile-placeholder.svg";
+import ProfilePlaceholder from "assets/icons/profile-placeholder.svg";
 import IconButton from "components/IconButton";
 
 const mainClass = "async-select";

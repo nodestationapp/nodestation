@@ -10,10 +10,10 @@ import { useMedia } from "context/client/media";
 import activeEmailChecker from "libs/helpers/activeEmailChecker";
 
 import { InboxStackIcon } from "@heroicons/react/24/outline";
-import { ReactComponent as AwsLogo } from "assets/icons/email-providers/aws.svg";
+import AwsLogo from "assets/icons/email-providers/aws.svg";
 // import { ReactComponent as GoogleLogo } from "assets/icons/media-providers/google.svg";
 // import { ReactComponent as WasabiLogo } from "assets/icons/media-providers/wasabi.svg";
-import { ReactComponent as DigitalOceanLogo } from "assets/icons/media-providers/digitalocean.svg";
+import DigitalOceanLogo from "assets/icons/media-providers/digitalocean.svg";
 
 const mainClass = "media-providers";
 

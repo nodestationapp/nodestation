@@ -1,6 +1,6 @@
 import "./styles.scss";
 
-import { ReactComponent as ProfilePlaceholder } from "assets/icons/profile-placeholder.svg";
+import ProfilePlaceholder from "assets/icons/profile-placeholder.svg";
 
 const mainClass = "table__user-profile";
 

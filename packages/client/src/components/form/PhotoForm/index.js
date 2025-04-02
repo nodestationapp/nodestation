@@ -2,7 +2,7 @@ import "./styles.scss";
 import { useState } from "react";
 
 import Loader from "components/Loader";
-import { ReactComponent as ProfilePlaceholder } from "assets/icons/profile-placeholder.svg";
+import ProfilePlaceholder from "assets/icons/profile-placeholder.svg";
 
 const mainClass = "photo-form";
 

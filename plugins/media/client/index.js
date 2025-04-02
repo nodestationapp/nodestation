@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 
-import DashboardIndex from "./dashboard.jsx";
+import MediaIndex from "./media.js";
 
 const Dashboard = () => {
   return (
     <Routes>
-      <Route index element={<DashboardIndex />} />
+      <Route index element={<MediaIndex />} />
     </Routes>
   );
 };

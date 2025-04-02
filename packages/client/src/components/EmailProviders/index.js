@@ -10,11 +10,11 @@ import activeEmailChecker from "libs/helpers/activeEmailChecker";
 
 import { InboxStackIcon } from "@heroicons/react/24/outline";
 
-import { ReactComponent as AwsLogo } from "assets/icons/email-providers/aws.svg";
-import { ReactComponent as MailgunLogo } from "assets/icons/email-providers/mailgun.svg";
+import AwsLogo from "assets/icons/email-providers/aws.svg";
+import MailgunLogo from "assets/icons/email-providers/mailgun.svg";
 // import { ReactComponent as SendgridLogo } from "assets/icons/email-providers/sendgrid.svg";
-import { ReactComponent as MailchimpLogo } from "assets/icons/email-providers/mailchimp.svg";
-import { ReactComponent as ElasticEmailLogo } from "assets/icons/email-providers/elastic-email.svg";
+import MailchimpLogo from "assets/icons/email-providers/mailchimp.svg";
+import ElasticEmailLogo from "assets/icons/email-providers/elastic-email.svg";
 
 const mainClass = "email-providers";
 

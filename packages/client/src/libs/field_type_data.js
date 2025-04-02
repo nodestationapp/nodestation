@@ -1,12 +1,12 @@
-import { ReactComponent as IdIcon } from "assets/icons/content-types/id.svg";
-import { ReactComponent as JsonIcon } from "assets/icons/content-types/json.svg";
-import { ReactComponent as DateIcon } from "assets/icons/content-types/date.svg";
-import { ReactComponent as MediaIcon } from "assets/icons/content-types/media.svg";
-import { ReactComponent as NumericIcon } from "assets/icons/content-types/number.svg";
-import { ReactComponent as BooleanIcon } from "assets/icons/content-types/boolean.svg";
-import { ReactComponent as ShortTextIcon } from "assets/icons/content-types/short-text.svg";
-import { ReactComponent as EnumerationIcon } from "assets/icons/content-types/enumeration.svg";
-import { ReactComponent as UserIcon } from "assets/icons/content-types/user.svg";
+import IdIcon from "assets/icons/content-types/id.svg";
+import JsonIcon from "assets/icons/content-types/json.svg";
+import DateIcon from "assets/icons/content-types/date.svg";
+import MediaIcon from "assets/icons/content-types/media.svg";
+import NumericIcon from "assets/icons/content-types/number.svg";
+import BooleanIcon from "assets/icons/content-types/boolean.svg";
+import ShortTextIcon from "assets/icons/content-types/short-text.svg";
+import EnumerationIcon from "assets/icons/content-types/enumeration.svg";
+import UserIcon from "assets/icons/content-types/user.svg";
 
 const field_type_data = [
   {

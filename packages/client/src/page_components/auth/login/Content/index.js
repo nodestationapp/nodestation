@@ -8,7 +8,7 @@ import FormikInput from "components/formik/FormikInput";
 
 import { useApp } from "context/app";
 
-import { ReactComponent as LogoIcon } from "assets/icons/logo-sygnet.svg";
+import LogoIcon from "assets/icons/logo-sygnet.svg";
 
 const mainClass = "login-content";
 
