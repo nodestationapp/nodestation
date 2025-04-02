@@ -11,7 +11,7 @@ module.exports = (env) => {
 
   return {
     entry: "./src/index.js",
-    mode: "development",
+    mode: env.NODE_ENV === "production" ? "production" : "development",
     output: {
       filename: "bundle.js",
       path: path.resolve(__dirname, "dist"),
