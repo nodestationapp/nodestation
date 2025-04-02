@@ -1,4 +1,5 @@
 import getFiles from "./helpers/getFiles.js";
+import getPluginFiles from "./helpers/getPluginFiles.js";
 import createFile from "./helpers/createFile.js";
 import updateFile from "./helpers/updateFile.js";
 import deleteFile from "./helpers/deleteFile.js";
@@ -11,5 +12,6 @@ export default {
   updateFile,
   deleteFile,
   generateServer,
+  getPluginFiles,
   removeUploadedFile,
 };

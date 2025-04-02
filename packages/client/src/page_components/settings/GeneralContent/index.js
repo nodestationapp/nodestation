@@ -2,9 +2,8 @@ import "./styles.scss";
 
 import { useState } from "react";
 import { Form, Formik } from "formik";
+import { Button, Input } from "@nstation/design-system";
 
-import Button from "components/Button";
-import Input from "components/form/Input";
 import KeyViewer from "components/KeyViewer";
 import PhotoForm from "components/form/PhotoForm";
 import FormikInput from "components/formik/FormikInput";
@@ -42,7 +41,6 @@ const GeneralContent = () => {
       await api.put(`/user/me`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage?.getItem("access_token")}`,
         },
       });
 

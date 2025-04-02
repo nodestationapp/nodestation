@@ -2,7 +2,6 @@ import "./styles.scss";
 import { Outlet, useLocation } from "react-router-dom";
 
 import DashboardContentLayout from "../DashboardContentLayout";
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 
 const mainClass = "account-settings-layout";
 
@@ -36,7 +35,7 @@ const AccountSettingsLayout = () => {
 
   const breadcrumps = [
     {
-      icon: <Cog6ToothIcon />,
+      icon: "Cog6ToothIcon",
       label: "Settings",
     },
     ...(!!current_view

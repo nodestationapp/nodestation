@@ -1,5 +1,6 @@
 import "./styles.scss";
 import { Link } from "react-router-dom";
+import { Icon } from "@nstation/design-system";
 
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import BreadcrumpSkeleton from "./components/BreadcrumpSkeleton";
@@ -21,11 +22,12 @@ const Breadcrumps = ({ data, loading }) => {
               <BreadcrumpSkeleton />
             ) : !!href ? (
               <Link to={href} className={`${mainClass}__section__item`}>
-                {icon} <span>{label}</span>
+                {!!icon && <Icon name={icon} />}
+                <span>{label}</span>
               </Link>
             ) : (
               <span className={`${mainClass}__section__item`}>
-                {icon} <span>{label}</span>
+                {!!icon && <Icon name={icon} />} <span>{label}</span>
               </span>
             )}
           </div>

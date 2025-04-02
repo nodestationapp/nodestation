@@ -2,38 +2,18 @@ import { io } from "socket.io-client";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  lazy,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import SplashScreen from "components/SplashScreen";
-import api from "libs/api";
+
 import EditorProvider from "./client/editor";
 import OrganizationProvider from "./organization";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
-import nstationConfig from "root/nstation.config.js";
+import api from "libs/api";
+import pluginsLoader from "libs/helpers/pluginsLoader";
 
-const config = nstationConfig();
-
-const plugins = Object.keys(config).map((key) => {
-  return {
-    ...config[key],
-    key: key,
-    path: !!config[key].href
-      ? config[key].href === "/"
-        ? ""
-        : `${config[key].href}/*`
-      : `/${key}/*`,
-    href: config[key].href || `/${key}`,
-    component: lazy(() => import(`plugins/${key}/client/index.jsx`)),
-  };
-});
+const plugins = pluginsLoader();
 
 const AppContext = createContext();
 

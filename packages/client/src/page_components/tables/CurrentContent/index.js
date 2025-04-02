@@ -8,7 +8,6 @@ import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 import { useTable } from "context/client/table";
 
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { CircleStackIcon } from "@heroicons/react/24/outline";
 
 const TablesContent = () => {
   const { data } = useTable();
@@ -25,7 +24,7 @@ const TablesContent = () => {
 
   const breadcrumps = [
     {
-      icon: <CircleStackIcon />,
+      icon: "CircleStackIcon",
       label: "Tables",
     },
     {
