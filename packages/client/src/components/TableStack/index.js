@@ -151,8 +151,6 @@ const TableStack = ({
   const [filters, setFilters] = useState([{ field: null, value: null }]);
 
   useEffect(() => {
-    // if (!!!preferences) return;
-
     setFiltersExpanded(preferences?.filtersToggle);
     setColumnVisibility(preferences?.visibility);
     setColumnOrder(preferences?.order);
@@ -309,6 +307,7 @@ const TableStack = ({
       ...(!!filtering
         ? [
             <IconButton
+              key={1}
               active={!!filtersExpanded}
               size="small"
               icon={<BoltIcon color={!!isFilterValue ? "#8A6FF1" : ""} />}
@@ -323,6 +322,7 @@ const TableStack = ({
       ...(!!!toolbarData?.hideColumnOrder
         ? [
             <DragOrderSelect
+              key={2}
               multi={true}
               value={
                 !!columnOrder?.[0]
@@ -363,6 +363,7 @@ const TableStack = ({
       ...(!!toolbarData?.settingsButtonHandler
         ? [
             <IconButton
+              key={3}
               size="small"
               icon={<Cog6ToothIcon />}
               href={toolbarData?.settingsButtonHandler}
@@ -373,6 +374,7 @@ const TableStack = ({
       ...(!!toolbarData?.deleteHandler
         ? [
             <IconButtonMenu
+              key={4}
               icon={<EllipsisHorizontalIcon />}
               data={[
                 {
@@ -387,7 +389,11 @@ const TableStack = ({
         : []),
       ...(!!toolbarData?.newButtonHandler
         ? [
-            <Button icon={<PlusIcon />} onClick={toolbarData?.newButtonHandler}>
+            <Button
+              key={5}
+              icon={<PlusIcon />}
+              onClick={toolbarData?.newButtonHandler}
+            >
               New
             </Button>,
           ]

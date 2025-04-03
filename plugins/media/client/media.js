@@ -16,7 +16,7 @@ const MediaContent = () => {
     <BaseLayout breadcrumps={breadcrumps}>
       <div className={mainClass}>
         <div className={`${mainClass}__placeholder`}>
-          <h1>Media page</h1>
+          <h1>Media page :)</h1>
         </div>
       </div>
     </BaseLayout>

@@ -32,7 +32,7 @@ const upsertPreferences = async (req, res) => {
       .jsonParser();
 
     if (!!preference) {
-      const content = { ...preference, ...body?.content };
+      const content = { ...preference?.content, ...body?.content };
 
       await knex("nodestation_preferences")
         .where({

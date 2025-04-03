@@ -87,8 +87,7 @@ const DragOrderSelect = ({
           {!!required && <span>*</span>}
         </label>
       )}
-      {/* <CustomButton /> */}
-      <button
+      <div
         ref={button_ref}
         type="button"
         onClick={() => setSelectOpen((prev) => !prev)}
@@ -105,7 +104,7 @@ const DragOrderSelect = ({
               ?.join(", ") || placeholder}
           </span>
         )}
-      </button>
+      </div>
       {select_open && (
         <div
           className={classnames(`${mainClass}__options`, {

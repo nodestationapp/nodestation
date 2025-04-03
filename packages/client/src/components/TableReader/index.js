@@ -12,7 +12,8 @@ const TableReader = ({ rowClick, selectAction, newButton, meta }) => {
 
   const toolbar = {
     menu:
-      views?.map((item) => ({
+      views?.map((item, index) => ({
+        key: index,
         id: item?.id,
         label: item?.name,
         href: `${pathname}?v=${item?.id}`,

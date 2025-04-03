@@ -68,6 +68,7 @@ const Submenu = ({ data, tableId, view, customizableView }) => {
 
         return (
           <DropdownInput
+            key={index}
             placeholder="View name"
             position="right"
             value={label}
@@ -77,7 +78,6 @@ const Submenu = ({ data, tableId, view, customizableView }) => {
             CustomButton={() => (
               <Component
                 to={href}
-                key={index}
                 onClick={() => updatePreferences(id)}
                 className={classnames(`${mainClass}__item`, {
                   [`${mainClass}__item--active`]: active,
