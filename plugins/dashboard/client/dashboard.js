@@ -1,36 +1,43 @@
-import "./styles.scss";
+import * as React from "react";
 
-import { Button } from "@nstation/design-system";
-
-import BaseLayout from "components/layouts/DashboardContentLayout";
-
+import { Button, Typography, Box } from "@mui/material";
 import { useApp } from "context/app";
 
-const mainClass = "dashboard-content";
-
-const breadcrumps = [
-  {
-    icon: "PresentationChartBarIcon",
-    label: "Dashboard",
-  },
-];
-
-const DashboardContent = () => {
+const Dashboard = () => {
   const { user } = useApp();
 
   return (
-    <BaseLayout breadcrumps={breadcrumps}>
-      <div className={mainClass}>
-        <div className={`${mainClass}__placeholder`}>
-          <h1>Welcome {user?.first_name} 👋</h1>
-          <span>
-            Get familiar with dashboard, here are some ways to get started.
-          </span>
-          <Button>Documentation</Button>
-        </div>
-      </div>
-    </BaseLayout>
+    <Box
+      sx={{
+        height: "calc(100vh - 150px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 1,
+        }}
+      >
+        <Typography variant="h5">Welcome {user?.first_name} 👋</Typography>
+        <span>
+          Get familiar with dashboard, here are some ways to get started.
+        </span>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          sx={{ mt: 2 }}
+        >
+          Documentation
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
-export default DashboardContent;
+export default Dashboard;

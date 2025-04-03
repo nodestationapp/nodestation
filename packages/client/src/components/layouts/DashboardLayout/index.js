@@ -1,42 +1,41 @@
-import "./styles.scss";
-
-import { useState } from "react";
+import * as React from "react";
 import { Outlet } from "react-router-dom";
+import { Box, Stack } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 
+import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
-import ToolBar from "./components/ToolBar";
-import AddTableModal from "./components/AddTableModal";
-
-import { useOrganization } from "context/organization";
-import TableWrapperProvider from "context/client/table-wrapper";
-
-const mainClass = "dashboard-layout";
 
 const DashboardLayout = () => {
-  const { add_table_modal, setAddTableModal } = useOrganization();
-  const [mobile_sidebar_open, setMobileSidebarOpen] = useState(false);
-
   return (
-    <TableWrapperProvider>
-      <div className={mainClass}>
-        <div className={`${mainClass}__wrapper`}>
-          <Sidebar
-            mobile_open={mobile_sidebar_open}
-            setMobileSidebarOpen={setMobileSidebarOpen}
-          />
-          <div className={`${mainClass}__content`}>
+    <Box sx={{ display: "flex" }}>
+      <Sidebar />
+      <Box
+        component="main"
+        sx={(theme) => ({
+          flexGrow: 1,
+          backgroundColor: theme.vars
+            ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
+            : alpha(theme.palette.background.default, 1),
+          overflow: "auto",
+        })}
+      >
+        <Stack
+          spacing={2}
+          sx={{
+            alignItems: "center",
+            mx: 3,
+            pb: 5,
+            mt: { xs: 8, md: 0 },
+          }}
+        >
+          <Header />
+          <Box sx={{ width: "100%", maxWidth: { sm: "100%", md: "1700px" } }}>
             <Outlet />
-          </div>
-        </div>
-        <ToolBar />
-      </div>
-      {add_table_modal && (
-        <AddTableModal
-          type={add_table_modal}
-          onClose={() => setAddTableModal(false)}
-        />
-      )}
-    </TableWrapperProvider>
+          </Box>
+        </Stack>
+      </Box>
+    </Box>
   );
 };
 

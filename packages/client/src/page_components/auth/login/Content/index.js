@@ -1,21 +1,24 @@
 import "./styles.scss";
 
-import { Form, Formik } from "formik";
-import { Link } from "react-router-dom";
-
-import Button from "components/Button";
-import FormikInput from "components/formik/FormikInput";
+import { useFormik } from "formik";
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Typography,
+  Button,
+  TextField,
+} from "@mui/material";
 
 import { useApp } from "context/app";
 
 import LogoIcon from "assets/icons/logo-sygnet.svg";
-
-const mainClass = "login-content";
+import ColorModeIconDropdown from "../../../../theme/ColorModeIconDropdown";
 
 const LoginContent = () => {
   const { login } = useApp();
 
-  const onSubmit = async (values, setSubmitting, setErrors) => {
+  const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       await login(values);
     } catch (err) {
@@ -24,54 +27,108 @@ const LoginContent = () => {
     }
   };
 
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit,
+  });
+
   return (
-    <div className={mainClass}>
-      <div className={`${mainClass}__wrapper`}>
-        <div className={`${mainClass}__wrapper__header`}>
-          <LogoIcon />
-          <h1>Log in to your account</h1>
-        </div>
-        <Formik
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          onSubmit={(values, { setSubmitting, setErrors }) => {
-            onSubmit(values, setSubmitting, setErrors);
+    <Box
+      sx={{
+        width: "100%",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Box sx={{ width: "100%", maxWidth: 380 }}>
+        <Box
+          sx={{
+            marginBottom: "30px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "20px",
+            alignItems: "center",
           }}
         >
-          {({ isSubmitting }) => (
-            <Form className="form" autoComplete="off">
-              <FormikInput
-                name="email"
-                type="email"
-                label="Email"
-                disabled={isSubmitting}
-              />
-              <div className={`${mainClass}__wrapper__password`}>
-                <FormikInput
-                  name="password"
-                  label="Password"
-                  type="password"
-                  disabled={isSubmitting}
-                  aside={
-                    <Link
-                      className={`${mainClass}__wrapper__password__forget`}
-                      to="/forget-password"
-                    >
-                      Forget password?
-                    </Link>
-                  }
-                />
-              </div>
-              <Button type="submit" loading={!!isSubmitting} fullWidth>
-                Log in
-              </Button>
-            </Form>
-          )}
-        </Formik>
-      </div>
-    </div>
+          <LogoIcon style={{ width: 50, height: 50 }} />
+          <Typography
+            component="h1"
+            variant="h4"
+            textAlign="center"
+            sx={{ width: "100%", fontSize: 20 }}
+          >
+            Log in to your account
+          </Typography>
+        </Box>
+
+        <Box
+          component="form"
+          onSubmit={formik.handleSubmit}
+          noValidate
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            gap: 2,
+          }}
+        >
+          <FormControl>
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <TextField
+              error={formik.errors.email}
+              helperText={formik.errors.email}
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              id="email"
+              type="email"
+              name="email"
+              placeholder="your@email.com"
+              autoComplete="email"
+              required
+              fullWidth
+              variant="outlined"
+              full
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <TextField
+              error={formik.errors.password}
+              helperText={formik.errors.password}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              name="password"
+              placeholder="••••••"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              required
+              fullWidth
+              variant="outlined"
+            />
+          </FormControl>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            loading={formik.isSubmitting}
+            color="primary"
+          >
+            Sign in
+          </Button>
+        </Box>
+      </Box>
+      <Box sx={{ position: "absolute", top: 15, right: 15 }}>
+        <ColorModeIconDropdown />
+      </Box>
+    </Box>
   );
 };
 

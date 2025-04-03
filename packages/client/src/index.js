@@ -11,6 +11,8 @@ import App from "./App";
 import NotifyContainer from "./components/NotifyContainer";
 
 import AppProvider from "context/app";
+import AppTheme from "./theme/AppTheme";
+import { CssBaseline } from "@mui/material";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -20,8 +22,11 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <CookiesProvider defaultSetOptions={{ path: "/" }}>
         <AppProvider>
-          <App />
-          <NotifyContainer />
+          <AppTheme>
+            <CssBaseline />
+            <App />
+            <NotifyContainer />
+          </AppTheme>
         </AppProvider>
       </CookiesProvider>
     </QueryClientProvider>

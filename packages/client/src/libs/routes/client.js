@@ -1,6 +1,5 @@
 import { Route } from "react-router-dom";
 
-import DashboardLayout from "components/layouts/DashboardLayout";
 import AccountSettingsLayout from "components/layouts/AccountSettingsLayout";
 
 // import Emails from "pages/client/emails";
@@ -14,6 +13,7 @@ import TableSettings from "pages/client/tables/settings";
 
 import SettingsGeneral from "pages/client/settings";
 import SettingsSecurity from "pages/client/settings/security";
+import DashboardLayout from "components/layouts/DashboardLayout";
 
 // // import MediaSettings from "pages/client/media/settings";
 // import Users from "pages/client/users";
@@ -40,7 +40,7 @@ const clientRoutes = ({ plugins }) => {
         <Route path=":id" element={<Table />} />
         <Route path=":id/settings" element={<TableSettings />} />
       </Route>
-      <Route element={<AccountSettingsLayout />} path="/settings">
+      <Route path="/settings">
         <Route index element={<SettingsGeneral />} />
         <Route path="security" element={<SettingsSecurity />} />
       </Route>

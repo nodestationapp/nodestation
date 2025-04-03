@@ -3,7 +3,7 @@ import "./styles.scss";
 import Dropdown from "components/Dropdown";
 import Searcher from "./components/Searcher";
 import DropdownMenu from "components/DropdownMenu";
-import Avatar from "components/layouts/DashboardLayout/components/Sidebar/components/Avatar";
+import Avatar from "components/layouts/DashboardLayoutOld/components/Sidebar/components/Avatar";
 
 import { useApp } from "context/app";
 
