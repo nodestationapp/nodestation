@@ -67,6 +67,7 @@ module.exports = (env) => {
         page_components: path.resolve(__dirname, "src/page_components"),
         plugins: path.resolve(__dirname, "../../plugins"),
         root: path.resolve(__dirname, "../../"),
+        layouts: path.resolve(__dirname, "src/layouts"),
       },
     },
   };

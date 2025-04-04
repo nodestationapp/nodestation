@@ -1,7 +1,13 @@
-import GeneralContent from "page_components/settings/GeneralContent";
+import Form from "page_components/settings/GeneralContent/Form";
+import PhotoInput from "page_components/settings/GeneralContent/PhotoInput";
 
 const SettingsGeneral = () => {
-  return <GeneralContent />;
+  return (
+    <>
+      <PhotoInput />
+      <Form />
+    </>
+  );
 };
 
 export default SettingsGeneral;

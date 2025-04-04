@@ -13,7 +13,8 @@ import TableSettings from "pages/client/tables/settings";
 
 import SettingsGeneral from "pages/client/settings";
 import SettingsSecurity from "pages/client/settings/security";
-import DashboardLayout from "components/layouts/DashboardLayout";
+import DashboardLayout from "layouts/DashboardLayout";
+import SettingsLayout from "layouts/SettingsLayout";
 
 // // import MediaSettings from "pages/client/media/settings";
 // import Users from "pages/client/users";
@@ -40,7 +41,7 @@ const clientRoutes = ({ plugins }) => {
         <Route path=":id" element={<Table />} />
         <Route path=":id/settings" element={<TableSettings />} />
       </Route>
-      <Route path="/settings">
+      <Route path="/settings" element={<SettingsLayout />}>
         <Route index element={<SettingsGeneral />} />
         <Route path="security" element={<SettingsSecurity />} />
       </Route>

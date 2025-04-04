@@ -7,8 +7,9 @@ const changePassword = async ({ user, current_password, new_password }) =>
       const validPass = await bcrypt.compare(current_password, user.password);
       if (!!!validPass) {
         return reject({
-          error: "Current password is incorrect.",
-          type: "wrong_password",
+          errors: {
+            current_password: "Current password is incorrect.",
+          },
         });
       }
 

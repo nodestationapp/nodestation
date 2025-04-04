@@ -1,5 +1,15 @@
-import SecurityContent from "page_components/settings/SecurityContent";
+import SettingsForm from "components/SettingsForm";
+import ChangePasswordForm from "page_components/settings/SecurityContent/ChangePasswordForm";
 
-const SettingsSecurity = () => <SecurityContent />;
+const SecuritySettings = () => {
+  const settings_data = [
+    {
+      label: "Change password",
+      component: <ChangePasswordForm />,
+    },
+  ];
 
-export default SettingsSecurity;
+  return <SettingsForm data={settings_data} />;
+};
+
+export default SecuritySettings;

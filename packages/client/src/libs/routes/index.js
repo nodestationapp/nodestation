@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import authRoutes from "./auth";
 import clientRoutes from "./client";
