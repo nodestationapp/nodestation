@@ -13,16 +13,21 @@ import NotifyContainer from "./components/NotifyContainer";
 import AppProvider from "context/app";
 import AppTheme from "./theme/AppTheme";
 import { CssBaseline } from "@mui/material";
+import { dataGridCustomizations } from "./theme/customizations/dataGrid";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
+
+const xThemeComponents = {
+  ...dataGridCustomizations,
+};
 
 root.render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
       <CookiesProvider defaultSetOptions={{ path: "/" }}>
         <AppProvider>
-          <AppTheme>
+          <AppTheme themeComponents={xThemeComponents}>
             <CssBaseline />
             <App />
             <NotifyContainer />

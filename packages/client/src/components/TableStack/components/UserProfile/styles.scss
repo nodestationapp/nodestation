@@ -8,6 +8,7 @@
     width: 28px;
     border-radius: 50%;
     overflow: hidden;
+    flex-shrink: 0;
 
     svg{
       height: 100%;

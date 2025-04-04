@@ -6,8 +6,6 @@ import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { PresentationChartBarIcon } from "@heroicons/react/24/outline";
 import { useApp } from "context/app";
-import { useEffect } from "react";
-import { Home } from "@mui/icons-material";
 
 const mainClass = "dashboard-content";
 

@@ -16,11 +16,13 @@ import SettingsSecurity from "pages/client/settings/security";
 import DashboardLayout from "layouts/DashboardLayout";
 import SettingsLayout from "layouts/SettingsLayout";
 
+import TablesMui from "pages/client/tables-mui";
+
 // // import MediaSettings from "pages/client/media/settings";
-// import Users from "pages/client/users";
+import Users from "pages/client/users";
 // import Form from "pages/client/forms/current";
 // import FormSettings from "pages/client/forms/settings";
-// import UserSettings from "pages/client/users/settings";
+import UserSettings from "pages/client/users/settings";
 
 // import Endpoints from "pages/client/endpoints";
 // import MediaSettings from "pages/client/media/settings";
@@ -44,6 +46,11 @@ const clientRoutes = ({ plugins }) => {
       <Route path="/settings" element={<SettingsLayout />}>
         <Route index element={<SettingsGeneral />} />
         <Route path="security" element={<SettingsSecurity />} />
+      </Route>
+      <Route path="/tables-mui" element={<TablesMui />} />
+      <Route path="/authentication">
+        <Route index element={<Users />} />
+        <Route path="settings" element={<UserSettings />} />
       </Route>
       {/* <Route path="/emails">
         <Route index element={<Emails />} />
