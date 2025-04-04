@@ -1,6 +1,5 @@
 import "./styles.scss";
 
-import { useFormik } from "formik";
 import {
   Box,
   FormControl,
@@ -9,11 +8,12 @@ import {
   Button,
   TextField,
 } from "@mui/material";
+import { useFormik } from "formik";
+import ColorModeDropdown from "components/ColorModeDropdown";
 
 import { useApp } from "context/app";
 
 import LogoIcon from "assets/icons/logo-sygnet.svg";
-import ColorModeIconDropdown from "../../../../theme/ColorModeIconDropdown";
 
 const LoginContent = () => {
   const { login } = useApp();
@@ -126,7 +126,7 @@ const LoginContent = () => {
         </Box>
       </Box>
       <Box sx={{ position: "absolute", top: 15, right: 15 }}>
-        <ColorModeIconDropdown />
+        <ColorModeDropdown />
       </Box>
     </Box>
   );

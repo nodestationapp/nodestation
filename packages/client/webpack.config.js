@@ -68,6 +68,7 @@ module.exports = (env) => {
         plugins: path.resolve(__dirname, "../../plugins"),
         root: path.resolve(__dirname, "../../"),
         layouts: path.resolve(__dirname, "src/layouts"),
+        hooks: path.resolve(__dirname, "src/hooks"),
       },
     },
   };

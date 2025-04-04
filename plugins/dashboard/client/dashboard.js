@@ -1,10 +1,18 @@
-import * as React from "react";
-
+import { Home } from "@mui/icons-material";
 import { Button, Typography, Box } from "@mui/material";
+
 import { useApp } from "context/app";
+import useSetBreadcrumbs from "hooks/useSetBreadcrumbs";
 
 const Dashboard = () => {
   const { user } = useApp();
+
+  useSetBreadcrumbs([
+    {
+      icon: Home,
+      label: "Dashboard",
+    },
+  ]);
 
   return (
     <Box

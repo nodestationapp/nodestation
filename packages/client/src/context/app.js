@@ -12,6 +12,7 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 import api from "libs/api";
 import pluginsLoader from "libs/helpers/pluginsLoader";
+import BreadcrumbsProvider from "./client/breadcrumps";
 
 const plugins = pluginsLoader();
 
@@ -167,6 +168,7 @@ const AppProvider = ({ children }) => {
     });
 
     removeCookie("access_token");
+    window.location.replace("/login");
 
     setUser(null);
   };
@@ -197,7 +199,9 @@ const AppProvider = ({ children }) => {
     return (
       <AppContext.Provider value={value}>
         <OrganizationProvider>
-          <EditorProvider>{children}</EditorProvider>
+          <BreadcrumbsProvider>
+            <EditorProvider>{children}</EditorProvider>
+          </BreadcrumbsProvider>
         </OrganizationProvider>
       </AppContext.Provider>
     );
