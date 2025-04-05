@@ -1,39 +1,31 @@
-import "./styles.scss";
-
-import classnames from "classnames";
 import { useEffect, useState } from "react";
-import PerfectScrollbar from "react-perfect-scrollbar";
 
-import Button from "components/Button";
-import Tooltip from "components/Tooltip";
-import KeyViewer from "components/KeyViewer";
-import IconButton from "components/IconButton";
-
-import { XMarkIcon } from "@heroicons/react/24/outline";
-
-const mainClass = "aside-modal";
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Drawer,
+  IconButton,
+} from "@mui/material";
+import { Close } from "@mui/icons-material";
 
 const AsideModal = ({
+  open,
+  header,
   children,
-  loading,
   onClose,
   onSubmit,
-  variant,
-  submit_label,
-  custom_actions,
-  reject_label = "Cancel",
-  header,
-  size,
-  noPadding,
-  action_cancel_hide,
-  hide_action,
-  submit_keys,
+  submitLoading = false,
+  submitDisabled = false,
+  submitLabel = "Save",
+  cancelLabel = "Cancel",
 }) => {
-  const [is_open, setIsOpen] = useState(false);
+  const [is_open, setIsOpen] = useState(open);
 
   const onSubmitHandler = (e) => {
     if (e.key === "Escape") {
-      onClose();
+      onCloseHandler();
     } else {
       if ((e.metaKey || e.ctrlKey) && e.key === "s") {
         e.preventDefault();
@@ -46,7 +38,7 @@ const AsideModal = ({
     setIsOpen(false);
     setTimeout(() => {
       onClose();
-    }, 300);
+    }, 225);
   };
 
   useEffect(() => {
@@ -60,57 +52,39 @@ const AsideModal = ({
   }, []);
 
   return (
-    <div
-      className={classnames(mainClass, {
-        [`${mainClass}--${size}`]: !!size,
-        [`${mainClass}--active`]: !!is_open,
-        [`${mainClass}--no-submit`]: !!!onSubmit,
-        [`${mainClass}--no-padding`]: !!noPadding,
-      })}
+    <Drawer
+      open={is_open}
+      anchor="right"
+      variant="temporary"
+      ModalProps={{ keepMounted: true }}
+      onClose={onCloseHandler}
+      sx={{
+        "& .MuiDrawer-paper": {
+          width: { xs: 300, sm: 400 },
+        },
+      }}
     >
-      <div className={`${mainClass}__dialog`}>
-        {header && (
-          <div className={`${mainClass}__dialog__header`}>
-            <span>{header}</span>
-            <Tooltip
-              text={<KeyViewer variant="dark" no_margin data={["Esc"]} />}
-            >
-              <IconButton icon={<XMarkIcon />} onClick={onCloseHandler} />
-            </Tooltip>
-          </div>
-        )}
-        <PerfectScrollbar
-          options={{
-            wheelPropagation: true,
-          }}
+      <DialogTitle sx={{ display: "flex", justifyContent: "space-between" }}>
+        {header}
+        <IconButton size="micro" onClick={onCloseHandler}>
+          <Close />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent dividers>{children}</DialogContent>
+      <DialogActions>
+        <Button
+          loading={submitLoading}
+          onClick={onSubmit}
+          variant="contained"
+          disabled={submitDisabled}
         >
-          <div className={`${mainClass}__dialog__content`}>{children}</div>
-        </PerfectScrollbar>
-
-        {!!!hide_action && (
-          <div className={`${mainClass}__dialog__actions`}>
-            {!!!action_cancel_hide && (
-              <Button onClick={onCloseHandler} variant="transparent-gray">
-                {reject_label}
-              </Button>
-            )}
-            {!!custom_actions ? (
-              <div className={`${mainClass}__dialog__actions__custom`}>
-                {custom_actions}
-              </div>
-            ) : (
-              !!onSubmit && (
-                <Button variant={variant} onClick={onSubmit} loading={loading}>
-                  {submit_label}
-                  {submit_keys && <KeyViewer data={submit_keys} />}
-                </Button>
-              )
-            )}
-          </div>
-        )}
-      </div>
-      <div onClick={onCloseHandler} className={`${mainClass}__backdrop`}></div>
-    </div>
+          {submitLabel}
+        </Button>
+        <Button variant="text" onClick={onCloseHandler}>
+          {cancelLabel}
+        </Button>
+      </DialogActions>
+    </Drawer>
   );
 };
 

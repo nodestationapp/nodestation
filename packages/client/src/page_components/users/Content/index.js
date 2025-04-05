@@ -1,32 +1,21 @@
 import { useState } from "react";
+import { Button } from "@mui/material";
 
-import TableReader from "components/TableReader";
-import DashboardContentLayout from "components/layouts/DashboardContentLayout";
-
-import ArchiveTableEntryModal from "page_components/tables/components/ArchiveTableEntryModal";
-import TableContentEditor from "page_components/tables/CurrentContent/components/TableContentEditor";
-
-import { TrashIcon, UsersIcon } from "@heroicons/react/24/outline";
 import MuiTable from "components/MuiTable";
-import useSetBreadcrumbs from "hooks/useSetBreadcrumbs";
-import { People } from "@mui/icons-material";
+import TableRowEditor from "components/TableRowEditor";
+
 import { useTable } from "context/client/table";
+import useSetBreadcrumbs from "hooks/useSetBreadcrumbs";
+import tableColumnsRender from "libs/helpers/tableColumnsRender";
+
+import { People } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
 
-import tableColumnsRender from "libs/helpers/tableColumnsRender";
-import { Button } from "@mui/material";
+//todo: add archive modal
 
 const UsersContent = () => {
   const [content_editor, setContentEditor] = useState(null);
-  const [archive_entry_modal, setArchiveEntryModal] = useState(false);
   const { data, loading, saveTableTransaction } = useTable();
-
-  const selectAction = [
-    {
-      icon: <TrashIcon color="#FF3636" />,
-      onClick: () => setArchiveEntryModal(true),
-    },
-  ];
 
   useSetBreadcrumbs([
     {
@@ -52,21 +41,24 @@ const UsersContent = () => {
   );
 
   return (
-    <MuiTable
-      rows={data?.entries}
-      columns={columns}
-      loading={loading}
-      views={data?.views}
-      action={action}
-      preferences={data?.preferences}
-      saveTransaction={saveTableTransaction}
-    />
-    // <DashboardContentLayout breadcrumps={breadcrumps}>
-    //   <TableReader
-    //     selectAction={selectAction}
-    //     newButton={() => setContentEditor(true)}
-    //     rowClick={(row) => setContentEditor(row)}
-    //   />
+    <>
+      <MuiTable
+        action={action}
+        columns={columns}
+        loading={loading}
+        views={data?.views}
+        rows={data?.entries}
+        preferences={data?.preferences}
+        saveTransaction={saveTableTransaction}
+        onRowClick={(row) => setContentEditor(row)}
+      />
+      {!!content_editor && (
+        <TableRowEditor
+          open={content_editor}
+          onClose={() => setContentEditor(null)}
+        />
+      )}
+    </>
     //   {!!archive_entry_modal && (
     //     <ArchiveTableEntryModal
     //       data={archive_entry_modal}
@@ -79,7 +71,6 @@ const UsersContent = () => {
     //       onClose={() => setContentEditor(null)}
     //     />
     //   )}
-    // </DashboardContentLayout>
   );
 };
 

@@ -20,6 +20,7 @@ module.exports = (env) => {
     devServer: {
       static: path.join(__dirname, "dist"),
       port: 1337,
+      hot: true,
       historyApiFallback: {
         index: "index.html",
       },

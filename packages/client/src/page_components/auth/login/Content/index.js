@@ -1,14 +1,8 @@
 import "./styles.scss";
 
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  Typography,
-  Button,
-  TextField,
-} from "@mui/material";
 import { useFormik } from "formik";
+import { Box, Typography, Button, TextField } from "@mui/material";
+
 import ColorModeDropdown from "components/ColorModeDropdown";
 
 import { useApp } from "context/app";
@@ -77,43 +71,34 @@ const LoginContent = () => {
             gap: 2,
           }}
         >
-          <FormControl>
-            <FormLabel htmlFor="email">Email</FormLabel>
-            <TextField
-              error={formik.errors.email}
-              helperText={formik.errors.email}
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              id="email"
-              type="email"
-              name="email"
-              placeholder="your@email.com"
-              autoComplete="email"
-              required
-              fullWidth
-              variant="outlined"
-              full
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel htmlFor="password">Password</FormLabel>
-            <TextField
-              error={formik.errors.password}
-              helperText={formik.errors.password}
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              name="password"
-              placeholder="••••••"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              required
-              fullWidth
-              variant="outlined"
-            />
-          </FormControl>
+          <TextField
+            fullWidth
+            type="email"
+            name="email"
+            label="Email"
+            variant="outlined"
+            autoComplete="email"
+            error={formik.errors.email}
+            value={formik.values.email}
+            placeholder="your@email.com"
+            helperText={formik.errors.email}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+          />
+          <TextField
+            fullWidth
+            name="password"
+            type="password"
+            label="Password"
+            variant="outlined"
+            placeholder="••••••"
+            error={formik.errors.password}
+            value={formik.values.password}
+            autoComplete="current-password"
+            helperText={formik.errors.password}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+          />
           <Button
             type="submit"
             fullWidth

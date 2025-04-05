@@ -1,13 +1,14 @@
 import { Formik, Form } from "formik";
 
-import KeyViewer from "components/KeyViewer";
+// import KeyViewer from "components/KeyViewer";
 import AsideModal from "components/AsideModal";
 
 import tableInputRender from "libs/tableInputRender";
 
 import { useTable } from "context/client/table";
+import { Stack } from "@mui/material";
 
-const TableContentEditor = ({ data = {}, onClose }) => {
+const TableContentEditor = ({ open, data = {}, onClose }) => {
   const { data: table_data, addTableEntry, updateTableEntry } = useTable();
 
   const onSubmit = async (values, setSubmitting, setErrors) => {
@@ -50,31 +51,28 @@ const TableContentEditor = ({ data = {}, onClose }) => {
       {({ submitForm, isSubmitting }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
           <AsideModal
+            open={open}
             header={
               data?.[table_data?.table?.display_name || "id"] || "Add entry"
             }
             onClose={onClose}
             onSubmit={submitForm}
             loading={isSubmitting}
-            submit_label={
-              <>
-                Save
-                <KeyViewer data={["⌘", "S"]} />
-              </>
-            }
+            // submit_label={
+            //   <>
+            //     Save
+            //     <KeyViewer data={["⌘", "S"]} />
+            //   </>
+            // }
           >
-            <div className="form form--wrap">
-              {table_data?.table?.fields?.map((item, index) => {
+            <Stack direction="column" gap={2}>
+              {table_data?.table?.fields?.map((item) => {
                 if (!!!data?.id) {
                   if (item?.slug === "id") return null;
                 }
-                return (
-                  <div key={index}>
-                    {tableInputRender(item, table_data?.table?.display_name)}
-                  </div>
-                );
+                return tableInputRender(item, table_data?.table?.display_name);
               })}
-            </div>
+            </Stack>
           </AsideModal>
         </Form>
       )}
