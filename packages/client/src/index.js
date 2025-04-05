@@ -14,12 +14,14 @@ import AppProvider from "context/app";
 import AppTheme from "./theme/AppTheme";
 import { CssBaseline } from "@mui/material";
 import { dataGridCustomizations } from "./theme/customizations/dataGrid";
+import { datePickersCustomizations } from "./theme/customizations/datePickers";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
 
 const xThemeComponents = {
   ...dataGridCustomizations,
+  ...datePickersCustomizations,
 };
 
 root.render(

@@ -1,18 +1,19 @@
 // import Pill from "components/Pill";
 // import FormikUsers from "components/formik/FormikUsers";
-// import FormikInput from "components/formik/FormikInput";
 // import FormikSelect from "components/formik/FormikSelect";
-// import FormikDateTime from "components/formik/FormikDateTime";
 // import FormikTextarea from "components/formik/FormikTextarea";
 // import FormikJsonInput from "components/formik/FormikJsonInput";
 // import FormikPhotoInput from "components/formik/FormikPhotoInput";
 // import FormikRefEntryTable from "components/formik/FormikRefEntryTable";
-import { useFormikContext } from "formik";
-import { FormControl, FormLabel, TextField } from "@mui/material";
 
-const tableInputRender = (item, display_name, formik) => {
-  console.log("s", formik);
+import moment from "moment";
+import { Chip, TextField, FormControl, Autocomplete } from "@mui/material";
 
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+
+const tableInputRender = (item, formik, display_name) => {
   let select_data = null;
 
   if (item?.type === "select") {
@@ -60,26 +61,62 @@ const tableInputRender = (item, display_name, formik) => {
     //         </FormControl>
     //       );
     //   }
-    // case "boolean":
-    // case "select":
-    //   return (
-    //     <FormikSelect
-    //       multi={item?.multi}
-    //       required={item?.required}
-    //       name={item?.slug}
-    //       label={item?.name}
-    //       options={select_data}
-    //       CustomValue={({ label, color }) => (
-    //         <Pill
-    //           label={label}
-    //           color={color || "#5A5A5A"}
-    //           textColor="#F0F1F3"
-    //           size="small"
-    //           readOnly
-    //         />
-    //       )}
-    //     />
-    //   );
+    case "boolean":
+    case "select":
+      return (
+        <Autocomplete
+          fullWidth
+          multiple={!item?.multi}
+          options={item?.options}
+          value={[formik.values[item?.slug]]}
+          onChange={(_, newValue) => {
+            formik.setFieldValue(
+              item?.slug,
+              newValue?.[newValue?.length - 1]?.value
+            );
+          }}
+          renderInput={(params) => <TextField {...params} label={item?.name} />}
+          renderTags={(tagValue, getTagProps) =>
+            tagValue.map((option, index) => {
+              const { key, ...tagProps } = getTagProps({ index });
+              return (
+                <Chip
+                  key={key}
+                  {...tagProps}
+                  color={
+                    item?.options?.find((item) => item?.value === option)?.color
+                  }
+                  label={option}
+                  variant="outlined"
+                />
+              );
+            })
+          }
+        />
+      );
+    case "date":
+      return (
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+          <FormControl fullWidth>
+            <DatePicker
+              label={item?.name}
+              format="DD/MM/YYYY"
+              value={moment.unix(formik.values[item?.slug])}
+              onChange={(newDate) => {
+                formik.setFieldValue(item?.slug, moment(newDate).unix());
+              }}
+              slotProps={{
+                nextIconButton: { size: "small" },
+                previousIconButton: { size: "small" },
+                openPickerButton: {
+                  size: "micro",
+                },
+              }}
+            />
+          </FormControl>
+        </LocalizationProvider>
+      );
+
     // case "json":
     //   return <FormikJsonInput label={item?.name} name={item?.slug} />;
     // case "user":
@@ -93,28 +130,18 @@ const tableInputRender = (item, display_name, formik) => {
     //       required={item?.required}
     //     />
     //   );
-    // case "date":
-    //   return (
-    //     <FormikDateTime
-    //       name={item?.slug}
-    //       label={item?.name}
-    //       variant="light"
-    //       type="datetime-local"
-    //       disabled={!!item?.read_only}
-    //     />
-    //   );
     default:
       return (
         <TextField
+          fullWidth
+          name={item?.slug}
           label={item?.name}
           variant="outlined"
-          fullWidth
-          value={formik.values[item?.slug]}
-          onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          id={item?.slug}
+          disabled={!!item?.read_only}
+          onChange={formik.handleChange}
+          value={formik.values[item?.slug]}
           type={item?.type === "password" ? "password" : "text"}
-          name={item?.slug}
         />
       );
     // return item?.relation ? (
@@ -123,16 +150,6 @@ const tableInputRender = (item, display_name, formik) => {
     //     label={item?.name}
     //     table={item?.relation}
     //   />
-    // ) : (
-    //   <FormikInput
-    //     name={item?.slug}
-    //     label={item?.name}
-    //     variant="light"
-    //     required={!!item?.required}
-    //     type={item?.type === "password" ? "password" : "text"}
-    //     disabled={!!item?.read_only}
-    //   />
-    // );
   }
 };
 
