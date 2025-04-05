@@ -17,6 +17,8 @@ const UsersContent = () => {
   const [content_editor, setContentEditor] = useState(null);
   const { data, loading, saveTableTransaction } = useTable();
 
+  console.log(data);
+
   useSetBreadcrumbs([
     {
       icon: People,
