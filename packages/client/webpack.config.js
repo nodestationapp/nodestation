@@ -13,17 +13,18 @@ module.exports = (env) => {
     entry: "./src/index.js",
     mode: env.NODE_ENV === "production" ? "production" : "development",
     output: {
-      filename: "bundle.js",
+      filename: "[name].[contenthash].js",
       path: path.resolve(__dirname, "dist"),
       publicPath: "/",
+      clean: true,
     },
+    devtool: "source-map",
     devServer: {
       static: path.join(__dirname, "dist"),
       port: 1337,
       hot: true,
-      historyApiFallback: {
-        index: "index.html",
-      },
+      compress: true,
+      historyApiFallback: true,
     },
     module: {
       rules: [

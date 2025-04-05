@@ -87,7 +87,6 @@ const tableInputRender = (item, formik, display_name) => {
                     item?.options?.find((item) => item?.value === option)?.color
                   }
                   label={option}
-                  variant="outlined"
                 />
               );
             })
