@@ -1,4 +1,4 @@
-import RegisterContent from "page_components/auth/register/Content";
+import RegisterContent from "page_components/auth/Register";
 
 const Register = () => <RegisterContent />;
 

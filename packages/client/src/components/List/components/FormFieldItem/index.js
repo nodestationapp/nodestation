@@ -1,26 +1,26 @@
-import "./styles.scss";
-
 import { useState } from "react";
-import classnames from "classnames";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 
-import IconButton from "components/IconButton";
 import ArchiveEmailModal from "page_components/emails/components/ArchiveEmailModal";
 
 import field_type_data from "libs/field_type_data";
 
+import { LockOutline, MoreVert } from "@mui/icons-material";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import {
-  TrashIcon,
-  LockClosedIcon,
-  EllipsisVerticalIcon,
-} from "@heroicons/react/24/outline";
+  Chip,
+  IconButton,
+  ListItem,
+  ListItemButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 const mainClass = "list__form-field-item";
 
 const FormFieldItem = ({
   name,
-  status,
   slug,
   type,
   onclick,
@@ -49,57 +49,52 @@ const FormFieldItem = ({
 
   return (
     <>
-      <div
+      <ListItem
         key={slug}
         ref={setNodeRef}
         style={style}
-        className={classnames(mainClass, {
-          [`${mainClass}--inactive`]: status === "inactive",
-          [`${mainClass}--is-grabbing`]: !!is_grabbing,
-        })}
-        type="button"
+        variant="bordered"
         onClick={onclick}
       >
-        <div className={`${mainClass}__handle`}>
+        <ListItemButton>
           <IconButton
-            {...attributes}
+            size="micro"
+            variant="light"
             {...listeners}
+            {...attributes}
+            sx={{ mr: 1.5, cursor: !!is_grabbing ? "grabbing" : "grab" }}
             onMouseDown={() => setIsGrabbing(true)}
             onMouseLeave={() => setIsGrabbing(false)}
-            size="small"
-            variant="light"
-            icon={<EllipsisVerticalIcon />}
-          />
-        </div>
-        <div className={`${mainClass}__label`}>
-          {current_type?.icon}
-          <div className={`${mainClass}__label__text`}>
-            <span>{name}</span>
-            <small>{slug}</small>
-          </div>
-        </div>
-        <div className={`${mainClass}__features`}>
-          {!!primary_key && (
-            <div className={`${mainClass}__features--primary-key`}>
-              <span>Primary key</span>
-            </div>
+          >
+            <MoreVert />
+          </IconButton>
+          <Stack direction="row" alignItems="center" gap={2}>
+            {current_type?.icon}
+            <Stack direction="column" gap={0}>
+              <Typography variant="body1">{name}</Typography>
+              <Typography variant="caption" color="textSecondary">
+                {slug}
+              </Typography>
+            </Stack>
+          </Stack>
+          <Stack direction="row" alignItems="center" gap={2} sx={{ ml: 3 }}>
+            {!!primary_key && <Chip label="Primary key" size="small" />}
+          </Stack>
+          {origin === "system" && <LockOutline sx={{ ml: "auto" }} />}
+          {/* //todo */}
+          {origin !== "system" && (
+            <Box>
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemoveClick();
+                }}
+                icon={<TrashIcon color="#FF3636" />}
+              />
+            </Box>
           )}
-        </div>
-        {origin === "system" && (
-          <LockClosedIcon height={18} width={18} color="#647182" />
-        )}
-        {origin !== "system" && (
-          <div className={`${mainClass}__actions`}>
-            <IconButton
-              onClick={(e) => {
-                e.stopPropagation();
-                onRemoveClick();
-              }}
-              icon={<TrashIcon color="#FF3636" />}
-            />
-          </div>
-        )}
-      </div>
+        </ListItemButton>
+      </ListItem>
       {!!archive_modal && (
         <ArchiveEmailModal
           data={archive_modal}

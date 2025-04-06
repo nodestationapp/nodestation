@@ -68,7 +68,7 @@ const tableInputRender = (item, formik, display_name) => {
           fullWidth
           multiple={!item?.multi}
           options={item?.options}
-          value={[formik.values[item?.slug]]}
+          value={!!formik.values[item?.slug] ? [formik.values[item?.slug]] : []}
           onChange={(_, newValue) => {
             formik.setFieldValue(
               item?.slug,
@@ -100,7 +100,11 @@ const tableInputRender = (item, formik, display_name) => {
             <DatePicker
               label={item?.name}
               format="DD/MM/YYYY"
-              value={moment.unix(formik.values[item?.slug])}
+              value={
+                !!formik.values[item?.slug]
+                  ? moment.unix(formik.values[item?.slug])
+                  : null
+              }
               onChange={(newDate) => {
                 formik.setFieldValue(item?.slug, moment(newDate).unix());
               }}

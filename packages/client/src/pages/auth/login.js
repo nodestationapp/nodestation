@@ -1,4 +1,4 @@
-import LoginContent from "page_components/auth/login/Content";
+import LoginContent from "page_components/auth/Login";
 
 const Login = () => <LoginContent />;
 

@@ -216,7 +216,7 @@ const addTableEntry = async (req, res) => {
 
   try {
     await upsertEntry({
-      type: id !== "auth" ? "tables" : null,
+      type: id !== "nodestation_users" ? "tables" : null,
       id,
       body,
       files,

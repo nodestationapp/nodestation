@@ -1,64 +1,76 @@
 import TableSettingsEditor from "components/TableSettingsEditor";
 
-import { useTable } from "context/client/table";
-import { UsersIcon } from "@heroicons/react/24/outline";
 import Button from "components/Button";
-import KeyViewer from "components/KeyViewer";
+import BaseLayout from "layouts/BaseLayout";
+import SettingsForm from "components/SettingsForm";
+
+import { useTable } from "context/client/table";
+import useSetBreadcrumbs from "hooks/useSetBreadcrumbs";
+
+import { People } from "@mui/icons-material";
 
 const UsersSettingsContent = () => {
   const { data } = useTable();
 
-  const table = data?.table;
-
-  const toolbar = ({ dirty, isSubmitting, submitForm }) => ({
-    menu: [
-      {
-        label: "Entries",
-        href: "/authentication",
-      },
-    ],
-    action: [
-      <Button disabled={!!!dirty} loading={!!isSubmitting} onClick={submitForm}>
-        Save <KeyViewer data={["⌘", "S"]} />
-      </Button>,
-    ],
-  });
-
-  const breadcrumps = [
+  useSetBreadcrumbs([
     {
-      icon: <UsersIcon />,
+      icon: People,
       label: "Authentication",
       href: "/authentication",
     },
     {
       label: "Settings",
     },
-  ];
+  ]);
 
-  const settings_data = [
-    {
-      label: "Fields",
-      items: [
-        {
-          name: "fields",
-          type: "input_editor",
-        },
-      ],
-    },
-  ];
+  const table = data?.table;
 
   const formInitialValues = {
     name: "auth",
     fields: table?.fields || [],
   };
 
+  const settings_data = [
+    {
+      label: "Fields",
+      component: <TableSettingsEditor form={formInitialValues} />,
+    },
+  ];
+
+  const action = () => (
+    <Button
+      size="small"
+      color="primary"
+      variant="contained"
+      // onClick={() =>
+      //   setContentEditor(
+      //     data?.table?.fields?.reduce((acc, item) => {
+      //       acc[item?.slug] = "";
+      //       return acc;
+      //     }, {})
+      //   )
+      // }
+    >
+      New
+    </Button>
+  );
+
+  const tabs = [
+    {
+      title: "Entries",
+      href: "/authentication?v=5c75616b-1de4-4fc7-b29d-a320ed1e8cd9",
+    },
+  ];
+
   return (
-    <TableSettingsEditor
-      toolbar={toolbar}
-      settings={settings_data}
-      form={formInitialValues}
-      breadcrumps={breadcrumps}
-    />
+    <BaseLayout
+      title="Settings"
+      subtitle="Manage your authentication settings"
+      tabs={tabs}
+    >
+      {/* <Toolbar tabs={[]} action={action} /> */}
+      <SettingsForm data={settings_data} />
+    </BaseLayout>
   );
 };
 

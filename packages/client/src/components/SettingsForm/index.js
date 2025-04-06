@@ -6,8 +6,10 @@ const SettingsForm = ({ data }) => {
     <Stack direction="column" gap={4}>
       {data?.map((item, index) => (
         <>
-          <Stack key={index} direction="row" gap={8}>
-            <Typography sx={{ fontWeight: 500 }}>{item?.label}</Typography>
+          <Stack key={index} direction="row">
+            <Typography sx={{ fontWeight: 500, minWidth: 180 }}>
+              {item?.label}
+            </Typography>
             {item?.component}
           </Stack>
           <Divider />

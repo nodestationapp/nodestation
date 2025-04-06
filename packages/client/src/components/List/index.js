@@ -12,6 +12,7 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
+import { Box, List as MuiList } from "@mui/material";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
 import FormItem from "./components/FormItem";
@@ -45,32 +46,32 @@ const List = ({ type, data: value, onOrderChange }) => {
   );
 
   return (
-    <div className={mainClass}>
-      <DndContext
-        sensors={sensors}
-        modifiers={[restrictToVerticalAxis]}
-        onDragEnd={({ active, over }) => {
-          if (over && active.id !== over?.id) {
-            const oldIndex = value.findIndex((v) => v?.slug === active.id);
-            const newIndex = value.findIndex((v) => v?.slug === over.id);
+    <DndContext
+      sensors={sensors}
+      modifiers={[restrictToVerticalAxis]}
+      onDragEnd={({ active, over }) => {
+        if (over && active.id !== over?.id) {
+          const oldIndex = value.findIndex((v) => v?.slug === active.id);
+          const newIndex = value.findIndex((v) => v?.slug === over.id);
 
-            const reorder = arrayMove(value, oldIndex, newIndex);
+          const reorder = arrayMove(value, oldIndex, newIndex);
 
-            onOrderChange(reorder);
-          }
-        }}
-      >
-        <SortableContext items={value?.map((item) => item?.slug)}>
-          <div className={`${mainClass}__content`}>
-            {value?.map((item, index) => (
-              <div key={index} className={`${mainClass}__content__row`}>
-                {list_item_render(type, item, value?.length + index)}
-              </div>
-            ))}
-          </div>
-        </SortableContext>
-      </DndContext>
-    </div>
+          onOrderChange(reorder);
+        }
+      }}
+    >
+      <SortableContext items={value?.map((item) => item?.slug)}>
+        <MuiList
+          dense
+          // sx={{ width: "100%", bgcolor: "background.paper" }}
+          variant="bordered"
+        >
+          {value?.map((item, index) =>
+            list_item_render(type, item, value?.length + index, index)
+          )}
+        </MuiList>
+      </SortableContext>
+    </DndContext>
   );
 };
 

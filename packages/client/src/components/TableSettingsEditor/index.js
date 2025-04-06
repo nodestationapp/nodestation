@@ -5,8 +5,9 @@ import SectionHeader from "components/SectionHeader";
 import DashboardContentLayout from "components/layouts/DashboardContentLayout";
 
 import { useTable } from "context/client/table";
+import InputElementsEditor from "components/InputElementsEditor";
 
-const TableSettingsEditor = ({ breadcrumps, toolbar, settings, form }) => {
+const TableSettingsEditor = ({ form }) => {
   const { loading, updateTable } = useTable();
 
   const onSubmit = async (values, setSubmitting, resetForm) => {
@@ -30,17 +31,12 @@ const TableSettingsEditor = ({ breadcrumps, toolbar, settings, form }) => {
     >
       {({ submitForm, isSubmitting, dirty }) => (
         <Form autoComplete="off" style={{ width: "100%" }}>
-          <DashboardContentLayout
-            loading={!!loading}
-            breadcrumps={breadcrumps}
-            toolbar={toolbar({ submitForm, isSubmitting, dirty })}
-          >
-            <SectionHeader
-              title="Settings"
-              subtitle="Manage your table settings"
-            />
-            <SettingsForm data={settings} />
-          </DashboardContentLayout>
+          {/* <SectionHeader
+            title="Settings"
+            subtitle="Manage your table settings"
+          /> */}
+          <InputElementsEditor />
+          {/* <SettingsForm data={settings} /> */}
         </Form>
       )}
     </Formik>

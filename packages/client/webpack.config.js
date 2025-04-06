@@ -23,7 +23,6 @@ module.exports = (env) => {
       static: path.join(__dirname, "dist"),
       port: 1337,
       hot: true,
-      compress: true,
       historyApiFallback: true,
     },
     module: {
