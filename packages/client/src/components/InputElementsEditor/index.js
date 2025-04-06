@@ -1,4 +1,4 @@
-import { useFormikContext } from "formik";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { Button, Stack } from "@mui/material";
 
@@ -7,15 +7,24 @@ import CreateFieldModal from "components/CreateFieldModal";
 
 import { Add } from "@mui/icons-material";
 
-const InputElementsEditor = () => {
-  const { values, setFieldValue, submitForm } = useFormikContext();
-
+const InputElementsEditor = ({ data }) => {
   const [add_field_modal, setAddFieldModal] = useState(false);
+
+  const onSubmit = () => {
+    //todo
+    console.info(data);
+  };
+
+  const formik = useFormik({
+    initialValues: data,
+    onSubmit,
+    enableReinitialize: true,
+  });
 
   const onSubmitHandler = (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === "s") {
       e.preventDefault();
-      submitForm();
+      onSubmit();
     }
   };
 
@@ -29,17 +38,17 @@ const InputElementsEditor = () => {
   }, []);
 
   const onRemove = (index) => {
-    let temp = [...values?.fields];
+    let temp = [...formik?.values?.fields];
     temp.splice(index, 1);
 
-    setFieldValue("fields", temp);
+    formik.setFieldValue("fields", temp);
   };
 
-  const formatted_fields = values?.fields?.map((item, index) => ({
+  const formatted_fields = formik?.values?.fields?.map((item, index) => ({
     ...item,
     name: item?.name,
-    onclick: () => setAddFieldModal({ data: item, index }),
     onRemoveClick: () => onRemove(index),
+    onclick: () => setAddFieldModal({ data: item, index }),
   }));
 
   return (
@@ -51,7 +60,7 @@ const InputElementsEditor = () => {
           }}
           type="forms_field"
           data={formatted_fields}
-          onOrderChange={(value) => setFieldValue("fields", value)}
+          onOrderChange={(value) => formik.setFieldValue("fields", value)}
         />
         <Button
           sx={{ mr: "auto" }}
@@ -66,8 +75,9 @@ const InputElementsEditor = () => {
       </Stack>
       {!!add_field_modal && (
         <CreateFieldModal
-          index={add_field_modal?.index}
+          formik={formik}
           form={add_field_modal?.data}
+          index={add_field_modal?.index}
           onClose={() => setAddFieldModal(false)}
         />
       )}

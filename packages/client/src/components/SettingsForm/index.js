@@ -1,5 +1,4 @@
-import "./styles.scss";
-import { Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 
 const SettingsForm = ({ data }) => {
   return (
@@ -10,7 +9,7 @@ const SettingsForm = ({ data }) => {
             <Typography sx={{ fontWeight: 500, minWidth: 180 }}>
               {item?.label}
             </Typography>
-            {item?.component}
+            <Box sx={{ flex: 1 }}>{item?.component}</Box>
           </Stack>
           <Divider />
         </>

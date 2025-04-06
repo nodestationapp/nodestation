@@ -1,14 +1,10 @@
 import { Form, Formik } from "formik";
 
-import SettingsForm from "components/SettingsForm";
-import SectionHeader from "components/SectionHeader";
-import DashboardContentLayout from "components/layouts/DashboardContentLayout";
-
 import { useTable } from "context/client/table";
 import InputElementsEditor from "components/InputElementsEditor";
 
 const TableSettingsEditor = ({ form }) => {
-  const { loading, updateTable } = useTable();
+  const { updateTable } = useTable();
 
   const onSubmit = async (values, setSubmitting, resetForm) => {
     try {
@@ -29,14 +25,9 @@ const TableSettingsEditor = ({ form }) => {
         onSubmit(values, setSubmitting, resetForm);
       }}
     >
-      {({ submitForm, isSubmitting, dirty }) => (
+      {() => (
         <Form autoComplete="off" style={{ width: "100%" }}>
-          {/* <SectionHeader
-            title="Settings"
-            subtitle="Manage your table settings"
-          /> */}
           <InputElementsEditor />
-          {/* <SettingsForm data={settings} /> */}
         </Form>
       )}
     </Formik>

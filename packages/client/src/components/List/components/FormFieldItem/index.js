@@ -9,6 +9,7 @@ import field_type_data from "libs/field_type_data";
 import { LockOutline, MoreVert } from "@mui/icons-material";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import {
+  Box,
   Chip,
   IconButton,
   ListItem,

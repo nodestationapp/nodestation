@@ -8,6 +8,7 @@ import { useTable } from "context/client/table";
 import useSetBreadcrumbs from "hooks/useSetBreadcrumbs";
 
 import { People } from "@mui/icons-material";
+import InputElementsEditor from "components/InputElementsEditor";
 
 const UsersSettingsContent = () => {
   const { data } = useTable();
@@ -33,7 +34,7 @@ const UsersSettingsContent = () => {
   const settings_data = [
     {
       label: "Fields",
-      component: <TableSettingsEditor form={formInitialValues} />,
+      component: <InputElementsEditor data={formInitialValues} />,
     },
   ];
 

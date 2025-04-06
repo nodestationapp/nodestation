@@ -1,10 +1,16 @@
 import { useEffect } from "react";
 import { useFormikContext } from "formik";
 
-import FormikInput from "components/formik/FormikInput";
-import FormikSelect from "components/formik/FormikSelect";
-import FormikSwitch from "components/formik/FormikSwitch";
-import FormikTextarea from "components/formik/FormikTextarea";
+import {
+  Divider,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  Switch,
+  TextField,
+} from "@mui/material";
 
 const variant_options = [
   {
@@ -18,7 +24,7 @@ const variant_options = [
 ];
 
 const Text = ({ locked }) => {
-  const { values, setFieldValue } = useFormikContext();
+  const { values, errors, setFieldValue, handleBlur } = useFormikContext();
 
   useEffect(() => {
     if (!!values?.variant) return;
@@ -28,18 +34,45 @@ const Text = ({ locked }) => {
 
   return (
     <>
-      <FormikSelect
-        label="Variant"
-        name="variant"
-        removeActiveLabel={true}
-        options={variant_options}
+      <Divider />
+      <FormControl fullWidth>
+        <InputLabel id="variant-select-label">Variant</InputLabel>
+        <Select
+          key={values?.variant}
+          name="variant"
+          label="Variant"
+          variant="outlined"
+          labelId="variant-select-label"
+          value={values.variant}
+          onChange={(e) => setFieldValue("variant", e.target.value)}
+          onBlur={handleBlur}
+          error={errors.variant}
+          helperText={errors.variant}
+        >
+          {variant_options?.map((item) => (
+            <MenuItem value={item?.value}>{item?.label}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <TextField
+        fullWidth
+        multiline
+        name="default"
+        label="Default"
+        variant="outlined"
+        value={values.default}
+        onBlur={handleBlur}
+        error={errors.default}
+        helperText={errors.default}
+        onChange={(e) => setFieldValue("default", e.target.value)}
       />
-      {values?.variant === "short" ? (
-        <FormikInput label="Default value" name="default" />
-      ) : (
-        <FormikTextarea label="Default value" name="default" />
-      )}
-      <FormikSwitch label="Required" name="required" disabled={locked} />
+      {/* todo: <FormikTextarea label="Default value" name="default" /> */}
+      <FormControlLabel
+        label="Required"
+        disabled={locked}
+        control={<Switch />}
+        onChange={(e) => setFieldValue("required", e.target.checked)}
+      />
     </>
   );
 };

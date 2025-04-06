@@ -1,11 +1,10 @@
-import { useFormikContext } from "formik";
-
 import Id from "./components/Id";
 import Text from "./components/Text";
 import Select from "./components/Select";
 import Boolean from "./components/Boolean";
 import FormikInput from "components/formik/FormikInput";
 import FormikSwitch from "components/formik/FormikSwitch";
+import { Stack } from "@mui/material";
 
 const extra_input_render = (type, locked) => {
   switch (type) {
@@ -27,12 +26,14 @@ const extra_input_render = (type, locked) => {
   }
 };
 
-const ExtraInputs = ({ locked }) => {
-  const { values } = useFormikContext();
+const ExtraInputs = ({ locked, type }) => {
+  if (!!!type) return null;
 
-  if (!!!values?.type) return null;
-
-  return extra_input_render(values?.type, locked);
+  return (
+    <Stack direction="column" gap={2}>
+      {extra_input_render(type, locked)}
+    </Stack>
+  );
 };
 
 export default ExtraInputs;

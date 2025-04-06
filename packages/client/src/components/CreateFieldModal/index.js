@@ -1,23 +1,26 @@
+import {
+  Stack,
+  Select,
+  MenuItem,
+  TextField,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 import slugify from "slugify";
-import { Form, Formik, useFormikContext } from "formik";
+import { useFormik, FormikContext } from "formik";
 
-import KeyViewer from "components/KeyViewer";
 import AsideModal from "components/AsideModal";
-import ExtraInputs from "./components/ExtraInputs";
-import FormikInput from "components/formik/FormikInput";
-import FormikSelect from "components/formik/FormikSelect";
 
 import field_type_data from "libs/field_type_data";
+import ExtraInputs from "./components/ExtraInputs";
 
-const CreateFieldModal = ({ index, form, onClose }) => {
-  const { values, setFieldValue } = useFormikContext();
-
+const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
   const formatted_field_type_data = field_type_data?.filter(
     (item) => !!!item?.hidden
   );
 
   const onSubmit = async (formik_values) => {
-    let temp = [...values?.fields];
+    let temp = [...mainFormik?.values?.fields];
 
     if (index >= 0) {
       if (!!formik_values?.primary_key) {
@@ -63,59 +66,75 @@ const CreateFieldModal = ({ index, form, onClose }) => {
       });
     }
 
-    setFieldValue("fields", temp);
+    mainFormik.setFieldValue("fields", temp);
     onClose();
   };
 
+  const formik = useFormik({
+    initialValues: {
+      name: form?.name || "",
+      type: form?.type || null,
+      variant: form?.variant || null,
+      multi: !!form?.multi,
+      default: form?.default || null,
+      options: form?.options || [],
+      required: form?.required || false,
+      relation: form?.relation || "",
+      primary_key: form?.primary_key || "",
+    },
+    enableReinitialize: true,
+    onSubmit,
+  });
+
   return (
-    <Formik
-      initialValues={{
-        name: form?.name || "",
-        type: form?.type || null,
-        variant: form?.variant || null,
-        multi: !!form?.multi,
-        default: form?.default || null,
-        options: form?.options || [],
-        required: form?.required || false,
-        relation: form?.relation || "",
-        primary_key: form?.primary_key || "",
-      }}
-      onSubmit={(values, { setSubmitting }) => {
-        onSubmit(values, setSubmitting);
-      }}
+    <AsideModal
+      header="Add field"
+      onClose={onClose}
+      onSubmit={formik.handleSubmit}
+      submitLoading={formik.isSubmitting}
     >
-      {({ submitForm }) => (
-        <Form autoComplete="off" style={{ width: "100%" }}>
-          <AsideModal
-            header="Add field"
-            onClose={onClose}
-            onSubmit={submitForm}
-            submit_label={
-              <>
-                Save
-                <KeyViewer data={["⌘", "S"]} />
-              </>
-            }
+      <Stack direction="column" gap={2}>
+        <TextField
+          fullWidth
+          name="name"
+          label="Name"
+          variant="outlined"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.name}
+          helperText={formik.errors.name}
+          disabled={form?.origin === "system"}
+        />
+        <FormControl fullWidth>
+          <InputLabel id="type-select-label">Type</InputLabel>
+          <Select
+            name="type"
+            label="Type"
+            variant="outlined"
+            labelId="type-select-label"
+            value={formik.values.type}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.errors.type}
+            helperText={formik.errors.type}
+            disabled={form?.origin === "system"}
           >
-            <div className="form">
-              <FormikInput
-                label="Name"
-                name="name"
-                disabled={form?.origin === "system"}
-              />
-              <FormikSelect
-                label="Type"
-                name="type"
-                disabled={form?.origin === "system"}
-                removeActiveLabel={true}
-                options={formatted_field_type_data}
-              />
-              <ExtraInputs locked={form?.origin === "system"} />
-            </div>
-          </AsideModal>
-        </Form>
-      )}
-    </Formik>
+            {formatted_field_type_data?.map((item) => (
+              <MenuItem value={item?.value}>{item?.label}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormikContext.Provider value={formik}>
+          <ExtraInputs
+            locked={form?.origin === "system"}
+            type={formik.values.type}
+          />
+        </FormikContext.Provider>
+        {/* 
+              <ExtraInputs locked={form?.origin === "system"} /> */}
+      </Stack>
+    </AsideModal>
   );
 };
 

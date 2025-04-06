@@ -97,10 +97,10 @@ const TableSettingsContent = () => {
   return (
     <>
       <TableSettingsEditor
-        settings={settings_data}
-        breadcrumps={breadcrumps}
         toolbar={toolbar}
+        settings={settings_data}
         form={formInitialValues}
+        breadcrumps={breadcrumps}
       />
       {!!archive_modal && (
         <ArchiveTableModal
