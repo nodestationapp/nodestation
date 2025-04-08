@@ -5,6 +5,7 @@ import updateFile from "./helpers/updateFile.js";
 import deleteFile from "./helpers/deleteFile.js";
 import generateServer from "./helpers/generateServer/index.js";
 import removeUploadedFile from "./helpers/utils/removeUploadedFile/index.js";
+import getSchema from "./helpers/getSchema.js";
 
 export default {
   getFiles,
@@ -14,4 +15,5 @@ export default {
   generateServer,
   getPluginFiles,
   removeUploadedFile,
+  getSchema,
 };

@@ -6,11 +6,11 @@ const populateRelations = (query, table) => {
       query = query
         .leftJoin(
           "nodestation_users",
-          `${table?.id}.${item?.slug}`,
+          `${table?.tableName}.${item?.slug}`,
           "nodestation_users.id"
         )
         .select(
-          `${table?.id}.*`,
+          `${table?.tableName}.*`,
           `nodestation_users.id as ${item?.slug}.id`,
           `nodestation_users.first_name as ${item?.slug}.first_name`,
           `nodestation_users.last_name as ${item?.slug}.last_name`,
@@ -24,14 +24,14 @@ const populateRelations = (query, table) => {
 
       query = query
         .leftJoin(
-          ref_table?.id,
-          `${table?.id}.${item?.slug}`,
-          `${ref_table?.id}.id`
+          ref_table?.tableName,
+          `${table?.tableName}.${item?.slug}`,
+          `${ref_table?.tableName}.id`
         )
         .select(
-          `${table?.id}.*`,
-          `${ref_table?.id}.id as ${item?.slug}.id`,
-          `${ref_table?.id}.${ref_table?.display_name} as ${item?.slug}.label`
+          `${table?.tableName}.*`,
+          `${ref_table?.tableName}.id as ${item?.slug}.id`,
+          `${ref_table?.tableName}.${ref_table?.display_name} as ${item?.slug}.label`
         );
     }
   });

@@ -18,14 +18,7 @@ function extractUploadPath(fullPath) {
   return null;
 }
 
-const upsertEntry = async ({
-  type,
-  id,
-  body,
-  files,
-  entry_id,
-  extraFields = [],
-}) =>
+const upsertEntry = async ({ id, body, files, entry_id, extraFields = [] }) =>
   new Promise(async (resolve, reject) => {
     for (const key in body) {
       if (body[key] === "null") {
@@ -33,14 +26,7 @@ const upsertEntry = async ({
       }
     }
 
-    const allSchemas =
-      type === "tables"
-        ? fs.getFiles([
-            "/src/schemas/tables/**/*.json",
-            "/src/schemas/forms/**/*.json",
-          ])
-        : fs.getFiles("/src/schemas/auth.json");
-    const schema = allSchemas?.find((item) => item?.id === id);
+    const schema = fs.getSchema(id);
     let schemaFields = schema?.fields;
 
     schemaFields = [...schemaFields, ...extraFields];
@@ -80,14 +66,11 @@ const upsertEntry = async ({
 
       const data = removeUndefinedProperties(formatted_body);
 
-      const table_name =
-        schema?.id === "auth" ? "nodestation_users" : schema?.id;
-
       if (entry_id) {
-        await knex(table_name).where({ id: entry_id }).update(data);
+        await knex(schema.tableName).where({ id: entry_id }).update(data);
       } else {
         delete data?.id;
-        await knex(table_name).insert(data);
+        await knex(schema.tableName).insert(data);
       }
 
       resolve(true);

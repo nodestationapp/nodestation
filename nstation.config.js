@@ -2,11 +2,11 @@ export default () => ({
   dashboard: {
     href: "/",
     title: "Dashboard",
-    icon: "PresentationChartBarIcon",
+    icon: "mdi:home",
   },
-  media: {
-    href: "/media",
-    title: "Media",
-    icon: "PhotoIcon",
+  authentication: {
+    href: "/authentication",
+    title: "Authentication",
+    icon: "mdi:people",
   },
 });

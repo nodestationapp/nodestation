@@ -48,10 +48,10 @@ const clientRoutes = ({ plugins }) => {
         <Route path="security" element={<SettingsSecurity />} />
       </Route>
       <Route path="/tables-mui" element={<TablesMui />} />
-      <Route path="/authentication">
+      {/* <Route path="/authentication">
         <Route index element={<Users />} />
         <Route path="settings" element={<UserSettings />} />
-      </Route>
+      </Route> */}
       {/* <Route path="/emails">
         <Route index element={<Emails />} />
         <Route path="settings">

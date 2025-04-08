@@ -12,7 +12,7 @@ const loadRoute = async (server, route) => {
     const { default: handler } = await import(route?.filePath);
 
     server.router[route?.name.toLowerCase()](
-      `/api${route?.path}`,
+      `/admin/api${route?.path}`,
       route?.properties?.parser === "raw"
         ? express.raw({ type: "application/json" })
         : express.json(),

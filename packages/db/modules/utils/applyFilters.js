@@ -46,7 +46,7 @@ const applyFilters = (query, filters, table) => {
               type,
               value: element,
               originalValue: value,
-              key: `${table?.id}.${key}`,
+              key: `${table?.tableName}.${key}`,
               condition: "like",
             };
 

@@ -71,39 +71,8 @@ const getTable = async (req, res) => {
         });
     }
 
-    const file_name = id === "nodestation_users" ? "auth" : id;
-
-    let tables = fs.getFiles(
-      `/src/schemas/${type ? `${type}/` : ""}${file_name}.json`
-    );
-
-    let table = tables?.[0];
-
-    let columns = table?.fields;
-    if (id === "nodestation_users") {
-      columns = !!columns
-        ? [
-            {
-              name: "User",
-              sort: "first_name",
-              type: "user_profile",
-              slug: "user",
-              origin: "system",
-            },
-            ...(columns || []),
-          ]
-        : [];
-
-      columns = columns?.filter(
-        (item) =>
-          item?.slug !== "first_name" &&
-          item?.slug !== "last_name" &&
-          item?.slug !== "photo" &&
-          item?.slug !== "password"
-      );
-
-      table.id = "nodestation_users";
-    }
+    const table = fs.getSchema(id);
+    table.id = table.tableName;
 
     const filters = [
       ...(preferences?.filters || []),
@@ -119,9 +88,12 @@ const getTable = async (req, res) => {
       sort: preferences?.sort?.[0],
     });
 
-    return res
-      .status(200)
-      .json({ table, entries, columns, preferences, views });
+    return res.status(200).json({
+      table,
+      entries,
+      preferences,
+      views,
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
@@ -236,8 +208,7 @@ const updateTableEntry = async (req, res) => {
 
   try {
     await upsertEntry({
-      type: id === "nodestation_users" ? "auth" : "tables",
-      id: id === "nodestation_users" ? "auth" : id,
+      id,
       body,
       files,
       entry_id,

@@ -6,7 +6,7 @@ import populateRelations from "./utils/populateRelations.js";
 import transformRelations from "./utils/transformRelations.js";
 
 export default async ({ table, filters, sort, pagination }) => {
-  let query = knex(table?.id === "auth" ? "nodestation_users" : table?.id);
+  let query = knex(table?.tableName);
 
   if (!!filters) {
     query = query.modify(applyFilters, filters, table);
@@ -19,10 +19,7 @@ export default async ({ table, filters, sort, pagination }) => {
   }
 
   if (!!sort) {
-    const field = sort?.id;
-    const method = sort?.desc ? "desc" : "asc";
-
-    query = query.orderBy(field, method);
+    query = query.orderBy(sort?.field, sort?.sort);
   }
 
   query = populateRelations(query, table);

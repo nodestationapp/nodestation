@@ -55,9 +55,9 @@ function createOrModifyColumn({ table, schema, dbColumns }) {
 
 export default async (table) => {
   let fileColumns = table?.fields;
-  let dbColumns = await knex(table?.id).columnInfo();
+  let dbColumns = await knex(table?.tableName).columnInfo();
 
-  const hasTable = await knex.schema.hasTable(table?.id);
+  const hasTable = await knex.schema.hasTable(table?.tableName);
 
   if (!!hasTable) {
     fileColumns = fileColumns.filter((item) => item?.primary_key !== true);
@@ -65,7 +65,7 @@ export default async (table) => {
   }
 
   await knex.schema?.[!!hasTable ? "alterTable" : "createTable"]?.(
-    table?.id,
+    table?.tableName,
     (table) => {
       for (const schema of fileColumns) {
         createOrModifyColumn({ table, schema, dbColumns });
@@ -78,12 +78,12 @@ export default async (table) => {
   );
 
   if (columnsToRemove.length > 0) {
-    await knex.schema.alterTable(table?.id, (table) => {
+    await knex.schema.alterTable(table?.tableName, (table) => {
       columnsToRemove.forEach((col) => {
         table.dropColumn(col);
       });
     });
   }
 
-  await createPreferencesIfNotExist(table?.id);
+  await createPreferencesIfNotExist(table?.tableName);
 };

@@ -14,15 +14,16 @@ const loadPlugins = (server) => {
     resolve: path.join(rootPath, "plugins", key),
   }));
 
-  pluginsList.forEach((plugin) => {
-    const routes = fs.getPluginFiles(
+  pluginsList.forEach(async (plugin) => {
+    const routes = await fs.getPluginFiles(
       path.join(plugin?.resolve, "server", "api", "**", "*.js"),
       plugin?.key
     );
 
-    const tables = fs.getPluginFiles(
-      path.join(plugin?.resolve, "server", "schemas", "**", "*.json"),
-      plugin?.key
+    const tables = await fs.getPluginFiles(
+      path.join(plugin?.resolve, "server", "schemas", "index.js"),
+      plugin?.key,
+      "schema"
     );
 
     routes.forEach(async (file) => {

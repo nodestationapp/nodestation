@@ -31,25 +31,29 @@ const getFileProperties = (content) => {
   return properties;
 };
 
-const getPluginFiles = (pattern, pluginKey) => {
+const getPluginFiles = async (pattern, pluginKey, type) => {
   let files = [];
 
   try {
     const items = glob.sync(pattern, { nodir: true });
 
-    items.forEach((item) => {
-      const name = path.basename(item)?.split(".")?.[0];
-      let content = fs.readFileSync(item, "utf8");
+    for await (const item of items) {
+      // const name = path.basename(item)?.split(".")?.[0];
+      // let content = fs.readFileSync(item, "utf8");
 
-      if (path.basename(item).endsWith(".json")) {
-        const parts = item.split("/schemas/");
-        const schemaPath = parts.length > 1 ? `/schemas/${parts[1]}` : null;
+      let content;
 
-        files.push({ id: name, schema: schemaPath, ...JSON.parse(content) });
-      } else if (path.basename(item).endsWith(".js")) {
+      if (type === "schema") {
+        if (!!content?.tableName) {
+          content = await import(item);
+          content = content.default?.[0];
+          files.push(content);
+        }
+      } else {
+        const name = path.basename(item)?.split(".")?.[0];
         const parts = item.split(`/api/`);
+        content = fs.readFileSync(item, "utf8");
         const schemaPath = parts.length > 1 ? `/${parts[1]}` : null;
-
         const properties = getFileProperties(content);
 
         files.push({
@@ -60,7 +64,26 @@ const getPluginFiles = (pattern, pluginKey) => {
           path: `/plugins/${pluginKey}${schemaPath.replace(/\/[^\/]+$/, "")}`,
         });
       }
-    });
+
+      if (path.basename(item).endsWith(".json")) {
+        // const parts = item.split("/schemas/");
+        // const schemaPath = parts.length > 1 ? `/schemas/${parts[1]}` : null;
+        // files.push({ id: name, schema: schemaPath, ...JSON.parse(content) });
+      } else if (path.basename(item).endsWith(".js")) {
+        // const parts = item.split(`/api/`);
+        // const schemaPath = parts.length > 1 ? `/${parts[1]}` : null;
+        // const properties = getFileProperties(content);
+        // if (content.default) {
+        //   files.push({
+        //     name,
+        //     content,
+        //     properties,
+        //     filePath: item,
+        //     path: `/plugins/${pluginKey}${schemaPath.replace(/\/[^\/]+$/, "")}`,
+        //   });
+        // }
+      }
+    }
   } catch (error) {
     console.error("Error reading directory structure:", error);
     throw error;
