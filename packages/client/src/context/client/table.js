@@ -44,6 +44,7 @@ const TableProvider = ({ id, children }) => {
         })}`
       ),
     enabled: !!view || pathname?.includes("/settings"),
+    placeholderData: (prev) => prev,
   });
 
   const updateTable = (values) =>
