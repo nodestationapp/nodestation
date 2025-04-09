@@ -140,10 +140,13 @@ const tableInputRender = (item, formik, display_name) => {
           name={item?.slug}
           label={item?.name}
           variant="outlined"
+          required={item?.required}
           onBlur={formik.handleBlur}
           disabled={!!item?.read_only}
           onChange={formik.handleChange}
           value={formik.values[item?.slug]}
+          error={!!formik?.errors?.[item?.slug]}
+          helperText={formik?.errors?.[item?.slug]}
           type={item?.type === "password" ? "password" : "text"}
         />
       );

@@ -44,11 +44,9 @@ const getPluginFiles = async (pattern, pluginKey, type) => {
       let content;
 
       if (type === "schema") {
-        if (!!content?.tableName) {
-          content = await import(item);
-          content = content.default?.[0];
-          files.push(content);
-        }
+        content = await import(item);
+        content = content.default?.[0];
+        files.push(content);
       } else {
         const name = path.basename(item)?.split(".")?.[0];
         const parts = item.split(`/api/`);

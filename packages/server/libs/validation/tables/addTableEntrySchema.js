@@ -21,14 +21,10 @@ const validationSchemaOptions = (type) => {
 };
 
 let addTableEntrySchema = (data) => {
-  const allSchemas = fs.getFiles(["tables"]);
-  const schemaFields = allSchemas?.find(
-    (item) => item?.id?.toString() === data?.params?.id
-  );
+  let schemaFields = fs.getSchema(data?.params?.id);
+  schemaFields = schemaFields?.fields;
 
-  const formattedSchema = schemaFields?.fields?.filter(
-    (item) => item?.slug !== "id"
-  );
+  const formattedSchema = schemaFields?.filter((item) => item?.slug !== "id");
 
   let schema = {};
 
