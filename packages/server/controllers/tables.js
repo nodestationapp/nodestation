@@ -34,8 +34,9 @@ const getAllTables = async (_, res) => {
 };
 
 const getTable = async (req, res) => {
+  const pageSize = 20;
   let { id } = req?.params;
-  let { view, type, ...rest } = req?.query || {};
+  let { view, type, page = 0, ...rest } = req?.query || {};
 
   try {
     let views = await knex("nodestation_preferences")
@@ -86,13 +87,15 @@ const getTable = async (req, res) => {
       table,
       filters,
       sort: preferences?.sort?.[0],
+      pagination: { page, pageSize },
     });
 
     return res.status(200).json({
       table,
-      entries,
+      entries: entries?.items,
       preferences,
       views,
+      pagination: { page, pageSize, count: entries?.count },
     });
   } catch (err) {
     console.error(err);

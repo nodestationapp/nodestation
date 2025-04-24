@@ -14,13 +14,12 @@ import api from "libs/api";
 import pluginsLoader from "libs/helpers/pluginsLoader";
 import BreadcrumbsProvider from "./client/breadcrumps";
 
-const plugins = pluginsLoader();
-
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const queryClient = useQueryClient();
   const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
+  const [menuLinks, setMenuLinks] = useState([]);
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,36 +29,44 @@ const AppProvider = ({ children }) => {
   const [is_admin, setIsAdmin] = useState(false);
   const [socket, setSocket] = useState(null);
 
+  const app = {
+    addMenuLink: (props) => {
+      setMenuLinks((prev) => [...prev, props]);
+    },
+  };
+
   useEffect(() => {
     (async function () {
-      const { is_admin } = await api.get("/user/check-admin");
+      const { is_admin } = await api.get("/api/plugins/auth/check-admin");
       setIsAdmin(is_admin);
+
+      await pluginsLoader(app);
 
       await getUserData(cookies?.access_token);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    (async function () {
-      if (!!!user) return;
-      if (!!socket) return;
+  // useEffect(() => {
+  //   (async function () {
+  //     if (!!!user) return;
+  //     if (!!socket) return;
 
-      const ioUrl =
-        process.env.NODE_ENV === "development"
-          ? `${process.env.REACT_APP_API}`
-          : `${window.location.origin}`;
+  //     const ioUrl =
+  //       process.env.NODE_ENV === "development"
+  //         ? `${process.env.REACT_APP_API}`
+  //         : `${window.location.origin}`;
 
-      const temp_socket = io.connect(ioUrl, {
-        reconnection: true,
-        forceNew: true,
-      });
+  //     const temp_socket = io.connect(ioUrl, {
+  //       reconnection: true,
+  //       forceNew: true,
+  //     });
 
-      temp_socket.emit("join", user.id);
-      setSocket(temp_socket);
-    })();
-    // eslint-disable-next-line
-  }, [user]);
+  //     temp_socket.emit("join", user.id);
+  //     setSocket(temp_socket);
+  //   })();
+  //   // eslint-disable-next-line
+  // }, [user]);
 
   useEffect(() => {
     if (!!!socket) return;
@@ -101,7 +108,7 @@ const AppProvider = ({ children }) => {
   const getUserData = async (access_token) => {
     try {
       if (!!access_token) {
-        const me = await api.get(`/user/me`, {
+        const me = await api.get(`/api/plugins/auth/me`, {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
@@ -134,7 +141,7 @@ const AppProvider = ({ children }) => {
   const userUpdate = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.put("/user/me", { ...values });
+        await api.put("/api/plugins/auth/me", { ...values });
 
         getUserData(cookies?.access_token);
         resolve();
@@ -147,7 +154,7 @@ const AppProvider = ({ children }) => {
   const login = ({ email, password }) =>
     new Promise(async (resolve, reject) => {
       try {
-        const data = await api.post(`/auth/login`, {
+        const data = await api.post(`/api/plugins/auth/login`, {
           email,
           password,
         });
@@ -188,10 +195,20 @@ const AppProvider = ({ children }) => {
       socket,
       logs_count,
       setLogsCount,
-      plugins,
+      app,
+      menuLinks,
     };
     // eslint-disable-next-line
-  }, [user, organizations, forms_count, is_admin, socket, logs_count, plugins]);
+  }, [
+    user,
+    organizations,
+    forms_count,
+    is_admin,
+    socket,
+    logs_count,
+    app,
+    menuLinks,
+  ]);
 
   if (!!loading) return <SplashScreen />;
 

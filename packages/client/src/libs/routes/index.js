@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import authRoutes from "./auth";
@@ -7,23 +8,23 @@ import AuthLayout from "components/layouts/AuthLayout";
 
 import { useApp } from "context/app";
 
-const routes_type_render = (user_type, plugins) => {
+const routes_type_render = (user_type) => {
   switch (user_type) {
     case "admin":
     case "client":
-      return clientRoutes({ plugins });
+      return clientRoutes();
     default:
       return authRoutes();
   }
 };
 
 const AppRoutes = () => {
-  const { user, is_admin, plugins } = useApp();
+  const { user, is_admin } = useApp();
 
   return (
     <Routes>
       {!!is_admin ? (
-        routes_type_render(user?.type, plugins)
+        routes_type_render(user?.type)
       ) : (
         <Route element={<AuthLayout />}>
           <Route index path="/register" element={<Register />} />

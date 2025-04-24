@@ -66,7 +66,6 @@ const upsertPreferences = async (req, res) => {
                 filtersToggle: singleJsonStringify(body?.filtersToggle),
               }
             : {}),
-
           content: singleJsonStringify(content),
           updated_at: currentDate,
         });

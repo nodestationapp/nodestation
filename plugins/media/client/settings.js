@@ -1,16 +1,13 @@
 import BaseLayout from "layouts/BaseLayout";
 import SettingsForm from "components/SettingsForm";
-import InputElementsEditor from "components/InputElementsEditor";
+import MediaProviders from "./components/MediaProviders.js";
 
-import { useTable } from "context/client/table";
-import TableProvider from "context/client/table";
+import MediaProvider from "context/client/media";
 import useSetBreadcrumbs from "hooks/useSetBreadcrumbs";
 
 import { Photo } from "@mui/icons-material";
 
 const MediaSettingsContent = () => {
-  const { data } = useTable();
-
   useSetBreadcrumbs([
     {
       icon: Photo,
@@ -22,17 +19,10 @@ const MediaSettingsContent = () => {
     },
   ]);
 
-  const table = data?.table;
-
-  const formInitialValues = {
-    name: "auth",
-    fields: table?.fields || [],
-  };
-
   const settings_data = [
     {
-      label: "Fields",
-      component: <InputElementsEditor data={formInitialValues} />,
+      label: "Provider",
+      component: <MediaProviders />,
     },
   ];
 
@@ -46,10 +36,9 @@ const MediaSettingsContent = () => {
   return (
     <BaseLayout
       title="Settings"
-      subtitle="Manage your authentication settings"
+      subtitle="Manage your media settings"
       tabs={tabs}
     >
-      {/* <Toolbar tabs={[]} action={action} /> */}
       <SettingsForm data={settings_data} />
     </BaseLayout>
   );
@@ -57,9 +46,9 @@ const MediaSettingsContent = () => {
 
 const MediaSettings = () => {
   return (
-    <TableProvider id="nodestation_media">
+    <MediaProvider>
       <MediaSettingsContent />
-    </TableProvider>
+    </MediaProvider>
   );
 };
 

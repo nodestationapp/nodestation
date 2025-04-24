@@ -21,7 +21,7 @@ const OrganizationProvider = ({ children }) => {
     refetch: refetchPreferences,
   } = useQuery({
     queryKey: ["preferences"],
-    queryFn: () => api.get("/preferences"),
+    queryFn: () => api.get("/admin/api/preferences"),
   });
 
   const updatePreferences = (id) => {

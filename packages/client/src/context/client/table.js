@@ -1,6 +1,6 @@
 import queryString from "query-string";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, useMemo } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import api from "libs/api";
@@ -10,11 +10,12 @@ const TableContext = createContext();
 
 const TableProvider = ({ id, children }) => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { pathname, query } = useLocation();
   const [searchParams] = useSearchParams();
   const { preferences } = useOrganization();
 
   const view = searchParams.get("v");
+  const page = searchParams.get("page");
 
   let type = pathname?.split("/")?.[1];
   type = type !== "authentication" ? type : undefined;
@@ -35,12 +36,13 @@ const TableProvider = ({ id, children }) => {
     isLoading: loading,
     refetch: tableRefetch,
   } = useQuery({
-    queryKey: ["tables", id, view],
+    queryKey: ["tables", id, view, page],
     queryFn: () =>
       api.get(
-        `/tables/${id}?${queryString.stringify({
+        `/admin/api/tables/${id}?${queryString.stringify({
           view,
           type,
+          page: parseInt(page || 0),
         })}`
       ),
     enabled: !!view || pathname?.includes("/settings"),
@@ -55,7 +57,7 @@ const TableProvider = ({ id, children }) => {
         }
 
         await api.put(
-          `/tables/${id}?${queryString.stringify({
+          `/admin/api/tables/${id}?${queryString.stringify({
             type,
           })}`,
           values
@@ -73,7 +75,7 @@ const TableProvider = ({ id, children }) => {
     new Promise(async (resolve, reject) => {
       try {
         await api.delete(
-          `/tables/${id}?${queryString.stringify({
+          `/admin/api/tables/${id}?${queryString.stringify({
             type,
           })}`
         );
@@ -87,7 +89,7 @@ const TableProvider = ({ id, children }) => {
   const addTableEntry = (formData) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.post(`/tables/${id}/entry`, formData, {
+        await api.post(`/admin/api/tables/${id}/entry`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -104,7 +106,7 @@ const TableProvider = ({ id, children }) => {
   const updateTableEntry = (entry_id, values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.put(`/tables/${id}/entry/${entry_id}`, values, {
+        await api.put(`/admin/api/tables/${id}/entry/${entry_id}`, values, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -121,7 +123,7 @@ const TableProvider = ({ id, children }) => {
   const deleteTableEntries = (entry_id) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.delete(`/tables/${id}/entry/${entry_id}`);
+        await api.delete(`/admin/api/tables/${id}/entry/${entry_id}`);
 
         tableRefetch();
 
@@ -132,7 +134,7 @@ const TableProvider = ({ id, children }) => {
     });
 
   const saveTableTransaction = async (values) => {
-    await api.post("/preferences", {
+    await api.post("/admin/api/preferences", {
       table_id: id,
       view,
       ...values,

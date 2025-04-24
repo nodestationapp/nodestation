@@ -33,6 +33,7 @@
     "@monaco-editor/react": "^4.6.0",
     "@mui/icons-material": "^7.0.1",
     "@mui/material": "^7.0.1",
+    "@nstation/core": "^0.0.1",
     "@nstation/design-system": "^1.14.12",
     "@tanstack/react-query": "^5.32.0",
     "@tanstack/react-table": "^8.20.6",

@@ -1,9 +1,11 @@
-// import "dotenv/config";
+import "dotenv/config";
+import createApp from "./createApp.js";
 
-import NStation from "./libs/server/index.js";
+(async () => {
+  const app = createApp();
+  await app.init();
 
-const nodestation = new NStation({
-  port: process.env.PORT,
-});
-
-nodestation.start();
+  app.express.listen(app.port, () => {
+    app.log(`Serwer działa na http://localhost:${app.port}`);
+  });
+})();

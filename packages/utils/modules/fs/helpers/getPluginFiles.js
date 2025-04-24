@@ -59,7 +59,8 @@ const getPluginFiles = async (pattern, pluginKey, type) => {
           content,
           properties,
           filePath: item,
-          path: `/plugins/${pluginKey}${schemaPath.replace(/\/[^\/]+$/, "")}`,
+          // path: `/plugins/${pluginKey}${schemaPath.replace(/\/[^\/]+$/, "")}`,
+          path: `/plugins/${pluginKey}`,
         });
       }
 

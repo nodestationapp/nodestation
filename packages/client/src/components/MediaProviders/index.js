@@ -3,8 +3,8 @@ import "./styles.scss";
 import { useState } from "react";
 
 import Switch from "components/form/Switch";
-import MediaProviderModal from "./components/MediaProviderModal";
-import ChangeProviderModal from "components/SettingsForm/components/ChangeProviderModal";
+// import MediaProviderModal from "./components/MediaProviderModal";
+// import ChangeProviderModal from "components/SettingsForm/components/ChangeProviderModal";
 
 import { useMedia } from "context/client/media";
 import activeEmailChecker from "libs/helpers/activeEmailChecker";
@@ -86,18 +86,18 @@ const MediaProviders = () => {
           />
         </button>
       ))}
-      {!!email_provider_modal && (
+      {/* {!!email_provider_modal && (
         <MediaProviderModal
           type={email_provider_modal}
           onClose={() => setEmailProviderModal(false)}
         />
-      )}
-      {!!change_provider_info && (
+      )} */}
+      {/* {!!change_provider_info && (
         <ChangeProviderModal
           data={change_provider_info}
           onClose={() => setChangeProviderInfo(false)}
         />
-      )}
+      )} */}
     </div>
   );
 };

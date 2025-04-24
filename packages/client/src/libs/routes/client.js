@@ -1,6 +1,7 @@
+import { lazy } from "react";
 import { Route } from "react-router-dom";
 
-import AccountSettingsLayout from "components/layouts/AccountSettingsLayout";
+// import AccountSettingsLayout from "components/layouts/AccountSettingsLayout";
 
 // import Emails from "pages/client/emails";
 // import EmailSettings from "pages/client/emails/settings";
@@ -8,46 +9,46 @@ import AccountSettingsLayout from "components/layouts/AccountSettingsLayout";
 // import Forms from "pages/client/forms";
 // import Media from "pages/client/media";
 
-import Table from "pages/client/tables";
-import TableSettings from "pages/client/tables/settings";
+// import Table from "pages/client/tables";
+// import TableSettings from "pages/client/tables/settings";
 
-import SettingsGeneral from "pages/client/settings";
-import SettingsSecurity from "pages/client/settings/security";
+// import SettingsGeneral from "pages/client/settings";
+// import SettingsSecurity from "pages/client/settings/security";
 import DashboardLayout from "layouts/DashboardLayout";
-import SettingsLayout from "layouts/SettingsLayout";
+// import SettingsLayout from "layouts/SettingsLayout";
 
-import TablesMui from "pages/client/tables-mui";
+// import TablesMui from "pages/client/tables-mui";
 
 // // import MediaSettings from "pages/client/media/settings";
-import Users from "pages/client/users";
+// import Users from "pages/client/users";
 // import Form from "pages/client/forms/current";
 // import FormSettings from "pages/client/forms/settings";
-import UserSettings from "pages/client/users/settings";
+// import UserSettings from "pages/client/users/settings";
+import { useApp } from "context/app";
 
 // import Endpoints from "pages/client/endpoints";
 // import MediaSettings from "pages/client/media/settings";
 
-const clientRoutes = ({ plugins }) => {
+const clientRoutes = () => {
+  const { menuLinks } = useApp();
+
   return (
     <Route element={<DashboardLayout />}>
-      {plugins.map((plugin) => {
+      {menuLinks.map((link) => {
+        const Component = lazy(link.loader);
         return (
-          <Route
-            key={plugin.path}
-            path={plugin.path}
-            element={<plugin.component />}
-          />
+          <Route key={link.to} path={`${link.to}/*`} element={<Component />} />
         );
       })}
-      <Route path="/tables">
+      {/* <Route path="/tables">
         <Route path=":id" element={<Table />} />
         <Route path=":id/settings" element={<TableSettings />} />
-      </Route>
-      <Route path="/settings" element={<SettingsLayout />}>
+      </Route> */}
+      {/* <Route path="/settings" element={<SettingsLayout />}>
         <Route index element={<SettingsGeneral />} />
         <Route path="security" element={<SettingsSecurity />} />
-      </Route>
-      <Route path="/tables-mui" element={<TablesMui />} />
+      </Route> */}
+      {/* <Route path="/tables-mui" element={<TablesMui />} /> */}
       {/* <Route path="/authentication">
         <Route index element={<Users />} />
         <Route path="settings" element={<UserSettings />} />

@@ -6,6 +6,12 @@ import populateRelations from "./utils/populateRelations.js";
 import transformRelations from "./utils/transformRelations.js";
 
 export default async ({ table, filters, sort, pagination }) => {
+  const countQuery = knex(table?.tableName);
+  if (filters) {
+    countQuery.modify(applyFilters, filters, table);
+  }
+  const [{ count }] = await countQuery.clone().count("* as count");
+
   let query = knex(table?.tableName);
 
   if (!!filters) {
@@ -15,7 +21,7 @@ export default async ({ table, filters, sort, pagination }) => {
   if (!!pagination) {
     query = query
       .limit(pagination.pageSize)
-      .offset((pagination.page - 1) * pagination.pageSize);
+      .offset(pagination.page * pagination.pageSize);
   }
 
   if (!!sort) {
@@ -37,5 +43,10 @@ export default async ({ table, filters, sort, pagination }) => {
     return formatted_items;
   });
 
-  return query;
+  const items = await query;
+
+  return {
+    items,
+    count,
+  };
 };
