@@ -40,7 +40,7 @@ const Submenu = ({ data, tableId, view, customizableView }) => {
 
   const onUpdateView = async (name) => {
     try {
-      await api.put(`/preferences/${view}`, {
+      await api.put(`/admin/api/preferences/${view}`, {
         name,
       });
 

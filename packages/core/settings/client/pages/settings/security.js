@@ -1,9 +1,9 @@
 import { SettingsRounded } from "@mui/icons-material";
 
 import SettingsForm from "components/SettingsForm";
-import ChangePasswordForm from "page_components/settings/SecurityContent/ChangePasswordForm";
+import ChangePasswordForm from "../../components/ChangePasswordForm.js";
 
-import useSetBreadcrumbs from "hooks/useSetBreadcrumbs";
+import useSetBreadcrumbs from "@nstation/utils/ui/hooks/useSetBreadcrumbs.js";
 
 const SecuritySettings = () => {
   useSetBreadcrumbs([

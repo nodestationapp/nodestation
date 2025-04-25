@@ -3,11 +3,11 @@ import App from "./app.js";
 export default {
   register(app) {
     app.addMenuLink({
-      order: 2,
-      icon: "mdi:people",
-      to: `/authentication`,
-      label: "Authentication",
+      to: `/media`,
+      order: 3,
       Component: App,
+      icon: "mdi:image",
+      label: "Media",
     });
   },
 };

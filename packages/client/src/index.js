@@ -3,14 +3,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
+import { BrowserRouter } from "react-router-dom";
+import AppProvider from "@nstation/utils/ui/contexts/app.js";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import App from "./App";
 import NotifyContainer from "./components/NotifyContainer";
 
-import AppProvider from "context/app";
 import AppTheme from "./theme/AppTheme";
 import { CssBaseline } from "@mui/material";
 import { dataGridCustomizations } from "./theme/customizations/dataGrid";

@@ -1,6 +1,6 @@
 import express from "express";
 import { uploader } from "@nstation/utils";
-import { authMiddleware } from "@nstation/auth";
+import authMiddleware from "@nstation/core/auth/utils/authMiddleware.js";
 
 import {
   getMedia,

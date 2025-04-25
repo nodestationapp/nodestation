@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import api from "libs/api";
-import { useOrganization } from "context/organization";
+import { useOrganization } from "@nstation/utils/ui/contexts/organization.js";
 
 const TableContext = createContext();
 

@@ -11,5 +11,8 @@
   "author": {
     "name": "Nodestation",
     "email": "ceo@nodestation.app"
+  },
+  "dependencies": {
+    "@nstation/utils": "^1.14.12"
   }
 }

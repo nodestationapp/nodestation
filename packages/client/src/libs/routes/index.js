@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import authRoutes from "./auth";
@@ -6,7 +5,7 @@ import clientRoutes from "./client";
 import Register from "pages/auth/register";
 import AuthLayout from "components/layouts/AuthLayout";
 
-import { useApp } from "context/app";
+import { useApp } from "@nstation/utils/ui/contexts/app.js";
 
 const routes_type_render = (user_type) => {
   switch (user_type) {

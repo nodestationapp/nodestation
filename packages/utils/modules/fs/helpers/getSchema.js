@@ -20,6 +20,7 @@ function findSchemasWithTableName(filePaths, targetTableName) {
 
 const paths = [
   `${path.join(rootPath, "plugins", "**", "server", "schemas", "*.json")}`,
+  `${path.join(rootPath, "packages", "core", "**", "server", "schemas", "*.json")}`,
 ];
 
 const getSchema = (tableName) => {

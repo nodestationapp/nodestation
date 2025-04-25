@@ -1,4 +1,3 @@
-import { lazy } from "react";
 import { Route } from "react-router-dom";
 
 // import AccountSettingsLayout from "components/layouts/AccountSettingsLayout";
@@ -24,7 +23,7 @@ import DashboardLayout from "layouts/DashboardLayout";
 // import Form from "pages/client/forms/current";
 // import FormSettings from "pages/client/forms/settings";
 // import UserSettings from "pages/client/users/settings";
-import { useApp } from "context/app";
+import { useApp } from "@nstation/utils/ui/contexts/app.js";
 
 // import Endpoints from "pages/client/endpoints";
 // import MediaSettings from "pages/client/media/settings";
@@ -35,7 +34,7 @@ const clientRoutes = () => {
   return (
     <Route element={<DashboardLayout />}>
       {menuLinks.map((link) => {
-        const Component = lazy(link.loader);
+        const Component = link.Component;
         return (
           <Route key={link.to} path={`${link.to}/*`} element={<Component />} />
         );

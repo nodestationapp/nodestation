@@ -4,7 +4,7 @@ import InputElementsEditor from "components/InputElementsEditor";
 
 import { useTable } from "context/client/table";
 import TableProvider from "context/client/table";
-import useSetBreadcrumbs from "hooks/useSetBreadcrumbs";
+import useSetBreadcrumbs from "@nstation/utils/ui/hooks/useSetBreadcrumbs.js";
 
 import { People } from "@mui/icons-material";
 

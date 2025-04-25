@@ -1,3 +1,5 @@
+import App from "./app.js";
+
 export default {
   register(app) {
     app.addMenuLink({
@@ -5,7 +7,7 @@ export default {
       to: `/settings`,
       label: "Settings",
       placement: "bottom",
-      loader: () => import("./app.js"),
+      Component: App,
     });
   },
 };

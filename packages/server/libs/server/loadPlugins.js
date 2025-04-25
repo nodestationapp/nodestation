@@ -1,33 +1,36 @@
-import path from "path";
+// import path from "path";
 // import fs_sys from "fs";
-import { rootPath } from "@nstation/utils";
+// import { rootPath } from "@nstation/utils";
 
 import loadRoute from "./loadRoute.js";
-import nstationConfig from "../../../../nstation.config.js";
+// import nstationConfig from "../../../../nstation.config.js";
 
 const core = [
   {
     resolve: "@nstation/core/auth/server/api/index.js",
   },
+  {
+    resolve: "@nstation/core/media/server/api/index.js",
+  },
 ];
 
 const loadPlugins = (router) => {
-  let pluginsList = nstationConfig();
+  // let pluginsList = nstationConfig();
 
-  pluginsList = Object.keys(pluginsList).map((key) => ({
-    key,
-    ...pluginsList[key],
-    resolve: path.join(
-      rootPath,
-      "plugins",
-      key,
-      "server",
-      "api_test",
-      "index.js"
-    ),
-  }));
+  // pluginsList = Object.keys(pluginsList).map((key) => ({
+  //   key,
+  //   ...pluginsList[key],
+  //   resolve: path.join(
+  //     rootPath,
+  //     "plugins",
+  //     key,
+  //     "server",
+  //     "api_test",
+  //     "index.js"
+  //   ),
+  // }));
 
-  let plugins = [...core, ...pluginsList];
+  let plugins = [...core];
 
   plugins.forEach(async (plugin) => {
     const { default: routes } = await import(plugin?.resolve);

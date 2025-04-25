@@ -23,13 +23,14 @@ const AsideModal = ({
 }) => {
   const [is_open, setIsOpen] = useState(open);
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = (e, type) => {
     if (e.key === "Escape") {
       onCloseHandler();
     } else {
-      if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+      if (((e.metaKey || e.ctrlKey) && e.key === "s") || type === "submit") {
         e.preventDefault();
         onSubmit();
+        onCloseHandler();
       }
     }
   };
@@ -74,7 +75,7 @@ const AsideModal = ({
       <DialogActions>
         <Button
           loading={submitLoading}
-          onClick={onSubmit}
+          onClick={(e) => onSubmitHandler(e, "submit")}
           variant="contained"
           disabled={submitDisabled}
         >

@@ -1,9 +1,5 @@
 export default () => ({
-  // dashboard: {
-  //   href: "/",
-  //   title: "Dashboard",
-  //   icon: "mdi:home",
-  // },
+  // dashboard: {},
   // media: {
   //   href: "/media",
   //   title: "Media",

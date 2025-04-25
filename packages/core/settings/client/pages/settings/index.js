@@ -1,8 +1,8 @@
 import { SettingsRounded } from "@mui/icons-material";
-import Form from "page_components/settings/GeneralContent/Form";
-import PhotoInput from "page_components/settings/GeneralContent/PhotoInput";
+import Form from "../../components/Form.js";
+import PhotoInput from "../../components/PhotoInput.js";
 
-import useSetBreadcrumbs from "hooks/useSetBreadcrumbs";
+import useSetBreadcrumbs from "@nstation/utils/ui/hooks/useSetBreadcrumbs.js";
 
 const SettingsGeneral = () => {
   useSetBreadcrumbs([

@@ -1,3 +1,5 @@
+import "../../utils/passport.js";
+
 import me from "./me.js";
 import login from "./login.js";
 import register from "./register.js";

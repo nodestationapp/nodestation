@@ -1,5 +1,5 @@
 import TableManager from "components/TableManager";
-import useSetBreadcrumbs from "hooks/useSetBreadcrumbs";
+import useSetBreadcrumbs from "@nstation/utils/ui/hooks/useSetBreadcrumbs.js";
 
 import { People } from "@mui/icons-material";
 

@@ -6,12 +6,13 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import SplashScreen from "components/SplashScreen";
 
-import EditorProvider from "./client/editor";
-import OrganizationProvider from "./organization";
+import OrganizationProvider from "./organization.js";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 import api from "libs/api";
 import pluginsLoader from "libs/helpers/pluginsLoader";
+// import BreadcrumbsProvider from "./client/breadcrumps";
+
 import BreadcrumbsProvider from "@nstation/utils/ui/contexts/breadcrumps.js";
 
 const AppContext = createContext();
@@ -31,7 +32,11 @@ const AppProvider = ({ children }) => {
 
   const app = {
     addMenuLink: (props) => {
-      setMenuLinks((prev) => [...prev, props]);
+      setMenuLinks((prev) => {
+        const exists = prev.some((link) => link.to === props.to);
+        if (exists) return prev;
+        return [...prev, props];
+      });
     },
   };
 
@@ -216,9 +221,7 @@ const AppProvider = ({ children }) => {
     return (
       <AppContext.Provider value={value}>
         <OrganizationProvider>
-          <BreadcrumbsProvider>
-            <EditorProvider>{children}</EditorProvider>
-          </BreadcrumbsProvider>
+          <BreadcrumbsProvider>{children}</BreadcrumbsProvider>
         </OrganizationProvider>
       </AppContext.Provider>
     );

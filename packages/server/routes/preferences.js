@@ -1,5 +1,5 @@
 import express from "express";
-import { authMiddleware } from "@nstation/auth";
+import authMiddleware from "@nstation/core/auth/utils/authMiddleware.js";
 
 import {
   getPreferences,
