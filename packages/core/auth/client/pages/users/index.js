@@ -1,16 +1,6 @@
 import TableManager from "components/TableManager";
-import useSetBreadcrumbs from "@nstation/utils/ui/hooks/useSetBreadcrumbs.js";
-
-import { People } from "@mui/icons-material";
 
 const Users = () => {
-  useSetBreadcrumbs([
-    {
-      icon: People,
-      label: "Authentication",
-    },
-  ]);
-
   return (
     <TableManager
       table="nodestation_users"

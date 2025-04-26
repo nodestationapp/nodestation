@@ -1,19 +1,8 @@
 import MimeType from "./components/MimeType.js";
+import MediaSize from "./components/MediaSize.js";
 import TableManager from "components/TableManager";
 
-import useSetBreadcrumbs from "@nstation/utils/ui/hooks/useSetBreadcrumbs.js";
-
-import { Photo } from "@mui/icons-material";
-import MediaSize from "./components/MediaSize.js";
-
 const Media = () => {
-  useSetBreadcrumbs([
-    {
-      icon: Photo,
-      label: "Media",
-    },
-  ]);
-
   const appendColumns = [
     {
       key: "media",

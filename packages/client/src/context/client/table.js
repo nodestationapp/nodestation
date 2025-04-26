@@ -56,12 +56,9 @@ const TableProvider = ({ id, children }) => {
           delete values?.name;
         }
 
-        await api.put(
-          `/admin/api/tables/${id}?${queryString.stringify({
-            type,
-          })}`,
-          values
-        );
+        console.log(type);
+
+        await api.put(`/admin/api/tables/${id}`, values);
 
         tableRefetch();
 

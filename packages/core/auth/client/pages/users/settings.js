@@ -4,23 +4,9 @@ import InputElementsEditor from "components/InputElementsEditor";
 
 import { useTable } from "context/client/table";
 import TableProvider from "context/client/table";
-import useSetBreadcrumbs from "@nstation/utils/ui/hooks/useSetBreadcrumbs.js";
-
-import { People } from "@mui/icons-material";
 
 const UsersSettingsContent = () => {
-  const { data } = useTable();
-
-  useSetBreadcrumbs([
-    {
-      icon: People,
-      label: "Authentication",
-      href: "/authentication",
-    },
-    {
-      label: "Settings",
-    },
-  ]);
+  const { data, updateTable } = useTable();
 
   const table = data?.table;
 
@@ -32,7 +18,9 @@ const UsersSettingsContent = () => {
   const settings_data = [
     {
       label: "Fields",
-      component: <InputElementsEditor data={formInitialValues} />,
+      component: (
+        <InputElementsEditor data={formInitialValues} onSubmit={updateTable} />
+      ),
     },
   ];
 

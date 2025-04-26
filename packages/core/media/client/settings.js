@@ -3,22 +3,8 @@ import SettingsForm from "components/SettingsForm";
 import MediaProviders from "./components/MediaProviders.js";
 
 import MediaProvider from "./contexts/media.js";
-import useSetBreadcrumbs from "@nstation/utils/ui/hooks/useSetBreadcrumbs.js";
-
-import { Photo } from "@mui/icons-material";
 
 const MediaSettingsContent = () => {
-  useSetBreadcrumbs([
-    {
-      icon: Photo,
-      label: "Media",
-      href: "/media",
-    },
-    {
-      label: "Settings",
-    },
-  ]);
-
   const settings_data = [
     {
       label: "Provider",

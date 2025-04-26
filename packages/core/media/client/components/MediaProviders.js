@@ -15,8 +15,6 @@ const MediaProviders = () => {
 
   const media_active = activeEmailChecker(media_settings);
 
-  console.log(media_settings);
-
   const media_type_data = [
     {
       icon: <StorageIcon height={20} width={20} />,

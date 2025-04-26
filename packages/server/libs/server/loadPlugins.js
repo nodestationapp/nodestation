@@ -1,16 +1,16 @@
-// import path from "path";
-// import fs_sys from "fs";
-// import { rootPath } from "@nstation/utils";
+import path from "path";
+import fs_sys from "fs";
+import glob from "glob";
+import { upsertTable } from "@nstation/db";
 
 import loadRoute from "./loadRoute.js";
-// import nstationConfig from "../../../../nstation.config.js";
 
 const core = [
   {
-    resolve: "@nstation/core/auth/server/api/index.js",
+    resolve: "@nstation/core/auth/server",
   },
   {
-    resolve: "@nstation/core/media/server/api/index.js",
+    resolve: "@nstation/core/media/server",
   },
 ];
 
@@ -33,27 +33,24 @@ const loadPlugins = (router) => {
   let plugins = [...core];
 
   plugins.forEach(async (plugin) => {
-    const { default: routes } = await import(plugin?.resolve);
+    //ROUTES
+    const { default: routes } = await import(`${plugin?.resolve}/api/index.js`);
     await loadRoute(router, routes);
 
-    // const routes = await fs.getPluginFiles(
-    //   path.join(plugin?.resolve, "server", "api_test", "index.js"),
-    //   plugin?.key
-    // );
+    //SCHEMAS
+    let resolved = import.meta.resolve(plugin?.resolve);
+    resolved = resolved.replace(/^file:\/*/, "/");
 
-    // const content = fs_sys.readFileSync(
-    //   path.join(plugin?.resolve, "server", "api_test", "index.js")
-    // );
+    const schemas = glob.sync(path.join(resolved, "schemas", "*.json"), {
+      nodir: true,
+    });
 
-    //   const tables = await fs.getPluginFiles(
-    //     path.join(plugin?.resolve, "server", "schemas", "index.js"),
-    //     plugin?.key,
-    //     "schema"
-    //   );
+    schemas.forEach(async (schema) => {
+      let file = fs_sys.readFileSync(schema, "utf-8");
+      file = JSON.parse(file);
 
-    //   tables.forEach(async (table) => {
-    //     await upsertTable(table);
-    //   });
+      await upsertTable(file);
+    });
   });
 
   return true;

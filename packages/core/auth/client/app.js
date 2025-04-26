@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Users from "./pages/users/index.js";
 import UsersSettings from "./pages/users/settings.js";
 
-const Dashboard = () => {
+const Auth = () => {
   return (
     <Routes>
       <Route index element={<Users />} />
@@ -12,4 +12,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Auth;

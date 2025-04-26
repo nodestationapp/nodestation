@@ -3,8 +3,6 @@ import { knex } from "@nstation/db";
 export default async (req, res) => {
   let body = req?.body;
 
-  console.log(body);
-
   try {
     const formatted_body = Object.keys(body).reduce((acc, key) => {
       acc[key] = key !== "active" ? JSON.stringify(body[key]) : body[key];

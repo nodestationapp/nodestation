@@ -6,7 +6,7 @@ import PlaceholderPage from "components/PlaceholderPage";
 import api from "libs/api";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
-const VerifyContent = () => {
+const Verify = () => {
   const [email_confirmed, setEmailConfirmed] = useState(false);
 
   const navigate = useNavigate();
@@ -44,4 +44,4 @@ const VerifyContent = () => {
   );
 };
 
-export default VerifyContent;
+export default Verify;

@@ -67,7 +67,8 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
     }
 
     mainFormik.setFieldValue("fields", temp);
-    onClose();
+    mainFormik.submitForm();
+    // onClose();
   };
 
   const formik = useFormik({

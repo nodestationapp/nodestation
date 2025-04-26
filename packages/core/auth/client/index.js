@@ -1,4 +1,5 @@
 import App from "./app.js";
+import AuthMiddleware from "./contexts/authMiddleware.js";
 
 export default {
   register(app) {
@@ -8,6 +9,10 @@ export default {
       to: `/authentication`,
       label: "Authentication",
       Component: App,
+    });
+
+    app.addMiddleware({
+      Component: (children) => <AuthMiddleware>{children}</AuthMiddleware>,
     });
   },
 };

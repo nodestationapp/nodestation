@@ -12,7 +12,6 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 import api from "libs/api";
 import pluginsLoader from "libs/helpers/pluginsLoader";
-import BreadcrumbsProvider from "@nstation/utils/ui/contexts/breadcrumps.js";
 
 const AppContext = createContext();
 
@@ -216,9 +215,7 @@ const AppProvider = ({ children }) => {
     return (
       <AppContext.Provider value={value}>
         <OrganizationProvider>
-          <BreadcrumbsProvider>
-            <EditorProvider>{children}</EditorProvider>
-          </BreadcrumbsProvider>
+          <EditorProvider>{children}</EditorProvider>
         </OrganizationProvider>
       </AppContext.Provider>
     );

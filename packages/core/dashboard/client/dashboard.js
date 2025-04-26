@@ -1,18 +1,9 @@
-import { Home } from "@mui/icons-material";
 import { Button, Typography, Box } from "@mui/material";
 
 import { useApp } from "@nstation/utils/ui/contexts/app.js";
-import useSetBreadcrumbs from "@nstation/utils/ui/hooks/useSetBreadcrumbs.js";
 
 const Dashboard = () => {
   const { user } = useApp();
-
-  useSetBreadcrumbs([
-    {
-      icon: Home,
-      label: "Dashboard",
-    },
-  ]);
 
   return (
     <Box

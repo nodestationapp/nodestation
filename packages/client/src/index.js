@@ -28,13 +28,13 @@ root.render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
       <CookiesProvider defaultSetOptions={{ path: "/" }}>
-        <AppProvider>
-          <AppTheme themeComponents={xThemeComponents}>
-            <CssBaseline />
+        <AppTheme themeComponents={xThemeComponents}>
+          <CssBaseline />
+          <AppProvider>
             <App />
             <NotifyContainer />
-          </AppTheme>
-        </AppProvider>
+          </AppProvider>
+        </AppTheme>
       </CookiesProvider>
     </QueryClientProvider>
   </BrowserRouter>

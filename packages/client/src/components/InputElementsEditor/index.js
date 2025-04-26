@@ -7,32 +7,36 @@ import CreateFieldModal from "components/CreateFieldModal";
 
 import { Add } from "@mui/icons-material";
 
-const InputElementsEditor = ({ data }) => {
+const InputElementsEditor = ({ data, onSubmit }) => {
   const [add_field_modal, setAddFieldModal] = useState(false);
 
-  const onSubmit = () => {
-    //todo
-    console.info(data);
+  const onSubmitHandler = async (values) => {
+    console.log(values);
+    try {
+      await onSubmit(values);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const formik = useFormik({
     initialValues: data,
-    onSubmit,
+    onSubmit: onSubmitHandler,
     enableReinitialize: true,
   });
 
-  const onSubmitHandler = (e) => {
+  const onSubmitKey = (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === "s") {
       e.preventDefault();
-      onSubmit();
+      onSubmitHandler();
     }
   };
 
   useEffect(() => {
-    document.addEventListener("keydown", onSubmitHandler);
+    document.addEventListener("keydown", onSubmitKey);
 
     return () => {
-      document.removeEventListener("keydown", onSubmitHandler);
+      document.removeEventListener("keydown", onSubmitKey);
     };
     // eslint-disable-next-line
   }, []);
