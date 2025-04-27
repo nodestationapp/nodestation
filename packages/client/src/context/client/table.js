@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import api from "libs/api";
-import { useOrganization } from "@nstation/utils/ui/contexts/organization.js";
+import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware";
 
 const TableContext = createContext();
 
@@ -12,7 +12,9 @@ const TableProvider = ({ id, children }) => {
   const navigate = useNavigate();
   const { pathname, query } = useLocation();
   const [searchParams] = useSearchParams();
-  const { preferences } = useOrganization();
+  const { preferences } = useAuth();
+
+  console.log(preferences);
 
   const view = searchParams.get("v");
   const page = searchParams.get("page");
@@ -55,8 +57,6 @@ const TableProvider = ({ id, children }) => {
         if (type === "authentication") {
           delete values?.name;
         }
-
-        console.log(type);
 
         await api.put(`/admin/api/tables/${id}`, values);
 

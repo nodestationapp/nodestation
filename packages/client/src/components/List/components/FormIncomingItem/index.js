@@ -6,7 +6,7 @@ import classnames from "classnames";
 import Tooltip from "components/Tooltip";
 import IconButton from "components/IconButton";
 
-import { useApp } from "context/app";
+// import { useApp } from "context/app";
 import { useForm } from "context/client/form";
 
 import {
@@ -25,7 +25,7 @@ const FormIncomingItem = ({
   onclick,
   parsed_fields,
 }) => {
-  const { setFormsCount } = useApp();
+  // const { setFormsCount } = useApp();
 
   const { archived, updateIncomeForm } = useForm();
 
@@ -42,9 +42,9 @@ const FormIncomingItem = ({
       const next_state = !is_read;
 
       await updateIncomeForm(id, { is_read: next_state });
-      setFormsCount((prev) =>
-        next_state ? parseInt(prev) - 1 : parseInt(prev) + 1
-      );
+      // setFormsCount((prev) =>
+      //   next_state ? parseInt(prev) - 1 : parseInt(prev) + 1
+      // );
     } catch (err) {
       console.error(err);
     }

@@ -12,37 +12,37 @@ import authMiddleware from "../../utils/authMiddleware.js";
 export default [
   {
     method: "GET",
-    path: "/plugins/auth/check-admin",
+    path: "/auth/check-admin",
     handler: checkAdmin,
     middlewares: [],
   },
   {
     method: "POST",
-    path: "/plugins/auth/login",
+    path: "/auth/login",
     handler: login,
     middlewares: [],
   },
   {
     method: "POST",
-    path: "/plugins/auth/register",
+    path: "/auth/register",
     handler: register,
     middlewares: [],
   },
   {
     method: "GET",
-    path: "/plugins/auth/me",
+    path: "/auth/me",
     handler: me,
     middlewares: [authMiddleware(["admin"])],
   },
   {
     method: "PUT",
-    path: "/plugins/auth/me",
+    path: "/auth/me",
     handler: updateMe,
     middlewares: [authMiddleware(["admin"])],
   },
   {
     method: "PUT",
-    path: "/plugins/auth/change-password",
+    path: "/auth/change-password",
     handler: changePassword,
     middlewares: [authMiddleware(["admin"])],
   },

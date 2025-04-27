@@ -6,14 +6,14 @@ import { createContext, useContext, useMemo, useState } from "react";
 import api from "libs/api";
 import sortParser from "libs/sortParser";
 
-import { useApp } from "context/app";
+// import { useApp } from "context/app";
 import { useOrganization } from "context/organization";
 
 const FormContext = createContext();
 
 const FormProvider = ({ archived, children }) => {
   const { id } = useParams();
-  const { setFormsCount } = useApp();
+  // const { setFormsCount } = useApp();
   const queryClient = useQueryClient();
   const { preferences, loading: preferencesLoading } = useOrganization();
 
@@ -108,9 +108,9 @@ const FormProvider = ({ archived, children }) => {
       const next_state = !is_read;
 
       await updateIncomeForm(id, { is_read: next_state });
-      setFormsCount((prev) =>
-        next_state ? parseInt(prev) - 1 : parseInt(prev) + 1
-      );
+      // setFormsCount((prev) =>
+      //   next_state ? parseInt(prev) - 1 : parseInt(prev) + 1
+      // );
     } catch (err) {
       console.error(err);
     }

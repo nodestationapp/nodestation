@@ -6,10 +6,12 @@ import { useApp } from "@nstation/utils/ui/contexts/app.js";
 const App = () => {
   const { menuLinks } = useApp();
 
+  const formattedMenuLinks = menuLinks?.filter((item) => !!item?.Component);
+
   return (
     <Routes>
       <Route element={<DashboardLayout />}>
-        {menuLinks.map((link) => (
+        {formattedMenuLinks.map((link) => (
           <Route
             key={link.to}
             path={`${link.to}/*`}

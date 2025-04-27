@@ -11,7 +11,6 @@ const InputElementsEditor = ({ data, onSubmit }) => {
   const [add_field_modal, setAddFieldModal] = useState(false);
 
   const onSubmitHandler = async (values) => {
-    console.log(values);
     try {
       await onSubmit(values);
     } catch (err) {

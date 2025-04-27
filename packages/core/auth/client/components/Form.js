@@ -1,9 +1,9 @@
 import { useFormik } from "formik";
 import { Button, Grid, TextField } from "@mui/material";
-import { useApp } from "@nstation/utils/ui/contexts/app.js";
+import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";
 
 const Form = () => {
-  const { user, userUpdate } = useApp();
+  const { user, userUpdate } = useAuth();
 
   const onSubmit = async (values, { setSubmitting, resetForm }) => {
     try {

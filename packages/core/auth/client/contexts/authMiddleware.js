@@ -1,12 +1,15 @@
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useCookies } from "react-cookie";
-import { Navigate, Outlet, Route, Routes } from "react-router-dom";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-import Login from "../pages/auth/login.js";
-import Verify from "../pages/auth/verify.js";
-import Register from "../pages/auth/register.js";
-import ForgetPassword from "../pages/auth/forget-password/Content/index.js";
-import ResetPassword from "../pages/auth/forget-password/reset/Content/index.js";
+import AuthRoutes from "../utils/AuthRoutes.js";
 import SplashScreen from "components/SplashScreen";
 
 import api from "libs/api";
@@ -14,6 +17,7 @@ import api from "libs/api";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
 
   const [user, setUser] = useState(null);
@@ -22,7 +26,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     (async function () {
-      const { is_admin } = await api.get("/api/plugins/auth/check-admin");
+      const { is_admin } = await api.get("/auth/check-admin");
       setIsAdmin(is_admin);
 
       await getUserData(cookies?.access_token);
@@ -30,10 +34,44 @@ const AuthProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { data: tables = [], refetch: refetchTables } = useQuery({
+    queryKey: ["tables"],
+    queryFn: () => api.get("/tables"),
+  });
+
+  // const {
+  //   data: preferences = [],
+  //   isLoading: preferencesloading,
+  //   refetch: refetchPreferences,
+  // } = useQuery({
+  //   queryKey: ["preferences"],
+  //   queryFn: () => api.get("/api/preferences"),
+  // });
+
+  const updatePreferences = (id) => {
+    let temp = [...preferences];
+
+    const table_id = temp?.find((item) => item?.id === id)?.table_id;
+
+    queryClient.setQueryData(["preferences"], (oldData) => {
+      if (!Array.isArray(oldData)) return oldData;
+
+      return oldData.map((item) => {
+        if (item.table_id === table_id) {
+          return {
+            ...item,
+            last_viewed: item.id === id ? 1 : null,
+          };
+        }
+        return item;
+      });
+    });
+  };
+
   const getUserData = async (access_token) => {
     try {
       if (!!access_token) {
-        const me = await api.get(`/api/plugins/auth/me`, {
+        const me = await api.get(`/auth/me`, {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
@@ -63,7 +101,7 @@ const AuthProvider = ({ children }) => {
   const userUpdate = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.put("/api/plugins/auth/me", { ...values });
+        await api.put("/auth/me", { ...values });
 
         getUserData(cookies?.access_token);
         resolve();
@@ -76,14 +114,15 @@ const AuthProvider = ({ children }) => {
   const login = ({ email, password }) =>
     new Promise(async (resolve, reject) => {
       try {
-        const data = await api.post(`/api/plugins/auth/login`, {
+        const data = await api.post(`/auth/login`, {
           email,
           password,
         });
 
         setCookie("access_token", data?.access_token, { maxAge: 1707109200 });
+        await getUserData(data?.access_token);
+        navigate("/");
 
-        getUserData(data?.access_token);
         resolve();
       } catch (err) {
         reject(err);
@@ -111,52 +150,18 @@ const AuthProvider = ({ children }) => {
       getUserData,
       is_admin,
       setIsAdmin,
+      preferences: [],
+      updatePreferences,
+      tables,
     };
     // eslint-disable-next-line
-  }, [user, is_admin]);
+  }, [user, is_admin, tables]);
 
   if (!!loading) return <SplashScreen />;
 
   return (
     <AuthContext.Provider value={value}>
-      {!!!user?.id ? (
-        <Routes>
-          {is_admin ? (
-            <Route path="/login" element={<Login />} />
-          ) : (
-            <Route path="/register" element={<Register />} />
-          )}
-          <Route path="/verify" element={<Verify />} />
-          <Route path="/forget-password">
-            <Route index element={<ForgetPassword />} />
-            <Route path="reset" element={<ResetPassword />} />
-          </Route>
-          <Route
-            path="*"
-            element={
-              <Navigate
-                to={!!user?.id ? "/" : is_admin ? "/login" : "/register"}
-                replace
-              />
-            }
-          />
-        </Routes>
-      ) : (
-        <>
-          {children}
-          <Routes>
-            <Route
-              path="*"
-              element={
-                <Navigate
-                  to={!!user?.id ? "/" : is_admin ? "/login" : "/register"}
-                  replace
-                />
-              }
-            />
-          </Routes>
-        </>
-      )}
+      {!user?.id ? <AuthRoutes /> : children}
     </AuthContext.Provider>
   );
 };

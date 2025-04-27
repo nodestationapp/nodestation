@@ -4,7 +4,7 @@ import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
 import loadPlugins from "./libs/server/loadPlugins.js";
-import { rootPath, cors, logger, io } from "@nstation/utils";
+import { rootPath, cors, logger } from "@nstation/utils";
 
 import allRoutes from "#routes/index.js";
 
@@ -56,48 +56,6 @@ function createApp() {
       });
     }
   };
-
-  //   app.loadPlugins = () => {
-  //     const pluginDir = path.join(__dirname, 'plugins');
-  //     const plugins = fs.readdirSync(pluginDir);
-
-  //     for (const name of plugins) {
-  //       const pluginPath = path.join(pluginDir, name);
-  //       const plugin = require(path.join(pluginPath, 'index.js'));
-
-  //       app.plugins[name] = plugin;
-
-  //       // register
-  //       if (typeof plugin.register === 'function') {
-  //         plugin.register({ app });
-  //       }
-  //     }
-  //   };
-
-  //   app.bootstrapPlugins = async () => {
-  //     for (const name in app.plugins) {
-  //       const plugin = app.plugins[name];
-  //       if (typeof plugin.bootstrap === 'function') {
-  //         await plugin.bootstrap({ app });
-  //       }
-  //     }
-  //   };
-
-  //   app.initPlugins = async () => {
-  //     for (const name in app.plugins) {
-  //       const plugin = app.plugins[name];
-  //       if (typeof plugin.init === 'function') {
-  //         await plugin.init({ app });
-  //       }
-  //     }
-  //   };
-
-  //   app.mountRoutes = () => {
-  //     for (const { method, path, handler } of app.routes) {
-  //       expressApp[method](path, handler);
-  //       app.log(`Route mounted: [${method.toUpperCase()}] ${path}`);
-  //     }
-  //   };
 
   return app;
 }
