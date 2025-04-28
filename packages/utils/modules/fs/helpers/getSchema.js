@@ -25,7 +25,10 @@ const paths = [
 
 const getSchema = (tableName) => {
   try {
-    const items = glob.sync(paths, { nodir: true });
+    const items = glob.sync(
+      path.join(rootPath, "src", "schemas", "**", "*.json"),
+      { nodir: true }
+    );
     const schema = findSchemasWithTableName(items, tableName);
     return schema;
   } catch (error) {

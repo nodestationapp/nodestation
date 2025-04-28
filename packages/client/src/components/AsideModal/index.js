@@ -23,14 +23,13 @@ const AsideModal = ({
 }) => {
   const [is_open, setIsOpen] = useState(open);
 
-  const onSubmitHandler = (e, type) => {
+  const onSubmitHandler = async (e, type) => {
     if (e.key === "Escape") {
       onCloseHandler();
     } else {
       if (((e.metaKey || e.ctrlKey) && e.key === "s") || type === "submit") {
         e.preventDefault();
         onSubmit();
-        onCloseHandler();
       }
     }
   };

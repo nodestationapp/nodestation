@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import AuthRoutes from "../utils/AuthRoutes.js";
 import SplashScreen from "components/SplashScreen";
@@ -34,19 +34,15 @@ const AuthProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { data: tables = [], refetch: refetchTables } = useQuery({
-    queryKey: ["tables"],
-    queryFn: () => api.get("/tables"),
+  const {
+    data: preferences = [],
+    isLoading: preferencesloading,
+    refetch: refetchPreferences,
+  } = useQuery({
+    queryKey: ["preferences"],
+    queryFn: () => api.get("/preferences"),
+    enabled: !!user?.id,
   });
-
-  // const {
-  //   data: preferences = [],
-  //   isLoading: preferencesloading,
-  //   refetch: refetchPreferences,
-  // } = useQuery({
-  //   queryKey: ["preferences"],
-  //   queryFn: () => api.get("/api/preferences"),
-  // });
 
   const updatePreferences = (id) => {
     let temp = [...preferences];
@@ -150,12 +146,10 @@ const AuthProvider = ({ children }) => {
       getUserData,
       is_admin,
       setIsAdmin,
-      preferences: [],
       updatePreferences,
-      tables,
     };
     // eslint-disable-next-line
-  }, [user, is_admin, tables]);
+  }, [user, is_admin]);
 
   if (!!loading) return <SplashScreen />;
 

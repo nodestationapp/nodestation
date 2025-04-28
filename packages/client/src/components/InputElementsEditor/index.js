@@ -63,7 +63,10 @@ const InputElementsEditor = ({ data, onSubmit }) => {
           }}
           type="forms_field"
           data={formatted_fields}
-          onOrderChange={(value) => formik.setFieldValue("fields", value)}
+          onOrderChange={(value) => {
+            formik.setFieldValue("fields", value);
+            formik.submitForm();
+          }}
         />
         <Button
           sx={{ mr: "auto" }}

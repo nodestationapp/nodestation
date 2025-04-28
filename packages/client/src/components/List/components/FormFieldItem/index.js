@@ -1,3 +1,11 @@
+import {
+  Chip,
+  IconButton,
+  ListItem,
+  ListItemButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
@@ -6,19 +14,7 @@ import ArchiveEmailModal from "page_components/emails/components/ArchiveEmailMod
 
 import field_type_data from "libs/field_type_data";
 
-import { LockOutline, MoreVert } from "@mui/icons-material";
-import { TrashIcon } from "@heroicons/react/24/outline";
-import {
-  Box,
-  Chip,
-  IconButton,
-  ListItem,
-  ListItemButton,
-  Stack,
-  Typography,
-} from "@mui/material";
-
-const mainClass = "list__form-field-item";
+import { LockOutline, MoreVert, DeleteOutline } from "@mui/icons-material";
 
 const FormFieldItem = ({
   name,
@@ -84,15 +80,18 @@ const FormFieldItem = ({
           {origin === "system" && <LockOutline sx={{ ml: "auto" }} />}
           {/* //todo */}
           {origin !== "system" && (
-            <Box>
-              <IconButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onRemoveClick();
-                }}
-                icon={<TrashIcon color="#FF3636" />}
-              />
-            </Box>
+            <IconButton
+              sx={{ ml: "auto" }}
+              color="secondary"
+              size="micro"
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemoveClick();
+              }}
+              // icon={<TrashIcon color="#FF3636" />}
+            >
+              <DeleteOutline />
+            </IconButton>
           )}
         </ListItemButton>
       </ListItem>

@@ -9,8 +9,6 @@ const AppProvider = ({ children }) => {
   const [menuLinks, setMenuLinks] = useState([]);
   const [middlewares, setMiddlewares] = useState([]);
 
-  console.log(menuLinks);
-
   const app = {
     addMenuLink: (props) => {
       setMenuLinks((prev) => {

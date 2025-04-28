@@ -2,8 +2,9 @@ import BaseLayout from "layouts/BaseLayout";
 import SettingsForm from "components/SettingsForm";
 import InputElementsEditor from "components/InputElementsEditor";
 
-import { useTable } from "context/client/table";
-import TableProvider from "context/client/table";
+import TableProvider, {
+  useTable,
+} from "../../../../tables/client/contexts/table.js";
 
 const UsersSettingsContent = () => {
   const { data, updateTable } = useTable();

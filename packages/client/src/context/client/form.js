@@ -7,7 +7,6 @@ import api from "libs/api";
 import sortParser from "libs/sortParser";
 
 // import { useApp } from "context/app";
-import { useOrganization } from "context/organization";
 
 const FormContext = createContext();
 
@@ -15,9 +14,8 @@ const FormProvider = ({ archived, children }) => {
   const { id } = useParams();
   // const { setFormsCount } = useApp();
   const queryClient = useQueryClient();
-  const { preferences, loading: preferencesLoading } = useOrganization();
 
-  const table_preferences = preferences?.find((item) => item?.table_id === id);
+  const table_preferences = {};
 
   const [checked, setChecked] = useState([]);
   const [columnOrder, setColumnOrder] = useState(
@@ -55,7 +53,7 @@ const FormProvider = ({ archived, children }) => {
           sort: sort_query || undefined,
         })}`
       ),
-    enabled: id !== "new" && !!!preferencesLoading,
+    enabled: id !== "new",
     placeholderData: (previousData) => previousData,
   });
 

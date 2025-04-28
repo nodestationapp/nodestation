@@ -1,10 +1,10 @@
 import queryString from "query-string";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, useMemo } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import api from "libs/api";
-import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware";
+import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";
 
 const TableContext = createContext();
 
@@ -12,13 +12,18 @@ const TableProvider = ({ id, children }) => {
   const navigate = useNavigate();
   const { pathname, query } = useLocation();
   const [searchParams] = useSearchParams();
-  const { preferences } = useAuth();
+  // const { preferences } = useAuth();
 
   const view = searchParams.get("v");
   const page = searchParams.get("page");
 
   let type = pathname?.split("/")?.[1];
   type = type !== "authentication" ? type : undefined;
+
+  const { data: preferences = [] } = useQuery({
+    queryKey: ["preferences"],
+    queryFn: () => api.get("/preferences"),
+  });
 
   useEffect(() => {
     const table_preference =
@@ -39,7 +44,7 @@ const TableProvider = ({ id, children }) => {
     queryKey: ["tables", id, view, page],
     queryFn: () =>
       api.get(
-        `/admin/api/tables/${id}?${queryString.stringify({
+        `/tables/${id}?${queryString.stringify({
           view,
           type,
           page: parseInt(page || 0),
@@ -56,7 +61,7 @@ const TableProvider = ({ id, children }) => {
           delete values?.name;
         }
 
-        await api.put(`/admin/api/tables/${id}`, values);
+        await api.put(`/tables/${id}`, values);
 
         tableRefetch();
 
@@ -70,7 +75,7 @@ const TableProvider = ({ id, children }) => {
     new Promise(async (resolve, reject) => {
       try {
         await api.delete(
-          `/admin/api/tables/${id}?${queryString.stringify({
+          `/tables/${id}?${queryString.stringify({
             type,
           })}`
         );
@@ -84,7 +89,7 @@ const TableProvider = ({ id, children }) => {
   const addTableEntry = (formData) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.post(`/admin/api/tables/${id}/entry`, formData, {
+        await api.post(`/tables/${id}/entry`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -101,7 +106,7 @@ const TableProvider = ({ id, children }) => {
   const updateTableEntry = (entry_id, values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.put(`/admin/api/tables/${id}/entry/${entry_id}`, values, {
+        await api.put(`/tables/${id}/entry/${entry_id}`, values, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -118,7 +123,7 @@ const TableProvider = ({ id, children }) => {
   const deleteTableEntries = (entry_id) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.delete(`/admin/api/tables/${id}/entry/${entry_id}`);
+        await api.delete(`/tables/${id}/entry/${entry_id}`);
 
         tableRefetch();
 
@@ -129,7 +134,7 @@ const TableProvider = ({ id, children }) => {
     });
 
   const saveTableTransaction = async (values) => {
-    await api.post("/admin/api/preferences", {
+    await api.post("/preferences", {
       table_id: id,
       view,
       ...values,
