@@ -45,6 +45,7 @@ const InputElementsEditor = ({ data, onSubmit }) => {
     temp.splice(index, 1);
 
     formik.setFieldValue("fields", temp);
+    formik.submitForm();
   };
 
   const formatted_fields = formik?.values?.fields?.map((item, index) => ({

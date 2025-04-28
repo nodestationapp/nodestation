@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, IconButton, Tooltip } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 
+import UsersSettings from "./components/Settings.js";
 import MuiTable from "../../components/MuiTable/index.js";
 import TableRowEditor from "../../components/TableRowEditor/index.js";
 import EntriesDeleteModal from "./components/EntriesDeleteModal/index.js";
@@ -19,10 +21,19 @@ const TableManagerContent = ({
   rowFullWidth,
 }) => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const type = queryParams.get("type");
 
   const [content_editor, setContentEditor] = useState(null);
-  const { data, page, loading, saveTableTransaction } = useTable();
+  const {
+    data,
+    page,
+    loading,
+    saveTableTransaction,
+    tableSettingsOpen,
+    setTableSettingsOpen,
+  } = useTable();
   const [entriesDeleteModal, setEntriesDeleteModal] = useState(false);
 
   let columnsToShow = data?.table?.fields || [];
@@ -41,10 +52,19 @@ const TableManagerContent = ({
     <>
       <IconButton
         size="micro"
-        color="secondary"
-        onClick={() => navigate(`${pathname}/settings`)}
+        sx={(theme) => ({
+          "&.MuiIconButton-sizeMicro": {
+            backgroundColor:
+              type === "settings"
+                ? alpha(theme.palette.action.selected, 0.1)
+                : null,
+          },
+        })}
+        onClick={() =>
+          navigate(`${pathname}?v=${data?.preferences?.id}&type=settings`)
+        }
       >
-        <Settings />
+        <Settings color={type === "settings" ? "primary" : ""} />
       </IconButton>
       <Button
         size="small"
@@ -82,6 +102,8 @@ const TableManagerContent = ({
     <>
       <MuiTable
         page={page}
+        tableSettingsOpen={tableSettingsOpen}
+        settingsView={<UsersSettings />}
         action={action}
         columns={columns}
         loading={loading}

@@ -12,6 +12,7 @@ const TableProvider = ({ id, children }) => {
   const navigate = useNavigate();
   const { pathname, query } = useLocation();
   const [searchParams] = useSearchParams();
+  const [tableSettingsOpen, setTableSettingsOpen] = useState(false);
   // const { preferences } = useAuth();
 
   const view = searchParams.get("v");
@@ -156,9 +157,11 @@ const TableProvider = ({ id, children }) => {
       addTableEntry,
       deleteTableEntries,
       saveTableTransaction,
+      setTableSettingsOpen,
+      tableSettingsOpen,
     };
     // eslint-disable-next-line
-  }, [data, id, loading, view]);
+  }, [data, id, loading, view, tableSettingsOpen]);
 
   return (
     <TableContext.Provider value={value}>{children}</TableContext.Provider>

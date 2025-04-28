@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -19,11 +19,15 @@ const MuiTable = ({
   selectActions,
   onRowClick,
   rowHeight = 42,
+  settingsView,
+  tableSettingsOpen,
+  setTableSettingsOpen,
 }) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const queryParams = new URLSearchParams(search);
   const page = queryParams.get("page");
+  const type = queryParams.get("type");
 
   const tabs = !!views?.length
     ? views?.map((view) => ({
@@ -99,72 +103,78 @@ const MuiTable = ({
         selectedRows={selectedRows}
         selectActions={selectActions}
       />
-      <DataGrid
-        pagination
-        rows={rows}
-        checkboxSelection
-        loading={loading}
-        columns={columns}
-        getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-        }
-        onRowClick={onRowClick}
-        filterDebounceMs={300}
-        onColumnResize={onColumnResize}
-        columnVisibilityModel={columnVisibility}
-        onColumnVisibilityModelChange={onColumnVisibilityChange}
-        sortingMode="server"
-        sortModel={columnSort}
-        onSortModelChange={onSortModelChange}
-        filterMode="server"
-        filterModel={
-          !!columnFilters
-            ? {
-                items: columnFilters,
-              }
-            : undefined
-        }
-        onFilterModelChange={onFilterModelChange}
-        paginationMode="server"
-        rowCount={pagination?.count}
-        paginationModel={{
-          page: parseInt(page || 0),
-          pageSize: pagination?.pageSize,
-        }}
-        onPaginationModelChange={onPaginationModelChange}
-        pageSizeOptions={[]}
-        rowHeight={rowHeight}
-        disableRowSelectionOnClick
-        columnHeaderHeight={42}
-        onRowSelectionModelChange={setSelectedRows}
-        rowSelectionModel={selectedRows}
-        slotProps={{
-          filterPanel: {
-            filterFormProps: {
-              logicOperatorInputProps: {
-                variant: "outlined",
-                size: "small",
-              },
-              columnInputProps: {
-                variant: "outlined",
-                size: "small",
-                sx: { mt: "auto" },
-              },
-              operatorInputProps: {
-                variant: "outlined",
-                size: "small",
-                sx: { mt: "auto" },
-              },
-              valueInputProps: {
-                InputComponentProps: {
-                  variant: "outlined",
-                  size: "small",
+      {type === "settings" ? (
+        <>{settingsView}</>
+      ) : (
+        <>
+          <DataGrid
+            pagination
+            rows={rows}
+            checkboxSelection
+            loading={loading}
+            columns={columns}
+            getRowClassName={(params) =>
+              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+            }
+            onRowClick={onRowClick}
+            filterDebounceMs={300}
+            onColumnResize={onColumnResize}
+            columnVisibilityModel={columnVisibility}
+            onColumnVisibilityModelChange={onColumnVisibilityChange}
+            sortingMode="server"
+            sortModel={columnSort}
+            onSortModelChange={onSortModelChange}
+            filterMode="server"
+            filterModel={
+              !!columnFilters
+                ? {
+                    items: columnFilters,
+                  }
+                : undefined
+            }
+            onFilterModelChange={onFilterModelChange}
+            paginationMode="server"
+            rowCount={pagination?.count}
+            paginationModel={{
+              page: parseInt(page || 0),
+              pageSize: pagination?.pageSize,
+            }}
+            onPaginationModelChange={onPaginationModelChange}
+            pageSizeOptions={[]}
+            rowHeight={rowHeight}
+            disableRowSelectionOnClick
+            columnHeaderHeight={42}
+            onRowSelectionModelChange={setSelectedRows}
+            rowSelectionModel={selectedRows}
+            slotProps={{
+              filterPanel: {
+                filterFormProps: {
+                  logicOperatorInputProps: {
+                    variant: "outlined",
+                    size: "small",
+                  },
+                  columnInputProps: {
+                    variant: "outlined",
+                    size: "small",
+                    sx: { mt: "auto" },
+                  },
+                  operatorInputProps: {
+                    variant: "outlined",
+                    size: "small",
+                    sx: { mt: "auto" },
+                  },
+                  valueInputProps: {
+                    InputComponentProps: {
+                      variant: "outlined",
+                      size: "small",
+                    },
+                  },
                 },
               },
-            },
-          },
-        }}
-      />
+            }}
+          />
+        </>
+      )}
     </Box>
   );
 };

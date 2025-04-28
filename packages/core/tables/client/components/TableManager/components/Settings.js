@@ -2,9 +2,7 @@ import BaseLayout from "layouts/BaseLayout";
 import SettingsForm from "components/SettingsForm";
 import InputElementsEditor from "components/InputElementsEditor";
 
-import TableProvider, {
-  useTable,
-} from "../../../../tables/client/contexts/table.js";
+import TableProvider, { useTable } from "../../../contexts/table.js";
 
 const UsersSettingsContent = () => {
   const { data, updateTable } = useTable();
@@ -12,7 +10,6 @@ const UsersSettingsContent = () => {
   const table = data?.table;
 
   const formInitialValues = {
-    name: "auth",
     fields: table?.fields || [],
   };
 
@@ -25,19 +22,8 @@ const UsersSettingsContent = () => {
     },
   ];
 
-  const tabs = [
-    {
-      title: "Entries",
-      href: "/authentication",
-    },
-  ];
-
   return (
-    <BaseLayout
-      title="Settings"
-      subtitle="Manage your authentication settings"
-      tabs={tabs}
-    >
+    <BaseLayout title="Settings" subtitle="Manage your authentication settings">
       <SettingsForm data={settings_data} />
     </BaseLayout>
   );
