@@ -152,6 +152,7 @@ const TableProvider = ({ id, children }) => {
       view,
       loading,
       updateTable,
+      tableRefetch,
       updateTableEntry,
       deleteTable,
       addTableEntry,

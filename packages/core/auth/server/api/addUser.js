@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 
-// import upsertEntry from "#libs/upsertEntry.js";
+import upsertEntry from "../../../tables/server/utils/upsertEntry.js";
 
 export default async (req, res) => {
   let body = req?.body;
@@ -11,7 +11,12 @@ export default async (req, res) => {
     const hashedPassword = await bcrypt.hash(body?.password, salt);
     body.password = hashedPassword;
 
-    // await upsertEntry({ id: "auth", body, files });
+    await upsertEntry({
+      id: "nodestation_users",
+      body,
+      files,
+      entry_id: body?.id,
+    });
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

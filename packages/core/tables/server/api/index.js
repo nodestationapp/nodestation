@@ -11,6 +11,9 @@ import upsertPreferences from "./upsertPreferences.js";
 import removeTableEntries from "./removeTableEntries.js";
 import authMiddleware from "../../../auth/utils/authMiddleware.js";
 
+import validate from "../utils/validate.js";
+import addTableEntrySchema from "../utils/addTableEntrySchema.js";
+
 export default [
   {
     method: "POST",
@@ -46,7 +49,11 @@ export default [
     method: "POST",
     path: "/tables/:id/entry",
     handler: createTableEntry,
-    middlewares: [authMiddleware(["admin"]), uploader],
+    middlewares: [
+      authMiddleware(["admin"]),
+      uploader,
+      validate({ getValidationSchema: addTableEntrySchema }),
+    ],
   },
   {
     method: "GET",

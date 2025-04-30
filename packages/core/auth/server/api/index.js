@@ -2,6 +2,7 @@ import "../../utils/passport.js";
 
 import me from "./me.js";
 import login from "./login.js";
+import addUser from "./addUser.js";
 import register from "./register.js";
 import updateMe from "./updateMe.js";
 import checkAdmin from "./check-admin.js";
@@ -9,7 +10,25 @@ import changePassword from "./changePassword.js";
 
 import authMiddleware from "../../utils/authMiddleware.js";
 
+import validate from "../../../tables/server/utils/validate.js";
+import addTableEntrySchema from "../../../tables/server/utils/addTableEntrySchema.js";
+
 export default [
+  {
+    method: "POST",
+    path: "/p/auth/user",
+    handler: addUser,
+    middlewares: [
+      authMiddleware(["admin"]),
+      validate({
+        getValidationSchema: (req) =>
+          addTableEntrySchema({
+            ...req,
+            params: { id: "nodestation_users" },
+          }),
+      }),
+    ],
+  },
   {
     method: "GET",
     path: "/auth/check-admin",

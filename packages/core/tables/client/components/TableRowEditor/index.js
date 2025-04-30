@@ -3,12 +3,17 @@ import { Stack } from "@mui/material";
 
 import AsideModal from "components/AsideModal";
 
-import tableInputRender from "libs/tableInputRender";
+import tableInputRender from "./components/tableInputRender.js";
 
 import { useTable } from "@nstation/core/tables/client/contexts/table.js";
 
-const TableRowEditor = ({ open, onClose }) => {
-  const { data: table_data, addTableEntry, updateTableEntry } = useTable();
+const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
+  const {
+    data: table_data,
+    addTableEntry,
+    updateTableEntry,
+    tableRefetch,
+  } = useTable();
 
   const onSubmit = async (values, { setSubmitting, setErrors, resetForm }) => {
     try {
@@ -28,10 +33,22 @@ const TableRowEditor = ({ open, onClose }) => {
       });
 
       if (open?.id) {
-        await updateTableEntry(open?.id, formData);
+        if (!!onEntrySubmit) {
+          await onEntrySubmit(formData);
+          tableRefetch();
+        } else {
+          await updateTableEntry(open?.id, formData);
+        }
       } else {
-        await addTableEntry(formData);
+        if (!!onEntrySubmit) {
+          await onEntrySubmit(formData);
+          tableRefetch();
+        } else {
+          await addTableEntry(formData);
+        }
       }
+
+      onClose();
 
       resetForm({ values });
     } catch (err) {
@@ -53,7 +70,7 @@ const TableRowEditor = ({ open, onClose }) => {
         submitDisabled={!formik.dirty}
         onSubmit={formik.handleSubmit}
         submitLoading={formik.isSubmitting}
-        header={open?.[table_data?.table?.display_name || "id"] || "Add entry"}
+        header={open?.[table_data?.table?.display_name || "id"] || "Add entr"}
       >
         <Stack gap={2} direction="column">
           {table_data?.table?.fields?.map((item, index) => {

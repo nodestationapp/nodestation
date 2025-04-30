@@ -1,4 +1,4 @@
-import { Box, Divider } from "@mui/material";
+import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -20,8 +20,6 @@ const MuiTable = ({
   onRowClick,
   rowHeight = 42,
   settingsView,
-  tableSettingsOpen,
-  setTableSettingsOpen,
 }) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();

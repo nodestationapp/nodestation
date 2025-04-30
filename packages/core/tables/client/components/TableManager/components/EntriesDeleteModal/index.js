@@ -26,6 +26,8 @@ const EntriesDeleteModal = ({ open, onClose }) => {
       setLoading(false);
       console.error(err);
     }
+
+    setLoading(false);
   };
 
   return (

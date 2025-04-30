@@ -19,6 +19,7 @@ const TableManagerContent = ({
   appendColumns,
   rowHeight,
   rowFullWidth,
+  onEntrySubmit,
 }) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
@@ -26,14 +27,8 @@ const TableManagerContent = ({
   const type = queryParams.get("type");
 
   const [content_editor, setContentEditor] = useState(null);
-  const {
-    data,
-    page,
-    loading,
-    saveTableTransaction,
-    tableSettingsOpen,
-    setTableSettingsOpen,
-  } = useTable();
+  const { data, page, loading, saveTableTransaction, tableSettingsOpen } =
+    useTable();
   const [entriesDeleteModal, setEntriesDeleteModal] = useState(false);
 
   let columnsToShow = data?.table?.fields || [];
@@ -104,7 +99,7 @@ const TableManagerContent = ({
         page={page}
         tableSettingsOpen={tableSettingsOpen}
         settingsView={<UsersSettings />}
-        action={action}
+        action={type !== "settings" ? action : null}
         columns={columns}
         loading={loading}
         rowHeight={rowHeight}
@@ -119,6 +114,7 @@ const TableManagerContent = ({
       {!!content_editor && (
         <TableRowEditor
           open={content_editor}
+          onEntrySubmit={onEntrySubmit}
           onClose={() => setContentEditor(null)}
         />
       )}
@@ -136,10 +132,12 @@ const TableManager = ({
   appendColumns = [],
   rowHeight = 42,
   rowFullWidth = undefined,
+  onEntrySubmit,
 }) => {
   return (
     <TableProvider id={table}>
       <TableManagerContent
+        onEntrySubmit={onEntrySubmit}
         hiddenColumns={hiddenColumns}
         appendColumns={appendColumns}
         rowHeight={rowHeight}

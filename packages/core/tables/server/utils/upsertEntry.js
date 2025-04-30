@@ -21,7 +21,7 @@ function extractUploadPath(fullPath) {
 const upsertEntry = async ({ id, body, files, entry_id, extraFields = [] }) =>
   new Promise(async (resolve, reject) => {
     for (const key in body) {
-      if (body[key] === "null") {
+      if (body[key] === "null" || body[key] === "") {
         body[key] = null;
       }
     }
@@ -30,12 +30,6 @@ const upsertEntry = async ({ id, body, files, entry_id, extraFields = [] }) =>
     let schemaFields = schema?.fields;
 
     schemaFields = [...schemaFields, ...extraFields];
-
-    if (id?.startsWith("form_")) {
-      schemaFields.push({
-        slug: "is_read",
-      });
-    }
 
     try {
       if (files?.length > 0) {
@@ -60,7 +54,13 @@ const upsertEntry = async ({ id, body, files, entry_id, extraFields = [] }) =>
       }
 
       let formatted_body = schemaFields.reduce((acc, curr) => {
-        acc[curr.slug] = body?.[curr.slug];
+        let value = body?.[curr.slug];
+
+        if (value === null && !!curr?.default) {
+          value = undefined;
+        }
+
+        acc[curr.slug] = value;
         return acc;
       }, {});
 

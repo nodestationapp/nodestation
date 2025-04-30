@@ -22,7 +22,7 @@ const Toolbar = ({ tabs, action, selectActions, selectedRows }) => {
       )}
 
       <Stack direction="row" spacing={1} alignItems="center">
-        {action()}
+        {action?.()}
       </Stack>
     </Stack>
   );

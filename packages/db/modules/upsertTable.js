@@ -4,6 +4,7 @@ import createPreferencesIfNotExist from "./createPreferencesIfNotExist.js";
 const typesMap = {
   id: "string",
   text: "text",
+  password: "string",
   select: "string",
   media: process.env.DATABASE_CLIENT === "sqlite" ? "text" : "jsonb",
   numeric: "integer",
