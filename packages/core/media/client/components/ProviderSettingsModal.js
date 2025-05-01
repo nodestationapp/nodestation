@@ -71,7 +71,6 @@ const ProviderSettingsModal = ({ open, onClose }) => {
       <AsideModal
         open={open}
         onClose={onClose}
-        submitDisabled={!formik.dirty}
         onSubmit={formik.handleSubmit}
         submitLoading={formik.isSubmitting}
         header={title}

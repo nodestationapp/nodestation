@@ -18,16 +18,16 @@ const Users = () => {
     <TableManager
       table="nodestation_users"
       onEntrySubmit={onEntrySubmit}
-      appendColumns={[
-        {
-          name: "User",
-          sort: "first_name",
-          type: "user_profile",
-          slug: "user",
-          origin: "system",
-        },
-      ]}
-      hiddenColumns={["first_name", "last_name", "photo", "password"]}
+      // appendColumns={[
+      //   {
+      //     name: "User",
+      //     sort: "first_name",
+      //     type: "user_profile",
+      //     slug: "user",
+      //     origin: "system",
+      //   },
+      // ]}
+      hiddenColumns={["password"]}
     />
   );
 };

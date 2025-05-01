@@ -1,10 +1,11 @@
+import { Stack } from "@mui/material";
+
 import Id from "./components/Id";
+import Date from "./components/Date";
 import Text from "./components/Text";
 import Select from "./components/Select";
 import Boolean from "./components/Boolean";
-import FormikInput from "components/formik/FormikInput";
 import FormikSwitch from "components/formik/FormikSwitch";
-import { Stack } from "@mui/material";
 
 const extra_input_render = (type, locked) => {
   switch (type) {
@@ -15,11 +16,12 @@ const extra_input_render = (type, locked) => {
     case "select":
       return <Select locked={locked} />;
     case "text":
-      return <Text />;
+      return <Text locked={locked} />;
+    case "date":
+      return <Date locked={locked} />;
     default:
       return (
         <>
-          <FormikInput label="Default value" name="default" disabled={locked} />
           <FormikSwitch label="Required" name="required" disabled={locked} />
         </>
       );

@@ -79,6 +79,7 @@ const tableInputRender = (item, formik, display_name) => {
             <TextField
               {...params}
               label={item?.name}
+              required={item?.required}
               error={!!formik?.errors?.[item?.slug]}
               helperText={formik?.errors?.[item?.slug]}
             />

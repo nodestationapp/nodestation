@@ -1,33 +1,76 @@
-import FormikInput from "components/formik/FormikInput";
-import FormikSelect from "components/formik/FormikSelect";
-import FormikSwitch from "components/formik/FormikSwitch";
-import FormikDragOrderInput from "components/formik/FormikDragOrderInput";
+import {
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  Switch,
+  TextField,
+} from "@mui/material";
+import { useFormikContext } from "formik";
+import DragOrderInput from "./components/DragOrderInput/index.js";
 
-const boolean_default_options = [
+const variant_options = [
   {
     label: "Single",
-    value: false,
+    value: "single",
   },
   {
     label: "Multi",
-    value: true,
+    value: "multi",
   },
 ];
 
-const Select = ({ locked }) => {
+const SelectInput = ({ locked }) => {
+  const { values, errors, setFieldValue, handleBlur } = useFormikContext();
+
   return (
     <>
-      <FormikSelect
-        label="Variant"
-        name="multi"
-        removeActiveLabel={true}
-        options={boolean_default_options}
+      <FormControl fullWidth>
+        <InputLabel id="variant-select-label">Variant</InputLabel>
+        <Select
+          key={values?.variant}
+          name="multi"
+          label="Variant"
+          disabled={locked}
+          variant="outlined"
+          labelId="variant-select-label"
+          value={values.variant}
+          onChange={(e) => setFieldValue("variant", e.target.value)}
+          onBlur={handleBlur}
+          error={errors.variant}
+          helperText={errors.variant}
+        >
+          {variant_options?.map((item) => (
+            <MenuItem value={item?.value}>{item?.label}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <TextField
+        fullWidth
+        multiline
+        name="default"
+        label="Default"
+        variant="outlined"
+        value={values.default}
+        onBlur={handleBlur}
+        error={errors.default}
+        helperText={errors.default}
+        onChange={(e) => setFieldValue("default", e.target.value)}
       />
-      <FormikInput label="Default value" name="default" />
-      <FormikSwitch label="Required" name="required" disabled={locked} />
-      <FormikDragOrderInput name="options" />
+      <FormControlLabel
+        name="required"
+        label="Required"
+        control={<Switch checked={values?.required} disabled={locked} />}
+        onChange={(e) => setFieldValue("required", e.target.checked)}
+      />
+      <DragOrderInput
+        name="options"
+        value={values?.options}
+        onChange={(e) => setFieldValue("options", e.target.value)}
+      />
     </>
   );
 };
 
-export default Select;
+export default SelectInput;

@@ -158,11 +158,9 @@ const TableProvider = ({ id, children }) => {
       addTableEntry,
       deleteTableEntries,
       saveTableTransaction,
-      setTableSettingsOpen,
-      tableSettingsOpen,
     };
     // eslint-disable-next-line
-  }, [data, id, loading, view, tableSettingsOpen]);
+  }, [data, id, loading, view]);
 
   return (
     <TableContext.Provider value={value}>{children}</TableContext.Provider>

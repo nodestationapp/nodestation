@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, IconButton, Tooltip } from "@mui/material";
-import { alpha } from "@mui/material/styles";
 
-import UsersSettings from "./components/Settings.js";
+import { alpha } from "@mui/material/styles";
+import { Button, IconButton, Tooltip } from "@mui/material";
+
 import MuiTable from "../../components/MuiTable/index.js";
 import TableRowEditor from "../../components/TableRowEditor/index.js";
 import EntriesDeleteModal from "./components/EntriesDeleteModal/index.js";
 
 import TableProvider, { useTable } from "../../contexts/table.js";
-import tableColumnsRender from "libs/helpers/tableColumnsRender";
+import tableColumnsRender from "../../utils/tableColumnsRender.js";
 
 import AddIcon from "@mui/icons-material/Add";
 import { DeleteOutline, Settings } from "@mui/icons-material";
@@ -27,8 +27,7 @@ const TableManagerContent = ({
   const type = queryParams.get("type");
 
   const [content_editor, setContentEditor] = useState(null);
-  const { data, page, loading, saveTableTransaction, tableSettingsOpen } =
-    useTable();
+  const { data, page, loading, saveTableTransaction } = useTable();
   const [entriesDeleteModal, setEntriesDeleteModal] = useState(false);
 
   let columnsToShow = data?.table?.fields || [];
@@ -55,9 +54,7 @@ const TableManagerContent = ({
                 : null,
           },
         })}
-        onClick={() =>
-          navigate(`${pathname}?v=${data?.preferences?.id}&type=settings`)
-        }
+        onClick={() => navigate(`${pathname}/settings`)}
       >
         <Settings color={type === "settings" ? "primary" : ""} />
       </IconButton>
@@ -97,9 +94,7 @@ const TableManagerContent = ({
     <>
       <MuiTable
         page={page}
-        tableSettingsOpen={tableSettingsOpen}
-        settingsView={<UsersSettings />}
-        action={type !== "settings" ? action : null}
+        action={action}
         columns={columns}
         loading={loading}
         rowHeight={rowHeight}

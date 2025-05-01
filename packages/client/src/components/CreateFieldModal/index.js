@@ -10,15 +10,11 @@ import slugify from "slugify";
 import { useFormik, FormikContext } from "formik";
 
 import AsideModal from "components/AsideModal";
-
-import field_type_data from "libs/field_type_data";
 import ExtraInputs from "./components/ExtraInputs";
 
-const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
-  const formatted_field_type_data = field_type_data?.filter(
-    (item) => !!!item?.hidden
-  );
+import field_type_data from "libs/field_type_data";
 
+const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
   const onSubmit = async (formik_values) => {
     let temp = [...mainFormik?.values?.fields];
 
@@ -68,7 +64,7 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
 
     mainFormik.setFieldValue("fields", temp);
     mainFormik.submitForm();
-    // onClose();
+    onClose();
   };
 
   const formik = useFormik({
@@ -121,8 +117,13 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
             helperText={formik.errors.type}
             disabled={form?.origin === "system"}
           >
-            {formatted_field_type_data?.map((item) => (
-              <MenuItem value={item?.value}>{item?.label}</MenuItem>
+            {field_type_data?.map((item) => (
+              <MenuItem value={item?.value}>
+                <Stack direction="row" gap={1.5} alignItems="center">
+                  {item?.icon}
+                  {item?.label}
+                </Stack>
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -132,8 +133,6 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
             type={formik.values.type}
           />
         </FormikContext.Provider>
-        {/* 
-              <ExtraInputs locked={form?.origin === "system"} /> */}
       </Stack>
     </AsideModal>
   );

@@ -67,10 +67,9 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
       <AsideModal
         open={open}
         onClose={onClose}
-        submitDisabled={!formik.dirty}
         onSubmit={formik.handleSubmit}
         submitLoading={formik.isSubmitting}
-        header={open?.[table_data?.table?.display_name || "id"] || "Add entr"}
+        header={open?.[table_data?.table?.display_name || "id"] || "Add entry"}
       >
         <Stack gap={2} direction="column">
           {table_data?.table?.fields?.map((item, index) => {

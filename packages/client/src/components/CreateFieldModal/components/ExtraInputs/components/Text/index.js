@@ -41,6 +41,7 @@ const Text = ({ locked }) => {
           key={values?.variant}
           name="variant"
           label="Variant"
+          disabled={locked}
           variant="outlined"
           labelId="variant-select-label"
           value={values.variant}
@@ -61,16 +62,16 @@ const Text = ({ locked }) => {
         label="Default"
         variant="outlined"
         value={values.default}
+        disabled={locked}
         onBlur={handleBlur}
         error={errors.default}
         helperText={errors.default}
         onChange={(e) => setFieldValue("default", e.target.value)}
       />
-      {/* todo: <FormikTextarea label="Default value" name="default" /> */}
       <FormControlLabel
+        name="required"
         label="Required"
-        disabled={locked}
-        control={<Switch />}
+        control={<Switch checked={values?.required} disabled={locked} />}
         onChange={(e) => setFieldValue("required", e.target.checked)}
       />
     </>

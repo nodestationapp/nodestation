@@ -2,9 +2,11 @@ import BaseLayout from "layouts/BaseLayout";
 import SettingsForm from "components/SettingsForm";
 import InputElementsEditor from "components/InputElementsEditor";
 
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 import TableProvider, {
   useTable,
-} from "../../../../tables/client/contexts/table.js";
+} from "../../../../../tables/client/contexts/table.js";
 
 const UsersSettingsContent = () => {
   const { data, updateTable } = useTable();
@@ -27,15 +29,23 @@ const UsersSettingsContent = () => {
 
   const tabs = [
     {
-      title: "Entries",
+      title: <ArrowBackIcon fontSize="1rem" />,
       href: "/authentication",
+    },
+    {
+      title: "Schema",
+      href: "/authentication/settings",
+    },
+    {
+      title: "Templates",
+      href: "/authentication/settings/templates",
     },
   ];
 
   return (
     <BaseLayout
-      title="Settings"
-      subtitle="Manage your authentication settings"
+      title="Schema"
+      subtitle="Manage your authentication schema"
       tabs={tabs}
     >
       <SettingsForm data={settings_data} />
