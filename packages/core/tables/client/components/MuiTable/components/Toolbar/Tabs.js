@@ -3,7 +3,8 @@ import { useFormik } from "formik";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { Add, DeleteOutline } from "@mui/icons-material";
+import Add from "@mui/icons-material/Add";
+import DeleteOutline from "@mui/icons-material/DeleteOutline";
 import { Button, IconButton, Popover, Stack, Tab, Tabs } from "@mui/material";
 
 import api from "libs/api";

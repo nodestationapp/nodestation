@@ -5,7 +5,7 @@ import { Button, Stack } from "@mui/material";
 import List from "components/List";
 import CreateFieldModal from "components/CreateFieldModal";
 
-import { Add } from "@mui/icons-material";
+import Add from "@mui/icons-material/Add";
 
 const InputElementsEditor = ({ data, onSubmit }) => {
   const [add_field_modal, setAddFieldModal] = useState(false);

@@ -14,7 +14,9 @@ import ArchiveEmailModal from "page_components/emails/components/ArchiveEmailMod
 
 import field_type_data from "libs/field_type_data";
 
-import { LockOutline, MoreVert, DeleteOutline } from "@mui/icons-material";
+import MoreVert from "@mui/icons-material/MoreVert";
+import LockOutline from "@mui/icons-material/LockOutline";
+import DeleteOutline from "@mui/icons-material/DeleteOutline";
 
 const FormFieldItem = ({
   name,

@@ -12,7 +12,8 @@ import TableProvider, { useTable } from "../../contexts/table.js";
 import tableColumnsRender from "../../utils/tableColumnsRender.js";
 
 import AddIcon from "@mui/icons-material/Add";
-import { DeleteOutline, Settings } from "@mui/icons-material";
+import Settings from "@mui/icons-material/Settings";
+import DeleteOutline from "@mui/icons-material/DeleteOutline";
 
 const TableManagerContent = ({
   hiddenColumns,
