@@ -7,14 +7,13 @@ import Add from "@mui/icons-material/Add";
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
 import { Button, IconButton, Popover, Stack, Tab, Tabs } from "@mui/material";
 
-import api from "libs/api";
+import api from "utils/api";
 import { useTable } from "@nstation/core/tables/client/contexts/table.js";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 
 const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
   const navigate = useNavigate();
 
-  // const { data, view } = useTable();
   const table = useTable();
   const queryClient = useQueryClient();
   const { pathname, search } = useLocation();
@@ -28,7 +27,7 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
       if (!!!values?.id) {
         create = await api.post("/preferences/create", {
           name: values?.name,
-          table: table?.table?.id,
+          table: table?.id,
           view: table?.view,
         });
 
@@ -171,7 +170,7 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
           >
             {!!formik?.values?.id ? "Update" : "Create"}
           </Button>
-          {!!formik?.values?.id && table?.views?.length > 1 && (
+          {!!formik?.values?.id && table?.data?.views?.length > 1 && (
             <IconButton
               size="micro"
               onClick={onDeleteView}

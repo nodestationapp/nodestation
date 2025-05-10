@@ -9,7 +9,7 @@ import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 
 import { IconifyIcon } from "@nstation/design-system";
 
-import { useApp } from "@nstation/utils/ui/contexts/app.js";
+import { useApp } from "contexts/app.js";
 
 const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   margin: theme.spacing(1, 0),

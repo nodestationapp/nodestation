@@ -4,7 +4,7 @@ import { Box, Typography, Button, TextField } from "@mui/material";
 import { ColorModeDropdown } from "@nstation/design-system";
 import { useAuth } from "../../contexts/authMiddleware.js";
 
-import LogoIcon from "assets/icons/logo-sygnet.svg";
+import LogoIcon from "icons/logo-sygnet.svg";
 
 const LoginContent = () => {
   const { login } = useAuth();

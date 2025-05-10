@@ -1,6 +1,6 @@
 import { Button, Typography, Box } from "@mui/material";
 
-import { useApp } from "@nstation/utils/ui/contexts/app.js";
+import { useApp } from "contexts/app.js";
 
 const Dashboard = () => {
   const { user } = useApp();

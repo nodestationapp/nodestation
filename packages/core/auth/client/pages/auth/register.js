@@ -4,9 +4,9 @@ import { Box, Typography, Button, TextField } from "@mui/material";
 
 import { ColorModeDropdown } from "@nstation/design-system";
 
-import api from "libs/api";
+import api from "utils/api.js";
 
-import LogoIcon from "assets/icons/logo-sygnet.svg";
+import LogoIcon from "icons/logo-sygnet.svg";
 import { useAuth } from "../../contexts/authMiddleware.js";
 
 const RegisterContent = () => {

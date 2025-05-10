@@ -1,30 +1,22 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { CookiesProvider } from "react-cookie";
 import { BrowserRouter } from "react-router-dom";
-import AppProvider from "@nstation/utils/ui/contexts/app.js";
+import AppProvider from "contexts/app.js";
+import { CssBaseline } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import App from "./App";
 
-import AppTheme from "./theme/AppTheme";
-import { CssBaseline } from "@mui/material";
-import { dataGridCustomizations } from "./theme/customizations/dataGrid";
-import { datePickersCustomizations } from "./theme/customizations/datePickers";
+import { AppTheme } from "@nstation/design-system/theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
-
-const xThemeComponents = {
-  ...dataGridCustomizations,
-  ...datePickersCustomizations,
-};
 
 root.render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
       <CookiesProvider defaultSetOptions={{ path: "/" }}>
-        <AppTheme themeComponents={xThemeComponents}>
+        <AppTheme>
           <CssBaseline />
           <AppProvider>
             <App />

@@ -1,12 +1,12 @@
-import IdIcon from "assets/icons/content-types/id.svg";
-import JsonIcon from "assets/icons/content-types/json.svg";
-import DateIcon from "assets/icons/content-types/date.svg";
-import UserIcon from "assets/icons/content-types/user.svg";
-import MediaIcon from "assets/icons/content-types/media.svg";
-import NumericIcon from "assets/icons/content-types/number.svg";
-import BooleanIcon from "assets/icons/content-types/boolean.svg";
-import ShortTextIcon from "assets/icons/content-types/short-text.svg";
-import EnumerationIcon from "assets/icons/content-types/enumeration.svg";
+import IdIcon from "../icons/id.svg";
+import JsonIcon from "../icons/json.svg";
+import DateIcon from "../icons/date.svg";
+import UserIcon from "../icons/user.svg";
+import MediaIcon from "../icons/media.svg";
+import NumericIcon from "../icons/number.svg";
+import BooleanIcon from "../icons/boolean.svg";
+import ShortTextIcon from "../icons/short-text.svg";
+import EnumerationIcon from "../icons/enumeration.svg";
 
 const field_type_data = [
   {

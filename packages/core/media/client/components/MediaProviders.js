@@ -5,9 +5,9 @@ import { useMedia } from "../contexts/media.js";
 import activeEmailChecker from "../utils/activeEmailChecker.js";
 import ProviderSettingsModal from "./ProviderSettingsModal.js";
 
+import AwsLogo from "../icons/aws.svg";
 import StorageIcon from "@mui/icons-material/Storage";
-import AwsLogo from "assets/icons/email-providers/aws.svg";
-import DigitalOceanLogo from "assets/icons/media-providers/digitalocean.svg";
+import DigitalOceanLogo from "../icons/digitalocean.svg";
 
 const MediaProviders = () => {
   const { media_settings, updateMediaSettings } = useMedia();

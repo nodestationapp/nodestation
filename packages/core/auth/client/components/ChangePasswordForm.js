@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 
-import api from "libs/api";
+import api from "utils/api";
 
 const ChangePasswordForm = () => {
   const onSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {

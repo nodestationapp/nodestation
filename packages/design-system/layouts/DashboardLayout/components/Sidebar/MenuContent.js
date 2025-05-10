@@ -10,7 +10,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 
 import { IconifyIcon } from "@nstation/design-system";
 
-import { useApp } from "@nstation/utils/ui/contexts/app.js";
+import { useApp } from "contexts/app.js";
 
 const ListItemComponent = ({ item }) => {
   const { pathname } = useLocation();

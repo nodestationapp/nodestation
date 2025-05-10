@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { Avatar, Button, Stack } from "@mui/material";
 
-import api from "libs/api";
-import { useApp } from "@nstation/utils/ui/contexts/app.js";
+import api from "utils/api";
+import { useApp } from "contexts/app.js";
 
 const PhotoInput = () => {
   const { user, getUserData } = useApp();

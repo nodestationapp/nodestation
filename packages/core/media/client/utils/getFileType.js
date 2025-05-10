@@ -1,4 +1,4 @@
-import { DocumentIcon } from "@heroicons/react/24/outline";
+// import { DocumentIcon } from "@heroicons/react/24/outline";
 
 import Image from "@mui/icons-material/Image";
 import Article from "@mui/icons-material/Article";
@@ -10,7 +10,7 @@ const getFileType = (type) => {
   if (!type)
     return {
       label: "Unknown",
-      icon: <DocumentIcon sx={{ height: 15, width: 15 }} />,
+      // icon: <DocumentIcon sx={{ height: 15, width: 15 }} />,
     };
 
   switch (true) {

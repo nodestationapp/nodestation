@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
+import { useApp } from "contexts/app.js";
 import { DashboardLayout } from "@nstation/design-system/Layouts";
-import { useApp } from "@nstation/utils/ui/contexts/app.js";
 
 const App = () => {
   const { menuLinks } = useApp();

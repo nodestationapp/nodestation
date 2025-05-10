@@ -3,8 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
-import api from "libs/api";
-import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";
+import api from "utils/api";
 
 const TableContext = createContext();
 

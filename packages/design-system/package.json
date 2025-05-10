@@ -5,6 +5,11 @@
   "main": "./index.js",
   "exports": {
     ".": "./index.js",
-    "./Layouts": "./Layouts/index.js"
+    "./Layouts": "./Layouts/index.js",
+    "./theme": "./theme/index.js"
+  },
+  "dependencies": {
+    "@iconify/react": "^6.0.0",
+    "classnames": "^2.5.1"
   }
 }

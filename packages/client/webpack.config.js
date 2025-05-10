@@ -60,16 +60,9 @@ module.exports = (env) => {
     resolve: {
       extensions: [".js", ".jsx"],
       alias: {
-        libs: path.resolve(__dirname, "src/libs"),
-        context: path.resolve(__dirname, "src/context"),
-        components: path.resolve(__dirname, "src/components"),
-        pages: path.resolve(__dirname, "src/pages"),
-        assets: path.resolve(__dirname, "src/assets"),
-        page_components: path.resolve(__dirname, "src/page_components"),
-        plugins: path.resolve(__dirname, "../../plugins"),
-        root: path.resolve(__dirname, "../../"),
-        layouts: path.resolve(__dirname, "src/layouts"),
-        hooks: path.resolve(__dirname, "src/hooks"),
+        utils: path.resolve(__dirname, "src/utils"),
+        icons: path.resolve(__dirname, "src/icons"),
+        contexts: path.resolve(__dirname, "src/contexts"),
       },
     },
   };
