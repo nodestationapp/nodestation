@@ -2,8 +2,6 @@ import BaseLayout from "layouts/BaseLayout";
 import SettingsForm from "components/SettingsForm";
 import SettingTemplates from "../../../components/SettingTemplates.js";
 
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
 const UsersTemplates = () => {
   const settings_data = [
     {
@@ -13,10 +11,6 @@ const UsersTemplates = () => {
   ];
 
   const tabs = [
-    {
-      title: <ArrowBackIcon fontSize="1rem" />,
-      href: "/authentication",
-    },
     {
       title: "Schema",
       href: "/authentication/settings",
@@ -32,6 +26,7 @@ const UsersTemplates = () => {
       title="Templates"
       subtitle="Manage your authentication templates"
       tabs={tabs}
+      backButtonLink="/authentication"
     >
       <SettingsForm data={settings_data} />
     </BaseLayout>

@@ -32,7 +32,7 @@ const ToolbarTabs = ({ tabs }) => {
 
         navigate(`${pathname}?v=${create?.id}`);
       } else {
-        await api.put(`/admin/api/preferences/${values?.id}`, {
+        await api.put(`/preferences/${values?.id}`, {
           name: values?.name,
         });
       }

@@ -2,8 +2,6 @@ import BaseLayout from "layouts/BaseLayout";
 import SettingsForm from "components/SettingsForm";
 import InputElementsEditor from "components/InputElementsEditor";
 
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
 import TableProvider, {
   useTable,
 } from "../../../../../tables/client/contexts/table.js";
@@ -29,10 +27,6 @@ const UsersSettingsContent = () => {
 
   const tabs = [
     {
-      title: <ArrowBackIcon fontSize="1rem" />,
-      href: "/authentication",
-    },
-    {
       title: "Schema",
       href: "/authentication/settings",
     },
@@ -44,9 +38,10 @@ const UsersSettingsContent = () => {
 
   return (
     <BaseLayout
+      tabs={tabs}
       title="Schema"
       subtitle="Manage your authentication schema"
-      tabs={tabs}
+      backButtonLink="/authentication"
     >
       <SettingsForm data={settings_data} />
     </BaseLayout>
