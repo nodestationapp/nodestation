@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useLocation } from "react-router-dom";
 import { Box, Typography, Button, TextField } from "@mui/material";
 
-import ColorModeDropdown from "components/ColorModeDropdown";
+import { ColorModeDropdown } from "@nstation/design-system";
 
 import api from "libs/api";
 

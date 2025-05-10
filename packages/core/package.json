@@ -13,6 +13,7 @@
     "email": "ceo@nodestation.app"
   },
   "dependencies": {
+    "@nstation/design-system": "^1.14.12",
     "@nstation/utils": "^1.14.12"
   }
 }

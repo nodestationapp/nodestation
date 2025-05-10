@@ -1,9 +1,9 @@
 import { useFormik } from "formik";
 import { Stack } from "@mui/material";
 
-import AsideModal from "components/AsideModal";
+import { AsideModal } from "@nstation/design-system";
 
-import tableInputRender from "./components/tableInputRender.js";
+import tableInputRender from "../TableRowEditor/components/tableInputRender.js";
 
 import { useTable } from "@nstation/core/tables/client/contexts/table.js";
 

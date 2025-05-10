@@ -1,12 +1,12 @@
 import { useFormik } from "formik";
 import { Stack } from "@mui/material";
 
-import AsideModal from "components/AsideModal";
+import { AsideModal } from "@nstation/design-system";
 
 import { useMedia } from "../contexts/media.js";
-import mediaSettingsFields from "./mediaSettingsFields.js";
+import mediaSettingsFields from "../utils/mediaSettingsFields.js";
 
-import tableInputRender from "libs/tableInputRender";
+import tableInputRender from "../../../tables/client/components/TableRowEditor/components/tableInputRender.js";
 
 const title_render = (type) => {
   switch (type) {

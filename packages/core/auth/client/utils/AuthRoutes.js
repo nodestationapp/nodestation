@@ -1,10 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import Login from "../pages/auth/login.js";
-import Verify from "../pages/auth/verify.js";
 import Register from "../pages/auth/register.js";
-import ForgetPassword from "../pages/auth/forget-password/Content/index.js";
-import ResetPassword from "../pages/auth/forget-password/reset/Content/index.js";
+
 import { useAuth } from "../contexts/authMiddleware.js";
 
 const AuthRoutes = () => {
@@ -17,11 +15,6 @@ const AuthRoutes = () => {
       ) : (
         <Route path="/register" element={<Register />} />
       )}
-      <Route path="/verify" element={<Verify />} />
-      <Route path="/forget-password">
-        <Route index element={<ForgetPassword />} />
-        <Route path="reset" element={<ResetPassword />} />
-      </Route>
       <Route
         path="*"
         element={

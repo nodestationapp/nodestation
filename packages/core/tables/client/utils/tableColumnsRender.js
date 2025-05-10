@@ -1,7 +1,7 @@
 import { Chip } from "@mui/material";
-import Date from "components/MuiTable/components/Date";
-import Media from "components/MuiTable/components/Media";
-import UserProfile from "components/MuiTable/components/UserProfile";
+import Date from "../components/MuiTable/components/Date/index.js";
+import Media from "../components/MuiTable/components/Media/index.js";
+import UserProfile from "../components/MuiTable/components/UserProfile/index.js";
 
 const render_options = (column, data) => {
   const colors = column?.options?.reduce((acc, item) => {

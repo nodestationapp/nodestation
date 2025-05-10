@@ -9,11 +9,13 @@ import { Button, IconButton, Popover, Stack, Tab, Tabs } from "@mui/material";
 
 import api from "libs/api";
 import { useTable } from "@nstation/core/tables/client/contexts/table.js";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 
-const ToolbarTabs = ({ tabs }) => {
+const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
   const navigate = useNavigate();
 
-  const { data, view } = useTable();
+  // const { data, view } = useTable();
+  const table = useTable();
   const queryClient = useQueryClient();
   const { pathname, search } = useLocation();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -26,8 +28,8 @@ const ToolbarTabs = ({ tabs }) => {
       if (!!!values?.id) {
         create = await api.post("/preferences/create", {
           name: values?.name,
-          table: data?.table?.id,
-          view,
+          table: table?.table?.id,
+          view: table?.view,
         });
 
         navigate(`${pathname}?v=${create?.id}`);
@@ -56,10 +58,10 @@ const ToolbarTabs = ({ tabs }) => {
 
   const onDeleteView = async () => {
     try {
-      const lastView = data?.views?.[data?.views?.length - 2]?.id;
+      const lastView = table?.views?.[table?.views?.length - 2]?.id;
 
       setDeleteLoading(true);
-      await api.delete(`/preferences/${view}`);
+      await api.delete(`/preferences/${table?.view}`);
 
       setAnchorEl(null);
       queryClient.refetchQueries("tables");
@@ -86,6 +88,11 @@ const ToolbarTabs = ({ tabs }) => {
 
   return (
     <Stack direction="row" gap={0.5} alignItems="center">
+      {!!backButtonLink && (
+        <IconButton size="micro" onClick={() => navigate(backButtonLink)}>
+          <ArrowBack />
+        </IconButton>
+      )}
       <Tabs
         textColor="secondary"
         indicatorColor="secondary"
@@ -99,7 +106,7 @@ const ToolbarTabs = ({ tabs }) => {
             label={item.title}
             onClick={(e) =>
               currentPath === item.href
-                ? onViewPopover(e.currentTarget, item.title, view)
+                ? onViewPopover(e.currentTarget, item.title, table?.view)
                 : {}
             }
             to={currentPath === item.href ? undefined : item.href}
@@ -107,13 +114,15 @@ const ToolbarTabs = ({ tabs }) => {
           />
         ))}
       </Tabs>
-      <IconButton
-        size="micro"
-        aria-describedby={id}
-        onClick={(e) => onViewPopover(e.currentTarget, "")}
-      >
-        <Add />
-      </IconButton>
+      {!!!noAddTab && (
+        <IconButton
+          size="micro"
+          aria-describedby={id}
+          onClick={(e) => onViewPopover(e.currentTarget, "")}
+        >
+          <Add />
+        </IconButton>
+      )}
       <Popover
         id={id}
         open={open}
@@ -162,7 +171,7 @@ const ToolbarTabs = ({ tabs }) => {
           >
             {!!formik?.values?.id ? "Update" : "Create"}
           </Button>
-          {!!formik?.values?.id && data?.views?.length > 1 && (
+          {!!formik?.values?.id && table?.views?.length > 1 && (
             <IconButton
               size="micro"
               onClick={onDeleteView}

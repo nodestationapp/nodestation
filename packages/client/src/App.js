@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
-import DashboardLayout from "layouts/DashboardLayout";
+import { DashboardLayout } from "@nstation/design-system/Layouts";
 import { useApp } from "@nstation/utils/ui/contexts/app.js";
 
 const App = () => {

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-import SplashScreen from "components/SplashScreen";
+// import SplashScreen from "components/SplashScreen";
 import pluginsLoader from "libs/helpers/pluginsLoader";
 
 const AppContext = createContext();
@@ -40,7 +40,7 @@ const AppProvider = ({ children }) => {
     // eslint-disable-next-line
   }, [app, menuLinks, middlewares]);
 
-  if (!!!middlewares?.length) return <SplashScreen />;
+  if (!!!middlewares?.length) return null;
 
   const content = (
     <AppContext.Provider value={value}>{children}</AppContext.Provider>

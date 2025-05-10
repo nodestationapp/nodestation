@@ -1,38 +1,10 @@
 {
   "name": "@nstation/design-system",
   "version": "1.14.12",
-  "main": "index.js",
-  "peerDependencies": {
-    "react": ">=19.0.0",
-    "react-dom": ">=19.0.0",
-    "react-router-dom": ">=6.23.0"
-  },
-  "devDependencies": {
-    "@chromatic-com/storybook": "^3.2.6",
-    "@heroicons/react": "^2.2.0",
-    "@storybook/addon-essentials": "^8.6.11",
-    "@storybook/addon-interactions": "^8.6.11",
-    "@storybook/addon-onboarding": "^8.6.11",
-    "@storybook/addon-styling-webpack": "^1.0.1",
-    "@storybook/addon-webpack5-compiler-swc": "^3.0.0",
-    "@storybook/blocks": "^8.6.11",
-    "@storybook/manager-api": "^8.6.11",
-    "@storybook/react": "^8.6.11",
-    "@storybook/react-webpack5": "^8.6.11",
-    "@storybook/test": "^8.6.11",
-    "@storybook/theming": "^8.6.11",
-    "css-loader": "^7.1.2",
-    "prop-types": "^15.8.1",
-    "react": "^19.0.1",
-    "react-dom": "^19.0.1",
-    "react-router-dom": "^6.23.0",
-    "sass": "^1.86.0",
-    "sass-loader": "^16.0.5",
-    "storybook": "^8.6.11",
-    "style-loader": "^4.0.0"
-  },
-  "scripts": {
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./Layouts": "./Layouts/index.js"
   }
 }

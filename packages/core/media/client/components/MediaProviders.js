@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardActionArea, Stack, Switch, Typography } from "@mui/material";
 
 import { useMedia } from "../contexts/media.js";
-import activeEmailChecker from "./activeEmailChecker.js";
+import activeEmailChecker from "../utils/activeEmailChecker.js";
 import ProviderSettingsModal from "./ProviderSettingsModal.js";
 
 import StorageIcon from "@mui/icons-material/Storage";

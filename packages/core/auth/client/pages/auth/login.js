@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { Box, Typography, Button, TextField } from "@mui/material";
 
-import ColorModeDropdown from "components/ColorModeDropdown";
+import { ColorModeDropdown } from "@nstation/design-system";
 import { useAuth } from "../../contexts/authMiddleware.js";
 
 import LogoIcon from "assets/icons/logo-sygnet.svg";

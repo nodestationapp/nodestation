@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 import AuthRoutes from "../utils/AuthRoutes.js";
-import SplashScreen from "components/SplashScreen";
 
 import api from "libs/api";
 
@@ -151,7 +150,7 @@ const AuthProvider = ({ children }) => {
     // eslint-disable-next-line
   }, [user, is_admin]);
 
-  if (!!loading) return <SplashScreen />;
+  if (!!loading) return null;
 
   return (
     <AuthContext.Provider value={value}>

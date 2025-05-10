@@ -1,6 +1,6 @@
-import BaseLayout from "layouts/BaseLayout";
-import SettingsForm from "components/SettingsForm";
-import InputElementsEditor from "components/InputElementsEditor";
+import { BaseLayout } from "@nstation/design-system/Layouts";
+import { SettingsForm } from "@nstation/design-system";
+import InputElementsEditor from "../../InputElementsEditor/index.js";
 
 import TableProvider, { useTable } from "../../../contexts/table.js";
 

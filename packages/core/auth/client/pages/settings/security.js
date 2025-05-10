@@ -1,4 +1,4 @@
-import SettingsForm from "components/SettingsForm";
+import { SettingsForm } from "@nstation/design-system";
 import ChangePasswordForm from "../../components/ChangePasswordForm.js";
 
 const SecuritySettings = () => {

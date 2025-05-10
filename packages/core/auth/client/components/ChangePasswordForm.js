@@ -8,13 +8,11 @@ import {
 import { useFormik } from "formik";
 
 import api from "libs/api";
-import { toast } from "react-toastify";
 
 const ChangePasswordForm = () => {
   const onSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {
     try {
       await api.put("/auth/change-password", values);
-      toast.success("Password has been changed");
       resetForm({ current_password: "", new_password: "", new_password2: "" });
     } catch (err) {
       setErrors(err?.response?.data?.errors);

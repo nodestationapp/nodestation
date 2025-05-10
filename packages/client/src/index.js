@@ -1,6 +1,3 @@
-import "./styles/globals.scss";
-import "react-toastify/dist/ReactToastify.css";
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { CookiesProvider } from "react-cookie";
@@ -9,7 +6,6 @@ import AppProvider from "@nstation/utils/ui/contexts/app.js";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import App from "./App";
-import NotifyContainer from "./components/NotifyContainer";
 
 import AppTheme from "./theme/AppTheme";
 import { CssBaseline } from "@mui/material";
@@ -32,7 +28,6 @@ root.render(
           <CssBaseline />
           <AppProvider>
             <App />
-            <NotifyContainer />
           </AppProvider>
         </AppTheme>
       </CookiesProvider>

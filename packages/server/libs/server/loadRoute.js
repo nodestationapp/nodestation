@@ -2,7 +2,6 @@ import express from "express";
 
 const loadRoute = async (router, routes) => {
   for await (const route of routes) {
-    console.log(route?.handler);
     router[route?.method.toLowerCase()](
       `/api${route?.path}`,
       route?.properties?.parser === "raw"
