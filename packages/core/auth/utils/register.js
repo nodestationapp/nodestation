@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import bcrypt from "bcryptjs";
 import { knex } from "@nstation/db";
-import { sendEmail } from "@nstation/utils";
+// import { sendEmail } from "@nstation/utils";
 
 const register = async (body) =>
   new Promise(async (resolve, reject) => {
@@ -43,10 +43,10 @@ const register = async (body) =>
           PUBLIC_URL: process.env.PUBLIC_URL,
         };
 
-        sendEmail("activation-email", {
-          recipients: [body?.email],
-          context: { ...context_body },
-        });
+        // sendEmail("activation-email", {
+        //   recipients: [body?.email],
+        //   context: { ...context_body },
+        // });
       }
 
       resolve({ status: "ok" });

@@ -1,5 +1,4 @@
 import { fs } from "@nstation/utils";
-import { createSchema } from "@nstation/db";
 
 export default async (req, res) => {
   const body = req?.body;
@@ -16,8 +15,6 @@ export default async (req, res) => {
       content,
       path: `/src/schemas/${type ? `${type}/` : ""}${id}.json`,
     });
-
-    await createSchema();
 
     return res.status(200).json({ status: "ok" });
   } catch (err) {

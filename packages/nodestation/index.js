@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 
-import entry from "./entry.js";
-import builder from "./build.js";
+import "dotenv/config";
+import createApp from "./utils/createApp.js";
+import welcomeBox from "./utils/welcomeBox.js";
 
-if (process.argv[2] === "build") {
-  builder();
-}
+(async () => {
+  // console.log(process.argv[2])
+  const app = createApp();
+  await app.init();
 
-if (process.argv[2] === "start" || process.argv[2] === "dev") {
-  entry(process.argv[2], process.argv[3]);
-}
+  app.express.listen(app.port, () => {
+    welcomeBox({ port: app.port });
+  });
+})();

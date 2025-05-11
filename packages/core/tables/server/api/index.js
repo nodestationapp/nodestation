@@ -1,4 +1,4 @@
-import { uploader } from "@nstation/utils";
+// import { uploader } from "@nstation/utils";
 
 import getTable from "./getTable.js";
 import updateTable from "./updateTable.js";
@@ -44,7 +44,10 @@ export default [
     method: "PUT",
     path: "/tables/:id/entry/:entry_id",
     handler: updateTableEntry,
-    middlewares: [authMiddleware(["admin"]), uploader],
+    middlewares: [
+      authMiddleware(["admin"]),
+      // uploader
+    ],
   },
   {
     method: "POST",
@@ -52,7 +55,7 @@ export default [
     handler: createTableEntry,
     middlewares: [
       authMiddleware(["admin"]),
-      uploader,
+      // uploader,
       validate({ getValidationSchema: addTableEntrySchema }),
     ],
   },

@@ -25,6 +25,7 @@ function createApp() {
     port: process.env.PORT,
     server: http.createServer(expressApp),
     log: (...args) => console.log("[APP]", ...args),
+    executionTime: 0,
   };
 
   app.init = async () => {
