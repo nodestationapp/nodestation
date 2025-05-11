@@ -3,10 +3,8 @@ import http from "http";
 import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
-import loadPlugins from "./libs/server/loadPlugins.js";
+import loadPlugins from "./utils/loadPlugins.js";
 import { rootPath, cors, logger } from "@nstation/utils";
-
-import allRoutes from "#routes/index.js";
 
 const clientPath = path.join(
   rootPath,
@@ -42,8 +40,6 @@ function createApp() {
     // io({ server: app.server, app: app.express });
 
     loadPlugins(app.router);
-
-    app.express.use("/admin/api", express.json(), allRoutes);
 
     //FRONTEND
     if (
