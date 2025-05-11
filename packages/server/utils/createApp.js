@@ -3,7 +3,7 @@ import http from "http";
 import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
-import loadPlugins from "./utils/loadPlugins.js";
+import loadPlugins from "./loadPlugins.js";
 import { rootPath, cors, logger } from "@nstation/utils";
 
 const clientPath = path.join(
