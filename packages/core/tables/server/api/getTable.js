@@ -15,7 +15,16 @@ export default async (req, res) => {
 
     let preferences;
 
-    if (!!view) {
+    if (view === "undefined") {
+      // preferences = await knex("nodestation_preferences")
+      //   .insert({
+      //     name: "Entries",
+      //     table_id: id,
+      //     last_viewed: 1,
+      //   })
+      //   .returning("*")
+      //   .then((row) => row[0]);
+    } else {
       preferences = await knex("nodestation_preferences")
         .where({
           id: view,

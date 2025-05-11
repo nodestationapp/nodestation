@@ -1,5 +1,4 @@
 import fs from "fs";
-import http from "http";
 import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
@@ -20,19 +19,15 @@ function createApp() {
 
   const app = {
     router,
-    plugins: {},
     express: expressApp,
     port: process.env.PORT,
-    server: http.createServer(expressApp),
-    log: (...args) => console.log("[APP]", ...args),
-    executionTime: 0,
   };
 
   app.init = async () => {
     app.express.set("trust proxy", "127.0.0.1");
 
     app.express.use(cors);
-    app.express.use(logger);
+    // app.express.use(logger);
     app.express.use(bodyParser.urlencoded({ extended: true }));
     app.express.use((req, res, next) => {
       app.router(req, res, next);
@@ -40,7 +35,7 @@ function createApp() {
 
     // io({ server: app.server, app: app.express });
 
-    loadPlugins(app.router);
+    await loadPlugins(app.router);
 
     //FRONTEND
     if (

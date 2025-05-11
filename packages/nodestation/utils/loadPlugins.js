@@ -8,12 +8,12 @@ import loadRoute from "./loadRoute.js";
 
 const core = [
   "@nstation/core/auth/server",
-  "@nstation/core/media/server",
+  // "@nstation/core/media/server",
   "@nstation/core/tables/server",
 ];
 
-const loadPlugins = (router) => {
-  core.forEach(async (plugin) => {
+const loadPlugins = async (router) => {
+  for await (const plugin of core) {
     //ROUTES
     const { default: routes } = await import(`${plugin}/api/index.js`);
     await loadRoute(router, routes);
@@ -26,16 +26,21 @@ const loadPlugins = (router) => {
       nodir: true,
     });
 
-    schemas.forEach(async (schema) => {
+    for await (const schema of schemas) {
       const index = schema.indexOf("/schemas");
       const result = schema.substring(index);
 
-      const file_exists = fs_sys.existsSync(path.join(rootPath, "src", result));
+      const isExtenstion = fs_sys.existsSync(
+        path.join(rootPath, "src", "extensions", result)
+      );
 
       let file;
 
-      if (!!file_exists) {
-        file = fs_sys.readFileSync(path.join(rootPath, "src", result), "utf-8");
+      if (!!isExtenstion) {
+        file = fs_sys.readFileSync(
+          path.join(rootPath, "src", "extensions", result),
+          "utf-8"
+        );
         file = JSON.parse(file);
       } else {
         file = fs_sys.readFileSync(schema, "utf-8");
@@ -43,8 +48,8 @@ const loadPlugins = (router) => {
       }
 
       await upsertTable(file);
-    });
-  });
+    }
+  }
 
   return true;
 };

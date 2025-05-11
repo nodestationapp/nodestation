@@ -27,36 +27,36 @@ export default async (req, res) => {
       }
     }
 
-    const logs_count = await knex("nodestation_logs")
-      .where({ is_read: 0 })
-      .count("* as count")
-      .first()
-      .then((row) => row.count);
+    // const logs_count = await knex("nodestation_logs")
+    //   .where({ is_read: 0 })
+    //   .count("* as count")
+    //   .first()
+    //   .then((row) => row.count);
 
     const packagePath = path.join(rootPath, "package.json");
     const fileContent = fs_sys.readFileSync(packagePath, "utf-8");
     const packageJson = JSON.parse(fileContent);
 
-    const settings = await knex("nodestation_media_settings").first();
-    const userPhoto = user?.photo || null;
+    // const settings = await knex("nodestation_media_settings").first();
+    // const userPhoto = user?.photo || null;
 
     const formatted_user = {
       ...user,
-      ...(!!userPhoto
-        ? {
-            photo: {
-              url:
-                settings?.active === "local"
-                  ? `${process.env.PUBLIC_URL}${userPhoto?.url}`
-                  : userPhoto?.url,
-            },
-          }
-        : {}),
+      // ...(!!userPhoto
+      //   ? {
+      //       photo: {
+      //         url:
+      //           settings?.active === "local"
+      //             ? `${process.env.PUBLIC_URL}${userPhoto?.url}`
+      //             : userPhoto?.url,
+      //       },
+      //     }
+      //   : {}),
     };
 
     return res.status(200).json({
       forms_count,
-      logs_count,
+      logs_count: 0,
       user: formatted_user,
       project_name: packageJson?.name,
       plugins: req?.plugins,

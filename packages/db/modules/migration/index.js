@@ -6,6 +6,7 @@ const typesMap = {
   id: "string",
   text: "text",
   select: "string",
+  varchar: "string",
   media: process.env.DATABASE_CLIENT === "sqlite" ? "text" : "jsonb",
   numeric: "integer",
   json: process.env.DATABASE_CLIENT === "sqlite" ? "text" : "jsonb",

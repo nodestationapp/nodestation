@@ -9,10 +9,8 @@ const TableContext = createContext();
 
 const TableProvider = ({ id, children }) => {
   const navigate = useNavigate();
-  const { pathname, query } = useLocation();
+  const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
-  const [tableSettingsOpen, setTableSettingsOpen] = useState(false);
-  // const { preferences } = useAuth();
 
   const view = searchParams.get("v");
   const page = searchParams.get("page");
@@ -21,20 +19,22 @@ const TableProvider = ({ id, children }) => {
   type = type !== "authentication" ? type : undefined;
 
   const { data: preferences = [] } = useQuery({
-    queryKey: ["preferences"],
-    queryFn: () => api.get("/preferences"),
+    queryKey: ["preferences", id],
+    queryFn: () => api.get(`/preferences/${id}`),
   });
 
   useEffect(() => {
+    if (!preferences?.length) return;
+
     const table_preference =
       preferences?.find((item) => item?.table_id === id && !!item?.last_viewed)
         ?.id || preferences?.find((item) => item?.table_id === id)?.id;
 
-    if (!pathname?.includes("/settings") && !!!view) {
+    if (!pathname?.includes("/settings")) {
       navigate(`${pathname}?v=${table_preference}`);
     }
     // eslint-disable-next-line
-  }, []);
+  }, [preferences?.length]);
 
   const {
     data,

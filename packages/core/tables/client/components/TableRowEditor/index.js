@@ -17,34 +17,19 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
 
   const onSubmit = async (values, { setSubmitting, setErrors, resetForm }) => {
     try {
-      const formData = new FormData();
-
-      Object.keys(values)?.forEach((item) => {
-        if (!!!values?.[item]?.size) {
-          formData.append(
-            item,
-            values?.[item]?.file ||
-              values?.[item]?.id ||
-              (typeof values?.[item] === "object"
-                ? JSON.stringify(values?.[item])
-                : values?.[item])
-          );
-        }
-      });
-
       if (open?.id) {
         if (!!onEntrySubmit) {
-          await onEntrySubmit(formData);
+          await onEntrySubmit(values);
           tableRefetch();
         } else {
-          await updateTableEntry(open?.id, formData);
+          await updateTableEntry(open?.id, values);
         }
       } else {
         if (!!onEntrySubmit) {
-          await onEntrySubmit(formData);
+          await onEntrySubmit(values);
           tableRefetch();
         } else {
-          await addTableEntry(formData);
+          await addTableEntry(values);
         }
       }
 

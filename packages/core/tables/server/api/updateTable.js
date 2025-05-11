@@ -1,9 +1,10 @@
-import { fs } from "@nstation/utils";
+import path from "path";
+import fs_sys from "fs";
+import { fs, rootPath } from "@nstation/utils";
 
 export default async (req, res) => {
   const body = req?.body;
   const { id } = req?.params;
-  const { type } = req?.query;
 
   const content = {
     ...body,
@@ -11,9 +12,19 @@ export default async (req, res) => {
   };
 
   try {
+    const schema_path = path.join(
+      rootPath,
+      "src",
+      "extensions",
+      "schemas",
+      `${id}.json`
+    );
+
+    const schema_exists = fs_sys.existsSync(schema_path);
+
     await fs.updateFile({
       content,
-      path: `/src/schemas/${type ? `${type}/` : ""}${id}.json`,
+      path: `/src/extensions/schemas/${id}.json`,
     });
 
     return res.status(200).json({ status: "ok" });
