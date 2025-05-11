@@ -7,4 +7,4 @@ const formatBytes = (bytes) => {
   return `${num} ${sizes[i]}`;
 };
 
-module.exports = formatBytes;
+export default formatBytes;

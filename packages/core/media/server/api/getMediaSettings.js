@@ -4,6 +4,13 @@ export default async (req, res) => {
   try {
     let settings = await knex("nodestation_media_settings").first();
 
+    if (!settings) {
+      settings = await knex("nodestation_media_settings")
+        .insert({ active: "local" })
+        .returning("*")
+        .then((data) => data[0]);
+    }
+
     const formatted_settings = Object.fromEntries(
       Object.entries(settings).map(([key, value]) => {
         if (value) {

@@ -8,7 +8,7 @@ import loadRoute from "./loadRoute.js";
 
 const core = [
   "@nstation/core/auth/server",
-  // "@nstation/core/media/server",
+  "@nstation/core/media/server",
   "@nstation/core/tables/server",
 ];
 

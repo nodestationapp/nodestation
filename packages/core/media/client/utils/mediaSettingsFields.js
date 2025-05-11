@@ -81,4 +81,4 @@ const mediaSettingsFields = (type, settings) => {
   }
 };
 
-module.exports = mediaSettingsFields;
+export default mediaSettingsFields;

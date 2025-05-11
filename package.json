@@ -78,6 +78,7 @@
   },
   "dependencies": {
     "@mui/x-data-grid": "^7.28.3",
-    "@mui/x-date-pickers": "^7.28.3"
+    "@mui/x-date-pickers": "^7.28.3",
+    "react-dropzone": "^14.3.8"
   }
 }

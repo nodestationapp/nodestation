@@ -21,6 +21,7 @@ const TableManagerContent = ({
   rowHeight,
   rowFullWidth,
   onEntrySubmit,
+  onNewClick,
 }) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
@@ -65,12 +66,14 @@ const TableManagerContent = ({
         variant="contained"
         startIcon={<AddIcon />}
         onClick={() =>
-          setContentEditor(
-            data?.table?.fields?.reduce((acc, item) => {
-              acc[item?.slug] = "";
-              return acc;
-            }, {})
-          )
+          onNewClick
+            ? onNewClick()
+            : setContentEditor(
+                data?.table?.fields?.reduce((acc, item) => {
+                  acc[item?.slug] = "";
+                  return acc;
+                }, {})
+              )
         }
       >
         New
@@ -129,6 +132,7 @@ const TableManager = ({
   rowHeight = 42,
   rowFullWidth = undefined,
   onEntrySubmit,
+  onNewClick,
 }) => {
   return (
     <TableProvider id={table}>
@@ -138,6 +142,7 @@ const TableManager = ({
         appendColumns={appendColumns}
         rowHeight={rowHeight}
         rowFullWidth={rowFullWidth}
+        onNewClick={onNewClick}
       />
     </TableProvider>
   );

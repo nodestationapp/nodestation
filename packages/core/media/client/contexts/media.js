@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useContext, useMemo, useState } from "react";
-import api from "libs/api";
+import api from "utils/api";
 
 const MediaContext = createContext();
 
@@ -14,7 +14,7 @@ const MediaProvider = ({ children }) => {
     refetch: refetchMedia,
   } = useQuery({
     queryKey: ["media"],
-    queryFn: () => api.get("/api/media"),
+    queryFn: () => api.get("/media"),
   });
 
   const {
@@ -23,7 +23,7 @@ const MediaProvider = ({ children }) => {
     refetch: refetchMediaSettings,
   } = useQuery({
     queryKey: ["media_settings"],
-    queryFn: () => api.get("/api/media/settings"),
+    queryFn: () => api.get("/media/settings"),
   });
 
   const uploadFiles = (values) =>
@@ -63,7 +63,7 @@ const MediaProvider = ({ children }) => {
   const updateMediaSettings = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.put(`/api/media/settings`, { ...values });
+        await api.put(`/media/settings`, { ...values });
 
         refetchMediaSettings();
 
