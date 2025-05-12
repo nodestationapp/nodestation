@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { useCookies } from "react-cookie";
 import { Avatar, Button, Stack } from "@mui/material";
 
 import api from "utils/api";
-import { useApp } from "contexts/app.js";
+import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";
 
 const PhotoInput = () => {
-  const { user, getUserData } = useApp();
-  const [cookies] = useCookies(["access_token"]);
+  const { user } = useAuth();
+
   const [loading, setLoading] = useState(false);
 
   const onPhotoUpload = async (photo) => {
@@ -23,7 +22,7 @@ const PhotoInput = () => {
         },
       });
 
-      getUserData(cookies?.access_token);
+      // getUserData(cookies?.access_token);
     } catch (err) {
       console.error(err);
     }

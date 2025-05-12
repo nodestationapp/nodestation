@@ -1,4 +1,3 @@
-import * as React from "react";
 import MuiAvatar from "@mui/material/Avatar";
 import { styled } from "@mui/material/styles";
 import { Box, Typography } from "@mui/material";

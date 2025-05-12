@@ -1,7 +1,7 @@
-import { BaseLayout } from "@nstation/design-system/Layouts";
 import { SettingsForm } from "@nstation/design-system";
-import MediaProviders from "./components/MediaProviders.js";
+import { BaseLayout } from "@nstation/design-system/Layouts";
 
+import MediaProviders from "./components/MediaProviders.js";
 import MediaProvider from "./contexts/media.js";
 
 const MediaSettingsContent = () => {
@@ -14,7 +14,7 @@ const MediaSettingsContent = () => {
 
   const tabs = [
     {
-      title: "Entries",
+      title: "Media",
       href: "/media",
     },
   ];

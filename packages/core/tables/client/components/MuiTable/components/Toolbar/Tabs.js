@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
-import Add from "@mui/icons-material/Add";
-import DeleteOutline from "@mui/icons-material/DeleteOutline";
 import { Button, IconButton, Popover, Stack, Tab, Tabs } from "@mui/material";
 
 import api from "utils/api";
 import { useTable } from "@nstation/core/tables/client/contexts/table.js";
+
+import Add from "@mui/icons-material/Add";
 import ArrowBack from "@mui/icons-material/ArrowBack";
+import DeleteOutline from "@mui/icons-material/DeleteOutline";
 
 const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
   const navigate = useNavigate();
@@ -103,10 +103,13 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
             key={item.href}
             value={item.href}
             label={item.title}
-            onClick={(e) =>
-              currentPath === item.href
-                ? onViewPopover(e.currentTarget, item.title, table?.view)
-                : {}
+            onClick={
+              !!!noAddTab
+                ? (e) =>
+                    currentPath === item.href
+                      ? onViewPopover(e.currentTarget, item.title, table?.view)
+                      : {}
+                : () => {}
             }
             to={currentPath === item.href ? undefined : item.href}
             LinkComponent={currentPath === item.href ? "button" : Link}

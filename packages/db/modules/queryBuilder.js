@@ -30,23 +30,18 @@ export default async ({ table, filters, sort, pagination }) => {
 
   query = populateRelations(query, table);
 
-  // const settings = await knex("nodestation_media_settings")
-  //   .first()
-  //   .jsonParser();
+  const settings = await knex("nodestation_media_settings")
+    .first()
+    .jsonParser();
 
   query = query.jsonParser();
 
-  // query = query.then((items) => {
-  //   let formatted_items = transformRelations(items, settings);
-  //   formatted_items = mediaParser(table?.fields, formatted_items, settings);
-
-  //   return formatted_items;
-  // });
-
   const items = await query;
+  let formatted_items = transformRelations(items, settings);
+  formatted_items = mediaParser(table?.fields, formatted_items, settings);
 
   return {
-    items,
+    items: formatted_items,
     count,
   };
 };

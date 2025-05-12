@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer, { drawerClasses } from "@mui/material/Drawer";
 import { Avatar, Divider, Stack, Typography, Box } from "@mui/material";

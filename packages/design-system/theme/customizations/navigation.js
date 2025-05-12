@@ -1,10 +1,9 @@
-import * as React from "react";
+import { forwardRef } from "react";
 import { alpha } from "@mui/material/styles";
 
 import { buttonBaseClasses } from "@mui/material/ButtonBase";
 import { dividerClasses } from "@mui/material/Divider";
 import { menuItemClasses } from "@mui/material/MenuItem";
-import { selectClasses } from "@mui/material/Select";
 import { tabClasses } from "@mui/material/Tab";
 import UnfoldMoreRoundedIcon from "@mui/icons-material/UnfoldMoreRounded";
 import { gray, brand } from "../themePrimitives.js";
@@ -58,7 +57,7 @@ export const navigationCustomizations = {
   },
   MuiSelect: {
     defaultProps: {
-      IconComponent: React.forwardRef((props, ref) => (
+      IconComponent: forwardRef((props, ref) => (
         <UnfoldMoreRoundedIcon fontSize="small" {...props} ref={ref} />
       )),
     },

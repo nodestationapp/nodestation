@@ -12,6 +12,7 @@ import { Chip, TextField, FormControl, Autocomplete } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker/index.js";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment/index.js";
+import MediaInput from "./MediaInput.js";
 
 const tableInputRender = (item, formik, display_name) => {
   let select_data = null;
@@ -132,7 +133,15 @@ const tableInputRender = (item, formik, display_name) => {
     //   return <FormikJsonInput label={item?.name} name={item?.slug} />;
     // case "user":
     //   return <FormikUsers label={item?.name} name={item?.slug} />;
-    // case "media":
+    case "media":
+      return (
+        <MediaInput
+          value={formik.values[item?.slug]}
+          onChange={(value) => {
+            formik.setFieldValue(item?.slug, value);
+          }}
+        />
+      );
     //   return (
     //     <FormikPhotoInput
     //       variant="light"

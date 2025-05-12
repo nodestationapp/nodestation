@@ -1,10 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, useMemo, useState } from "react";
 import api from "utils/api";
 
 const MediaContext = createContext();
 
 const MediaProvider = ({ children }) => {
+  const queryClient = useQueryClient();
+
   const [percent, setPercent] = useState([]);
   const [uploading_files, setUploadingFiles] = useState([]);
 
@@ -73,6 +75,23 @@ const MediaProvider = ({ children }) => {
       }
     });
 
+  const deleteFile = async (id) => {
+    try {
+      await api.delete(`/media/${id}`);
+
+      refetchMedia();
+      onClose();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const enterSubmitHandler = (e) => {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  };
+
   const saveTableTransaction = async (values) => {
     await api.post("/preferences", {
       table_id: "nodestation_media",
@@ -89,6 +108,7 @@ const MediaProvider = ({ children }) => {
       loading,
       uploadFiles,
       percent,
+      deleteFile,
       media_settings,
       settings_loading,
       uploading_files,

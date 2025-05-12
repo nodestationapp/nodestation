@@ -1,7 +1,11 @@
-const filterQueryBuild = (item, query) => {
+const filterQueryBuild = (item, query, table) => {
   switch (item?.operator) {
     case "contains":
-      query.where(item?.field, "like", `%${item?.value}%`);
+      query.where(
+        `${table?.tableName}.${item?.field}`,
+        "like",
+        `%${item?.value}%`
+      );
       break;
     case "doesNotContain":
       query.whereNot(item?.field, "like", `%${item?.value}%`);
@@ -41,7 +45,7 @@ const applyFilters = (query, filters, table) => {
     const removeEmptyFilters = filters?.filter((item) => !!item?.value);
 
     removeEmptyFilters.forEach((item) => {
-      filterQueryBuild(item, query);
+      filterQueryBuild(item, query, table);
     });
   } catch (err) {
     console.error(err);

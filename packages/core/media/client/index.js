@@ -1,4 +1,5 @@
 import App from "./app.js";
+import MediaProvider from "./contexts/media.js";
 
 export default {
   register(app) {
@@ -8,6 +9,10 @@ export default {
       Component: App,
       icon: "mdi:image",
       label: "Media",
+    });
+
+    app.addMiddleware({
+      Component: (children) => <MediaProvider>{children}</MediaProvider>,
     });
   },
 };

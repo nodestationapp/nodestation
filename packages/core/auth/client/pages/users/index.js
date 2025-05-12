@@ -9,7 +9,7 @@ const Users = () => {
 
         resolve();
       } catch (err) {
-        console.log(err);
+        console.error(err);
         reject(err);
       }
     });
@@ -18,16 +18,16 @@ const Users = () => {
     <TableManager
       table="nodestation_users"
       onEntrySubmit={onEntrySubmit}
-      // appendColumns={[
-      //   {
-      //     name: "User",
-      //     sort: "first_name",
-      //     type: "user_profile",
-      //     slug: "user",
-      //     origin: "system",
-      //   },
-      // ]}
-      hiddenColumns={["password"]}
+      appendColumns={[
+        {
+          name: "User",
+          sort: "first_name",
+          type: "user_profile",
+          slug: "user",
+          origin: "system",
+        },
+      ]}
+      hiddenColumns={["password", "first_name", "last_name", "photo"]}
     />
   );
 };

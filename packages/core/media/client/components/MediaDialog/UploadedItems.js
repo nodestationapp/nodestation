@@ -10,11 +10,11 @@ import formatBytes from "../../utils/formatBytes.js";
 import Delete from "@mui/icons-material/Delete";
 import Link from "@mui/icons-material/Link";
 
-const UploadedItems = ({ files, percent, onSelect, onDelete }) => {
+const UploadedItems = ({ files, percent, onSelect, onDelete, selected }) => {
   return (
-    <Grid container spacing={2} sx={{ pb: 0 }}>
+    <Grid container spacing={2} sx={{ p: 1 }}>
       {files?.map((file, index) => (
-        <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}>
+        <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 4 }}>
           <Card sx={{ width: "100%", p: 1, pb: 0 }}>
             <CardMedia
               sx={{ height: 140, borderRadius: 0.5 }}
@@ -51,7 +51,10 @@ const UploadedItems = ({ files, percent, onSelect, onDelete }) => {
               {percent?.[index] && percent?.[index] !== 100 ? (
                 <CircularProgress size={20} />
               ) : onSelect ? (
-                <Checkbox />
+                <Checkbox
+                  checked={selected?.id === file?.id}
+                  onChange={() => onSelect(file)}
+                />
               ) : (
                 <Stack
                   direction="row"

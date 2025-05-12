@@ -35,6 +35,7 @@ function createApp() {
 
     // io({ server: app.server, app: app.express });
 
+    app.express.use("/uploads", express.static(path.join(rootPath, "uploads")));
     await loadPlugins(app.router);
 
     //FRONTEND

@@ -1,9 +1,9 @@
 import { Button, Typography, Box } from "@mui/material";
 
-import { useApp } from "contexts/app.js";
+import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";
 
 const Dashboard = () => {
-  const { user } = useApp();
+  const { user } = useAuth();
 
   return (
     <Box

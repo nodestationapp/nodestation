@@ -5,7 +5,10 @@ const UserProfile = ({ data }) => {
 
   return (
     <Stack direction="row" alignItems="center" gap={1} height="100%">
-      <Avatar src={data?.photo?.url} sx={{ width: 28, height: 28 }} />
+      <Avatar
+        src={data?.photo?.url}
+        sx={{ width: 28, height: 28, objectFit: "cover" }}
+      />
       <Typography>{`${data?.first_name} ${data?.last_name}`}</Typography>
     </Stack>
   );

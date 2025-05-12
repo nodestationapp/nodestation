@@ -2,6 +2,8 @@ const path = require("path");
 const webpack = require("webpack");
 const WebpackBar = require("webpackbar");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = (env) => {
   const isProduction = env.NODE_ENV === "production";
@@ -56,6 +58,7 @@ module.exports = (env) => {
         "process.env": JSON.stringify(envVars),
       }),
       new WebpackBar(),
+      new BundleAnalyzerPlugin(),
     ],
     resolve: {
       extensions: [".js", ".jsx"],

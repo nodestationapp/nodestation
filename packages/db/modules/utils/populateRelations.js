@@ -2,38 +2,53 @@ import { fs } from "@nstation/utils";
 
 const populateRelations = (query, table) => {
   table?.fields?.forEach((item) => {
-    if (item?.type === "user") {
+    if (item?.type === "media") {
       query = query
         .leftJoin(
-          "nodestation_users",
+          "nodestation_media",
           `${table?.tableName}.${item?.slug}`,
-          "nodestation_users.id"
+          "nodestation_media.id"
         )
         .select(
           `${table?.tableName}.*`,
-          `nodestation_users.id as ${item?.slug}.id`,
-          `nodestation_users.first_name as ${item?.slug}.first_name`,
-          `nodestation_users.last_name as ${item?.slug}.last_name`,
-          `nodestation_users.photo as ${item?.slug}.photo`
+          `nodestation_media.id as ${item?.slug}.id`,
+          `nodestation_media.name as ${item?.slug}.name`,
+          `nodestation_media.url as ${item?.slug}.url`
         );
     }
 
-    if (!!item?.relation) {
-      const tables = fs.getFiles(`/src/schemas/tables/${item?.relation}.json`);
-      const ref_table = tables?.[0];
+    // if (item?.type === "user") {
+    //   query = query
+    //     .leftJoin(
+    //       "nodestation_users",
+    //       `${table?.tableName}.${item?.slug}`,
+    //       "nodestation_users.id"
+    //     )
+    //     .select(
+    //       `${table?.tableName}.*`,
+    //       `nodestation_users.id as ${item?.slug}.id`,
+    //       `nodestation_users.first_name as ${item?.slug}.first_name`,
+    //       `nodestation_users.last_name as ${item?.slug}.last_name`,
+    //       `nodestation_users.photo as ${item?.slug}.photo`
+    //     );
+    // }
 
-      query = query
-        .leftJoin(
-          ref_table?.tableName,
-          `${table?.tableName}.${item?.slug}`,
-          `${ref_table?.tableName}.id`
-        )
-        .select(
-          `${table?.tableName}.*`,
-          `${ref_table?.tableName}.id as ${item?.slug}.id`,
-          `${ref_table?.tableName}.${ref_table?.display_name} as ${item?.slug}.label`
-        );
-    }
+    // if (!!item?.relation) {
+    //   const tables = fs.getFiles(`/src/schemas/tables/${item?.relation}.json`);
+    //   const ref_table = tables?.[0];
+
+    //   query = query
+    //     .leftJoin(
+    //       ref_table?.tableName,
+    //       `${table?.tableName}.${item?.slug}`,
+    //       `${ref_table?.tableName}.id`
+    //     )
+    //     .select(
+    //       `${table?.tableName}.*`,
+    //       `${ref_table?.tableName}.id as ${item?.slug}.id`,
+    //       `${ref_table?.tableName}.${ref_table?.display_name} as ${item?.slug}.label`
+    //     );
+    // }
   });
 
   return query;

@@ -1,7 +1,8 @@
 import passport from "passport";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 
-import { knex } from "@nstation/db";
+import { fs } from "@nstation/utils";
+import { queryBuilder } from "@nstation/db";
 
 passport.use(
   new JWTStrategy(
@@ -14,17 +15,28 @@ passport.use(
         let result = null;
 
         if (!!jwtPayload?.id) {
-          result = await knex("nodestation_users")
-            .where({
-              id: jwtPayload.id,
-              status: "active",
-            })
-            .first()
-            .jsonParser();
+          const table = fs.getSchema("nodestation_users");
+
+          result = await queryBuilder({
+            table,
+            filters: [
+              {
+                field: "nodestation_users.id",
+                value: jwtPayload.id,
+                operator: "equals",
+              },
+              {
+                field: "nodestation_users.status",
+                value: "active",
+                operator: "equals",
+              },
+            ],
+          });
         }
 
-        return done(null, result);
+        return done(null, result?.items?.[0]);
       } catch (err) {
+        console.error(err);
         return done(err);
       }
     }

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useLocation, Link } from "react-router-dom";
 
 import List from "@mui/material/List";

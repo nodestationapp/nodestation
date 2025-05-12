@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -20,7 +20,7 @@ function AppTheme(props) {
     ...datePickersCustomizations,
   };
 
-  const theme = React.useMemo(() => {
+  const theme = useMemo(() => {
     return disableCustomTheme
       ? {}
       : createTheme({
@@ -43,7 +43,7 @@ function AppTheme(props) {
         });
   }, [disableCustomTheme, themeComponents]);
   if (disableCustomTheme) {
-    return <React.Fragment>{children}</React.Fragment>;
+    return <>{children}</>;
   }
   return (
     <ThemeProvider theme={theme} disableTransitionOnChange>

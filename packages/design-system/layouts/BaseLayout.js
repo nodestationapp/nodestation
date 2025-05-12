@@ -13,8 +13,8 @@ const BaseLayout = ({
     <Box>
       {!!tabs && (
         <Toolbar
-          tabs={tabs}
           noAddTab
+          tabs={tabs}
           action={action}
           backButtonLink={backButtonLink}
         />

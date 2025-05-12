@@ -14,7 +14,8 @@ const generateBase64 = (file) =>
   });
 
 const UploadDialog = ({ open, onClose }) => {
-  const { uploading_files, setUploadingFiles, percent } = useMedia();
+  const { uploading_files, setUploadingFiles, percent, uploadFiles } =
+    useMedia();
 
   const handleChange = async (files) => {
     let formatted_files = [];
@@ -32,6 +33,7 @@ const UploadDialog = ({ open, onClose }) => {
     }
 
     setUploadingFiles(formatted_files);
+    uploadFiles(files);
   };
 
   const handleClose = () => {
