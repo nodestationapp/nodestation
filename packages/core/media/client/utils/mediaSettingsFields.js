@@ -28,51 +28,51 @@ const mediaSettingsFields = (type, settings) => {
     case "digitalocean":
       return [
         {
-          name: "bucket",
-          label: "Bucket name",
+          slug: "bucket",
+          name: "Bucket name",
           value: settings?.digitalocean?.bucket,
         },
         {
-          name: "region",
-          label: "Region",
+          slug: "region",
+          name: "Region",
           value: settings?.digitalocean?.region,
         },
         {
-          name: "spaces_endpoint",
-          label: "Origin endpoint",
+          slug: "spaces_endpoint",
+          name: "Origin endpoint",
           value: settings?.digitalocean?.spaces_endpoint,
         },
         {
-          name: "access_key_id",
-          label: "Access Key ID",
+          slug: "access_key_id",
+          name: "Access Key ID",
           value: settings?.digitalocean?.access_key_id,
         },
         {
-          name: "secret_access_key",
-          label: "Secret access key",
+          slug: "secret_access_key",
+          name: "Secret access key",
           value: settings?.digitalocean?.secret_access_key,
         },
       ];
     case "wasabi":
       return [
         {
-          name: "bucket",
-          label: "Bucket name",
+          slug: "bucket",
+          name: "Bucket name",
           value: settings?.wasabi?.bucket,
         },
         {
-          name: "region",
-          label: "Region",
+          slug: "region",
+          name: "Region",
           value: settings?.wasabi?.region,
         },
         {
-          name: "access_key_id",
-          label: "Access Key ID",
+          slug: "access_key_id",
+          name: "Access Key ID",
           value: settings?.wasabi?.access_key_id,
         },
         {
-          name: "secret_access_key",
-          label: "Secret access key",
+          slug: "secret_access_key",
+          name: "Secret access key",
           value: settings?.wasabi?.secret_access_key,
         },
       ];
