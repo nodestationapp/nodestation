@@ -5,23 +5,23 @@ const mediaSettingsFields = (type, settings) => {
     case "aws":
       return [
         {
-          name: "bucket",
-          label: "Bucket name",
+          slug: "bucket",
+          name: "Bucket name",
           value: settings?.aws?.bucket,
         },
         {
-          name: "region",
-          label: "Region",
+          slug: "region",
+          name: "Region",
           value: settings?.aws?.region,
         },
         {
-          name: "access_key_id",
-          label: "Access Key ID",
+          slug: "access_key_id",
+          name: "Access Key ID",
           value: settings?.aws?.access_key_id,
         },
         {
-          name: "secret_access_key",
-          label: "Secret access key",
+          slug: "secret_access_key",
+          name: "Secret access key",
           value: settings?.aws?.secret_access_key,
         },
       ];

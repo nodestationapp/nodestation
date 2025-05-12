@@ -24,7 +24,7 @@ const title_render = (type) => {
 };
 
 const ProviderSettingsModal = ({ open, onClose }) => {
-  const { media_settings } = useMedia();
+  const { media_settings, updateMediaSettings } = useMedia();
 
   const title = title_render(open);
   const settings_fields = mediaSettingsFields(open, media_settings);
@@ -34,30 +34,13 @@ const ProviderSettingsModal = ({ open, onClose }) => {
     return acc;
   }, {});
 
-  const onSubmit = async (values, { setSubmitting, setErrors, resetForm }) => {
+  const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      // const formData = new FormData();
-      // Object.keys(values)?.forEach((item) => {
-      //   if (!!!values?.[item]?.size) {
-      //     formData.append(
-      //       item,
-      //       values?.[item]?.file ||
-      //         values?.[item]?.id ||
-      //         (typeof values?.[item] === "object"
-      //           ? JSON.stringify(values?.[item])
-      //           : values?.[item])
-      //     );
-      //   }
-      // });
-      // if (open?.id) {
-      //   await updateTableEntry(open?.id, formData);
-      // } else {
-      //   await addTableEntry(formData);
-      // }
-      // resetForm({ values });
+      await updateMediaSettings({ [open]: values });
+      onClose();
     } catch (err) {
-      // setSubmitting(false);
-      // setErrors(err?.response?.data?.errors);
+      setSubmitting(false);
+      setErrors(err?.response?.data?.errors);
     }
   };
 
@@ -76,24 +59,7 @@ const ProviderSettingsModal = ({ open, onClose }) => {
         header={title}
       >
         <Stack gap={2} direction="column">
-          {settings_fields?.map((item, index) =>
-            tableInputRender(item, formik)
-          )}
-          {/* {table_data?.table?.fields?.map((item, index) => {
-            if (!!!open?.id) {
-              if (item?.slug === "id") return null;
-            }
-
-            return (
-              <div key={index}>
-                {tableInputRender(
-                  item,
-                  formik,
-                  table_data?.table?.display_name
-                )}
-              </div>
-            );
-          })} */}
+          {settings_fields?.map((item) => tableInputRender(item, formik))}
         </Stack>
       </AsideModal>
     </form>
