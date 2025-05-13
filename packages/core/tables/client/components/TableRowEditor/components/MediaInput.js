@@ -8,9 +8,12 @@ import {
   Typography,
   InputLabel,
   FormControl,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
+import { ClearIcon } from "@mui/x-date-pickers";
 
-const MediaInput = ({ value, onChange }) => {
+const MediaInput = ({ label, value, onChange }) => {
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
 
   const handleSubmit = (value) => {
@@ -21,11 +24,11 @@ const MediaInput = ({ value, onChange }) => {
   return (
     <>
       <FormControl fullWidth size="large">
-        <InputLabel id="photo-label">Photo</InputLabel>
+        <InputLabel id="photo-label">{label}</InputLabel>
         <Select
           fullWidth
           open={false}
-          label="Photo"
+          label={label}
           onClick={(e) => {
             e.preventDefault();
             setUploadDialogOpen(true);
@@ -43,6 +46,21 @@ const MediaInput = ({ value, onChange }) => {
               </Typography>
             </Stack>
           )}
+          endAdornment={
+            !!value && (
+              <InputAdornment sx={{ marginRight: "10px" }} position="end">
+                <IconButton
+                  size="micro"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onChange(null);
+                  }}
+                >
+                  <ClearIcon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }
         />
       </FormControl>
       <MediaDialog

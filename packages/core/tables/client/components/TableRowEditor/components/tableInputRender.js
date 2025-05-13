@@ -136,6 +136,7 @@ const tableInputRender = (item, formik, display_name) => {
     case "media":
       return (
         <MediaInput
+          label={item?.name}
           value={formik.values[item?.slug]}
           onChange={(value) => {
             formik.setFieldValue(item?.slug, value);
