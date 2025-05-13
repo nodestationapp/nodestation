@@ -19,6 +19,7 @@ const MuiTable = ({
   selectActions,
   onRowClick,
   rowHeight = 42,
+  noAddTab,
 }) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
@@ -28,7 +29,7 @@ const MuiTable = ({
   const tabs = !!views?.length
     ? views?.map((view) => ({
         title: view.name,
-        href: `${pathname}?v=${view.id}`,
+        href: `${pathname}${view.id ? `?v=${view.id}` : ""}`,
       }))
     : [];
 
@@ -96,6 +97,7 @@ const MuiTable = ({
       <Toolbar
         tabs={tabs}
         action={action}
+        noAddTab={noAddTab}
         selectedRows={selectedRows}
         selectActions={selectActions}
       />

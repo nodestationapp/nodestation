@@ -10,6 +10,7 @@ const core = [
   "@nstation/core/auth/server",
   "@nstation/core/media/server",
   "@nstation/core/tables/server",
+  "@nstation/core/emails/server",
 ];
 
 const loadPlugins = async (router) => {
