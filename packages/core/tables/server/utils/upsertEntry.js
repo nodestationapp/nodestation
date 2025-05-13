@@ -18,7 +18,7 @@ function extractUploadPath(fullPath) {
   return null;
 }
 
-const upsertEntry = async ({ id, body, files, entry_id, extraFields = [] }) =>
+const upsertEntry = async ({ id, body, entry_id, extraFields = [] }) =>
   new Promise(async (resolve, reject) => {
     for (const key in body) {
       if (body[key] === "null" || body[key] === "") {
@@ -32,27 +32,6 @@ const upsertEntry = async ({ id, body, files, entry_id, extraFields = [] }) =>
     schemaFields = [...schemaFields, ...extraFields];
 
     try {
-      if (files?.length > 0) {
-        files?.forEach((item) => {
-          const is_field = schemaFields?.find(
-            (element) => element?.slug === item?.fieldname
-          );
-
-          if (!!is_field) {
-            const upload_path = !!item?.path
-              ? extractUploadPath(item?.path)
-              : item?.location;
-
-            body[item?.fieldname] = JSON.stringify({
-              name: item?.originalname,
-              type: item?.mimetype,
-              url: upload_path,
-              size: item?.size,
-            });
-          }
-        });
-      }
-
       let formatted_body = schemaFields.reduce((acc, curr) => {
         let value = body?.[curr.slug];
 

@@ -10,7 +10,7 @@ export default async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(body?.password, salt);
     body.password = hashedPassword;
-    body.photo = body?.photo?.id;
+    body.photo = body?.photo?.id || body?.photo;
 
     await upsertEntry({
       id: "nodestation_users",

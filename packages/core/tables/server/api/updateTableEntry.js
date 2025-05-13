@@ -2,14 +2,12 @@ import upsertEntry from "../utils/upsertEntry.js";
 
 export default async (req, res) => {
   const body = req?.body;
-  const files = req?.files;
   const { id, entry_id } = req?.params;
 
   try {
     await upsertEntry({
       id,
       body,
-      files,
       entry_id,
     });
 

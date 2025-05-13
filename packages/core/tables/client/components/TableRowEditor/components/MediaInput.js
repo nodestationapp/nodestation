@@ -11,7 +11,9 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
+
 import { ClearIcon } from "@mui/x-date-pickers";
+import InsertPhoto from "@mui/icons-material/Photo";
 
 const MediaInput = ({ label, value, onChange }) => {
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
@@ -37,10 +39,16 @@ const MediaInput = ({ label, value, onChange }) => {
           value={true}
           renderValue={() => (
             <Stack direction="row" alignItems="center" gap={1}>
-              <Avatar
-                src={value?.url}
-                sx={{ width: 34, height: 34, objectFit: "cover" }}
-              />
+              {value?.url ? (
+                <Avatar
+                  src={value?.url}
+                  sx={{ width: 34, height: 34, objectFit: "cover" }}
+                />
+              ) : (
+                <Avatar sx={{ width: 34, height: 34, objectFit: "cover" }}>
+                  <InsertPhoto />
+                </Avatar>
+              )}
               <Typography color={!!value ? "text.primary" : "text.secondary"}>
                 {value?.name || "Empty"}
               </Typography>
@@ -53,7 +61,7 @@ const MediaInput = ({ label, value, onChange }) => {
                   size="micro"
                   onClick={(e) => {
                     e.stopPropagation();
-                    onChange(null);
+                    onChange("null");
                   }}
                 >
                   <ClearIcon />
