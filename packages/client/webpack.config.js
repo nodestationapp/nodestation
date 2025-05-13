@@ -59,6 +59,10 @@ module.exports = (env) => {
       }),
       new WebpackBar(),
       new BundleAnalyzerPlugin(),
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/,
+      }),
     ],
     resolve: {
       extensions: [".js", ".jsx"],

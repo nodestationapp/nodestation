@@ -1,6 +1,6 @@
 import path from "path";
 import fs_sys from "fs";
-import glob from "glob";
+import { glob } from "glob";
 import { upsertTable } from "@nstation/db";
 import { rootPath } from "@nstation/utils";
 
