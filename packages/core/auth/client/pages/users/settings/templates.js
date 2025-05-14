@@ -1,5 +1,5 @@
-import { BaseLayout } from "@nstation/design-system/Layouts";
 import { SettingsForm } from "@nstation/design-system";
+import { BaseLayout } from "@nstation/design-system/Layouts";
 import SettingTemplates from "../../../components/SettingTemplates.js";
 
 const UsersTemplates = () => {
