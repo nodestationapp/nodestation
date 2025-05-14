@@ -1,13 +1,26 @@
 import { useFormik } from "formik";
-import { InputLabel, MenuItem, Select, Stack } from "@mui/material";
-import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";
+import { useQuery } from "@tanstack/react-query";
+import { Button, InputLabel, MenuItem, Select, Stack } from "@mui/material";
+
+import api from "../../../../client/src/utils/api.js";
+import { useAuth } from "../contexts/authMiddleware.js";
 
 const SettingTemplates = () => {
-  const { user, userUpdate } = useAuth();
+  const { user } = useAuth();
+
+  const { data: emails } = useQuery({
+    queryKey: ["emails"],
+    queryFn: () => api.get("/emails"),
+  });
+
+  const formatted_emails = emails?.map((item) => ({
+    label: item?.name,
+    value: item?.id,
+  }));
 
   const onSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      await userUpdate(values);
+      await api.put("/auth/templates", values);
       resetForm({ values });
     } catch (err) {
       console.error(err);
@@ -18,13 +31,11 @@ const SettingTemplates = () => {
 
   const formik = useFormik({
     initialValues: {
-      first_name: user?.first_name,
-      last_name: user?.last_name,
+      email_verification_template: user?.templates?.email_verification_template,
+      forget_password_template: user?.templates?.forget_password_template,
     },
     onSubmit,
   });
-
-  const variant_options = [];
 
   return (
     <Stack
@@ -41,10 +52,12 @@ const SettingTemplates = () => {
         <Select
           fullWidth
           size="medium"
-          name="default"
+          name="email_verification_template"
           labelId="email-verification-label"
+          onChange={formik.handleChange}
+          value={formik.values.email_verification_template}
         >
-          {variant_options?.map((item) => (
+          {formatted_emails?.map((item) => (
             <MenuItem value={item?.value}>{item?.label}</MenuItem>
           ))}
         </Select>
@@ -54,14 +67,25 @@ const SettingTemplates = () => {
         <Select
           fullWidth
           size="medium"
-          name="default"
+          value={formik.values.forget_password_template}
+          onChange={formik.handleChange}
+          name="forget_password_template"
           labelId="forget-password-label"
         >
-          {variant_options?.map((item) => (
+          {formatted_emails?.map((item) => (
             <MenuItem value={item?.value}>{item?.label}</MenuItem>
           ))}
         </Select>
       </Stack>
+      <Button
+        type="submit"
+        variant="contained"
+        disabled={!formik.dirty}
+        loading={formik.isSubmitting}
+        onClick={formik.handleSubmit}
+      >
+        Save
+      </Button>
     </Stack>
   );
 };

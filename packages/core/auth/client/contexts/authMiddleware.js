@@ -83,7 +83,11 @@ const AuthProvider = ({ children }) => {
             }
           );
 
-          setUser({ ...me?.user, project_name: me?.project_name });
+          setUser({
+            ...me?.user,
+            project_name: me?.project_name,
+            templates: me?.templates,
+          });
         }
       }
     } catch (err) {

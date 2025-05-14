@@ -1,21 +1,29 @@
 import bcrypt from "bcryptjs";
 
 import upsertEntry from "../../../tables/server/utils/upsertEntry.js";
+import { knex } from "@nstation/db";
 
 export default async (req, res) => {
   let body = req?.body;
-  const files = req?.files;
 
   try {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(body?.password, salt);
-    body.password = hashedPassword;
+    const user = await knex("nodestation_users")
+      .where({
+        id: body?.id,
+      })
+      .first();
+
+    if (user?.password !== body?.password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(body?.password, salt);
+      body.password = hashedPassword;
+    }
+
     body.photo = body?.photo?.id || body?.photo;
 
     await upsertEntry({
       id: "nodestation_users",
       body,
-      files,
       entry_id: body?.id,
     });
 

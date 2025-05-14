@@ -7,9 +7,9 @@ import register from "./register.js";
 import updateMe from "./updateMe.js";
 import checkAdmin from "./check-admin.js";
 import changePassword from "./changePassword.js";
+import updateTemplates from "./updateTemplates.js";
 
 import authMiddleware from "../../utils/authMiddleware.js";
-
 import validate from "../../../tables/server/utils/validate.js";
 import addTableEntrySchema from "../../../tables/server/utils/addTableEntrySchema.js";
 
@@ -63,6 +63,12 @@ export default [
     method: "PUT",
     path: "/auth/change-password",
     handler: changePassword,
+    middlewares: [authMiddleware(["admin"])],
+  },
+  {
+    method: "PUT",
+    path: "/auth/templates",
+    handler: updateTemplates,
     middlewares: [authMiddleware(["admin"])],
   },
 ];
