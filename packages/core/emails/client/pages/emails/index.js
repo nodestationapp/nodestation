@@ -17,7 +17,7 @@ const Emails = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const { emails, loading, deleteEmail } = useEmails();
+  const { emails, email_settings, loading, deleteEmail } = useEmails();
   const [email_editor_modal, setEmailEditorModal] = useState(false);
 
   const deleteHandler = async (ids) => {
@@ -71,21 +71,23 @@ const Emails = () => {
 
   return (
     <>
-      <Alert
-        severity="info"
-        sx={{ mb: 2 }}
-        action={
-          <Button
-            color="inherit"
-            size="small"
-            onClick={() => navigate(`${pathname}/settings`)}
-          >
-            Configure
-          </Button>
-        }
-      >
-        To send email messages, you must first configure your settings.
-      </Alert>
+      {!!!email_settings?.active && (
+        <Alert
+          severity="info"
+          sx={{ mb: 2 }}
+          action={
+            <Button
+              color="inherit"
+              size="small"
+              onClick={() => navigate(`${pathname}/settings`)}
+            >
+              Configure
+            </Button>
+          }
+        >
+          To send email messages, you must first configure your settings.
+        </Alert>
+      )}
       <MuiTable
         page={1}
         views={[
