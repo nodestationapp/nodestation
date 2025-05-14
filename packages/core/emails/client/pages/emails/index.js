@@ -1,8 +1,9 @@
 import MuiTable from "../../../../tables/client/components/MuiTable/index.js";
 
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { Button, IconButton, Tooltip } from "@mui/material";
+import { Alert, Button, IconButton, Tooltip } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 import Settings from "@mui/icons-material/Settings";
@@ -13,6 +14,9 @@ import { useEmails } from "../../contexts/emails.js";
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
 
 const Emails = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   const { emails, loading, deleteEmail } = useEmails();
   const [email_editor_modal, setEmailEditorModal] = useState(false);
 
@@ -67,6 +71,21 @@ const Emails = () => {
 
   return (
     <>
+      <Alert
+        severity="info"
+        sx={{ mb: 2 }}
+        action={
+          <Button
+            color="inherit"
+            size="small"
+            onClick={() => navigate(`${pathname}/settings`)}
+          >
+            Configure
+          </Button>
+        }
+      >
+        To send email messages, you must first configure your settings.
+      </Alert>
       <MuiTable
         page={1}
         views={[
