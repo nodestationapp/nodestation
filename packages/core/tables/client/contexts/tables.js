@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, useMemo } from "react";
-
-import api from "utils/api";
 import { useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { createContext, useContext, useMemo } from "react";
+
+import { api } from "@nstation/design-system/utils";
 
 const TablesContext = createContext();
 

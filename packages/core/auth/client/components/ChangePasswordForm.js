@@ -1,13 +1,7 @@
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Stack,
-  TextField,
-} from "@mui/material";
 import { useFormik } from "formik";
+import { Button, Stack, TextField } from "@mui/material";
 
-import api from "utils/api";
+import { api } from "@nstation/design-system/utils";
 
 const ChangePasswordForm = () => {
   const onSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {

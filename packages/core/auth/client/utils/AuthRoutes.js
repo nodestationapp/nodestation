@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import Login from "../pages/auth/login.js";
 import Register from "../pages/auth/register.js";
+import Verify from "../pages/auth/verify.js";
 
 import { useAuth } from "../contexts/authMiddleware.js";
 
@@ -11,7 +12,10 @@ const AuthRoutes = () => {
   return (
     <Routes>
       {is_admin ? (
-        <Route path="/login" element={<Login />} />
+        <>
+          <Route path="/login" element={<Login />} />
+          <Route path="/verify" element={<Verify />} />
+        </>
       ) : (
         <Route path="/register" element={<Register />} />
       )}

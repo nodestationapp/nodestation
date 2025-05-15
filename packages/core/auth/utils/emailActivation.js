@@ -4,8 +4,8 @@ import { knex } from "@nstation/db";
 const emailActivation = async ({ token }) =>
   new Promise(async (resolve, reject) => {
     try {
-      const token_exist = await knex("nodestation_email_activations")
-        .where({ token })
+      const token_exist = await knex("nodestation_users_activation")
+        .where({ id: token })
         .first();
 
       if (!!!token_exist) {
@@ -16,7 +16,7 @@ const emailActivation = async ({ token }) =>
         .where({ id: token_exist?.uid })
         .update({ status: "active" });
 
-      await knex("nodestation_email_activations")
+      await knex("nodestation_users_activation")
         .where({ id: token_exist?.id })
         .del();
 

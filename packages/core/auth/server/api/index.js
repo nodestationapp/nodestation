@@ -8,6 +8,7 @@ import updateMe from "./updateMe.js";
 import checkAdmin from "./check-admin.js";
 import changePassword from "./changePassword.js";
 import updateTemplates from "./updateTemplates.js";
+import emailActivation from "./emailActivation.js";
 
 import authMiddleware from "../../utils/authMiddleware.js";
 import validate from "../../../tables/server/utils/validate.js";
@@ -70,5 +71,11 @@ export default [
     path: "/auth/templates",
     handler: updateTemplates,
     middlewares: [authMiddleware(["admin"])],
+  },
+  {
+    method: "POST",
+    path: "/auth/activation",
+    handler: emailActivation,
+    middlewares: [],
   },
 ];

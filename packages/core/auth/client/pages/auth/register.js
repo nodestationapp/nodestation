@@ -4,7 +4,7 @@ import { Box, Typography, Button, TextField } from "@mui/material";
 
 import { ColorModeDropdown } from "@nstation/design-system";
 
-import api from "utils/api.js";
+import { api } from "@nstation/design-system/utils";
 
 import LogoIcon from "icons/logo-sygnet.svg";
 import { useAuth } from "../../contexts/authMiddleware.js";

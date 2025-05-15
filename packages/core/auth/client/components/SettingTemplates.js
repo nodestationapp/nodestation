@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useQuery } from "@tanstack/react-query";
 import { Button, InputLabel, MenuItem, Select, Stack } from "@mui/material";
 
-import api from "../../../../client/src/utils/api.js";
+import { api } from "@nstation/design-system/utils";
 import { useAuth } from "../contexts/authMiddleware.js";
 
 const SettingTemplates = () => {

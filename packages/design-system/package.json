@@ -6,7 +6,8 @@
   "exports": {
     ".": "./index.js",
     "./Layouts": "./Layouts/index.js",
-    "./theme": "./theme/index.js"
+    "./theme": "./theme/index.js",
+    "./utils": "./utils/index.js"
   },
   "dependencies": {
     "@iconify/react": "^6.0.0",

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Avatar, Button, Stack } from "@mui/material";
 
-import api from "utils/api";
-import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";
+import { api } from "@nstation/design-system/utils";
+import { useAuth } from "../contexts/authMiddleware.js";
 
 const PhotoInput = () => {
   const { user } = useAuth();

@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
-
 import bcrypt from "bcryptjs";
 import { knex } from "@nstation/db";
 import sendEmail from "../../emails/server/utils/sendEmail/index.js";
@@ -19,8 +17,6 @@ const register = async (body) =>
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(body?.password, salt);
 
-      const token = uuidv4();
-
       const newUser = await knex("nodestation_users")
         .insert({
           type: body?.type,
@@ -33,13 +29,15 @@ const register = async (body) =>
         .returning("id");
 
       if (body?.type !== "admin") {
-        // await knex("nodestation_email_activations").insert({
-        //   uid: newUser?.[0]?.id,
-        //   token: token,
-        // });
+        const activation_token = await knex("nodestation_users_activation")
+          .insert({
+            uid: newUser?.[0]?.id,
+          })
+          .returning("id");
+
         const context_body = {
           ...body,
-          token,
+          token: activation_token?.[0]?.id,
           PUBLIC_URL: process.env.PUBLIC_URL,
         };
         sendEmail(auth_settings?.email_verification_template, {

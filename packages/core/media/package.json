@@ -1,9 +1,9 @@
 {
-  "name": "@nstation/dashboard",
-  "version": "0.0.1",
+  "name": "@nstation/media",
+  "version": "1.14.12",
   "type": "module",
   "license": "MIT",
-  "description": "Nodestation's dashboard",
+  "description": "Nodestation's media plugin",
   "repository": {
     "type": "git",
     "url": "https://github.com/nodestationapp/nodestation.git"

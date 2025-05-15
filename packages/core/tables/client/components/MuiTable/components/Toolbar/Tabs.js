@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, IconButton, Popover, Stack, Tab, Tabs } from "@mui/material";
 
-import api from "utils/api";
+import { api } from "@nstation/design-system/utils";
 import { useTable } from "@nstation/core/tables/client/contexts/table.js";
 
 import Add from "@mui/icons-material/Add";

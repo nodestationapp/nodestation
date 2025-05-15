@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import AuthRoutes from "../utils/AuthRoutes.js";
 
-import api from "utils/api.js";
+import { api } from "@nstation/design-system/utils";
 
 const AuthContext = createContext();
 

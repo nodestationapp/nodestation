@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { Button, Grid, TextField } from "@mui/material";
-import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";
+import { useAuth } from "../contexts/authMiddleware.js";
 
 const Form = () => {
   const { user, userUpdate } = useAuth();

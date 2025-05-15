@@ -1,9 +1,9 @@
 {
-  "name": "@nstation/tables",
+  "name": "@nstation/auth",
   "version": "1.14.12",
   "type": "module",
   "license": "MIT",
-  "description": "Nodestation's tables",
+  "description": "Nodestation's authentication plugin",
   "repository": {
     "type": "git",
     "url": "https://github.com/nodestationapp/nodestation.git"

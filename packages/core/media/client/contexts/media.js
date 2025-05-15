@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, useMemo, useState } from "react";
-import api from "utils/api";
+import { api } from "@nstation/design-system/utils";
 
 const MediaContext = createContext();
 
