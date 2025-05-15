@@ -2,7 +2,7 @@ import ReactDOM from "react-dom/client";
 import { CookiesProvider } from "react-cookie";
 import { BrowserRouter } from "react-router-dom";
 
-import { CssBaseline } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 import { AppTheme } from "@nstation/design-system/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 

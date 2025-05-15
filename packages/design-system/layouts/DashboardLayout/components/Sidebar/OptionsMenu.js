@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Box from "@mui/material/Box";
+import Menu from "@mui/material/Menu";
 import { styled } from "@mui/material/styles";
 import MuiMenuItem from "@mui/material/MenuItem";
 import { listClasses } from "@mui/material/List";
 import { paperClasses } from "@mui/material/Paper";
-import { Box, Menu, ListItemText } from "@mui/material";
+import ListItemText from "@mui/material/ListItemText";
 import Divider, { dividerClasses } from "@mui/material/Divider";
 import ListItemIcon, { listItemIconClasses } from "@mui/material/ListItemIcon";
 import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";

@@ -1,17 +1,12 @@
-// import Pill from "components/Pill";
-// import FormikUsers from "components/formik/FormikUsers";
-// import FormikSelect from "components/formik/FormikSelect";
-// import FormikTextarea from "components/formik/FormikTextarea";
-// import FormikJsonInput from "components/formik/FormikJsonInput";
-// import FormikPhotoInput from "components/formik/FormikPhotoInput";
-// import FormikRefEntryTable from "components/formik/FormikRefEntryTable";
-
 import moment from "moment";
-import { Chip, TextField, FormControl, Autocomplete } from "@mui/material";
-
+import Chip from "@mui/material/Chip";
+import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
+import Autocomplete from "@mui/material/Autocomplete";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker/index.js";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment/index.js";
+
 import MediaInput from "./MediaInput.js";
 
 const tableInputRender = (item, formik, display_name) => {

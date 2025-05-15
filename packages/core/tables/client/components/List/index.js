@@ -10,7 +10,7 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
-import { List as MuiList } from "@mui/material";
+import MuiList from "@mui/material/List";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
 import FormFieldItem from "./components/FormFieldItem/index.js";

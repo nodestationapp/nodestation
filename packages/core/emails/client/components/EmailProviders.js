@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { Card, CardActionArea, Stack, Switch, Typography } from "@mui/material";
+
+import Card from "@mui/material/Card";
+import Stack from "@mui/material/Stack";
+import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
+import CardActionArea from "@mui/material/CardActionArea";
 
 import { useEmails } from "../contexts/emails.js";
 import activeEmailChecker from "../utils/activeEmailChecker.js";
 
+import StorageIcon from "@mui/icons-material/Storage";
+
 import AwsLogo from "../icons/aws.svg";
 import MailgunLogo from "../icons/mailgun.svg";
 import MailchimpLogo from "../icons/mailchimp.svg";
-import StorageIcon from "@mui/icons-material/Storage";
 import ElasticEmailLogo from "../icons/elastic-email.svg";
 import ProviderSettingsModal from "./ProviderSettingsModal.js";
 

@@ -1,16 +1,18 @@
-import MuiTable from "../../../../tables/client/components/MuiTable/index.js";
-
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { Alert, Button, IconButton, Tooltip } from "@mui/material";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+
+import MuiTable from "../../../../tables/client/components/MuiTable/index.js";
+import EmailEditorModal from "../../components/EmailEditorModal/index.js";
+
+import { useEmails } from "../../contexts/emails.js";
 
 import AddIcon from "@mui/icons-material/Add";
 import Settings from "@mui/icons-material/Settings";
-
-import EmailEditorModal from "../../components/EmailEditorModal/index.js";
-import { useEmails } from "../../contexts/emails.js";
-
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
 
 const Emails = () => {

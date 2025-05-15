@@ -1,4 +1,4 @@
-import { Chip } from "@mui/material";
+import Chip from "@mui/material/Chip";
 import getFileType from "../utils/getFileType.js";
 
 const MimeType = ({ data }) => {

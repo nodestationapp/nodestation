@@ -1,14 +1,17 @@
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import Stack from "@mui/material/Stack";
+import Checkbox from "@mui/material/Checkbox";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
 import CardContent from "@mui/material/CardContent";
-import { Checkbox, CircularProgress, Stack, IconButton } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import formatBytes from "../../utils/formatBytes.js";
 
-import Delete from "@mui/icons-material/Delete";
 import Link from "@mui/icons-material/Link";
+import Delete from "@mui/icons-material/Delete";
 
 const UploadedItems = ({ files, percent, onSelect, onDelete, selected }) => {
   return (

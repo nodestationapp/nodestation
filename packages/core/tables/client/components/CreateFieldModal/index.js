@@ -1,13 +1,12 @@
-import {
-  Stack,
-  Select,
-  MenuItem,
-  TextField,
-  InputLabel,
-  FormControl,
-} from "@mui/material";
 import slugify from "slugify";
 import { useFormik, FormikContext } from "formik";
+
+import Stack from "@mui/material/Stack";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
 
 import { AsideModal } from "@nstation/design-system";
 import ExtraInputs from "./components/ExtraInputs/index.js";

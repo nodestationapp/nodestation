@@ -2,7 +2,13 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button, IconButton, Popover, Stack, Tab, Tabs } from "@mui/material";
+
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import Popover from "@mui/material/Popover";
+import IconButton from "@mui/material/IconButton";
 
 import { api } from "@nstation/design-system/utils";
 import { useTable } from "@nstation/core/tables/client/contexts/table.js";

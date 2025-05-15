@@ -1,6 +1,10 @@
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Avatar from "@mui/material/Avatar";
+import Divider from "@mui/material/Divider";
 import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import MuiDrawer, { drawerClasses } from "@mui/material/Drawer";
-import { Avatar, Divider, Stack, Typography, Box } from "@mui/material";
 
 import MenuContent from "./MenuContent.js";
 import OptionsMenu from "./OptionsMenu.js";

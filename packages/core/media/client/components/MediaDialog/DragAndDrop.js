@@ -1,7 +1,11 @@
-import { useDropzone } from "react-dropzone";
 import { useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 
-import { Card, Stack, Typography, Button } from "@mui/material";
+import Card from "@mui/material/Card";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 const DragAndDrop = ({ onChange }) => {

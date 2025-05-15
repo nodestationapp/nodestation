@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
-import { api } from "@nstation/design-system/utils";
-import { Button, Typography, Box } from "@mui/material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
+import { api } from "@nstation/design-system/utils";
 
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 

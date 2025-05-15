@@ -1,6 +1,11 @@
 import { useFormik } from "formik";
 import { useQuery } from "@tanstack/react-query";
-import { Button, InputLabel, MenuItem, Select, Stack } from "@mui/material";
+
+import Stack from "@mui/material/Stack";
+import Select from "@mui/material/Select";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 
 import { api } from "@nstation/design-system/utils";
 import { useAuth } from "../contexts/authMiddleware.js";

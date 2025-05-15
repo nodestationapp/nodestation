@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { Avatar, Button, Stack } from "@mui/material";
+
+import Stack from "@mui/material/Stack";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
 
 import { api } from "@nstation/design-system/utils";
 import { useAuth } from "../contexts/authMiddleware.js";

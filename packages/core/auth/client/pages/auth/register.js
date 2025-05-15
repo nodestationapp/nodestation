@@ -1,13 +1,16 @@
 import { useFormik } from "formik";
 import { useLocation } from "react-router-dom";
-import { Box, Typography, Button, TextField } from "@mui/material";
 
-import { ColorModeDropdown } from "@nstation/design-system";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 import { api } from "@nstation/design-system/utils";
+import { useAuth } from "../../contexts/authMiddleware.js";
+import { ColorModeDropdown } from "@nstation/design-system";
 
 import LogoIcon from "icons/logo-sygnet.svg";
-import { useAuth } from "../../contexts/authMiddleware.js";
 
 const RegisterContent = () => {
   const { setIsAdmin } = useAuth();

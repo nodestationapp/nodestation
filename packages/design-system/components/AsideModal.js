@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 
-import {
-  Button,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Drawer,
-  IconButton,
-} from "@mui/material";
+import Button from "@mui/material/Button";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+
 import Close from "@mui/icons-material/Close";
 
 const AsideModal = ({

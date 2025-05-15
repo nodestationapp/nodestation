@@ -1,5 +1,9 @@
 import { useFormik } from "formik";
-import { Box, Typography, Button, TextField } from "@mui/material";
+
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 import { ColorModeDropdown } from "@nstation/design-system";
 import { useAuth } from "../../contexts/authMiddleware.js";

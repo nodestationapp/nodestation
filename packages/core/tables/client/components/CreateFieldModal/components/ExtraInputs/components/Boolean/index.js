@@ -1,11 +1,10 @@
-import {
-  Select,
-  Divider,
-  MenuItem,
-  InputLabel,
-  FormControl,
-} from "@mui/material";
 import { useFormikContext } from "formik";
+
+import Select from "@mui/material/Select";
+import Divider from "@mui/material/Divider";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
 
 const default_options = [
   {

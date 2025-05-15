@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import Stack from "@mui/material/Stack";
 
 import Id from "./components/Id/index.js";
 import Date from "./components/Date/index.js";

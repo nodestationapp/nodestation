@@ -1,18 +1,16 @@
 import { useState } from "react";
 import MediaDialog from "../../../../../media/client/components/MediaDialog/index.js";
 
-import {
-  Stack,
-  Select,
-  Avatar,
-  Typography,
-  InputLabel,
-  FormControl,
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
-
+import Stack from "@mui/material/Stack";
+import Select from "@mui/material/Select";
+import Avatar from "@mui/material/Avatar";
 import { ClearIcon } from "@mui/x-date-pickers";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
+
 import InsertPhoto from "@mui/icons-material/Photo";
 
 const MediaInput = ({ label, value, onChange }) => {

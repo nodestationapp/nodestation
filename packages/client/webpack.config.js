@@ -64,6 +64,11 @@ module.exports = (env) => {
         contextRegExp: /moment$/,
       }),
     ],
+    optimization: {
+      usedExports: true,
+      sideEffects: true,
+      minimize: true,
+    },
     resolve: {
       extensions: [".js", ".jsx"],
       alias: {

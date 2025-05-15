@@ -1,16 +1,19 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { Button, IconButton, Tooltip } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+
+import { BaseLayout } from "@nstation/design-system/Layouts";
 
 import MimeType from "./components/MimeType.js";
 import MediaSize from "./components/MediaSize.js";
-import TableManager from "@nstation/core/tables/client/components/TableManager/index.js";
 import UploadDialog from "./components/UploadDialog/index.js";
-import { BaseLayout } from "@nstation/design-system/Layouts";
 import UploadedItems from "./components/UploadDialog/UploadedItems.js";
+
 import { useMedia } from "./contexts/media.js";
-import { useNavigate } from "react-router-dom";
+
+import AddIcon from "@mui/icons-material/Add";
 import Settings from "@mui/icons-material/Settings";
 
 const Media = () => {

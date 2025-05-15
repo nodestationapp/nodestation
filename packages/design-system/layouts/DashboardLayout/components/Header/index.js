@@ -1,9 +1,10 @@
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
 import NavbarBreadcrumbs from "./NavbarBreadcrumbs.js";
 import { ColorModeDropdown } from "@nstation/design-system";
 
 import Search from "./Search.js";
-import { Box, Divider } from "@mui/material";
 
 const Header = () => {
   return (

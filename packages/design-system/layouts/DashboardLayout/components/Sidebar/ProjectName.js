@@ -1,6 +1,7 @@
+import Box from "@mui/material/Box";
 import MuiAvatar from "@mui/material/Avatar";
 import { styled } from "@mui/material/styles";
-import { Box, Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import DevicesRoundedIcon from "@mui/icons-material/DevicesRounded";
 
 import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";

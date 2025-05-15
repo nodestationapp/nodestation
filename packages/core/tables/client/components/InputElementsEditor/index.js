@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { Button, Stack } from "@mui/material";
+
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 
 import List from "../List/index.js";
 import CreateFieldModal from "../CreateFieldModal/index.js";

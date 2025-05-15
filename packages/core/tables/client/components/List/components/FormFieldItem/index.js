@@ -1,16 +1,14 @@
-import {
-  Chip,
-  IconButton,
-  ListItem,
-  ListItemButton,
-  Stack,
-  Typography,
-} from "@mui/material";
 import { useState } from "react";
+
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import ListItem from "@mui/material/ListItem";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import ListItemButton from "@mui/material/ListItemButton";
+
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
-
-// import ArchiveEmailModal from "page_components/emails/components/ArchiveEmailModal";
 
 import field_type_data from "../../../../utils/field_type_data.js";
 

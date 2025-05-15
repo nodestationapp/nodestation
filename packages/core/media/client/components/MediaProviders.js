@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { Card, CardActionArea, Stack, Switch, Typography } from "@mui/material";
+
+import Card from "@mui/material/Card";
+import Stack from "@mui/material/Stack";
+import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
+import CardActionArea from "@mui/material/CardActionArea";
 
 import { useMedia } from "../contexts/media.js";
 import activeEmailChecker from "../utils/activeEmailChecker.js";

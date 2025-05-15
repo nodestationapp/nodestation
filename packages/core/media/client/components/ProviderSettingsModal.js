@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { Stack } from "@mui/material";
+import Stack from "@mui/material/Stack";
 
 import { AsideModal } from "@nstation/design-system";
 

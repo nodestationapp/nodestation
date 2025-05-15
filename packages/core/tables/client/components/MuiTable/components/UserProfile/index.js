@@ -1,4 +1,6 @@
-import { Avatar, Stack, Typography } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
 
 const UserProfile = ({ data }) => {
   if (!!!data) return "-";

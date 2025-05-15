@@ -1,16 +1,14 @@
 import { useEffect } from "react";
 import { useFormikContext } from "formik";
 
-import {
-  Divider,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  Switch,
-  TextField,
-} from "@mui/material";
+import Select from "@mui/material/Select";
+import Switch from "@mui/material/Switch";
+import Divider from "@mui/material/Divider";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 const variant_options = [
   {

@@ -1,7 +1,8 @@
-import { Box } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
+import Box from "@mui/material/Box";
+import { DataGrid } from "@mui/x-data-grid";
 
 import Toolbar from "./components/Toolbar/index.js";
 

@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs, { breadcrumbsClasses } from "@mui/material/Breadcrumbs";

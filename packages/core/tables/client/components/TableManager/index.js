@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 import { alpha } from "@mui/material/styles";
-import { Button, IconButton, Tooltip } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 
 import MuiTable from "../../components/MuiTable/index.js";
 import TableRowEditor from "../../components/TableRowEditor/index.js";
