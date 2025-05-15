@@ -27,6 +27,7 @@
     "@mui/icons-material": "^7.0.1",
     "@mui/material": "^7.0.1",
     "@nstation/design-system": "^1.14.12",
+    "@nstation/utils": "^1.14.12",
     "@tanstack/react-query": "^5.32.0",
     "axios": "^1.6.8",
     "moment": "^2.30.1",

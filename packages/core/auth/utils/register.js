@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import bcrypt from "bcryptjs";
 import { knex } from "@nstation/db";
-// import { sendEmail } from "@nstation/utils";
+import sendEmail from "../../emails/server/utils/sendEmail/index.js";
 
 const register = async (body) =>
   new Promise(async (resolve, reject) => {
@@ -10,6 +10,7 @@ const register = async (body) =>
       const email_exist = await knex("nodestation_users")
         .where({ email: body?.email })
         .first();
+      const auth_settings = await knex("nodestation_users_settings").first();
 
       if (!!email_exist) {
         return reject({ error: "Email address already exist" });
@@ -32,21 +33,19 @@ const register = async (body) =>
         .returning("id");
 
       if (body?.type !== "admin") {
-        await knex("nodestation_email_activations").insert({
-          uid: newUser?.[0]?.id,
-          token: token,
-        });
-
+        // await knex("nodestation_email_activations").insert({
+        //   uid: newUser?.[0]?.id,
+        //   token: token,
+        // });
         const context_body = {
           ...body,
           token,
           PUBLIC_URL: process.env.PUBLIC_URL,
         };
-
-        // sendEmail("activation-email", {
-        //   recipients: [body?.email],
-        //   context: { ...context_body },
-        // });
+        sendEmail(auth_settings?.email_verification_template, {
+          recipients: [body?.email],
+          context: { ...context_body },
+        });
       }
 
       resolve({ status: "ok" });

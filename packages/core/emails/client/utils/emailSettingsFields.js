@@ -1,10 +1,10 @@
 const tls_data = [
   {
-    name: "SSL",
+    label: "SSL",
     value: "ssl",
   },
   {
-    name: "STARTTLS",
+    label: "STARTTLS",
     value: "starttls",
   },
 ];
