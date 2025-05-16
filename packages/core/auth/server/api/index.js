@@ -9,9 +9,16 @@ import checkAdmin from "./check-admin.js";
 import changePassword from "./changePassword.js";
 import updateTemplates from "./updateTemplates.js";
 import emailActivation from "./emailActivation.js";
+import resetPassword from "./resetPassword.js";
+import checkResetPassword from "./checkResetPassword.js";
+import resetPasswordConfirm from "./resetPasswordConfirm.js";
+
+import validate from "../../../tables/server/utils/validate.js";
 
 import authMiddleware from "../../utils/authMiddleware.js";
-import validate from "../../../tables/server/utils/validate.js";
+import loginSchema from "../utils/validations/loginSchema.js";
+import resetPasswordSchema from "../utils/validations/resetPasswordSchema.js";
+import resetPasswordConfirmSchema from "../utils/validations/resetPasswordConfirmSchema.js";
 import addTableEntrySchema from "../../../tables/server/utils/addTableEntrySchema.js";
 
 export default [
@@ -40,7 +47,7 @@ export default [
     method: "POST",
     path: "/auth/login",
     handler: login,
-    middlewares: [],
+    middlewares: [validate({ schema: loginSchema })],
   },
   {
     method: "POST",
@@ -77,5 +84,23 @@ export default [
     path: "/auth/activation",
     handler: emailActivation,
     middlewares: [],
+  },
+  {
+    method: "POST",
+    path: "/auth/reset-password",
+    handler: resetPassword,
+    middlewares: [validate({ schema: resetPasswordSchema })],
+  },
+  {
+    method: "GET",
+    path: "/auth/reset-password",
+    handler: checkResetPassword,
+    middlewares: [],
+  },
+  {
+    method: "POST",
+    path: "/auth/reset-password/confirm",
+    handler: resetPasswordConfirm,
+    middlewares: [validate({ schema: resetPasswordConfirmSchema })],
   },
 ];

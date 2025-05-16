@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 
@@ -7,12 +8,16 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
+import { api } from "@nstation/design-system/utils";
 import { ColorModeDropdown } from "@nstation/design-system";
 
 const ForgetPasswordContent = () => {
+  const [reset_sent, setResetSent] = useState(false);
+
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      // await login(values);
+      await api.post("/auth/reset-password", values);
+      setResetSent(true);
     } catch (err) {
       setErrors(err?.response?.data?.errors);
       setSubmitting(false);
@@ -22,12 +27,11 @@ const ForgetPasswordContent = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
     },
     onSubmit,
   });
 
-  return (
+  return !!!reset_sent ? (
     <Box
       sx={{
         width: "100%",
@@ -110,6 +114,41 @@ const ForgetPasswordContent = () => {
       </Box>
       <Box sx={{ position: "absolute", top: 15, right: 15 }}>
         <ColorModeDropdown />
+      </Box>
+    </Box>
+  ) : (
+    <Box
+      sx={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 1,
+        }}
+      >
+        <Typography variant="h5" textAlign="center">
+          Password Reset Link Sent!
+        </Typography>
+        <Typography variant="body">
+          Check your email for the password reset link.
+        </Typography>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          sx={{ mt: 2 }}
+          LinkComponent={Link}
+          to="/login"
+        >
+          Go to login
+        </Button>
       </Box>
     </Box>
   );

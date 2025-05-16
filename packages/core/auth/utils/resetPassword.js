@@ -1,6 +1,5 @@
-import { v4 as uuid } from "uuid";
 import { knex } from "@nstation/db";
-import { sendEmail } from "@nstation/utils";
+import sendEmail from "../../emails/server/utils/sendEmail/index.js";
 
 const resetPassword = async (body) =>
   new Promise(async (resolve, reject) => {
@@ -13,24 +12,25 @@ const resetPassword = async (body) =>
         return resolve({ status: "ok" });
       }
 
-      const token = uuid.v4();
-      const created_at = Date.now();
+      const auth_settings = await knex("nodestation_users_settings").first();
 
-      await knex("nodestation_passwords_reset").insert({
-        token,
-        created_at,
-        uid: user?.id,
-      });
+      const password_reset_token = await knex(
+        "nodestation_users_password_reset"
+      )
+        .insert({
+          uid: user?.id,
+        })
+        .returning("id");
 
       const context_body = {
         ...user,
-        token,
-        created_at,
+        PUBLIC_URL: process.env.PUBLIC_URL,
+        token: password_reset_token?.[0]?.id,
       };
 
-      sendEmail("password-reset", {
+      sendEmail(auth_settings?.forget_password_template, {
         recipients: [user?.email],
-        context: { ...context_body, PUBLIC_URL: process.env.PUBLIC_URL },
+        context: context_body,
       });
 
       resolve({ status: "ok" });

@@ -42,7 +42,7 @@ const register = async (body) =>
         };
         sendEmail(auth_settings?.email_verification_template, {
           recipients: [body?.email],
-          context: { ...context_body },
+          context: context_body,
         });
       }
 

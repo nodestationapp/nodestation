@@ -4,11 +4,11 @@ import { knex } from "@nstation/db";
 const resetPasswordConfirm = async (body) =>
   new Promise(async (resolve, reject) => {
     try {
-      const token_exist = await knex("nodestation_passwords_reset")
-        .where({ token: body?.token })
-        .first();
+      const token_exist = await knex("nodestation_users_password_reset").where({
+        id: body?.token,
+      });
 
-      if (!!!token_exist) {
+      if (!!!token_exist?.length) {
         return reject({ error: "Something went wrong" });
       }
 
@@ -16,11 +16,11 @@ const resetPasswordConfirm = async (body) =>
       const hashedPassword = await bcrypt.hash(body?.password, salt);
 
       await knex("nodestation_users")
-        .where({ id: token_exist?.uid })
+        .where({ id: token_exist[0]?.uid })
         .update({ password: hashedPassword });
 
-      await knex("nodestation_passwords_reset")
-        .where({ token: body?.token })
+      await knex("nodestation_users_password_reset")
+        .where({ id: body?.token })
         .del();
 
       resolve({ status: "ok" });
