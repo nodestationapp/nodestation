@@ -1,23 +1,18 @@
 import { useFormik } from "formik";
+import { Link } from "react-router-dom";
 
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 import { ColorModeDropdown } from "@nstation/design-system";
-import { useAuth } from "../../contexts/authMiddleware.js";
 
-import LogoIcon from "icons/logo-sygnet.svg";
-import { InputAdornment } from "@mui/material";
-import { Link } from "react-router-dom";
-
-const LoginContent = () => {
-  const { login } = useAuth();
-
+const ForgetPasswordContent = () => {
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      await login(values);
+      // await login(values);
     } catch (err) {
       setErrors(err?.response?.data?.errors);
       setSubmitting(false);
@@ -43,25 +38,25 @@ const LoginContent = () => {
       }}
     >
       <Box sx={{ width: "100%", maxWidth: 380 }}>
-        <Box
+        <Stack
+          direction="column"
+          gap={1}
           sx={{
             marginBottom: "30px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px",
-            alignItems: "center",
           }}
         >
-          <LogoIcon style={{ width: 50, height: 50 }} />
           <Typography
             component="h1"
             variant="h4"
             textAlign="center"
             sx={{ width: "100%", fontSize: 20 }}
           >
-            Log in to your account
+            Forgot your password?
           </Typography>
-        </Box>
+          <Typography variant="body2" textAlign="center">
+            We will send you instructions to your email address
+          </Typography>
+        </Stack>
 
         <Box
           component="form"
@@ -87,39 +82,6 @@ const LoginContent = () => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
-          <TextField
-            fullWidth
-            name="password"
-            type="password"
-            label="Password"
-            variant="outlined"
-            error={formik.errors.password}
-            value={formik.values.password}
-            autoComplete="current-password"
-            helperText={formik.errors.password}
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Typography
-                      component={Link}
-                      variant="caption"
-                      color="textSecondary"
-                      to="/forget-password"
-                      sx={{
-                        textDecoration: "none",
-                        "&:hover": { textDecoration: "underline" },
-                      }}
-                    >
-                      Forget password
-                    </Typography>
-                  </InputAdornment>
-                ),
-              },
-            }}
-          />
           <Button
             type="submit"
             fullWidth
@@ -127,8 +89,23 @@ const LoginContent = () => {
             loading={formik.isSubmitting}
             color="primary"
           >
-            Sign in
+            Reset password
           </Button>
+          <Stack direction="row" justifyContent="center" marginTop={1}>
+            <Typography
+              component={Link}
+              variant="body2"
+              color="textPrimary"
+              fontWeight={500}
+              to="/login"
+              sx={{
+                textDecoration: "none",
+                "&:hover": { textDecoration: "underline" },
+              }}
+            >
+              Back to login
+            </Typography>
+          </Stack>
         </Box>
       </Box>
       <Box sx={{ position: "absolute", top: 15, right: 15 }}>
@@ -138,4 +115,4 @@ const LoginContent = () => {
   );
 };
 
-export default LoginContent;
+export default ForgetPasswordContent;
