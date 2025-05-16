@@ -4,6 +4,7 @@ src/
 schemas/
 dist/
 build/
+nodestation-config.js
 
 # DATABASE
 .db/
