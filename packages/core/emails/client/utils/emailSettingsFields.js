@@ -24,6 +24,7 @@ const emailSettingsFields = (type, settings) => {
           value: settings?.smtp?.email,
         },
         {
+          type: "password",
           slug: "password",
           name: "Password",
           value: settings?.smtp?.password,
@@ -36,7 +37,7 @@ const emailSettingsFields = (type, settings) => {
         {
           slug: "tls",
           name: "TLS",
-          type: "select",
+          type: "list",
           value: settings?.smtp?.tls,
           options: tls_data,
         },

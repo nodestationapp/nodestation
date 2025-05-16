@@ -20,6 +20,7 @@ const mediaSettingsFields = (type, settings) => {
           value: settings?.aws?.access_key_id,
         },
         {
+          type: "password",
           slug: "secret_access_key",
           name: "Secret access key",
           value: settings?.aws?.secret_access_key,
@@ -48,32 +49,10 @@ const mediaSettingsFields = (type, settings) => {
           value: settings?.digitalocean?.access_key_id,
         },
         {
+          type: "password",
           slug: "secret_access_key",
           name: "Secret access key",
           value: settings?.digitalocean?.secret_access_key,
-        },
-      ];
-    case "wasabi":
-      return [
-        {
-          slug: "bucket",
-          name: "Bucket name",
-          value: settings?.wasabi?.bucket,
-        },
-        {
-          slug: "region",
-          name: "Region",
-          value: settings?.wasabi?.region,
-        },
-        {
-          slug: "access_key_id",
-          name: "Access Key ID",
-          value: settings?.wasabi?.access_key_id,
-        },
-        {
-          slug: "secret_access_key",
-          name: "Secret access key",
-          value: settings?.wasabi?.secret_access_key,
         },
       ];
     default:

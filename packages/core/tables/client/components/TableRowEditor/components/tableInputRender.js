@@ -8,6 +8,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker/index.js";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment/index.js";
 
 import MediaInput from "./MediaInput.js";
+import { InputLabel, MenuItem, Select } from "@mui/material";
 
 const tableInputRender = (item, formik, display_name) => {
   let select_data = null;
@@ -57,6 +58,26 @@ const tableInputRender = (item, formik, display_name) => {
     //         </FormControl>
     //       );
     //   }
+    case "list":
+      return (
+        <FormControl fullWidth>
+          <InputLabel id={item?.slug}>{item?.name}</InputLabel>
+          <Select
+            fullWidth
+            label={item?.name}
+            size="medium"
+            variant="outlined"
+            name={item?.slug}
+            labelId={item?.slug}
+            onChange={formik.handleChange}
+            value={formik.values[item?.slug]}
+          >
+            {item?.options?.map((item) => (
+              <MenuItem value={item?.value}>{item?.label}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      );
     case "boolean":
     case "select":
       return (
