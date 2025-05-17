@@ -2,15 +2,13 @@ import upsertEntry from "../utils/upsertEntry.js";
 
 export default async (req, res) => {
   const body = req?.body;
-  const files = req?.files;
   const { id } = req?.params;
 
   try {
     await upsertEntry({
-      type: id !== "nodestation_users" ? "tables" : null,
       id,
       body,
-      files,
+      entry_id: body?.id,
     });
 
     return res.status(200).json({ status: "ok" });

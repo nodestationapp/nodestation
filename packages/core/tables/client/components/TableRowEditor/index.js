@@ -8,12 +8,7 @@ import tableInputRender from "../TableRowEditor/components/tableInputRender.js";
 import { useTable } from "@nstation/core/tables/client/contexts/table.js";
 
 const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
-  const {
-    data: table_data,
-    addTableEntry,
-    updateTableEntry,
-    tableRefetch,
-  } = useTable();
+  const { data: table_data, addTableEntry, tableRefetch } = useTable();
 
   const onSubmit = async (values, { setSubmitting, setErrors, resetForm }) => {
     try {
@@ -22,7 +17,7 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
           await onEntrySubmit(values);
           tableRefetch();
         } else {
-          await updateTableEntry(open?.id, values);
+          await addTableEntry(values);
         }
       } else {
         if (!!onEntrySubmit) {

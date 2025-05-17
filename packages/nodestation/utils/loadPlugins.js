@@ -52,6 +52,20 @@ const loadPlugins = async (router) => {
     }
   }
 
+  const table_schemas = glob.sync(
+    path.join(rootPath, "src", "tables", "*.json"),
+    {
+      nodir: true,
+    }
+  );
+
+  for await (const schema of table_schemas) {
+    let file = fs_sys.readFileSync(schema, "utf-8");
+    file = JSON.parse(file);
+
+    await upsertTable(file);
+  }
+
   return true;
 };
 

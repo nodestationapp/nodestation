@@ -7,7 +7,7 @@ import { api } from "@nstation/design-system/utils";
 
 const TableContext = createContext();
 
-const TableProvider = ({ id, children }) => {
+const TableProvider = ({ id, extendable = false, children }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
@@ -61,7 +61,7 @@ const TableProvider = ({ id, children }) => {
           delete values?.name;
         }
 
-        await api.put(`/tables/${id}`, values);
+        await api.put(`/tables/${id}?extendable=${extendable}`, values);
 
         tableRefetch();
 
@@ -86,14 +86,10 @@ const TableProvider = ({ id, children }) => {
       }
     });
 
-  const addTableEntry = (formData) =>
+  const addTableEntry = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.post(`/tables/${id}/entry`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        await api.post(`/tables/${id}/entry`, values);
 
         tableRefetch();
 

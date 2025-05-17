@@ -42,7 +42,7 @@ function findSchemasWithTableName(filePaths, targetTableName, extension_items) {
 
 const getSchema = (tableName) => {
   try {
-    const items = glob.sync(
+    let items = glob.sync(
       path.join(
         rootPath,
         "packages",
@@ -54,6 +54,15 @@ const getSchema = (tableName) => {
       ),
       { nodir: true }
     );
+
+    const table_schemas = glob.sync(
+      path.join(rootPath, "src", "tables", "*.json"),
+      {
+        nodir: true,
+      }
+    );
+
+    items = [...items, ...table_schemas];
 
     const extension_items = glob.sync(
       path.join(rootPath, "src", "extensions", "schemas", "*.json"),

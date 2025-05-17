@@ -1,19 +1,20 @@
+import { useParams } from "react-router-dom";
+
 import { SettingsForm } from "@nstation/design-system";
 import { BaseLayout } from "@nstation/design-system/Layouts";
 
-import InputElementsEditor from "../../../../../tables/client/components/InputElementsEditor/index.js";
+import InputElementsEditor from "../components/InputElementsEditor/index.js";
 
-import TableProvider, {
-  useTable,
-} from "../../../../../tables/client/contexts/table.js";
+import TableProvider, { useTable } from "../contexts/table.js";
 
-const UsersSettingsContent = () => {
+const TableSettingsContent = () => {
   const { data, updateTable } = useTable();
 
   const table = data?.table;
 
   const formInitialValues = {
-    name: "auth",
+    name: table?.name,
+    tableName: table?.tableName,
     fields: table?.fields || [],
   };
 
@@ -29,11 +30,7 @@ const UsersSettingsContent = () => {
   const tabs = [
     {
       title: "Schema",
-      href: "/authentication/settings",
-    },
-    {
-      title: "Templates",
-      href: "/authentication/settings/templates",
+      href: `/tables/${table?.id}/settings`,
     },
   ];
 
@@ -41,20 +38,22 @@ const UsersSettingsContent = () => {
     <BaseLayout
       tabs={tabs}
       title="Schema"
-      subtitle="Manage your authentication schema"
-      backButtonLink="/authentication"
+      subtitle="Manage your table schema"
+      backButtonLink={`/tables/${table?.id}`}
     >
       <SettingsForm data={settings_data} />
     </BaseLayout>
   );
 };
 
-const UsersSettings = () => {
+const TableSettings = () => {
+  const { id } = useParams();
+
   return (
-    <TableProvider id="nodestation_users" extendable={true}>
-      <UsersSettingsContent />
+    <TableProvider id={id}>
+      <TableSettingsContent />
     </TableProvider>
   );
 };
 
-export default UsersSettings;
+export default TableSettings;

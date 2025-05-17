@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+
+import Table from "@nstation/core/tables/client/app.js";
 import { DashboardLayout } from "@nstation/design-system/Layouts";
 
 import { useApp } from "contexts/app";
@@ -18,6 +20,7 @@ const App = () => {
             element={<link.Component />}
           />
         ))}
+        <Route path={`/tables/:id/*`} element={<Table />} />
       </Route>
     </Routes>
   );

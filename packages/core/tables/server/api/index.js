@@ -1,5 +1,7 @@
 import getTable from "./getTable.js";
+import getTables from "./getTables.js";
 import updateTable from "./updateTable.js";
+import createTable from "./createTable.js";
 import getPreferences from "./getPreferences.js";
 import createTableView from "./createTableView.js";
 import updateTableView from "./updateTableView.js";
@@ -75,6 +77,18 @@ export default [
     method: "DELETE",
     path: "/preferences/:id",
     handler: removeTableView,
+    middlewares: [authMiddleware(["admin"])],
+  },
+  {
+    method: "POST",
+    path: "/tables",
+    handler: createTable,
+    middlewares: [authMiddleware(["admin"])],
+  },
+  {
+    method: "GET",
+    path: "/tables",
+    handler: getTables,
     middlewares: [authMiddleware(["admin"])],
   },
 ];
