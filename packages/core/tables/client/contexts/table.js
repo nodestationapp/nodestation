@@ -1,6 +1,6 @@
 import queryString from "query-string";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import { api } from "@nstation/design-system/utils";
@@ -74,11 +74,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
   const deleteTable = () =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.delete(
-          `/tables/${id}?${queryString.stringify({
-            type,
-          })}`
-        );
+        await api.delete(`/tables/${id}`);
 
         resolve();
       } catch (err) {

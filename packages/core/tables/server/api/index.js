@@ -2,6 +2,7 @@ import getTable from "./getTable.js";
 import getTables from "./getTables.js";
 import updateTable from "./updateTable.js";
 import createTable from "./createTable.js";
+import removeTable from "./removeTable.js";
 import getPreferences from "./getPreferences.js";
 import createTableView from "./createTableView.js";
 import updateTableView from "./updateTableView.js";
@@ -89,6 +90,12 @@ export default [
     method: "GET",
     path: "/tables",
     handler: getTables,
+    middlewares: [authMiddleware(["admin"])],
+  },
+  {
+    method: "DELETE",
+    path: "/tables/:id",
+    handler: removeTable,
     middlewares: [authMiddleware(["admin"])],
   },
 ];
