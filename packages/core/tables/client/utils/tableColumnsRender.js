@@ -2,6 +2,7 @@ import Chip from "@mui/material/Chip";
 import Date from "../components/MuiTable/components/Date/index.js";
 import Media from "../components/MuiTable/components/Media/index.js";
 import UserProfile from "../components/MuiTable/components/UserProfile/index.js";
+import Boolean from "./Boolean.js";
 
 const render_options = (column, data) => {
   const colors = column?.options?.reduce((acc, item) => {
@@ -17,6 +18,8 @@ const render_options = (column, data) => {
       return <UserProfile data={data} />;
     case "select":
       return <Chip label={data} color={colors[data]} size="small" />;
+    case "boolean":
+      return <Boolean data={data} />;
     case "date":
       return <Date data={data} />;
     case "media":
@@ -39,7 +42,10 @@ const tableColumnsRender = ({ columns, preferences }) => {
           renderCell: (params) =>
             column?.renderCell
               ? column?.renderCell(params)
-              : render_options(column, params.value || params?.row),
+              : render_options(
+                  column,
+                  params.value !== undefined ? params.value : params?.row
+                ),
         };
       })
     : [];

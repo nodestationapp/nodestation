@@ -9,6 +9,7 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment/index.js";
 
 import MediaInput from "./MediaInput.js";
 import { InputLabel, MenuItem, Select } from "@mui/material";
+import BooleanInput from "./BooleanInput.js";
 
 const tableInputRender = (item, formik, display_name) => {
   let select_data = null;
@@ -79,6 +80,14 @@ const tableInputRender = (item, formik, display_name) => {
         </FormControl>
       );
     case "boolean":
+      return (
+        <BooleanInput
+          label={item?.name}
+          slug={item?.slug}
+          value={formik.values[item?.slug]}
+          onChange={formik.handleChange}
+        />
+      );
     case "select":
       return (
         <Autocomplete

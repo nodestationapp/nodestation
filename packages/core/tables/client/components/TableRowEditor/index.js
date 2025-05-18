@@ -12,20 +12,11 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
 
   const onSubmit = async (values, { setSubmitting, setErrors, resetForm }) => {
     try {
-      if (open?.id) {
-        if (!!onEntrySubmit) {
-          await onEntrySubmit(values);
-          tableRefetch();
-        } else {
-          await addTableEntry(values);
-        }
+      if (!!onEntrySubmit) {
+        await onEntrySubmit(values);
+        tableRefetch();
       } else {
-        if (!!onEntrySubmit) {
-          await onEntrySubmit(values);
-          tableRefetch();
-        } else {
-          await addTableEntry(values);
-        }
+        await addTableEntry(values);
       }
 
       onClose();

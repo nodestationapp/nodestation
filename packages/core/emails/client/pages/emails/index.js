@@ -32,18 +32,6 @@ const Emails = () => {
     }
   };
 
-  // const onEntrySubmit = async (entry) =>
-  //   new Promise(async (resolve, reject) => {
-  //     try {
-  //       await api.post("/p/auth/user", entry);
-
-  //       resolve();
-  //     } catch (err) {
-  //       console.error(err);
-  //       reject(err);
-  //     }
-  //   });
-
   const action = () => (
     <>
       <IconButton size="micro" onClick={() => navigate(`${pathname}/settings`)}>
@@ -73,7 +61,7 @@ const Emails = () => {
 
   return (
     <>
-      {!!!email_settings?.active && (
+      {!!email_settings && !email_settings?.active && (
         <Alert
           severity="info"
           sx={{ mb: 2 }}
