@@ -10,6 +10,7 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment/index.js";
 import MediaInput from "./MediaInput.js";
 import { InputLabel, MenuItem, Select } from "@mui/material";
 import BooleanInput from "./BooleanInput.js";
+// import JsonInput from "./JsonInput.js";
 
 const tableInputRender = (item, formik, display_name) => {
   let select_data = null;
@@ -153,9 +154,15 @@ const tableInputRender = (item, formik, display_name) => {
           </FormControl>
         </LocalizationProvider>
       );
-
     // case "json":
-    //   return <FormikJsonInput label={item?.name} name={item?.slug} />;
+    //   return (
+    //     <JsonInput
+    //       label={item?.name}
+    //       name={item?.slug}
+    //       value={formik.values[item?.slug]}
+    //       onChange={formik.handleChange}
+    //     />
+    //   );
     // case "user":
     //   return <FormikUsers label={item?.name} name={item?.slug} />;
     case "media":

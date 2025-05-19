@@ -9,7 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 
-import { useTable } from "@nstation/core/tables/client/contexts/table.js";
+import { useTable } from "@nstation/tables/client/contexts/table.js";
 
 const DeleteTableModal = ({ open, onClose }) => {
   const navigate = useNavigate();

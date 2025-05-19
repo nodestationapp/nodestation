@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import DevicesRoundedIcon from "@mui/icons-material/DevicesRounded";
 
-import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";
+import { useAuth } from "@nstation/auth/client/contexts/authMiddleware.js";
 
 const Avatar = styled(MuiAvatar)(({ theme }) => ({
   width: 28,

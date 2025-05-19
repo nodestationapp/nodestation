@@ -10,7 +10,7 @@ import { paperClasses } from "@mui/material/Paper";
 import ListItemText from "@mui/material/ListItemText";
 import Divider, { dividerClasses } from "@mui/material/Divider";
 import ListItemIcon, { listItemIconClasses } from "@mui/material/ListItemIcon";
-import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";
+import { useAuth } from "@nstation/auth/client/contexts/authMiddleware.js";
 
 import MenuButton from "./MenuButton.js";
 

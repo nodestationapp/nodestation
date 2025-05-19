@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import { MenuItem, Select } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { SettingsForm } from "@nstation/design-system";
 import { BaseLayout } from "@nstation/design-system/Layouts";
@@ -13,18 +14,48 @@ import TableProvider, { useTable } from "../contexts/table.js";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const TableSettingsContent = () => {
-  const { data, updateTable } = useTable();
+  const { data, updateTable, loading } = useTable();
   const [deleteTableModal, setDeleteTableModal] = useState(false);
+  const [displayName, setDisplayName] = useState(data?.table?.displayName);
 
   const table = data?.table;
 
   const formInitialValues = {
     name: table?.name,
     tableName: table?.tableName,
+    displayName: table?.displayName,
     fields: table?.fields || [],
   };
 
+  const updateDisplayName = (value) => {
+    let temp = formInitialValues;
+    temp.displayName = value;
+    setDisplayName(value);
+    updateTable(temp);
+  };
+
+  const display_name_options = data?.table?.fields?.filter(
+    (item) =>
+      item?.type === "id" || item?.type === "text" || item?.type === "numeric"
+  );
+
   const settings_data = [
+    {
+      label: "Display field",
+      component: !loading ? (
+        <Select
+          fullWidth
+          size="medium"
+          name="displayName"
+          onChange={(e) => updateDisplayName(e.target.value)}
+          value={displayName}
+        >
+          {display_name_options?.map((item) => (
+            <MenuItem value={item?.slug}>{item?.name}</MenuItem>
+          ))}
+        </Select>
+      ) : null,
+    },
     {
       label: "Fields",
       component: (

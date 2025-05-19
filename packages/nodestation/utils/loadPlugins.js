@@ -7,10 +7,10 @@ import { rootPath } from "@nstation/utils";
 import loadRoute from "./loadRoute.js";
 
 const core = [
-  "@nstation/core/auth/server",
-  "@nstation/core/media/server",
-  "@nstation/core/tables/server",
-  "@nstation/core/emails/server",
+  "@nstation/auth/server",
+  "@nstation/media/server",
+  "@nstation/tables/server",
+  "@nstation/emails/server",
 ];
 
 const loadPlugins = async (router) => {

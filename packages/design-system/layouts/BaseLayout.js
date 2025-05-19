@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import Toolbar from "@nstation/core/tables/client/components/MuiTable/components/Toolbar/index.js";
+import Toolbar from "@nstation/tables/client/components/MuiTable/components/Toolbar/index.js";
 
 const BaseLayout = ({
   children,

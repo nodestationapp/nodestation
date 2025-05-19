@@ -1,4 +1,4 @@
-import TableManager from "@nstation/core/tables/client/components/TableManager/index.js";
+import TableManager from "@nstation/tables/client/components/TableManager/index.js";
 import { api } from "@nstation/design-system/utils";
 
 const Users = () => {

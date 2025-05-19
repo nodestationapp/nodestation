@@ -59,7 +59,7 @@ const MediaInput = ({ label, value, onChange }) => {
                   size="micro"
                   onClick={(e) => {
                     e.stopPropagation();
-                    onChange("null");
+                    onChange(null);
                   }}
                 >
                   <ClearIcon />

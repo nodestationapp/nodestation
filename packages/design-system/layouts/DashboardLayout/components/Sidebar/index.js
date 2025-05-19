@@ -10,7 +10,7 @@ import MenuContent from "./MenuContent.js";
 import OptionsMenu from "./OptionsMenu.js";
 import ProjectName from "./ProjectName.js";
 
-import { useAuth } from "@nstation/core/auth/client/contexts/authMiddleware.js";
+import { useAuth } from "@nstation/auth/client/contexts/authMiddleware.js";
 
 const drawerWidth = 240;
 

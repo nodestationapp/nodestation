@@ -13,7 +13,8 @@
     "email": "ceo@nodestation.app"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/core/*"
   ],
   "scripts": {
     "test": "vitest",

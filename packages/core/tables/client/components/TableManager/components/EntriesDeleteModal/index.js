@@ -7,7 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-import { useTable } from "@nstation/core/tables/client/contexts/table.js";
+import { useTable } from "@nstation/tables/client/contexts/table.js";
 
 const EntriesDeleteModal = ({ open, onClose }) => {
   const { deleteTableEntries } = useTable();

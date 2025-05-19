@@ -1,8 +1,8 @@
 import Chip from "@mui/material/Chip";
 import Date from "../components/MuiTable/components/Date/index.js";
+import Boolean from "../components/MuiTable/components/Boolean.js";
 import Media from "../components/MuiTable/components/Media/index.js";
 import UserProfile from "../components/MuiTable/components/UserProfile/index.js";
-import Boolean from "./Boolean.js";
 
 const render_options = (column, data) => {
   const colors = column?.options?.reduce((acc, item) => {

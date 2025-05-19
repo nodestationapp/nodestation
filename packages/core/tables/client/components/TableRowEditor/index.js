@@ -5,13 +5,19 @@ import { AsideModal } from "@nstation/design-system";
 
 import tableInputRender from "../TableRowEditor/components/tableInputRender.js";
 
-import { useTable } from "@nstation/core/tables/client/contexts/table.js";
+import { useTable } from "@nstation/tables/client/contexts/table.js";
 
 const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
   const { data: table_data, addTableEntry, tableRefetch } = useTable();
 
   const onSubmit = async (values, { setSubmitting, setErrors, resetForm }) => {
     try {
+      table_data?.table?.fields?.forEach((item) => {
+        if (item?.type === "media") {
+          values[item?.slug] = values[item?.slug]?.id || null;
+        }
+      });
+
       if (!!onEntrySubmit) {
         await onEntrySubmit(values);
         tableRefetch();
@@ -40,7 +46,7 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
         onClose={onClose}
         onSubmit={formik.handleSubmit}
         submitLoading={formik.isSubmitting}
-        header={open?.[table_data?.table?.display_name || "id"] || "Add entry"}
+        header={open?.[table_data?.table?.displayName || "id"] || "Add entry"}
       >
         <Stack gap={2} direction="column">
           {table_data?.table?.fields?.map((item, index) => {

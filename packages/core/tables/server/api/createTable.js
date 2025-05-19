@@ -13,7 +13,7 @@ export default async (req, res) => {
     const formatted_body = {
       name: name,
       tableName: slug,
-      display_name: "id",
+      displayName: "id",
       fields: [
         {
           name: "ID",

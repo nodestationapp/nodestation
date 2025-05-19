@@ -19,8 +19,6 @@ export default async (req, res) => {
       body.password = hashedPassword;
     }
 
-    body.photo = body?.photo?.id || body?.photo;
-
     await upsertEntry({
       id: "nodestation_users",
       body,

@@ -11,7 +11,7 @@ import Popover from "@mui/material/Popover";
 import IconButton from "@mui/material/IconButton";
 
 import { api } from "@nstation/design-system/utils";
-import { useTable } from "@nstation/core/tables/client/contexts/table.js";
+import { useTable } from "@nstation/tables/client/contexts/table.js";
 
 import Add from "@mui/icons-material/Add";
 import ArrowBack from "@mui/icons-material/ArrowBack";
