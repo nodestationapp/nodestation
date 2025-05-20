@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
 const UserProfile = ({ data }) => {
-  if (!!!data) return "-";
+  if (!!!data?.id) return "-";
 
   return (
     <Stack direction="row" alignItems="center" gap={1} height="100%">

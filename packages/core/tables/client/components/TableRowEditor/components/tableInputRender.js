@@ -4,11 +4,12 @@ import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import Autocomplete from "@mui/material/Autocomplete";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import { InputLabel, MenuItem, Select } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker/index.js";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment/index.js";
 
+import UserInput from "./UserInput.js";
 import MediaInput from "./MediaInput.js";
-import { InputLabel, MenuItem, Select } from "@mui/material";
 import BooleanInput from "./BooleanInput.js";
 // import JsonInput from "./JsonInput.js";
 
@@ -87,6 +88,15 @@ const tableInputRender = (item, formik, display_name) => {
           slug={item?.slug}
           value={formik.values[item?.slug]}
           onChange={formik.handleChange}
+        />
+      );
+    case "user":
+      return (
+        <UserInput
+          slug={item?.slug}
+          label={item?.name}
+          value={formik.values[item?.slug]}
+          onChange={formik.setFieldValue}
         />
       );
     case "select":

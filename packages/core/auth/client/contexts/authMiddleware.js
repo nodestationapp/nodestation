@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 
 import AuthRoutes from "../utils/AuthRoutes.js";
 
@@ -32,36 +31,6 @@ const AuthProvider = ({ children }) => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const {
-    data: preferences = [],
-    isLoading: preferencesloading,
-    refetch: refetchPreferences,
-  } = useQuery({
-    queryKey: ["preferences"],
-    queryFn: () => api.get("/preferences"),
-    enabled: !!user?.id,
-  });
-
-  const updatePreferences = (id) => {
-    let temp = [...preferences];
-
-    const table_id = temp?.find((item) => item?.id === id)?.table_id;
-
-    queryClient.setQueryData(["preferences"], (oldData) => {
-      if (!Array.isArray(oldData)) return oldData;
-
-      return oldData.map((item) => {
-        if (item.table_id === table_id) {
-          return {
-            ...item,
-            last_viewed: item.id === id ? 1 : null,
-          };
-        }
-        return item;
-      });
-    });
-  };
 
   const getUserData = async (access_token) => {
     try {
@@ -149,7 +118,6 @@ const AuthProvider = ({ children }) => {
       getUserData,
       is_admin,
       setIsAdmin,
-      updatePreferences,
     };
     // eslint-disable-next-line
   }, [user, is_admin]);

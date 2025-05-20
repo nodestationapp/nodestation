@@ -1,34 +1,35 @@
-function transformRelations(data, settings) {
+function setDeepValue(obj, keys, value) {
+  let current = obj;
+
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+
+    if (i === keys.length - 1) {
+      current[key] = value;
+    } else {
+      if (typeof current[key] !== "object" || current[key] === null) {
+        current[key] = {};
+      }
+      current = current[key];
+    }
+  }
+}
+
+function transformRelations(data) {
   return data.map((item) => {
     const transformedItem = {};
 
     for (const [key, value] of Object.entries(item)) {
       if (key.includes(".")) {
         const keys = key.split(".");
-        const parent = keys.shift();
-        const nestedKey = keys.join(".");
 
-        if (typeof transformedItem[parent] !== "object") {
-          transformedItem[parent] = {};
-        }
+        const parentPath = keys.slice(0, -1).join(".");
+        const topLevelPath = keys[0];
 
-        if (!!item?.[`${parent}.id`]) {
-          if (nestedKey === "photo") {
-            let media = !!value ? value : null;
-            transformedItem[parent][nestedKey] = !!media?.url
-              ? {
-                  ...media,
-                  url:
-                    settings?.active === "local"
-                      ? `${process.env.PUBLIC_URL}${media?.url}`
-                      : media?.url,
-                }
-              : null;
-          } else {
-            transformedItem[parent][nestedKey] = value;
-          }
+        if (item?.[`${parentPath}.id`] || item?.[`${topLevelPath}.id`]) {
+          setDeepValue(transformedItem, keys, value);
         } else {
-          transformedItem[parent] = null;
+          setDeepValue(transformedItem, keys.slice(0, -1), null);
         }
       } else {
         transformedItem[key] = value;

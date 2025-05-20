@@ -17,6 +17,29 @@ const populateRelations = (query, table) => {
         );
     }
 
+    if (item?.type === "user") {
+      query = query
+        .leftJoin(
+          "nodestation_users",
+          `${table?.tableName}.${item?.slug}`,
+          "nodestation_users.id"
+        )
+        .leftJoin(
+          { user_photo_media: "nodestation_media" },
+          `nodestation_users.photo`,
+          `user_photo_media.id`
+        )
+        .select(
+          `${table?.tableName}.*`,
+          `nodestation_users.id as ${item?.slug}.id`,
+          `nodestation_users.first_name as ${item?.slug}.first_name`,
+          `nodestation_users.last_name as ${item?.slug}.last_name`,
+          `user_photo_media.id as ${item?.slug}.photo.id`,
+          `user_photo_media.name as ${item?.slug}.photo.name`,
+          `user_photo_media.url as ${item?.slug}.photo.url`
+        );
+    }
+
     // if (item?.type === "user") {
     //   query = query
     //     .leftJoin(

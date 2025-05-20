@@ -15,6 +15,7 @@ const render_options = (column, data) => {
 
   switch (column?.type) {
     case "user_profile":
+    case "user":
       return <UserProfile data={data} />;
     case "select":
       return <Chip label={data} color={colors[data]} size="small" />;

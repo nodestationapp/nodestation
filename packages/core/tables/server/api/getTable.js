@@ -15,7 +15,7 @@ export default async (req, res) => {
 
     let preferences;
 
-    if (view === "undefined") {
+    if (view === "undefined" || view === undefined) {
       // preferences = await knex("nodestation_preferences")
       //   .insert({
       //     name: "Entries",

@@ -19,6 +19,23 @@ const mediaParser = (fields, objects, settings) => {
           obj[key] = null;
         }
       }
+
+      if (type === "user") {
+        try {
+          let media = obj[key].photo;
+          obj[key].photo = media.url
+            ? {
+                ...media,
+                url:
+                  settings?.active === "local"
+                    ? `${process.env.PUBLIC_URL}${media.url}`
+                    : media.url,
+              }
+            : null;
+        } catch (e) {
+          obj[key] = null;
+        }
+      }
     }
     return obj;
   });
