@@ -116,10 +116,11 @@ const MuiTable = ({
         onColumnResize={onColumnResize}
         columnVisibilityModel={columnVisibility}
         onColumnVisibilityModelChange={onColumnVisibilityChange}
-        sortingMode="server"
         sortModel={columnSort || []}
         onSortModelChange={onSortModelChange}
         filterMode="server"
+        sortingMode="server"
+        paginationMode="server"
         filterModel={
           !!columnFilters
             ? {
@@ -128,11 +129,10 @@ const MuiTable = ({
             : undefined
         }
         onFilterModelChange={onFilterModelChange}
-        paginationMode="server"
-        rowCount={pagination?.count}
+        rowCount={pagination?.count || 0}
         paginationModel={{
           page: parseInt(page || 0),
-          pageSize: pagination?.pageSize,
+          pageSize: pagination?.pageSize || 0,
         }}
         onPaginationModelChange={onPaginationModelChange}
         pageSizeOptions={[]}

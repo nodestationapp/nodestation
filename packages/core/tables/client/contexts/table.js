@@ -153,8 +153,6 @@ const TableProvider = ({ id, extendable = false, children }) => {
     // eslint-disable-next-line
   }, [data, id, loading, view]);
 
-  if (loading) return null;
-
   return (
     <TableContext.Provider value={value}>{children}</TableContext.Provider>
   );

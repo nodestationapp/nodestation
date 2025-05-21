@@ -45,8 +45,8 @@ const getSchema = (tableName) => {
     let items = glob.sync(
       path.join(
         rootPath,
-        "packages",
-        "core",
+        "node_modules",
+        "@nstation",
         "**",
         "server",
         "schemas",

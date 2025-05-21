@@ -51,7 +51,7 @@ export default function NavbarBreadcrumbs() {
       separator={<NavigateNextRoundedIcon fontSize="small" />}
     >
       {breadcrumbs?.map((item, index) => (
-        <Typography
+        <Box
           component={item?.href ? Link : null}
           to={item?.href}
           key={index}
@@ -73,7 +73,7 @@ export default function NavbarBreadcrumbs() {
             </Box>
           )}
           {item?.label}
-        </Typography>
+        </Box>
       ))}
     </StyledBreadcrumbs>
   );
