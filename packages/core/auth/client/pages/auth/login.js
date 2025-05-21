@@ -1,16 +1,16 @@
 import { useFormik } from "formik";
+import { Link } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-
+import InputAdornment from "@mui/material/InputAdornment";
 import { ColorModeDropdown } from "@nstation/design-system";
+
 import { useAuth } from "../../contexts/authMiddleware.js";
 
 import LogoIcon from "icons/logo-sygnet.svg";
-import { InputAdornment } from "@mui/material";
-import { Link } from "react-router-dom";
 
 const LoginContent = () => {
   const { login } = useAuth();

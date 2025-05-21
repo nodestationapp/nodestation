@@ -11,7 +11,7 @@ import updateTableEntry from "./updateTableEntry.js";
 import createTableEntry from "./createTableEntry.js";
 import upsertPreferences from "./upsertPreferences.js";
 import removeTableEntries from "./removeTableEntries.js";
-import authMiddleware from "../../../auth/utils/authMiddleware.js";
+import authMiddleware from "@nstation/auth/utils/authMiddleware.js";
 
 import validate from "../utils/validate.js";
 import addTableEntrySchema from "../utils/addTableEntrySchema.js";

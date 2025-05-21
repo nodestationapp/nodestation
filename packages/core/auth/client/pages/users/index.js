@@ -1,5 +1,5 @@
-import TableManager from "@nstation/tables/client/components/TableManager/index.js";
 import { api } from "@nstation/design-system/utils";
+import TableManager from "@nstation/tables/client/components/TableManager/index.js";
 
 const Users = () => {
   const onEntrySubmit = async (entry) =>

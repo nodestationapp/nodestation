@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 
-import MuiTable from "../../../../tables/client/components/MuiTable/index.js";
+import MuiTable from "@nstation/tables/client/components/MuiTable/index.js";
 import EmailEditorModal from "../../components/EmailEditorModal/index.js";
 
 import { useEmails } from "../../contexts/emails.js";

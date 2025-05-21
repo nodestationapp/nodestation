@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 
-import upsertEntry from "../../../tables/server/utils/upsertEntry.js";
+import upsertEntry from "@nstation/tables/server/utils/upsertEntry.js";
 import { knex } from "@nstation/db";
 
 export default async (req, res) => {

@@ -13,13 +13,13 @@ import resetPassword from "./resetPassword.js";
 import checkResetPassword from "./checkResetPassword.js";
 import resetPasswordConfirm from "./resetPasswordConfirm.js";
 
-import validate from "../../../tables/server/utils/validate.js";
+import validate from "@nstation/tables/server/utils/validate.js";
+import addTableEntrySchema from "@nstation/tables/server/utils/addTableEntrySchema.js";
 
 import authMiddleware from "../../utils/authMiddleware.js";
 import loginSchema from "../utils/validations/loginSchema.js";
 import resetPasswordSchema from "../utils/validations/resetPasswordSchema.js";
 import resetPasswordConfirmSchema from "../utils/validations/resetPasswordConfirmSchema.js";
-import addTableEntrySchema from "../../../tables/server/utils/addTableEntrySchema.js";
 
 export default [
   {

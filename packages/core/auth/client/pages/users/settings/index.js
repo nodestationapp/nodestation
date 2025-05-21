@@ -1,11 +1,11 @@
 import { SettingsForm } from "@nstation/design-system";
 import { BaseLayout } from "@nstation/design-system/Layouts";
 
-import InputElementsEditor from "../../../../../tables/client/components/InputElementsEditor/index.js";
+import InputElementsEditor from "@nstation/tables/client/components/InputElementsEditor/index.js";
 
 import TableProvider, {
   useTable,
-} from "../../../../../tables/client/contexts/table.js";
+} from "@nstation/tables/client/contexts/table.js";
 
 const UsersSettingsContent = () => {
   const { data, updateTable } = useTable();

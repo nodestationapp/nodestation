@@ -1,0 +1,13 @@
+{
+  "name": "nstation",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "nodestation dev",
+    "start": "nodestation start",
+    "build": "nodestation build"
+  },
+  "dependencies": {
+    "nodestation": "^1.15.1"
+  }
+}

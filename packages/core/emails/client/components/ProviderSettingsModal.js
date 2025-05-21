@@ -2,10 +2,10 @@ import { useFormik } from "formik";
 import Stack from "@mui/material/Stack";
 
 import { AsideModal } from "@nstation/design-system";
+import tableInputRender from "@nstation/tables/client/components/TableRowEditor/components/tableInputRender.js";
 
 import { useEmails } from "../contexts/emails.js";
 import emailSettingsFields from "../utils/emailSettingsFields.js";
-import tableInputRender from "../../../tables/client/components/TableRowEditor/components/tableInputRender.js";
 
 const title_render = (type) => {
   switch (type) {

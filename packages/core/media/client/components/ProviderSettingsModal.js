@@ -6,7 +6,7 @@ import { AsideModal } from "@nstation/design-system";
 import { useMedia } from "../contexts/media.js";
 import mediaSettingsFields from "../utils/mediaSettingsFields.js";
 
-import tableInputRender from "../../../tables/client/components/TableRowEditor/components/tableInputRender.js";
+import tableInputRender from "@nstation/tables/client/components/TableRowEditor/components/tableInputRender.js";
 
 const title_render = (type) => {
   switch (type) {

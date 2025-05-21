@@ -7,8 +7,9 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 import { api } from "@nstation/design-system/utils";
-import { useAuth } from "../../contexts/authMiddleware.js";
 import { ColorModeDropdown } from "@nstation/design-system";
+
+import { useAuth } from "../../contexts/authMiddleware.js";
 
 import LogoIcon from "icons/logo-sygnet.svg";
 

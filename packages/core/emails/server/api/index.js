@@ -4,7 +4,7 @@ import deleteEmail from "./deleteEmail.js";
 import getEmailSettings from "./getEmailSettings.js";
 import updateEmailSettings from "./updateEmailSettings.js";
 
-import authMiddleware from "../../../auth/utils/authMiddleware.js";
+import authMiddleware from "@nstation/auth/utils/authMiddleware.js";
 
 export default [
   {
