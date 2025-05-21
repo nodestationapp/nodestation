@@ -14,8 +14,6 @@ import BooleanInput from "./BooleanInput.js";
 // import JsonInput from "./JsonInput.js";
 
 const tableInputRender = (item, formik, display_name) => {
-  let select_data = null;
-
   if (item?.type === "select") {
     select_data = item?.options?.map((item) => ({
       label: item?.label,

@@ -1,42 +1,40 @@
-import { fs } from "@nstation/utils";
-
 const populateRelations = (query, table) => {
-  table?.fields?.forEach((item) => {
+  table?.fields?.forEach((item, index) => {
     if (item?.type === "media") {
       query = query
         .leftJoin(
-          "nodestation_media",
+          { [`nodestation_media_${index}`]: "nodestation_media" },
           `${table?.tableName}.${item?.slug}`,
-          "nodestation_media.id"
+          `nodestation_media_${index}.id`
         )
         .select(
           `${table?.tableName}.*`,
-          `nodestation_media.id as ${item?.slug}.id`,
-          `nodestation_media.name as ${item?.slug}.name`,
-          `nodestation_media.url as ${item?.slug}.url`
+          `nodestation_media_${index}.id as ${item?.slug}.id`,
+          `nodestation_media_${index}.name as ${item?.slug}.name`,
+          `nodestation_media_${index}.url as ${item?.slug}.url`
         );
     }
 
     if (item?.type === "user") {
       query = query
         .leftJoin(
-          "nodestation_users",
+          { [`nodestation_users_${index}`]: "nodestation_users" },
           `${table?.tableName}.${item?.slug}`,
-          "nodestation_users.id"
+          `nodestation_users_${index}.id`
         )
         .leftJoin(
-          { user_photo_media: "nodestation_media" },
-          `nodestation_users.photo`,
-          `user_photo_media.id`
+          { [`user_photo_media_${index}`]: "nodestation_media" },
+          `nodestation_users_${index}.photo`,
+          `user_photo_media_${index}.id`
         )
         .select(
           `${table?.tableName}.*`,
-          `nodestation_users.id as ${item?.slug}.id`,
-          `nodestation_users.first_name as ${item?.slug}.first_name`,
-          `nodestation_users.last_name as ${item?.slug}.last_name`,
-          `user_photo_media.id as ${item?.slug}.photo.id`,
-          `user_photo_media.name as ${item?.slug}.photo.name`,
-          `user_photo_media.url as ${item?.slug}.photo.url`
+          `nodestation_users_${index}.id as ${item?.slug}.id`,
+          `nodestation_users_${index}.first_name as ${item?.slug}.first_name`,
+          `nodestation_users_${index}.last_name as ${item?.slug}.last_name`,
+          `user_photo_media_${index}.id as ${item?.slug}.photo.id`,
+          `user_photo_media_${index}.name as ${item?.slug}.photo.name`,
+          `user_photo_media_${index}.url as ${item?.slug}.photo.url`
         );
     }
 
