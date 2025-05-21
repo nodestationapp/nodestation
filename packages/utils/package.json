@@ -17,6 +17,11 @@
     "#root": "./",
     "#modules/*": "./modules/*"
   },
+  "files": [
+    "./modules",
+    "./index.js",
+    "./package.json"
+  ],
   "dependencies": {
     "@aws-sdk/client-s3": "^3.717.0",
     "@nstation/db": "^1.15.2",

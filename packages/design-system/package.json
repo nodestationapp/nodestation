@@ -9,6 +9,14 @@
     "./theme": "./theme/index.js",
     "./utils": "./utils/index.js"
   },
+  "files": [
+    "./components",
+    "./layouts",
+    "./theme",
+    "./utils",
+    "./index.js",
+    "./package.json"
+  ],
   "dependencies": {
     "@iconify/react": "^6.0.0",
     "classnames": "^2.5.1"

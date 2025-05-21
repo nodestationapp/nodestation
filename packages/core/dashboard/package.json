@@ -13,6 +13,10 @@
     "react-dom": ">=19.0.0",
     "react-router-dom": ">=6.23.0"
   },
+  "files": [
+    "./client",
+    "./package.json"
+  ],
   "author": {
     "name": "Nodestation",
     "email": "ceo@nodestation.app"

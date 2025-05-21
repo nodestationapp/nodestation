@@ -16,6 +16,11 @@
   "dependencies": {
     "react-dropzone": "^14.3.8"
   },
+  "files": [
+    "./client",
+    "./server",
+    "./package.json"
+  ],
   "author": {
     "name": "Nodestation",
     "email": "ceo@nodestation.app"

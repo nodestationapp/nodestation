@@ -16,6 +16,11 @@
   "dependencies": {
     "@monaco-editor/react": "^4.7.0"
   },
+  "files": [
+    "./client",
+    "./server",
+    "./package.json"
+  ],
   "author": {
     "name": "Nodestation",
     "email": "ceo@nodestation.app"

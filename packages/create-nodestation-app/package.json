@@ -13,6 +13,10 @@
     "name": "Nodestation",
     "email": "ceo@nodestation.app"
   },
+  "files": [
+    "./index.js",
+    "./package.json"
+  ],
   "bin": "./index.js",
   "dependencies": {
     "@nstation/utils": "^1.15.2",

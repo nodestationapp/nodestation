@@ -19,6 +19,11 @@
     "@dnd-kit/sortable": "^10.0.0",
     "slugify": "^1.6.6"
   },
+  "files": [
+    "./client",
+    "./server",
+    "./package.json"
+  ],
   "author": {
     "name": "Nodestation",
     "email": "ceo@nodestation.app"

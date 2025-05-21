@@ -16,6 +16,11 @@
   "bin": {
     "nodestation": "./index.js"
   },
+  "files": [
+    "./utils",
+    "./index.js",
+    "./package.json"
+  ],
   "imports": {
     "#libs/*": "./libs/*",
     "#routes/*": "./routes/*",
