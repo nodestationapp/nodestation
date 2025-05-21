@@ -11,15 +11,6 @@ import inquirer from "inquirer";
 import { cli } from "@nstation/utils";
 import { promises as fs_promise } from "fs";
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
-
-const authSchema = JSON.parse(
-  fs_sys.readFileSync(
-    path.join(__dirname, "/templates/authSchema.json"),
-    "utf-8"
-  )
-);
-
 (async () => {
   try {
     const choices = [
@@ -84,13 +75,7 @@ const authSchema = JSON.parse(
       path.join(projectPath, "package.json"),
       JSON.stringify(packageJson, null, 2)
     );
-    await fs_promise.mkdir(path.join(projectPath, "schemas"), {
-      recursive: true,
-    });
-    await fs_promise.writeFile(
-      path.join(projectPath, "schemas", "auth.json"),
-      JSON.stringify(authSchema, null, 2)
-    );
+
     let spinner;
     spinner = ora(`Installing dependencies`).start();
     await cli.runCommand({

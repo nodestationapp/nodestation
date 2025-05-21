@@ -36,7 +36,9 @@
     "react-dom": "19.1.0",
     "react-router-dom": "^6.23.0",
     "formik": "^2.4.6",
-    "query-string": "^9.1.2"
+    "query-string": "^9.1.2",
+    "@mui/x-date-pickers": "^7.28.3",
+    "@mui/x-data-grid": "^7.28.3"
   },
   "eslintConfig": {
     "extends": [
