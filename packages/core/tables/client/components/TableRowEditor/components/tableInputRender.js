@@ -11,54 +11,9 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment/index.js";
 import UserInput from "./UserInput.js";
 import MediaInput from "./MediaInput.js";
 import BooleanInput from "./BooleanInput.js";
-// import JsonInput from "./JsonInput.js";
 
-const tableInputRender = (item, formik, display_name) => {
-  if (item?.type === "select") {
-    select_data = item?.options?.map((item) => ({
-      label: item?.label,
-      value: item?.label,
-      color: item?.color,
-    }));
-  }
-
-  if (item?.type === "boolean") {
-    select_data = [
-      {
-        label: "NULL",
-        value: "",
-      },
-      {
-        label: "TRUE",
-        value: 1,
-      },
-      {
-        label: "FALSE",
-        value: 0,
-      },
-    ];
-  }
-
+const tableInputRender = (item, formik) => {
   switch (item?.type) {
-    // case "text":
-    //   switch (item?.variant) {
-    //     case "long":
-    //       return <FormikTextarea name={item?.slug} label={item?.name} />;
-    //     default:
-    //       return (
-    //         <FormControl fullWidth>
-    //           <FormLabel htmlFor="email">{item?.name}</FormLabel>
-    //           <TextField
-    //             value={formik.values[item?.slug]}
-    //             onChange={formik.handleChange}
-    //             onBlur={formik.handleBlur}
-    //             id={item?.slug}
-    //             type={item?.type === "password" ? "password" : "text"}
-    //             name={item?.slug}
-    //           />
-    //         </FormControl>
-    //       );
-    //   }
     case "list":
       return (
         <FormControl fullWidth>
@@ -183,14 +138,6 @@ const tableInputRender = (item, formik, display_name) => {
           }}
         />
       );
-    //   return (
-    //     <FormikPhotoInput
-    //       variant="light"
-    //       name={item?.slug}
-    //       label={item?.name}
-    //       required={item?.required}
-    //     />
-    //   );
     default:
       return (
         <TextField
