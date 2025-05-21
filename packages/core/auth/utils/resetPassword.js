@@ -1,5 +1,5 @@
 import { knex } from "@nstation/db";
-import sendEmail from "../../emails/server/utils/sendEmail/index.js";
+import sendEmail from "@nstation/emails/server/utils/sendEmail/index.js";
 
 const resetPassword = async (body) =>
   new Promise(async (resolve, reject) => {

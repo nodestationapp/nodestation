@@ -16,6 +16,8 @@
   "dependencies": {
     "@nstation/db": "^1.15.3",
     "@nstation/utils": "^1.15.3",
+    "@nstation/tables": "^1.15.3",
+    "@nstation/emails": "^1.15.3",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
     "passport": "^0.7.0",

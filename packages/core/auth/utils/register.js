@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { knex } from "@nstation/db";
-import sendEmail from "../../emails/server/utils/sendEmail/index.js";
+import sendEmail from "@nstation/emails/server/utils/sendEmail/index.js";
 
 const register = async (body) =>
   new Promise(async (resolve, reject) => {
