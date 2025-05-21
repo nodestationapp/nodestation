@@ -96,6 +96,7 @@ async function installNodestation(projectPath) {
     if (!fs_sys.existsSync(projectPath)) {
       await fs_promise.mkdir(projectPath, { recursive: true });
     }
+    await fs_promise.mkdir(path.join(projectPath, ".db"), { recursive: true });
     await fs_promise.writeFile(path.join(projectPath, ".env"), envString);
     await fs_promise.writeFile(
       path.join(projectPath, "package.json"),
