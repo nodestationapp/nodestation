@@ -1,6 +1,6 @@
 {
   "name": "@nstation/design-system",
-  "version": "1.14.12",
+  "version": "1.15.0",
   "type": "module",
   "main": "./index.js",
   "exports": {

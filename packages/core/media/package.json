@@ -1,6 +1,6 @@
 {
   "name": "@nstation/media",
-  "version": "1.14.12",
+  "version": "1.15.0",
   "type": "module",
   "license": "MIT",
   "description": "Nodestation's media plugin",
