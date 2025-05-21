@@ -16,14 +16,6 @@
   "bin": {
     "nodestation": "./index.js"
   },
-  "files": [
-    "./libs",
-    "./routes",
-    "./cli.js",
-    "./index.js",
-    "./controllers",
-    "./package.json"
-  ],
   "imports": {
     "#libs/*": "./libs/*",
     "#routes/*": "./routes/*",

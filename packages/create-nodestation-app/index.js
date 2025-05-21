@@ -8,8 +8,34 @@ import chalk from "chalk";
 import crypto from "crypto";
 import figlet from "figlet";
 import inquirer from "inquirer";
-import { cli } from "@nstation/utils";
 import { promises as fs_promise } from "fs";
+import { spawn } from "child_process";
+
+async function installNodestation(projectPath) {
+  return new Promise((resolve, reject) => {
+    const npmProcess = spawn(
+      "npm",
+      ["i", "nodestation@latest", "--loglevel", "error"],
+      {
+        cwd: projectPath,
+        stdio: "inherit",
+        shell: true,
+      }
+    );
+
+    npmProcess.on("close", (code) => {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject(new Error(`npm install exited with code ${code}`));
+      }
+    });
+
+    npmProcess.on("error", (err) => {
+      reject(err);
+    });
+  });
+}
 
 (async () => {
   try {
@@ -78,11 +104,9 @@ import { promises as fs_promise } from "fs";
 
     let spinner;
     spinner = ora(`Installing dependencies`).start();
-    await cli.runCommand({
-      cmd: "npm",
-      args: ["i", "nodestation@latest", "--loglevel", "error"],
-      __dirname: projectPath,
-    });
+
+    await installNodestation(projectPath);
+
     spinner.succeed("Installing dependencies");
 
     const nodestationText = await figlet("Nodestation");

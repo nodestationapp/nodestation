@@ -13,10 +13,6 @@
     "name": "Nodestation",
     "email": "ceo@nodestation.app"
   },
-  "files": [
-    "./modules",
-    "./index.js"
-  ],
   "imports": {
     "#root": "./",
     "#modules/*": "./modules/*"
