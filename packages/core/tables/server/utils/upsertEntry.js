@@ -10,14 +10,6 @@ function removeUndefinedProperties(obj) {
   return obj;
 }
 
-function extractUploadPath(fullPath) {
-  const uploadIndex = fullPath.indexOf("/uploads/");
-  if (uploadIndex !== -1) {
-    return fullPath.substring(uploadIndex);
-  }
-  return null;
-}
-
 const upsertEntry = async ({ id, body, entry_id, extraFields = [] }) =>
   new Promise(async (resolve, reject) => {
     for (const key in body) {
@@ -34,6 +26,10 @@ const upsertEntry = async ({ id, body, entry_id, extraFields = [] }) =>
     try {
       let formatted_body = schemaFields.reduce((acc, curr) => {
         let value = body?.[curr.slug];
+
+        if (curr?.type === "json") {
+          value = JSON.stringify(value);
+        }
 
         if (value === null && !!curr?.default) {
           value = undefined;

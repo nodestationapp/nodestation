@@ -9,6 +9,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker/index.js";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment/index.js";
 
 import UserInput from "./UserInput.js";
+import JsonInput from "./JsonInput.js";
 import MediaInput from "./MediaInput.js";
 import BooleanInput from "./BooleanInput.js";
 
@@ -117,17 +118,15 @@ const tableInputRender = (item, formik) => {
           </FormControl>
         </LocalizationProvider>
       );
-    // case "json":
-    //   return (
-    //     <JsonInput
-    //       label={item?.name}
-    //       name={item?.slug}
-    //       value={formik.values[item?.slug]}
-    //       onChange={formik.handleChange}
-    //     />
-    //   );
-    // case "user":
-    //   return <FormikUsers label={item?.name} name={item?.slug} />;
+    case "json":
+      return (
+        <JsonInput
+          label={item?.name}
+          name={item?.slug}
+          value={formik.values[item?.slug]}
+          onChange={formik.handleChange}
+        />
+      );
     case "media":
       return (
         <MediaInput

@@ -1,4 +1,5 @@
 import Chip from "@mui/material/Chip";
+import Json from "../components/MuiTable/components/Json.js";
 import Date from "../components/MuiTable/components/Date/index.js";
 import Boolean from "../components/MuiTable/components/Boolean.js";
 import Media from "../components/MuiTable/components/Media/index.js";
@@ -25,6 +26,8 @@ const render_options = (column, data) => {
       return <Date data={data} />;
     case "media":
       return <Media data={data} />;
+    case "json":
+      return <Json data={data} />;
     default:
       return !!!isObject(data) ? data : "-";
   }

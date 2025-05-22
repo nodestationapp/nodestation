@@ -1,20 +1,15 @@
-import ReactJsonView from "@microlink/react-json-view";
+import ReactJsonViewRaw from "@microlink/react-json-view";
+const ReactJsonView = ReactJsonViewRaw.default;
 
 const JsonInput = ({ label, name, value, onChange }) => {
   return (
     <ReactJsonView
-      src={!!value ? JSON.parse(value) : {}}
+      src={value || {}}
       name={label}
       theme="ocean"
-      onEdit={(e) =>
-        onChange({ target: { name, value: JSON.stringify(e?.updated_src) } })
-      }
-      onAdd={(e) =>
-        onChange({ target: { name, value: JSON.stringify(e?.updated_src) } })
-      }
-      onDelete={(e) =>
-        onChange({ target: { name, value: JSON.stringify(e?.updated_src) } })
-      }
+      onEdit={(e) => onChange({ target: { name, value: e?.updated_src } })}
+      onAdd={(e) => onChange({ target: { name, value: e?.updated_src } })}
+      onDelete={(e) => onChange({ target: { name, value: e?.updated_src } })}
       enableClipboard={false}
       displayDataTypes={false}
       shouldCollapse={({ src }) => {
