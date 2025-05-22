@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { MenuItem, Select } from "@mui/material";
@@ -16,7 +16,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const TableSettingsContent = () => {
   const { data, updateTable, loading } = useTable();
   const [deleteTableModal, setDeleteTableModal] = useState(false);
-  const [displayName, setDisplayName] = useState(data?.table?.displayName);
 
   const table = data?.table;
 
@@ -30,7 +29,6 @@ const TableSettingsContent = () => {
   const updateDisplayName = (value) => {
     let temp = formInitialValues;
     temp.displayName = value;
-    setDisplayName(value);
     updateTable(temp);
   };
 
@@ -47,8 +45,8 @@ const TableSettingsContent = () => {
           fullWidth
           size="medium"
           name="displayName"
+          defaultValue={table?.displayName}
           onChange={(e) => updateDisplayName(e.target.value)}
-          value={displayName}
         >
           {display_name_options?.map((item) => (
             <MenuItem value={item?.slug}>{item?.name}</MenuItem>

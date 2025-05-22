@@ -139,12 +139,12 @@ const TableManager = ({
   return (
     <TableProvider id={table}>
       <TableManagerContent
+        rowHeight={rowHeight}
+        onNewClick={onNewClick}
+        rowFullWidth={rowFullWidth}
         onEntrySubmit={onEntrySubmit}
         hiddenColumns={hiddenColumns}
         appendColumns={appendColumns}
-        rowHeight={rowHeight}
-        rowFullWidth={rowFullWidth}
-        onNewClick={onNewClick}
       />
     </TableProvider>
   );

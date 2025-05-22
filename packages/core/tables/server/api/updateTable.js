@@ -1,5 +1,6 @@
 import path from "path";
-import fs_sys from "fs";
+import { promises as fs_promise } from "fs";
+
 import { fs, rootPath } from "@nstation/utils";
 
 export default async (req, res) => {
@@ -14,21 +15,20 @@ export default async (req, res) => {
 
   try {
     if (extendable === "true") {
-      const schema_path = path.join(
-        rootPath,
-        "src",
-        "extensions",
-        "schemas",
-        `${id}.json`
+      await fs_promise.mkdir(
+        path.join(rootPath, "src", "extensions", "schemas"),
+        { recursive: true }
       );
-
-      fs_sys.existsSync(schema_path);
 
       await fs.updateFile({
         content,
         path: `/src/extensions/schemas/${id}.json`,
       });
     } else {
+      await fs_promise.mkdir(path.join(rootPath, "src", "tables"), {
+        recursive: true,
+      });
+
       await fs.updateFile({
         content,
         path: `/src/tables/${id}.json`,

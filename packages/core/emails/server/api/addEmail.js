@@ -9,6 +9,10 @@ export default async (req, res) => {
   }
 
   try {
+    await fs_promise.mkdir(path.join(rootPath, "src", "emails"), {
+      recursive: true,
+    });
+
     await fs_promise.writeFile(
       path.join(rootPath, "src", "emails", `${body?.id}.json`),
       JSON.stringify(body, null, 2)

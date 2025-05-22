@@ -30,11 +30,7 @@ export default async (req, res) => {
 
     const table_path = path.join(rootPath, "src", "tables");
 
-    try {
-      await fs_promise.stat(table_path);
-    } catch (err) {
-      await fs_promise.mkdir(table_path);
-    }
+    await fs_promise.mkdir(table_path, { recursive: true });
 
     await fs_promise.writeFile(
       path.join(table_path, `${slug}.json`),
