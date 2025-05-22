@@ -7,7 +7,17 @@ export default async (req, res) => {
   const user = req?.user;
 
   try {
-    const auth_templates = await knex("nodestation_users_settings").first();
+    let auth_templates = await knex("nodestation_users_settings").first();
+
+    if (!auth_templates) {
+      auth_templates = await knex("nodestation_users_settings")
+        .insert({
+          email_verification_template: "email-activation",
+          forget_password_template: "password-reset",
+        })
+        .returning("*")
+        .then((data) => data[0]);
+    }
 
     const packagePath = path.join(rootPath, "package.json");
     const fileContent = fs_sys.readFileSync(packagePath, "utf-8");

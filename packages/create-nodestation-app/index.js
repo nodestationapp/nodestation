@@ -97,6 +97,13 @@ async function installNodestation(projectPath) {
       await fs_promise.mkdir(projectPath, { recursive: true });
     }
     await fs_promise.mkdir(path.join(projectPath, ".db"), { recursive: true });
+    await fs_promise.cp(
+      "./templates/emails",
+      path.join(projectPath, "src", "emails"),
+      {
+        recursive: true,
+      }
+    );
     await fs_promise.writeFile(path.join(projectPath, ".env"), envString);
     await fs_promise.writeFile(
       path.join(projectPath, "package.json"),

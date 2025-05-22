@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
 import Breadcrumbs, { breadcrumbsClasses } from "@mui/material/Breadcrumbs";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 
@@ -32,9 +31,16 @@ export default function NavbarBreadcrumbs() {
   const { menuLinks } = useApp();
   const { pathname } = useLocation();
 
-  const currentView = menuLinks.find(
+  let currentView = menuLinks.find(
     (link) => link?.to?.replace(/^\//, "") === pathname?.split("/")[1]
   );
+
+  if (pathname?.split("/")[1] === "tables") {
+    currentView = {
+      label: "Tables",
+      icon: "mdi:table",
+    };
+  }
 
   const breadcrumbs = [
     {

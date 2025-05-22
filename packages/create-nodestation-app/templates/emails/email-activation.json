@@ -1,0 +1,6 @@
+{
+  "id": "email-activation",
+  "name": "Complete Account Activation",
+  "subject": "Complete Account Activation",
+  "content": "Hello {{first_name}},<br/><br/>\n\nYour account has been created.<br/>\nTo activate it, please click the link below:<br/><br/>\n\nhttp://localhost:1337/verify?token={{token}}"
+}
