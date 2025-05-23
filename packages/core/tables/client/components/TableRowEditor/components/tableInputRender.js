@@ -123,6 +123,7 @@ const tableInputRender = (item, formik) => {
         <JsonInput
           label={item?.name}
           name={item?.slug}
+          defaultValue={item?.default}
           value={formik.values[item?.slug]}
           onChange={formik.handleChange}
         />

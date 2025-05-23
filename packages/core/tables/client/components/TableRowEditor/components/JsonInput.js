@@ -1,7 +1,7 @@
 import ReactJsonViewRaw from "@microlink/react-json-view";
 const ReactJsonView = ReactJsonViewRaw.default;
 
-const JsonInput = ({ label, name, value, onChange }) => {
+const JsonInput = ({ label, name, value, onChange, defaultValue }) => {
   return (
     <ReactJsonView
       src={value || {}}

@@ -5,8 +5,10 @@ import Date from "./components/Date/index.js";
 import Text from "./components/Text/index.js";
 import Select from "./components/Select/index.js";
 import Boolean from "./components/Boolean/index.js";
+import Json from "./components/Json/index.js";
 
 const extra_input_render = (type, locked) => {
+  console.log(type);
   switch (type) {
     case "id":
       return <Id locked={locked} />;
@@ -18,6 +20,8 @@ const extra_input_render = (type, locked) => {
       return <Text locked={locked} />;
     case "date":
       return <Date locked={locked} />;
+    case "json":
+      return <Json locked={locked} />;
     default:
       return (
         <>

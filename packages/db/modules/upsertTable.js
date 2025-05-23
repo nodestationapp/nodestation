@@ -31,22 +31,18 @@ function createOrModifyColumn({ table, schema, dbColumns }) {
   if (!!schema?.default) {
     if (schema?.default === "generate_id()") {
       column.defaultTo(knex.fn.uuid());
-    }
-
-    if (schema?.default === true) {
+    } else if (schema?.default === true) {
       column.defaultTo(1);
-    }
-
-    if (schema?.default === false) {
+    } else if (schema?.default === false) {
       column.defaultTo(0);
-    }
-
-    if (schema?.default === "now()") {
+    } else if (schema?.default === "now()") {
       if (knex.client.config.client === "pg") {
         column.defaultTo(knex.raw("EXTRACT(EPOCH FROM NOW())::BIGINT"));
       } else {
         column.defaultTo(knex.raw("(strftime('%s', 'now') * 1)"));
       }
+    } else {
+      column.defaultTo(schema?.default);
     }
   }
 
