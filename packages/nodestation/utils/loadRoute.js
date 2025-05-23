@@ -7,7 +7,7 @@ const loadRoute = async (router, routes) => {
       route?.properties?.parser === "raw"
         ? express.raw({ type: "application/json" })
         : express.json(),
-      ...route?.middlewares,
+      ...(route?.middlewares || []),
       route?.handler
     );
   }

@@ -6,8 +6,8 @@ import TableSettings from "./pages/settings.js";
 const Table = () => {
   return (
     <Routes>
-      <Route index element={<TableContent />} />
-      <Route path="settings" element={<TableSettings />} />
+      <Route path=":id" element={<TableContent />} />
+      <Route path=":id/settings" element={<TableSettings />} />
     </Routes>
   );
 };

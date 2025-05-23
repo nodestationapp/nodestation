@@ -6,7 +6,7 @@ import { rootPath } from "@nstation/utils";
 
 import loadRoute from "./loadRoute.js";
 
-const core = [
+let core = [
   "@nstation/auth/server",
   "@nstation/media/server",
   "@nstation/tables/server",
@@ -14,6 +14,9 @@ const core = [
 ];
 
 const loadPlugins = async (router) => {
+  const plugins = glob.sync(path.join(rootPath, "plugins", "**", "server"));
+  core.push(...plugins);
+
   for await (const plugin of core) {
     //ROUTES
     const { default: routes } = await import(`${plugin}/api/index.js`);

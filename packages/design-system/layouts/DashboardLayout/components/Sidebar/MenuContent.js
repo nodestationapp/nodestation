@@ -11,7 +11,7 @@ const MenuContent = () => {
   const { menuLinks } = useApp();
 
   const topMenuLinks = menuLinks
-    .filter((link) => link.placement !== "bottom")
+    .filter((link) => link.placement !== "bottom" && !link.hidden)
     ?.sort((a, b) => a.order - b.order);
   const bottomMenuLinks = menuLinks
     .filter((link) => link.placement === "bottom")

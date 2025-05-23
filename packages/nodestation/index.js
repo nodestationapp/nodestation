@@ -5,7 +5,6 @@ import createApp from "./utils/createApp.js";
 import welcomeBox from "./utils/welcomeBox.js";
 
 (async () => {
-  // console.log(process.argv[2])
   const app = createApp();
   await app.init();
 

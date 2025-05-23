@@ -16,6 +16,8 @@ nodestation-config.js
 # UPLOADS
 uploads/
 
+# PLUGINS
+plugins/
 # NODE_MODULES
 node_modules/
 package-lock.json
