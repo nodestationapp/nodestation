@@ -5,7 +5,7 @@ const typesMap = {
   text: "text",
   password: "string",
   select: "string",
-  media: process.env.DATABASE_CLIENT === "sqlite" ? "text" : "jsonb",
+  media: "text",
   numeric: "integer",
   json: process.env.DATABASE_CLIENT === "sqlite" ? "text" : "jsonb",
   boolean: "integer",

@@ -11,6 +11,8 @@ import inquirer from "inquirer";
 import { promises as fs_promise } from "fs";
 import { spawn } from "child_process";
 
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
 async function installNodestation(projectPath) {
   return new Promise((resolve, reject) => {
     const npmProcess = spawn(
@@ -84,7 +86,7 @@ async function installNodestation(projectPath) {
     };
     const env = {
       PORT: 3000,
-      DATABASE_CLIENT: "sqlite",
+      DATABASE_CLIENT: answers?.provider?.provider,
       PUBLIC_URL: "http://localhost:3000",
       DATABASE_PATH: answers?.provider?.url,
       TOKEN_SECRET: crypto.randomBytes(64).toString("hex"),
@@ -96,9 +98,17 @@ async function installNodestation(projectPath) {
     if (!fs_sys.existsSync(projectPath)) {
       await fs_promise.mkdir(projectPath, { recursive: true });
     }
-    await fs_promise.mkdir(path.join(projectPath, ".db"), { recursive: true });
+    if (answers?.provider?.provider === "sqlite") {
+      await fs_promise.mkdir(path.join(projectPath, ".db"), {
+        recursive: true,
+      });
+    }
+    await fs_promise.mkdir(path.join(projectPath, "src", "emails"), {
+      recursive: true,
+    });
+
     await fs_promise.cp(
-      "./templates/emails",
+      path.join(__dirname, "/templates/emails"),
       path.join(projectPath, "src", "emails"),
       {
         recursive: true,

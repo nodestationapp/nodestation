@@ -28,7 +28,9 @@ const upsertEntry = async ({ id, body, entry_id, extraFields = [] }) =>
         let value = body?.[curr.slug];
 
         if (curr?.type === "json") {
-          value = JSON.stringify(value);
+          if (knex.client.config.client !== "pg") {
+            value = JSON.stringify(value);
+          }
         }
 
         if (value === null && !!curr?.default) {
