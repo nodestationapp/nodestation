@@ -15,6 +15,7 @@
   },
   "files": [
     "./index.js",
+    "./templates",
     "./package.json"
   ],
   "bin": "./index.js",
