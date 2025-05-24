@@ -31,7 +31,7 @@ const TableManagerContent = ({
   const type = queryParams.get("type");
 
   const [content_editor, setContentEditor] = useState(null);
-  const { data, page, loading, saveTableTransaction } = useTable();
+  const { id, data, page, loading, saveTableTransaction } = useTable();
   const [entriesDeleteModal, setEntriesDeleteModal] = useState(false);
 
   let columnsToShow = data?.table?.fields || [];

@@ -1,3 +1,5 @@
+import { fs } from "@nstation/utils";
+
 const populateRelations = (query, table) => {
   table?.fields?.forEach((item, index) => {
     if (item?.type === "media") {
@@ -38,21 +40,21 @@ const populateRelations = (query, table) => {
         );
     }
 
-    // if (item?.type === "user") {
-    //   query = query
-    //     .leftJoin(
-    //       "nodestation_users",
-    //       `${table?.tableName}.${item?.slug}`,
-    //       "nodestation_users.id"
-    //     )
-    //     .select(
-    //       `${table?.tableName}.*`,
-    //       `nodestation_users.id as ${item?.slug}.id`,
-    //       `nodestation_users.first_name as ${item?.slug}.first_name`,
-    //       `nodestation_users.last_name as ${item?.slug}.last_name`,
-    //       `nodestation_users.photo as ${item?.slug}.photo`
-    //     );
-    // }
+    if (!!item?.relation) {
+      const schema = fs.getSchema(item?.relation?.table);
+
+      query = query
+        .leftJoin(
+          schema?.tableName,
+          `${table?.tableName}.${item?.slug}`,
+          `${schema?.tableName}.id`
+        )
+        .select(
+          `${table?.tableName}.*`,
+          `${schema?.tableName}.id as ${item?.slug}.id`,
+          `${schema?.tableName}.${schema?.displayName} as ${item?.slug}.${schema?.displayName}`
+        );
+    }
 
     // if (!!item?.relation) {
     //   const tables = fs.getFiles(`/src/schemas/tables/${item?.relation}.json`);

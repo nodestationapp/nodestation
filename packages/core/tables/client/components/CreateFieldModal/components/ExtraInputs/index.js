@@ -8,7 +8,6 @@ import Boolean from "./components/Boolean/index.js";
 import Json from "./components/Json/index.js";
 
 const extra_input_render = (type, locked) => {
-  console.log(type);
   switch (type) {
     case "id":
       return <Id locked={locked} />;

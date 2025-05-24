@@ -12,8 +12,21 @@ import UserInput from "./UserInput.js";
 import JsonInput from "./JsonInput.js";
 import MediaInput from "./MediaInput.js";
 import BooleanInput from "./BooleanInput.js";
+import RelationInput from "./RelationInput.js";
 
 const tableInputRender = (item, formik) => {
+  if (!!item?.relation) {
+    return (
+      <RelationInput
+        label={item?.name}
+        slug={item?.slug}
+        relation={item?.relation}
+        value={formik.values[item?.slug]}
+        onChange={formik.setFieldValue}
+      />
+    );
+  }
+
   switch (item?.type) {
     case "list":
       return (

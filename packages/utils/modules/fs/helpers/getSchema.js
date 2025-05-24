@@ -3,7 +3,11 @@ import path from "path";
 import { glob } from "glob";
 import rootPath from "../../rootPath.js";
 
-function findSchemasWithTableName(filePaths, targetTableName, extension_items) {
+function findSchemasWithTableName(
+  filePaths,
+  targetTableName,
+  extension_items = []
+) {
   let schema;
 
   for (const filePath of filePaths) {
@@ -35,11 +39,6 @@ function findSchemasWithTableName(filePaths, targetTableName, extension_items) {
   return schema;
 }
 
-// const paths = [
-//   `${path.join(rootPath, "plugins", "**", "server", "schemas", "*.json")}`,
-//   `${path.join(rootPath, "packages", "core", "**", "server", "schemas", "*.json")}`,
-// ];
-
 const getSchema = (tableName) => {
   try {
     let items = glob.sync(
@@ -69,7 +68,19 @@ const getSchema = (tableName) => {
       { nodir: true }
     );
 
-    const schema = findSchemasWithTableName(items, tableName, extension_items);
+    let schema = findSchemasWithTableName(items, tableName, extension_items);
+
+    schema?.fields?.forEach((field) => {
+      if (!!field.relation) {
+        let relatedTable = findSchemasWithTableName(items, field.relation);
+
+        field.relation = {
+          table: field.relation,
+          displayName: relatedTable.displayName,
+        };
+      }
+    });
+
     return schema;
   } catch (error) {
     console.error("Error reading directory structure:", error);

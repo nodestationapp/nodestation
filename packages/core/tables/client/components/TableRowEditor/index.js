@@ -20,6 +20,10 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
         if (item?.type === "user") {
           values[item?.slug] = values[item?.slug]?.id || null;
         }
+
+        if (!!item?.relation) {
+          values[item?.slug] = values[item?.slug]?.id || null;
+        }
       });
 
       if (!!onEntrySubmit) {
@@ -58,15 +62,7 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
               if (item?.slug === "id") return null;
             }
 
-            return (
-              <div key={index}>
-                {tableInputRender(
-                  item,
-                  formik,
-                  table_data?.table?.display_name
-                )}
-              </div>
-            );
+            return <div key={index}>{tableInputRender(item, formik)}</div>;
           })}
         </Stack>
       </AsideModal>

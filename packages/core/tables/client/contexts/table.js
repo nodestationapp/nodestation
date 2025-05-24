@@ -34,7 +34,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
       navigate(`${pathname}?v=${table_preference}`);
     }
     // eslint-disable-next-line
-  }, [preferences?.length]);
+  }, [preferences?.length, id]);
 
   const {
     data,

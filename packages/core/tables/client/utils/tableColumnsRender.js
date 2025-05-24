@@ -4,6 +4,7 @@ import Date from "../components/MuiTable/components/Date/index.js";
 import Boolean from "../components/MuiTable/components/Boolean.js";
 import Media from "../components/MuiTable/components/Media/index.js";
 import UserProfile from "../components/MuiTable/components/UserProfile/index.js";
+import Relation from "../components/MuiTable/components/Relation/index.js";
 
 const render_options = (column, data) => {
   const colors = column?.options?.reduce((acc, item) => {
@@ -29,7 +30,13 @@ const render_options = (column, data) => {
     case "json":
       return <Json data={data} />;
     default:
-      return !!!isObject(data) ? data : "-";
+      return !!!isObject(data) ? (
+        data
+      ) : !!column?.relation ? (
+        <Relation data={data} relation={column?.relation} />
+      ) : (
+        "-"
+      );
   }
 };
 
