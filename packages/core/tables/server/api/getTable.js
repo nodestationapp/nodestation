@@ -15,15 +15,14 @@ export default async (req, res) => {
 
     let preferences;
 
-    if (view === "undefined" || view === undefined) {
-      // preferences = await knex("nodestation_preferences")
-      //   .insert({
-      //     name: "Entries",
-      //     table_id: id,
-      //     last_viewed: 1,
-      //   })
-      //   .returning("*")
-      //   .then((row) => row[0]);
+    if (!!!view) {
+      preferences = await knex("nodestation_preferences")
+        .where({
+          table_id: id,
+          last_viewed: 1,
+        })
+        .first()
+        .jsonParser();
     } else {
       preferences = await knex("nodestation_preferences")
         .where({

@@ -18,23 +18,23 @@ const TableProvider = ({ id, extendable = false, children }) => {
   let type = pathname?.split("/")?.[1];
   type = type !== "authentication" ? type : undefined;
 
-  const { data: preferences = [] } = useQuery({
-    queryKey: ["preferences", id],
-    queryFn: () => api.get(`/preferences/${id}`),
-  });
+  // const { data: preferences = [] } = useQuery({
+  //   queryKey: ["preferences", id],
+  //   queryFn: () => api.get(`/preferences/${id}`),
+  // });
 
-  useEffect(() => {
-    if (!preferences?.length) return;
+  // useEffect(() => {
+  //   if (!preferences?.length) return;
 
-    const table_preference =
-      preferences?.find((item) => item?.table_id === id && !!item?.last_viewed)
-        ?.id || preferences?.find((item) => item?.table_id === id)?.id;
+  //   const table_preference =
+  //     preferences?.find((item) => item?.table_id === id && !!item?.last_viewed)
+  //       ?.id || preferences?.find((item) => item?.table_id === id)?.id;
 
-    if (!pathname?.includes("/settings")) {
-      navigate(`${pathname}?v=${table_preference}`);
-    }
-    // eslint-disable-next-line
-  }, [preferences?.length, id]);
+  //   if (!pathname?.includes("/settings")) {
+  //     navigate(`${pathname}?v=${table_preference}`);
+  //   }
+  //   // eslint-disable-next-line
+  // }, [preferences?.length, id]);
 
   const {
     data,
@@ -50,7 +50,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
           page: parseInt(page || 0),
         })}`
       ),
-    enabled: !!view || pathname?.includes("/settings"),
+    enabled: !pathname?.includes("/settings"),
     placeholderData: (prev) => prev,
   });
 

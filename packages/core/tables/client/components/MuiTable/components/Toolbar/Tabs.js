@@ -89,7 +89,9 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const currentPath = `${pathname}${search}`;
+  const currentPath = `${pathname}${
+    search || "?v=" + table?.data?.preferences?.id
+  }`;
 
   return (
     <Stack direction="row" gap={0.5} alignItems="center">
