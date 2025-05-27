@@ -4,7 +4,24 @@ import { knex, queryBuilder } from "@nstation/db";
 export default async (req, res) => {
   const pageSize = 20;
   let { id } = req?.params;
-  let { view, type, page = 0, ...rest } = req?.query || {};
+  let { view, page = 0, sort, filters } = req?.query || {};
+
+  if (sort) {
+    sort = sort?.split(":");
+    sort = {
+      field: sort?.[0],
+      sort: sort?.[1],
+    };
+  }
+
+  if (filters) {
+    filters = filters?.split(",");
+
+    filters = filters?.map((item) => {
+      item = item?.split(":");
+      return { field: item?.[0], operator: item?.[1], value: item?.[2] };
+    });
+  }
 
   try {
     let views = await knex("nodestation_preferences")
@@ -23,6 +40,19 @@ export default async (req, res) => {
         })
         .first()
         .jsonParser();
+
+      if (!!!preferences) {
+        preferences = await knex("nodestation_preferences")
+          .insert({
+            table_id: id,
+            name: "Entries",
+            uid: req?.user?.id,
+            last_viewed: 1,
+          })
+          .returning("id");
+
+        preferences = preferences?.[0];
+      }
     } else {
       preferences = await knex("nodestation_preferences")
         .where({
@@ -51,18 +81,18 @@ export default async (req, res) => {
     const table = fs.getSchema(id);
     table.id = table.tableName;
 
-    const filters = [
-      ...(preferences?.filters || []),
-      ...Object.keys(rest)?.map((item) => ({
-        field: item,
-        value: req?.query?.[item],
-      })),
-    ];
+    // const filters = [
+    //   ...(preferences?.filters || []),
+    //   ...Object.keys(rest)?.map((item) => ({
+    //     field: item,
+    //     value: req?.query?.[item],
+    //   })),
+    // ];
 
     const entries = await queryBuilder({
       table,
       filters,
-      sort: preferences?.sort?.[0],
+      sort,
       pagination: { page, pageSize },
     });
 

@@ -8,6 +8,7 @@ import Tabs from "@mui/material/Tabs";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Popover from "@mui/material/Popover";
+import Skeleton from "@mui/material/Skeleton";
 import IconButton from "@mui/material/IconButton";
 
 import { api } from "@nstation/design-system/utils";
@@ -17,7 +18,7 @@ import Add from "@mui/icons-material/Add";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
 
-const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
+const ToolbarTabs = ({ tabs, noAddTab, backButtonLink, loading }) => {
   const navigate = useNavigate();
 
   const table = useTable();
@@ -89,9 +90,9 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const currentPath = `${pathname}${
-    search || "?v=" + table?.data?.preferences?.id
-  }`;
+  const default_view = tabs?.find((item) => item?.last_viewed);
+
+  const currentPath = !!search ? `${pathname}${search}` : default_view?.href;
 
   return (
     <Stack direction="row" gap={0.5} alignItems="center">
@@ -100,100 +101,117 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
           <ArrowBack />
         </IconButton>
       )}
-      <Tabs
-        textColor="secondary"
-        indicatorColor="secondary"
-        value={currentPath}
-        sx={{ display: "flex", gap: 2 }}
-      >
-        {tabs.map((item) => (
-          <Tab
-            key={item.href}
-            value={item.href}
-            label={item.title}
-            onClick={
-              !!!noAddTab
-                ? (e) =>
-                    currentPath === item.href
-                      ? onViewPopover(e.currentTarget, item.title, table?.view)
-                      : {}
-                : () => {}
-            }
-            to={currentPath === item.href ? undefined : item.href}
-            LinkComponent={currentPath === item.href ? "button" : Link}
+      {!!!tabs?.length ? (
+        <Stack direction="row" gap={0.5}>
+          <Skeleton
+            variant="rectangular"
+            width={70}
+            height={31}
+            sx={{ borderRadius: 0.8 }}
           />
-        ))}
-      </Tabs>
-      {!!!noAddTab && (
-        <IconButton
-          size="micro"
-          aria-describedby={id}
-          onClick={(e) => onViewPopover(e.currentTarget, "")}
-        >
-          <Add />
-        </IconButton>
-      )}
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={() => setAnchorEl(null)}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-      >
-        <Stack
-          direction="row"
-          alignItems="center"
-          gap={0}
-          sx={{ px: 0.5 }}
-          component="form"
-          onSubmit={formik.handleSubmit}
-        >
-          <input
-            type="text"
-            placeholder="Name"
-            name="name"
-            autoFocus={true}
-            disabled={!!deleteLoading}
-            data-1p-ignore
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            style={{
-              padding: "0 10px",
-              height: "41px",
-              width: "120px",
-              border: "none",
-              outlineWidth: 0,
-              backgroundColor: "transparent",
-            }}
-          />
-          <Button
-            size="small"
-            type="submit"
-            disabled={!formik?.dirty || !!deleteLoading}
-            loading={formik?.isSubmitting}
+        </Stack>
+      ) : (
+        <>
+          <Tabs
+            textColor="secondary"
+            indicatorColor="secondary"
+            value={currentPath}
+            sx={{ display: "flex", gap: 2 }}
           >
-            {!!formik?.values?.id ? "Update" : "Create"}
-          </Button>
-          {!!formik?.values?.id && table?.data?.views?.length > 1 && (
+            {tabs.map((item) => (
+              <Tab
+                key={item.href}
+                value={item.href}
+                label={item.title}
+                onClick={
+                  !!!noAddTab
+                    ? (e) =>
+                        currentPath === item.href
+                          ? onViewPopover(
+                              e.currentTarget,
+                              item.title,
+                              table?.view
+                            )
+                          : {}
+                    : () => {}
+                }
+                to={currentPath === item.href ? undefined : item.href}
+                LinkComponent={currentPath === item.href ? "button" : Link}
+              />
+            ))}
+          </Tabs>
+          {!!!noAddTab && (
             <IconButton
               size="micro"
-              onClick={onDeleteView}
-              loading={!!deleteLoading}
+              aria-describedby={id}
+              onClick={(e) => onViewPopover(e.currentTarget, "")}
             >
-              {!!!deleteLoading ? (
-                <DeleteOutline sx={{ color: "error.light" }} />
-              ) : null}
+              <Add />
             </IconButton>
           )}
-        </Stack>
-      </Popover>
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={() => setAnchorEl(null)}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+          >
+            <Stack
+              direction="row"
+              alignItems="center"
+              gap={0}
+              sx={{ px: 0.5 }}
+              component="form"
+              onSubmit={formik.handleSubmit}
+            >
+              <input
+                type="text"
+                placeholder="Name"
+                name="name"
+                autoFocus={true}
+                disabled={!!deleteLoading}
+                data-1p-ignore
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                style={{
+                  padding: "0 10px",
+                  height: "41px",
+                  width: "120px",
+                  border: "none",
+                  outlineWidth: 0,
+                  backgroundColor: "transparent",
+                }}
+              />
+              <Button
+                size="small"
+                type="submit"
+                disabled={!formik?.dirty || !!deleteLoading}
+                loading={formik?.isSubmitting}
+              >
+                {!!formik?.values?.id ? "Update" : "Create"}
+              </Button>
+              {!!formik?.values?.id && table?.data?.views?.length > 1 && (
+                <IconButton
+                  size="micro"
+                  onClick={onDeleteView}
+                  loading={!!deleteLoading}
+                >
+                  {!!!deleteLoading ? (
+                    <DeleteOutline sx={{ color: "error.light" }} />
+                  ) : null}
+                </IconButton>
+              )}
+            </Stack>
+          </Popover>
+        </>
+      )}
     </Stack>
   );
 };

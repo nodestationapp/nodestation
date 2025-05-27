@@ -6,6 +6,7 @@ import ToolbarTabs from "./Tabs.js";
 const Toolbar = ({
   tabs,
   action,
+  loading,
   selectActions,
   selectedRows,
   noAddTab,
@@ -28,6 +29,7 @@ const Toolbar = ({
       ) : (
         <ToolbarTabs
           tabs={tabs}
+          loading={loading}
           noAddTab={noAddTab}
           backButtonLink={backButtonLink}
         />

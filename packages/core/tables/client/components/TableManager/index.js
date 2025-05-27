@@ -31,10 +31,22 @@ const TableManagerContent = ({
   const type = queryParams.get("type");
 
   const [content_editor, setContentEditor] = useState(null);
-  const { id, data, page, loading, saveTableTransaction } = useTable();
+  const {
+    data,
+    page,
+    loading,
+    sort,
+    setSort,
+    saveTableTransaction,
+    views,
+    table,
+    preferences,
+    filters,
+    setFilters,
+  } = useTable();
   const [entriesDeleteModal, setEntriesDeleteModal] = useState(false);
 
-  let columnsToShow = data?.table?.fields || [];
+  let columnsToShow = table?.fields || [];
   columnsToShow = columnsToShow?.filter(
     (item) => !hiddenColumns.includes(item?.slug)
   );
@@ -43,7 +55,7 @@ const TableManagerContent = ({
   const columns = tableColumnsRender({
     flex: rowFullWidth,
     columns: columnsToShow,
-    preferences: data?.preferences,
+    preferences,
   });
 
   const action = () => (
@@ -104,11 +116,15 @@ const TableManagerContent = ({
         columns={columns}
         loading={loading}
         rowHeight={rowHeight}
-        views={data?.views}
+        views={views}
+        sort={sort}
+        setSort={setSort}
+        filters={filters}
+        setFilters={setFilters}
         rows={data?.entries}
         selectActions={selectActions}
         pagination={data?.pagination}
-        preferences={data?.preferences}
+        preferences={preferences}
         saveTransaction={saveTableTransaction}
         onRowClick={({ row }) => setContentEditor(row)}
       />

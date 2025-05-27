@@ -18,6 +18,7 @@
     "./package.json"
   ],
   "dependencies": {
+    "@fontsource/inter": "^5.2.5",
     "@iconify/react": "^6.0.0",
     "classnames": "^2.5.1"
   }

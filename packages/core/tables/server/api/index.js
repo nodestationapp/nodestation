@@ -11,6 +11,8 @@ import updateTableEntry from "./updateTableEntry.js";
 import createTableEntry from "./createTableEntry.js";
 import upsertPreferences from "./upsertPreferences.js";
 import removeTableEntries from "./removeTableEntries.js";
+import getAllTables from "./getAllTables.js";
+
 import authMiddleware from "@nstation/auth/utils/authMiddleware.js";
 
 import validate from "../utils/validate.js";
@@ -21,6 +23,12 @@ export default [
     method: "POST",
     path: "/preferences",
     handler: upsertPreferences,
+    middlewares: [authMiddleware(["admin"])],
+  },
+  {
+    method: "GET",
+    path: "/tables/all",
+    handler: getAllTables,
     middlewares: [authMiddleware(["admin"])],
   },
   {
@@ -58,7 +66,7 @@ export default [
   },
   {
     method: "GET",
-    path: "/preferences/:id",
+    path: "/preferences",
     handler: getPreferences,
     middlewares: [authMiddleware(["admin"])],
   },

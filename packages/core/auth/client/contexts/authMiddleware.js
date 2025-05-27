@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import AuthRoutes from "../utils/AuthRoutes.js";
 
+import { PageLoader } from "@nstation/design-system";
 import { api } from "@nstation/design-system/utils";
 
 const AuthContext = createContext();
@@ -122,7 +123,7 @@ const AuthProvider = ({ children }) => {
     // eslint-disable-next-line
   }, [user, is_admin]);
 
-  if (!!loading) return null;
+  if (!!loading) return <PageLoader />;
 
   return (
     <AuthContext.Provider value={value}>

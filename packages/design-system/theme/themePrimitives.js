@@ -1,3 +1,8 @@
+import "@fontsource/inter/300.css"; // Light
+import "@fontsource/inter/400.css"; // Regular
+import "@fontsource/inter/500.css"; // Medium
+import "@fontsource/inter/700.css"; // Bold
+
 import { createTheme, alpha } from "@mui/material/styles";
 
 const defaultTheme = createTheme();

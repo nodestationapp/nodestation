@@ -1,16 +1,18 @@
 import queryString from "query-string";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, useMemo } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { createContext, useContext, useMemo, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 import { api } from "@nstation/design-system/utils";
+import { useTables } from "./tables.js";
 
 const TableContext = createContext();
 
 const TableProvider = ({ id, extendable = false, children }) => {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
+  const { tables, preferences } = useTables();
+  const [save_loading, setSaveLoading] = useState(false);
 
   const view = searchParams.get("v");
   const page = searchParams.get("page");
@@ -18,48 +20,41 @@ const TableProvider = ({ id, extendable = false, children }) => {
   let type = pathname?.split("/")?.[1];
   type = type !== "authentication" ? type : undefined;
 
-  // const { data: preferences = [] } = useQuery({
-  //   queryKey: ["preferences", id],
-  //   queryFn: () => api.get(`/preferences/${id}`),
-  // });
+  const table_views = preferences?.filter((item) => item?.table_id === id);
+  const table = tables?.find((item) => item?.tableName === id);
+  const table_preferences = table_views?.find((item) =>
+    !!view ? item?.id === view : !!item?.last_viewed
+  );
 
-  // useEffect(() => {
-  //   if (!preferences?.length) return;
-
-  //   const table_preference =
-  //     preferences?.find((item) => item?.table_id === id && !!item?.last_viewed)
-  //       ?.id || preferences?.find((item) => item?.table_id === id)?.id;
-
-  //   if (!pathname?.includes("/settings")) {
-  //     navigate(`${pathname}?v=${table_preference}`);
-  //   }
-  //   // eslint-disable-next-line
-  // }, [preferences?.length, id]);
+  const [sort, setSort] = useState(table_preferences?.sort || []);
+  const [filters, setFilters] = useState(table_preferences?.filters || []);
 
   const {
     data,
     isLoading: loading,
     refetch: tableRefetch,
   } = useQuery({
-    queryKey: ["tables", id, view, page],
+    queryKey: ["tables", id, view, page, sort, filters],
     queryFn: () =>
       api.get(
         `/tables/${id}?${queryString.stringify({
           view,
-          type,
           page: parseInt(page || 0),
+          sort: !!sort?.[0]
+            ? `${sort?.[0]?.field}:${sort?.[0]?.sort}`
+            : undefined,
+          filters:
+            filters
+              ?.map((item) => `${item?.field}:${item?.operator}:${item?.value}`)
+              ?.join(",") || undefined,
         })}`
       ),
-    enabled: !pathname?.includes("/settings"),
-    placeholderData: (prev) => prev,
   });
 
   const updateTable = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        if (type === "authentication") {
-          delete values?.name;
-        }
+        delete values?.name;
 
         await api.put(`/tables/${id}?extendable=${extendable}`, values);
 
@@ -126,22 +121,34 @@ const TableProvider = ({ id, extendable = false, children }) => {
     });
 
   const saveTableTransaction = async (values) => {
+    // setSaveLoading(true);
+
     await api.post("/preferences", {
       table_id: id,
       view,
       ...values,
     });
 
-    tableRefetch();
+    // if (values?.sort) {
+    //   await tableRefetch();
+    // }
+
+    setSaveLoading(false);
   };
 
   const value = useMemo(() => {
     return {
       data,
       id,
-      type,
       view,
-      loading,
+      views: table_views,
+      preferences: table_preferences,
+      table,
+      sort,
+      loading: loading || save_loading,
+      filters,
+      setFilters,
+      setSort,
       updateTable,
       tableRefetch,
       updateTableEntry,
@@ -151,7 +158,17 @@ const TableProvider = ({ id, extendable = false, children }) => {
       saveTableTransaction,
     };
     // eslint-disable-next-line
-  }, [data, id, loading, view]);
+  }, [
+    data,
+    id,
+    loading,
+    view,
+    table_views,
+    table_preferences,
+    table,
+    sort,
+    filters,
+  ]);
 
   return (
     <TableContext.Provider value={value}>{children}</TableContext.Provider>

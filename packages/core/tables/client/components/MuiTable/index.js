@@ -21,6 +21,10 @@ const MuiTable = ({
   onRowClick,
   rowHeight = 42,
   noAddTab,
+  sort,
+  setSort,
+  filters,
+  setFilters,
 }) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
@@ -31,28 +35,34 @@ const MuiTable = ({
     ? views?.map((view) => ({
         title: view.name,
         href: `${pathname}${view.id ? `?v=${view.id}` : ""}`,
+        last_viewed: view.last_viewed,
       }))
     : [];
 
   const [columnVisibility, setColumnVisibility] = useState(
-    preferences?.visibility
+    preferences?.visibility || {}
   );
   const [selectedRows, setSelectedRows] = useState([]);
-  const [columnSort, setColumnSort] = useState(preferences?.sort);
-  const [columnFilters, setColumnFilters] = useState(preferences?.filters);
+  const [columnSizes, setColumnSizes] = useState(preferences?.content);
 
   useEffect(() => {
-    setColumnVisibility(preferences?.visibility || undefined);
-    setColumnSort(preferences?.sort || []);
-    setColumnFilters(preferences?.filters || []);
+    setColumnVisibility(preferences?.visibility || {});
+    setFilters(preferences?.filters || []);
+    setColumnSizes(preferences?.content || {});
+
+    if (setSort) {
+      setSort(preferences?.sort || []);
+    }
   }, [preferences?.id]);
 
   const onColumnResize = (params) => {
     clearTimeout(timer);
 
     timer = setTimeout(() => {
-      let temp = { ...preferences?.content };
+      let temp = { ...columnSizes };
       temp[params.colDef?.field] = params.width;
+
+      setColumnSizes(temp);
 
       saveTransaction({ content: temp });
     }, 500);
@@ -64,7 +74,7 @@ const MuiTable = ({
   };
 
   const onSortModelChange = (params) => {
-    setColumnSort(params);
+    setSort(params);
     saveTransaction({ sort: params || [] });
   };
 
@@ -79,7 +89,7 @@ const MuiTable = ({
         ]
       : null;
 
-    setColumnFilters(filters || []);
+    setFilters(filters || []);
     saveTransaction({ filters });
   };
 
@@ -98,13 +108,14 @@ const MuiTable = ({
       <Toolbar
         tabs={tabs}
         action={action}
+        loading={loading}
         noAddTab={noAddTab}
         selectedRows={selectedRows}
         selectActions={selectActions}
       />
       <DataGrid
         pagination
-        rows={rows}
+        rows={rows || []}
         checkboxSelection
         loading={loading}
         columns={columns}
@@ -116,15 +127,15 @@ const MuiTable = ({
         onColumnResize={onColumnResize}
         columnVisibilityModel={columnVisibility}
         onColumnVisibilityModelChange={onColumnVisibilityChange}
-        sortModel={columnSort || []}
+        sortModel={sort || []}
         onSortModelChange={onSortModelChange}
         filterMode="server"
         sortingMode="server"
         paginationMode="server"
         filterModel={
-          !!columnFilters
+          !!filters
             ? {
-                items: columnFilters,
+                items: filters,
               }
             : undefined
         }
@@ -142,6 +153,10 @@ const MuiTable = ({
         onRowSelectionModelChange={setSelectedRows}
         rowSelectionModel={selectedRows}
         slotProps={{
+          loadingOverlay: {
+            variant: "skeleton",
+            noRowsVariant: "skeleton",
+          },
           filterPanel: {
             filterFormProps: {
               logicOperatorInputProps: {
