@@ -43,6 +43,10 @@ const TableManagerContent = ({
     preferences,
     filters,
     setFilters,
+    columnSizes,
+    setColumnSizes,
+    columnVisibility,
+    setColumnVisibility,
   } = useTable();
   const [entriesDeleteModal, setEntriesDeleteModal] = useState(false);
 
@@ -55,7 +59,7 @@ const TableManagerContent = ({
   const columns = tableColumnsRender({
     flex: rowFullWidth,
     columns: columnsToShow,
-    preferences,
+    columnSizes,
   });
 
   const action = () => (
@@ -119,8 +123,12 @@ const TableManagerContent = ({
         views={views}
         sort={sort}
         setSort={setSort}
+        columnSizes={columnSizes}
+        setColumnSizes={setColumnSizes}
         filters={filters}
         setFilters={setFilters}
+        columnVisibility={columnVisibility}
+        setColumnVisibility={setColumnVisibility}
         rows={data?.entries}
         selectActions={selectActions}
         pagination={data?.pagination}

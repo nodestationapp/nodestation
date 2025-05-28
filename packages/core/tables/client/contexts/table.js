@@ -1,7 +1,7 @@
 import queryString from "query-string";
-import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useMemo, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import { api } from "@nstation/design-system/utils";
 import { useTables } from "./tables.js";
@@ -10,9 +10,10 @@ const TableContext = createContext();
 
 const TableProvider = ({ id, extendable = false, children }) => {
   const { pathname } = useLocation();
+  const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
+
   const { tables, preferences } = useTables();
-  const [save_loading, setSaveLoading] = useState(false);
 
   const view = searchParams.get("v");
   const page = searchParams.get("page");
@@ -26,8 +27,27 @@ const TableProvider = ({ id, extendable = false, children }) => {
     !!view ? item?.id === view : !!item?.last_viewed
   );
 
+  const [init, setInit] = useState(false);
   const [sort, setSort] = useState(table_preferences?.sort || []);
   const [filters, setFilters] = useState(table_preferences?.filters || []);
+  const [columnVisibility, setColumnVisibility] = useState(
+    table_preferences?.visibility || {}
+  );
+  const [columnSizes, setColumnSizes] = useState(
+    table_preferences?.content || {}
+  );
+
+  useEffect(() => {
+    if (!init) {
+      setInit(true);
+      return;
+    }
+
+    setSort(table_preferences?.sort || []);
+    setFilters(table_preferences?.filters || []);
+    setColumnSizes(table_preferences?.content || {});
+    setColumnVisibility(table_preferences?.visibility || {});
+  }, [table_preferences?.id]);
 
   const {
     data,
@@ -120,20 +140,24 @@ const TableProvider = ({ id, extendable = false, children }) => {
       }
     });
 
-  const saveTableTransaction = async (values) => {
-    // setSaveLoading(true);
-
-    await api.post("/preferences", {
-      table_id: id,
+  const saveTableTransaction = (values) => {
+    api.post("/preferences", {
       view,
+      table_id: id,
       ...values,
     });
 
-    // if (values?.sort) {
-    //   await tableRefetch();
-    // }
+    queryClient.setQueryData(["client_tables_preferences"], (prev) => {
+      const index = preferences?.findIndex((item) => item?.id === view);
 
-    setSaveLoading(false);
+      let temp = [...prev];
+      temp[index] = {
+        ...temp[index],
+        ...values,
+      };
+
+      return temp;
+    });
   };
 
   const value = useMemo(() => {
@@ -145,8 +169,12 @@ const TableProvider = ({ id, extendable = false, children }) => {
       preferences: table_preferences,
       table,
       sort,
-      loading: loading || save_loading,
+      loading,
       filters,
+      columnSizes,
+      columnVisibility,
+      setColumnVisibility,
+      setColumnSizes,
       setFilters,
       setSort,
       updateTable,
@@ -168,6 +196,8 @@ const TableProvider = ({ id, extendable = false, children }) => {
     table,
     sort,
     filters,
+    columnSizes,
+    columnVisibility,
   ]);
 
   return (

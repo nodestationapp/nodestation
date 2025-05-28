@@ -40,10 +40,10 @@ const render_options = (column, data) => {
   }
 };
 
-const tableColumnsRender = ({ columns, preferences }) => {
+const tableColumnsRender = ({ columns, columnSizes }) => {
   return !!columns?.length
     ? columns?.map((column) => {
-        let width = preferences?.content?.[column?.slug] || undefined;
+        let width = columnSizes?.[column?.slug] || undefined;
 
         return {
           width: width,

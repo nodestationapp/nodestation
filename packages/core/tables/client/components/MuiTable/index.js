@@ -25,6 +25,10 @@ const MuiTable = ({
   setSort,
   filters,
   setFilters,
+  columnSizes,
+  setColumnSizes,
+  columnVisibility,
+  setColumnVisibility,
 }) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
@@ -39,21 +43,7 @@ const MuiTable = ({
       }))
     : [];
 
-  const [columnVisibility, setColumnVisibility] = useState(
-    preferences?.visibility || {}
-  );
   const [selectedRows, setSelectedRows] = useState([]);
-  const [columnSizes, setColumnSizes] = useState(preferences?.content);
-
-  useEffect(() => {
-    setColumnVisibility(preferences?.visibility || {});
-    setFilters(preferences?.filters || []);
-    setColumnSizes(preferences?.content || {});
-
-    if (setSort) {
-      setSort(preferences?.sort || []);
-    }
-  }, [preferences?.id]);
 
   const onColumnResize = (params) => {
     clearTimeout(timer);
@@ -65,7 +55,7 @@ const MuiTable = ({
       setColumnSizes(temp);
 
       saveTransaction({ content: temp });
-    }, 500);
+    }, 300);
   };
 
   const onColumnVisibilityChange = (params) => {
@@ -143,10 +133,10 @@ const MuiTable = ({
         rowCount={pagination?.count || 0}
         paginationModel={{
           page: parseInt(page || 0),
-          pageSize: pagination?.pageSize || 0,
+          pageSize: pagination?.pageSize || 20,
         }}
         onPaginationModelChange={onPaginationModelChange}
-        pageSizeOptions={[]}
+        pageSizeOptions={[20]}
         rowHeight={rowHeight}
         disableRowSelectionOnClick
         columnHeaderHeight={42}

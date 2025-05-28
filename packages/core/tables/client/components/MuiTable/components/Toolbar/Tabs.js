@@ -92,7 +92,9 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink, loading }) => {
 
   const default_view = tabs?.find((item) => item?.last_viewed);
 
-  const currentPath = !!search ? `${pathname}${search}` : default_view?.href;
+  const currentPath = !!search
+    ? `${pathname}${search}`
+    : default_view?.href || pathname;
 
   return (
     <Stack direction="row" gap={0.5} alignItems="center">

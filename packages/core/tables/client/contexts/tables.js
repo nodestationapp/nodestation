@@ -18,7 +18,12 @@ const TablesProvider = ({ children }) => {
   });
 
   const value = useMemo(() => {
-    return { tables, loading, preferences, preferencesLoading };
+    return {
+      tables,
+      loading,
+      preferences,
+      preferencesLoading,
+    };
     // eslint-disable-next-line
   }, [tables, loading, preferences, preferencesLoading]);
 
