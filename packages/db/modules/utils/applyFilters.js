@@ -8,33 +8,51 @@ const filterQueryBuild = (item, query, table) => {
       );
       break;
     case "doesNotContain":
-      query.whereNot(item?.field, "like", `%${item?.value}%`);
+      query.whereNot(
+        `${table?.tableName}.${item?.field}`,
+        "like",
+        `%${item?.value}%`
+      );
       break;
     case "equals":
-      query.where(item?.field, item?.value);
+      query.where(`${table?.tableName}.${item?.field}`, item?.value);
       break;
     case "doesNotEqual":
-      query.whereNot(item?.field, item?.value);
+      query.whereNot(`${table?.tableName}.${item?.field}`, item?.value);
       break;
     case "startsWith":
-      query.where(item?.field, "like", `${item?.value}%`);
+      query.where(
+        `${table?.tableName}.${item?.field}`,
+        "like",
+        `${item?.value}%`
+      );
       break;
     case "endsWith":
-      query.where(item?.field, "like", `%${item?.value}`);
+      query.where(
+        `${table?.tableName}.${item?.field}`,
+        "like",
+        `%${item?.value}`
+      );
       break;
     case "isEmpty":
       query.where(function () {
-        this.whereNull(item?.field).orWhere(item?.field, "");
+        this.whereNull(`${table?.tableName}.${item?.field}`).orWhere(
+          `${table?.tableName}.${item?.field}`,
+          ""
+        );
       });
       break;
     case "isNotEmpty":
       query.where(function () {
-        this.whereNotNull(item?.field).andWhereNot(item?.field, "");
+        this.whereNotNull(`${table?.tableName}.${item?.field}`).andWhereNot(
+          `${table?.tableName}.${item?.field}`,
+          ""
+        );
       });
       break;
     case "isAnyOf":
       if (Array.isArray(item?.value)) {
-        query.whereIn(item?.field, item?.value);
+        query.whereIn(`${table?.tableName}.${item?.field}`, item?.value);
       }
       break;
   }

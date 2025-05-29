@@ -21,12 +21,12 @@ passport.use(
             table,
             filters: [
               {
-                field: "nodestation_users.id",
+                field: "id",
                 value: jwtPayload.id,
                 operator: "equals",
               },
               {
-                field: "nodestation_users.status",
+                field: "status",
                 value: "active",
                 operator: "equals",
               },

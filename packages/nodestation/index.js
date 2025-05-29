@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 
 import "dotenv/config";
-import createApp from "./utils/createApp.js";
-import welcomeBox from "./utils/welcomeBox.js";
 
-(async () => {
-  const app = createApp();
-  await app.init();
+import path from "path";
+import { rootPath, runCommand } from "@nstation/utils";
 
-  app.express.listen(app.port, () => {
-    welcomeBox({ port: app.port });
+if (process.argv[2] === "start") {
+  const cwd = path.join(rootPath, "node_modules", "nodestation");
+
+  runCommand({
+    cmd: "nodemon",
+    args: ["--watch", rootPath, "--quiet", "entry.js"],
+    __dirname: cwd,
   });
-})();
+}

@@ -4,6 +4,7 @@ export default async (req, res) => {
   try {
     let preferences = await knex("nodestation_preferences")
       .select()
+      .orderBy("created_at", "asc")
       .jsonParser();
 
     return res.status(200).json(preferences);

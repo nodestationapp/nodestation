@@ -28,6 +28,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
   );
 
   const [init, setInit] = useState(false);
+  const [currentView, setView] = useState(table_preferences?.id);
   const [sort, setSort] = useState(table_preferences?.sort || []);
   const [filters, setFilters] = useState(table_preferences?.filters || []);
   const [columnVisibility, setColumnVisibility] = useState(
@@ -47,6 +48,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
     setFilters(table_preferences?.filters || []);
     setColumnSizes(table_preferences?.content || {});
     setColumnVisibility(table_preferences?.visibility || {});
+    setView(table_preferences?.id);
   }, [table_preferences?.id]);
 
   const {
@@ -54,7 +56,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
     isLoading: loading,
     refetch: tableRefetch,
   } = useQuery({
-    queryKey: ["tables", id, view, page, sort, filters],
+    queryKey: ["tables", currentView, page, sort, filters],
     queryFn: () =>
       api.get(
         `/tables/${id}?${queryString.stringify({

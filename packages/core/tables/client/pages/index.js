@@ -4,7 +4,7 @@ import TableManager from "@nstation/tables/client/components/TableManager/index.
 const TableContent = () => {
   const { id } = useParams();
 
-  return <TableManager table={id} />;
+  return <TableManager key={id} table={id} />;
 };
 
 export default TableContent;
