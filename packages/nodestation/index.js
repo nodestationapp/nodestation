@@ -5,7 +5,7 @@ import "dotenv/config";
 import path from "path";
 import { rootPath, runCommand } from "@nstation/utils";
 
-if (process.argv[2] === "dev") {
+if (process.argv[2] === "dev" || process.argv[2] === "start") {
   const cwd = path.join(rootPath, "node_modules", "nodestation");
 
   runCommand({
