@@ -21,9 +21,11 @@ export const dataGridCustomizations = {
         backgroundColor: (theme.vars || theme).palette.background.default,
         [`& .${gridClasses.columnHeader}`]: {
           backgroundColor: (theme.vars || theme).palette.background.paper,
+          borderBottom: "none !important",
         },
         [`& .${gridClasses.footerContainer}`]: {
           backgroundColor: (theme.vars || theme).palette.background.paper,
+          borderTop: "none",
         },
         [`& .${checkboxClasses.root}`]: {
           padding: theme.spacing(0.5),
@@ -43,6 +45,7 @@ export const dataGridCustomizations = {
         },
         ".MuiDataGrid-filler": {
           backgroundColor: (theme.vars || theme).palette.background.paper,
+          borderBottom: "none !important",
         },
       }),
       cell: ({ theme }) => ({

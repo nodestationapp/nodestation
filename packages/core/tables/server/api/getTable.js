@@ -49,7 +49,7 @@ export default async (req, res) => {
             uid: req?.user?.id,
             last_viewed: 1,
           })
-          .returning("id");
+          .returning("*");
 
         preferences = preferences?.[0];
       }

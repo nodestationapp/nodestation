@@ -76,9 +76,14 @@ const TableProvider = ({ id, extendable = false, children }) => {
   const updateTable = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        delete values?.name;
+        let temp = { ...values };
+        temp?.fields?.forEach((item) => {
+          if (!!item?.relation) {
+            item.relation = item?.relation?.table;
+          }
+        });
 
-        await api.put(`/tables/${id}?extendable=${extendable}`, values);
+        await api.put(`/tables/${id}?extendable=${extendable}`, temp);
 
         tableRefetch();
 

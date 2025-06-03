@@ -76,7 +76,7 @@ export const inputsCustomizations = {
               ...theme.applyStyles("dark", {
                 color: "black",
                 backgroundColor: gray[50],
-                boxShadow: "inset 0 -1px 0  hsl(220, 30%, 80%)",
+                boxShadow: "none",
                 border: `1px solid ${gray[50]}`,
                 "&:hover": {
                   backgroundImage: "none",

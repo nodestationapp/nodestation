@@ -23,16 +23,16 @@ export const brand = {
 };
 
 export const gray = {
-  50: "hsl(220, 35%, 97%)",
-  100: "hsl(220, 30%, 94%)",
-  200: "hsl(220, 20%, 88%)",
-  300: "hsl(220, 20%, 80%)",
-  400: "hsl(220, 20%, 65%)",
-  500: "hsl(220, 20%, 42%)",
-  600: "hsl(220, 20%, 35%)",
-  700: "hsl(220, 20%, 25%)",
-  800: "hsl(220, 30%, 6%)",
-  900: "hsl(220, 35%, 3%)",
+  50: "hsl(220, 15%, 97%)",
+  100: "hsl(220, 14%, 92%)",
+  200: "hsl(220, 14%, 82%)",
+  300: "hsl(220, 14%, 70%)",
+  400: "hsl(220, 14%,  55%)",
+  500: "hsl(220, 14%, 40%)",
+  600: "hsl(220, 14%, 30%)",
+  700: "hsl(220, 13%, 22%)",
+  800: "hsl(220, 13%, 18%)",
+  900: "hsl(220, 13%, 15%)",
 };
 
 export const green = {
@@ -319,10 +319,10 @@ export const colorSchemes = {
       grey: {
         ...gray,
       },
-      divider: alpha(gray[700], 0.6),
+      divider: alpha(gray[600], 0.5),
       background: {
         default: gray[900],
-        paper: "hsl(220, 30%, 7%)",
+        paper: "hsl(210, 13%, 18%)",
       },
       text: {
         primary: "hsl(0, 0%, 100%)",
@@ -389,7 +389,7 @@ export const typography = {
 };
 
 export const shape = {
-  borderRadius: 8,
+  borderRadius: 7,
 };
 
 const defaultShadows = [

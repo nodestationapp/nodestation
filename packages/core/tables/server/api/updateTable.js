@@ -9,8 +9,8 @@ export default async (req, res) => {
   const { extendable } = req?.query;
 
   const content = {
-    tableName: id,
     ...body,
+    tableName: id,
   };
 
   try {

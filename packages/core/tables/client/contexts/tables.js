@@ -12,7 +12,11 @@ const TablesProvider = ({ children }) => {
     queryFn: () => api.get("/tables/all"),
   });
 
-  const { isLoading: preferencesLoading, data: preferences } = useQuery({
+  const {
+    isLoading: preferencesLoading,
+    data: preferences,
+    refetch: refetchPreferences,
+  } = useQuery({
     queryKey: ["client_tables_preferences"],
     queryFn: () => api.get("/preferences"),
   });
@@ -22,10 +26,11 @@ const TablesProvider = ({ children }) => {
       tables,
       loading,
       preferences,
+      refetchPreferences,
       preferencesLoading,
     };
     // eslint-disable-next-line
-  }, [tables, loading, preferences, preferencesLoading]);
+  }, [tables, loading, preferences, refetchPreferences, preferencesLoading]);
 
   if (!!loading || !!preferencesLoading) return <PageLoader />;
 

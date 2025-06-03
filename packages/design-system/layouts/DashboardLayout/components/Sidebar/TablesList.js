@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import List from "@mui/material/List";
 import Stack from "@mui/material/Stack";
@@ -20,6 +20,8 @@ const TablesList = () => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const queryClient = useQueryClient();
+
   const { data: tables, refetch: tablesRefetch } = useQuery({
     queryKey: ["tables"],
     queryFn: () => api.get("/tables"),
@@ -33,7 +35,10 @@ const TablesList = () => {
 
       setAnchorEl(null);
 
-      tablesRefetch();
+      await queryClient.refetchQueries({
+        queryKey: ["client_tables_preferences"],
+      });
+      await tablesRefetch();
 
       navigate(`/tables/${create?.id}`);
     } catch (err) {

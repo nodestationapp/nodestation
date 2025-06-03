@@ -30,24 +30,24 @@ const TableManagerContent = ({
   const queryParams = new URLSearchParams(search);
   const type = queryParams.get("type");
 
-  const [content_editor, setContentEditor] = useState(null);
   const {
     data,
     page,
-    loading,
     sort,
-    setSort,
-    saveTableTransaction,
     views,
     table,
-    preferences,
+    loading,
+    setSort,
     filters,
+    preferences,
     setFilters,
     columnSizes,
     setColumnSizes,
     columnVisibility,
     setColumnVisibility,
+    saveTableTransaction,
   } = useTable();
+  const [content_editor, setContentEditor] = useState(null);
   const [entriesDeleteModal, setEntriesDeleteModal] = useState(false);
 
   let columnsToShow = table?.fields || [];
