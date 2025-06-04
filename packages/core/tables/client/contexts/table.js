@@ -54,10 +54,12 @@ const TableProvider = ({ id, extendable = false, children }) => {
       let temp = [...prev];
 
       temp.forEach((item) => {
-        if (item?.id === table_preferences?.id) {
-          item.last_viewed = 1;
-        } else {
-          item.last_viewed = 0;
+        if (item?.table_id === id) {
+          if (item?.id === table_preferences?.id) {
+            item.last_viewed = 1;
+          } else {
+            item.last_viewed = 0;
+          }
         }
       });
 

@@ -1,5 +1,6 @@
 import { useFormikContext } from "formik";
 
+import { Divider } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -7,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Options from "./Options.js";
 
 const variant_options = [
   {
@@ -62,11 +64,11 @@ const SelectInput = ({ locked }) => {
         control={<Switch checked={values?.required} disabled={locked} />}
         onChange={(e) => setFieldValue("required", e.target.checked)}
       />
-      {/* <DragOrderInput
-        name="options"
-        value={values?.options}
-        onChange={(e) => setFieldValue("options", e.target.value)}
-      /> */}
+      <Divider />
+      <Options
+        value={values.options}
+        onChange={(value) => setFieldValue("options", value)}
+      />
     </>
   );
 };
