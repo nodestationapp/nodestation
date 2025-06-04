@@ -150,7 +150,8 @@ export const navigationCustomizations = {
   MuiDrawer: {
     styleOverrides: {
       paper: ({ theme }) => ({
-        backgroundColor: (theme.vars || theme).palette.background.default,
+        backgroundColor: (theme.vars || theme).palette.background.paper,
+        backgroundImage: "none",
       }),
     },
   },

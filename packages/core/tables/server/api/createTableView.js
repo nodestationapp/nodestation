@@ -1,12 +1,11 @@
 import { knex, singleJsonStringify } from "@nstation/db";
 
 export default async (req, res) => {
-  const { name, table, view } = req?.body;
+  const { name, table } = req?.body;
 
   try {
     let preferences = await knex("nodestation_preferences")
       .where({
-        id: view,
         table_id: table,
       })
       .first()

@@ -49,6 +49,20 @@ const TableProvider = ({ id, extendable = false, children }) => {
     setColumnSizes(table_preferences?.content || {});
     setColumnVisibility(table_preferences?.visibility || {});
     setView(table_preferences?.id);
+
+    queryClient.setQueryData(["client_tables_preferences"], (prev) => {
+      let temp = [...prev];
+
+      temp.forEach((item) => {
+        if (item?.id === table_preferences?.id) {
+          item.last_viewed = 1;
+        } else {
+          item.last_viewed = 0;
+        }
+      });
+
+      return temp;
+    });
   }, [table_preferences?.id]);
 
   const {
@@ -155,13 +169,28 @@ const TableProvider = ({ id, extendable = false, children }) => {
     });
 
     queryClient.setQueryData(["client_tables_preferences"], (prev) => {
-      const index = preferences?.findIndex((item) => item?.id === view);
-
       let temp = [...prev];
-      temp[index] = {
-        ...temp[index],
-        ...values,
-      };
+
+      if (
+        values?.hasOwnProperty("content") ||
+        values?.hasOwnProperty("visibility")
+      ) {
+        temp.forEach((item) => {
+          if (item?.table_id === id) {
+            item.content = values?.content || item?.content;
+            item.visibility = values?.visibility || item?.visibility;
+          }
+        });
+
+        return prev;
+      } else {
+        const index = preferences?.findIndex((item) => item?.id === view);
+
+        temp[index] = {
+          ...temp[index],
+          ...values,
+        };
+      }
 
       return temp;
     });

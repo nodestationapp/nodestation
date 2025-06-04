@@ -38,15 +38,18 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink, loading }) => {
           view: table?.view,
         });
 
+        await queryClient.refetchQueries("tables");
+
         navigate(`${pathname}?v=${create?.id}`);
       } else {
         await api.put(`/preferences/${values?.id}`, {
           name: values?.name,
         });
+
+        await queryClient.refetchQueries("tables");
       }
 
       setAnchorEl(null);
-      queryClient.refetchQueries("tables");
     } catch (err) {
       console.error(err);
     }

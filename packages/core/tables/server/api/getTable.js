@@ -17,10 +17,12 @@ export default async (req, res) => {
   if (filters) {
     filters = filters?.split(",");
 
-    filters = filters?.map((item) => {
-      item = item?.split(":");
-      return { field: item?.[0], operator: item?.[1], value: item?.[2] };
-    });
+    filters = filters
+      ?.map((item) => {
+        item = item?.split(":");
+        return { field: item?.[0], operator: item?.[1], value: item?.[2] };
+      })
+      ?.filter((item) => item?.value !== "undefined");
   }
 
   try {
