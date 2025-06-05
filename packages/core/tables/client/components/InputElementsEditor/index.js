@@ -66,23 +66,26 @@ const InputElementsEditor = ({ data, onSubmit }) => {
           }}
           type="forms_field"
           data={formatted_fields}
+          disabled={process.env.NODE_ENV !== "development"}
           onOrderChange={(value) => {
             formik.setFieldValue("fields", value);
             formik.submitForm();
           }}
         />
-        <Button
-          sx={{ mr: "auto" }}
-          variant="text"
-          size="small"
-          startIcon={<Add />}
-          color="primary"
-          onClick={() => setAddFieldModal(true)}
-        >
-          Add field
-        </Button>
+        {process.env.NODE_ENV === "development" && (
+          <Button
+            sx={{ mr: "auto" }}
+            variant="text"
+            size="small"
+            startIcon={<Add />}
+            color="primary"
+            onClick={() => setAddFieldModal(true)}
+          >
+            Add field
+          </Button>
+        )}
       </Stack>
-      {!!add_field_modal && (
+      {!!add_field_modal && process.env.NODE_ENV === "development" && (
         <CreateFieldModal
           formik={formik}
           form={add_field_modal?.data}

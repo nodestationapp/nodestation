@@ -24,6 +24,7 @@ const FormFieldItem = ({
   onRemoveClick,
   primary_key,
   origin,
+  disabled,
 }) => {
   const {
     attributes,
@@ -50,22 +51,30 @@ const FormFieldItem = ({
         key={slug}
         ref={setNodeRef}
         style={style}
+        sx={!!disabled ? { pointerEvents: "none" } : null}
         variant="bordered"
         onClick={onclick}
       >
         <ListItemButton>
-          <IconButton
-            size="micro"
-            variant="light"
-            {...listeners}
-            {...attributes}
-            sx={{ mr: 1.5, cursor: !!is_grabbing ? "grabbing" : "grab" }}
-            onMouseDown={() => setIsGrabbing(true)}
-            onMouseLeave={() => setIsGrabbing(false)}
+          {process.env.NODE_ENV === "development" && (
+            <IconButton
+              size="micro"
+              variant="light"
+              {...listeners}
+              {...attributes}
+              sx={{ mr: 1.5, cursor: !!is_grabbing ? "grabbing" : "grab" }}
+              onMouseDown={() => setIsGrabbing(true)}
+              onMouseLeave={() => setIsGrabbing(false)}
+            >
+              <MoreVert />
+            </IconButton>
+          )}
+          <Stack
+            direction="row"
+            alignItems="center"
+            gap={2}
+            ml={process.env.NODE_ENV === "development" ? 0 : 1}
           >
-            <MoreVert />
-          </IconButton>
-          <Stack direction="row" alignItems="center" gap={2}>
             {current_type?.icon}
             <Stack direction="column" gap={0}>
               <Typography variant="body1">{name}</Typography>
@@ -77,9 +86,11 @@ const FormFieldItem = ({
           <Stack direction="row" alignItems="center" gap={2} sx={{ ml: 3 }}>
             {!!primary_key && <Chip label="Primary key" size="small" />}
           </Stack>
-          {origin === "system" && <LockOutline sx={{ ml: "auto" }} />}
+          {(origin === "system" || process.env.NODE_ENV !== "development") && (
+            <LockOutline sx={{ ml: "auto" }} />
+          )}
           {/* //todo */}
-          {origin !== "system" && (
+          {origin !== "system" && process.env.NODE_ENV === "development" && (
             <IconButton
               sx={{ ml: "auto" }}
               color="secondary"

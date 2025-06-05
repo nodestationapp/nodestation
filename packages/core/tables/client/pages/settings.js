@@ -45,6 +45,7 @@ const TableSettingsContent = () => {
           fullWidth
           size="medium"
           name="displayName"
+          disabled={process.env.NODE_ENV !== "development"}
           defaultValue={table?.displayName}
           onChange={(e) => updateDisplayName(e.target.value)}
         >
@@ -79,7 +80,7 @@ const TableSettingsContent = () => {
     <BaseLayout
       tabs={tabs}
       title="Schema"
-      action={actions}
+      action={process.env.NODE_ENV === "development" ? actions : null}
       subtitle="Manage your table schema"
       backButtonLink={`/tables/${table?.id}`}
     >

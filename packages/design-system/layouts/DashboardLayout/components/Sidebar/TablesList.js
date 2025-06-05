@@ -84,15 +84,17 @@ const TablesList = () => {
         sx={{ px: 1.3, pt: 0.5 }}
       >
         <Typography variant="caption" sx={{ color: "text.secondary" }}>
-          Tables
+          Table
         </Typography>
-        <IconButton
-          size="micro"
-          aria-describedby={id}
-          onClick={(e) => onViewPopover(e.currentTarget, "")}
-        >
-          <AddIcon />
-        </IconButton>
+        {process.env.NODE_ENV === "development" && (
+          <IconButton
+            size="micro"
+            aria-describedby={id}
+            onClick={(e) => onViewPopover(e.currentTarget, "")}
+          >
+            <AddIcon />
+          </IconButton>
+        )}
       </Stack>
       <List dense sx={{ pt: 0.5 }}>
         {tableLinks.map((item, index) => (

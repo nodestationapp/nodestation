@@ -28,6 +28,8 @@ const Drawer = styled(MuiDrawer)({
 const Sidebar = () => {
   const { user } = useAuth();
 
+  console.log(process.env.NODE_ENV);
+
   return (
     <Drawer
       variant="permanent"

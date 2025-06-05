@@ -15,7 +15,7 @@ import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
 import FormFieldItem from "./components/FormFieldItem/index.js";
 
-const list_item_render = (type, item, key) => {
+const list_item_render = (type, item, key, disabled) => {
   switch (type) {
     case "endpoints":
       return <EndpointItem {...item} key={key} />;
@@ -24,13 +24,13 @@ const list_item_render = (type, item, key) => {
     case "forms_incoming":
       return <FormIncomingItem {...item} key={key} />;
     case "forms_field":
-      return <FormFieldItem {...item} key={key} />;
+      return <FormFieldItem {...item} key={key} disabled={disabled} />;
     default:
       return null;
   }
 };
 
-const List = ({ type, data: value, onOrderChange }) => {
+const List = ({ type, data: value, onOrderChange, disabled }) => {
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -53,14 +53,13 @@ const List = ({ type, data: value, onOrderChange }) => {
         }
       }}
     >
-      <SortableContext items={value?.map((item) => item?.slug)}>
-        <MuiList
-          dense
-          // sx={{ width: "100%", bgcolor: "background.paper" }}
-          variant="bordered"
-        >
+      <SortableContext
+        items={value?.map((item) => item?.slug)}
+        disabled={process.env.NODE_ENV !== "development"}
+      >
+        <MuiList dense variant="bordered">
           {value?.map((item, index) =>
-            list_item_render(type, item, value?.length + index, index)
+            list_item_render(type, item, value?.length + index, disabled)
           )}
         </MuiList>
       </SortableContext>
