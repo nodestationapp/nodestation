@@ -1,0 +1,23 @@
+{
+  "tableName": "nodestation_users_settings",
+  "fields": [
+    {
+      "name": "ID",
+      "slug": "id",
+      "type": "id",
+      "required": true,
+      "primary_key": true,
+      "default": "generate_id()"
+    },
+    {
+      "name": "Email verification template",
+      "slug": "email_verification_template",
+      "type": "text"
+    },
+    {
+      "name": "Forget password template",
+      "slug": "forget_password_template",
+      "type": "text"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "tableName": "nodestation_media_settings",
+  "fields": [
+    {
+      "name": "ID",
+      "slug": "id",
+      "type": "id",
+      "required": true,
+      "origin": "system",
+      "primary_key": true,
+      "default": "generate_id()"
+    },
+    {
+      "name": "Aws",
+      "slug": "aws",
+      "type": "json",
+      "origin": "system"
+    },
+    {
+      "name": "Digitalocean",
+      "slug": "digitalocean",
+      "type": "json",
+      "origin": "system"
+    },
+    {
+      "name": "Wasabi",
+      "slug": "wasabi",
+      "type": "json",
+      "origin": "system"
+    },
+    {
+      "name": "Local",
+      "slug": "local",
+      "type": "json",
+      "origin": "system"
+    },
+    {
+      "name": "Active",
+      "slug": "active",
+      "type": "text",
+      "origin": "system"
+    }
+  ]
+}

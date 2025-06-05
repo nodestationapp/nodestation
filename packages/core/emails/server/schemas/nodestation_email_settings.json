@@ -1,0 +1,51 @@
+{
+  "tableName": "nodestation_email_settings",
+  "fields": [
+    {
+      "name": "ID",
+      "slug": "id",
+      "type": "id",
+      "required": true,
+      "origin": "system",
+      "primary_key": true,
+      "default": "generate_id()"
+    },
+    {
+      "name": "SMTP",
+      "slug": "smtp",
+      "type": "json",
+      "origin": "system"
+    },
+    {
+      "name": "Aws",
+      "slug": "aws",
+      "type": "json",
+      "origin": "system"
+    },
+    {
+      "name": "Elastic Email",
+      "slug": "elastic",
+      "type": "json",
+      "origin": "system"
+    },
+    {
+      "name": "Mailgun",
+      "slug": "mailgun",
+      "type": "json",
+      "origin": "system"
+    },
+    {
+      "name": "Mailchimp",
+      "slug": "mailchimp",
+      "type": "json",
+      "origin": "system"
+    },
+
+    {
+      "name": "Active",
+      "slug": "active",
+      "type": "text",
+      "origin": "system"
+    }
+  ]
+}

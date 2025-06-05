@@ -1,11 +1,15 @@
 import { spawn } from "child_process";
 
-const runCommand = async ({ cmd, args = [], __dirname, quiet }) => {
+const runCommand = async ({ cmd, args = [], __dirname, quiet, env }) => {
   try {
     const nodeProcess = spawn(cmd, args, {
       cwd: __dirname,
       stdio: quiet ? "ignore" : "inherit",
       shell: true,
+      env: {
+        ...process.env,
+        ...env,
+      },
     });
 
     await new Promise((resolve, reject) => {

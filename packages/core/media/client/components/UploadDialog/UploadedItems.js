@@ -12,17 +12,65 @@ import formatBytes from "../../utils/formatBytes.js";
 
 import Link from "@mui/icons-material/Link";
 import Delete from "@mui/icons-material/Delete";
+import { Box } from "@mui/material";
 
 const UploadedItems = ({ files, percent, onSelect, onDelete }) => {
   return (
     <Grid container spacing={2} sx={{ pb: 0 }}>
       {files?.map((file, index) => (
         <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}>
-          <Card sx={{ width: "100%", p: 1, pb: 0 }}>
+          <Card sx={{ width: "100%", p: 1, pb: 0, zIndex: -2 }}>
             <CardMedia
-              sx={{ height: 140, borderRadius: 0.5 }}
+              sx={{
+                position: "relative",
+                height: 140,
+                borderRadius: 0.5,
+                overflow: "hidden",
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "120%",
+                  height: "120%",
+                  backgroundImage: `url("${file?.url}")`,
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                  overflow: "hidden",
+                  "-webkit-filter": "blur(15px) brightness(0.6)",
+                  "-moz-filter": "blur(15px) brightness(0.6)",
+                  "-o-filter": "blur(15px) brightness(0.6)",
+                  "-ms-filter": "blur(15px) brightness(0.6)",
+                  filter: "blur(15px) brightness(0.6)",
+                  "-webkit-transform": "scale(1.8, 1.8)",
+                  "-moz-transform": "scale(1.8, 1.8)",
+                  "-o-transform": "scale(1.8, 1.8)",
+                  "-ms-transform": "scale(1.8, 1.8)",
+                  transform: "scale(1.8, 1.8)",
+                  zIndex: 0,
+                },
+                // Możesz dodać overlay albo inne elementy nad tym
+                zIndex: 1,
+              }}
               image={file?.url}
               title="green iguana"
+              children={
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src={file?.url}
+                    alt={file?.name}
+                    style={{ height: "100%", zIndex: 1000000 }}
+                  />
+                </Box>
+              }
             />
             <CardContent
               sx={{

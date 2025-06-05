@@ -1,8 +1,5 @@
 # TEMP
-.nodestation/
 src/
-schemas/
-dist/
 build/
 nodestation-config.js
 

@@ -1,0 +1,51 @@
+{
+  "display_name": "name",
+  "tableName": "nodestation_media",
+  "fields": [
+    {
+      "name": "ID",
+      "slug": "id",
+      "type": "id",
+      "required": true,
+      "origin": "system",
+      "primary_key": true,
+      "default": "generate_id()"
+    },
+    {
+      "name": "Name",
+      "slug": "name",
+      "type": "text",
+      "origin": "system",
+      "required": true
+    },
+    {
+      "name": "Size",
+      "slug": "size",
+      "type": "numeric",
+      "origin": "system",
+      "required": true
+    },
+    {
+      "name": "Type",
+      "slug": "type",
+      "type": "text",
+      "required": true,
+      "origin": "system"
+    },
+    {
+      "name": "Url",
+      "slug": "url",
+      "type": "text",
+      "origin": "system",
+      "required": true
+    },
+    {
+      "name": "Created at",
+      "slug": "created_at",
+      "type": "date",
+      "origin": "system",
+      "required": true,
+      "default": "now()"
+    }
+  ]
+}

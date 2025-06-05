@@ -16,7 +16,7 @@ module.exports = (env) => {
     mode: env.NODE_ENV === "production" ? "production" : "development",
     output: {
       filename: "[name].[contenthash].js",
-      path: path.resolve(__dirname, "dist"),
+      path: path.resolve(process.env.ROOT_DIR, "build"),
       publicPath: "/",
       clean: true,
     },

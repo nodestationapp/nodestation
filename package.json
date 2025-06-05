@@ -21,6 +21,7 @@
     "release": "release-it",
     "dev": "nodestation dev",
     "start": "nodestation start",
+    "build": "nodestation build",
     "dev:client": "npm --prefix ./packages/client start",
     "build:client": "npm --prefix ./packages/client run build",
     "dev:server": "nodemon ./packages/nodestation/index.js"
@@ -42,9 +43,6 @@
     "npm": false,
     "github": {
       "release": true
-    },
-    "hooks": {
-      "before:release": "npm run build:client"
     },
     "plugins": {
       "@release-it/conventional-changelog": {

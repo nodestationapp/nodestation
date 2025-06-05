@@ -17,9 +17,11 @@
   },
   "files": [
     "./src",
-    "./dist",
     "./public",
-    "./package.json"
+    "./package.json",
+    "./jsconfig.json",
+    "./babel.config.json",
+    "./webpack.config.js"
   ],
   "dependencies": {
     "@emotion/react": "^11.14.0",

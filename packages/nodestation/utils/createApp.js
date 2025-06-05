@@ -5,13 +5,7 @@ import bodyParser from "body-parser";
 import loadPlugins from "./loadPlugins.js";
 import { rootPath, cors } from "@nstation/utils";
 
-const clientPath = path.join(
-  rootPath,
-  "node_modules",
-  "@nstation",
-  "client",
-  "dist"
-);
+const clientPath = path.join(rootPath, "build");
 
 function createApp() {
   const expressApp = express();
