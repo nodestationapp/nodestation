@@ -88,7 +88,11 @@ const TableManagerContent = ({
             ? onNewClick()
             : setContentEditor(
                 data?.table?.fields?.reduce((acc, item) => {
-                  acc[item?.slug] = "";
+                  if (item?.slug === "id") {
+                    item.default = "";
+                  }
+
+                  acc[item?.slug] = item?.default || "";
                   return acc;
                 }, {})
               )

@@ -31,10 +31,6 @@ const upsertEntry = async ({ id, body, entry_id, extraFields = [] }) =>
           value = JSON.stringify(value);
         }
 
-        if (value === null && !!curr?.default) {
-          value = undefined;
-        }
-
         acc[curr.slug] = value;
         return acc;
       }, {});

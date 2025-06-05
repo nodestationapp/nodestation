@@ -15,7 +15,6 @@ import { useMedia } from "./contexts/media.js";
 
 import AddIcon from "@mui/icons-material/Add";
 import Settings from "@mui/icons-material/Settings";
-
 const Media = () => {
   const navigate = useNavigate();
   const { media, deleteFile } = useMedia();
@@ -78,18 +77,6 @@ const Media = () => {
         open={uploadDialogOpen}
         onClose={() => setUploadDialogOpen(false)}
       />
-      {/* <TableManager
-        rowFullWidth
-        rowHeight={60}
-        table="nodestation_media"
-        onNewClick={() => setUploadDialogOpen(true)}
-        appendColumns={appendColumns}
-        hiddenColumns={["name", "url", "type", "size"]}
-      />
-      <UploadDialog
-        open={uploadDialogOpen}
-        onClose={() => setUploadDialogOpen(false)}
-      /> */}
     </BaseLayout>
   );
 };

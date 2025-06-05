@@ -89,7 +89,7 @@ const tableInputRender = (item, formik) => {
               value = newValue?.join(",");
             }
 
-            formik.setFieldValue(item?.slug, value);
+            formik.setFieldValue(item?.slug, value || null);
           }}
           renderInput={(params) => (
             <TextField
