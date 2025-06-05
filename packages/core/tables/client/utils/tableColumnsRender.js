@@ -5,13 +5,9 @@ import Boolean from "../components/MuiTable/components/Boolean.js";
 import Media from "../components/MuiTable/components/Media/index.js";
 import UserProfile from "../components/MuiTable/components/UserProfile/index.js";
 import Relation from "../components/MuiTable/components/Relation/index.js";
+import Select from "../components/MuiTable/components/Select.js";
 
 const render_options = (column, data) => {
-  const colors = column?.options?.reduce((acc, item) => {
-    acc[item?.value] = item?.color;
-    return acc;
-  }, {});
-
   const isObject = (val) =>
     val !== null && typeof val === "object" && !Array.isArray(val);
 
@@ -20,7 +16,7 @@ const render_options = (column, data) => {
     case "user":
       return <UserProfile data={data} />;
     case "select":
-      return <Chip label={data} color={colors[data]} size="small" />;
+      return <Select data={data} options={column?.options} />;
     case "boolean":
       return <Boolean data={data} />;
     case "date":

@@ -70,14 +70,26 @@ const tableInputRender = (item, formik) => {
       return (
         <Autocomplete
           fullWidth
-          multiple={!item?.multi}
+          multiple={item?.variant === "multi"}
           options={item?.options}
-          value={!!formik.values[item?.slug] ? [formik.values[item?.slug]] : []}
+          filterSelectedOptions={true}
+          isOptionEqualToValue={(option, value) => option.value === value}
+          value={
+            !!formik.values[item?.slug]
+              ? formik.values[item?.slug]?.toString()?.split(",")
+              : []
+          }
           onChange={(_, newValue) => {
-            formik.setFieldValue(
-              item?.slug,
-              newValue?.[newValue?.length - 1]?.value
-            );
+            let value = newValue?.value;
+            if (Array.isArray(newValue)) {
+              newValue = newValue?.map((item) =>
+                typeof item === "object" ? item?.value : item
+              );
+
+              value = newValue?.join(",");
+            }
+
+            formik.setFieldValue(item?.slug, value);
           }}
           renderInput={(params) => (
             <TextField
@@ -88,21 +100,25 @@ const tableInputRender = (item, formik) => {
               helperText={formik?.errors?.[item?.slug]}
             />
           )}
-          renderTags={(tagValue, getTagProps) =>
-            tagValue.map((option, index) => {
+          renderValue={(tagValue, getTagProps) => {
+            if (!!!formik.values[item?.slug]) return undefined;
+
+            return tagValue.map((option, index) => {
               const { key, ...tagProps } = getTagProps({ index });
               return (
                 <Chip
                   key={key}
                   {...tagProps}
                   color={
-                    item?.options?.find((item) => item?.value === option)?.color
+                    item?.options?.find(
+                      (item) => item?.value?.toString() === option?.toString()
+                    )?.color
                   }
                   label={option}
                 />
               );
-            })
-          }
+            });
+          }}
         />
       );
     case "date":

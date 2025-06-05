@@ -52,41 +52,9 @@ function createOrModifyColumn({ table, schema, dbColumns }) {
 }
 
 export default async () => {
-  let forms = fs.getFiles("/src/schemas/forms/**/*.json");
-  let auth = fs.getFiles("/src/schemas/auth.json");
   const tables = fs.getFiles(["/src/schemas/tables/**/*.json"]);
 
-  auth = {
-    ...auth?.[0],
-    id: "nodestation_users",
-  };
-
-  forms = forms?.map((item) => ({
-    ...item,
-    fields: [
-      ...item?.fields,
-      {
-        name: "Is read",
-        type: "boolean",
-        slug: "is_read",
-      },
-      {
-        name: "Archived",
-        type: "boolean",
-        slug: "archived",
-      },
-      {
-        name: "Created at",
-        type: "boolean",
-        default: "now()",
-        slug: "created_at",
-      },
-    ],
-  }));
-
-  let all_tables = [...tables, ...forms, auth];
-
-  for await (const item of all_tables) {
+  for await (const item of tables) {
     let fileColumns = item?.fields;
     let dbColumns = await knex(item?.id).columnInfo();
 
