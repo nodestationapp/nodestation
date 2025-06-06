@@ -3,7 +3,7 @@ import getFileType from "../utils/getFileType.js";
 
 const MimeType = ({ data }) => {
   const type = getFileType(data);
-  return <Chip icon={type.icon} label={type?.label} color="gray" />;
+  return <Chip label={type?.label} size="small" />;
 };
 
 export default MimeType;

@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import Checkbox from "@mui/material/Checkbox";
@@ -11,17 +12,24 @@ import formatBytes from "../../utils/formatBytes.js";
 
 import Link from "@mui/icons-material/Link";
 import Delete from "@mui/icons-material/Delete";
-import { Box } from "@mui/material";
+import getFileType from "../../utils/getFileType.js";
+
+import MimeType from "../MimeType.js";
 
 const MediaCard = ({ file, index, percent, onSelect, onDelete }) => {
+  const type = getFileType(file?.type);
+
   return (
     <Card sx={{ width: "100%", p: 1, pb: 0, zIndex: -2 }}>
       <CardMedia
-        sx={{
+        sx={(theme) => ({
           position: "relative",
           height: 140,
           borderRadius: 0.5,
           overflow: "hidden",
+          backgroundColor: theme.vars
+            ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
+            : alpha(theme.palette.background.default, 1),
           "&::before": {
             content: '""',
             position: "absolute",
@@ -47,7 +55,7 @@ const MediaCard = ({ file, index, percent, onSelect, onDelete }) => {
             zIndex: 0,
           },
           zIndex: 1,
-        }}
+        })}
         image={file?.url}
         title="green iguana"
         children={
@@ -57,13 +65,18 @@ const MediaCard = ({ file, index, percent, onSelect, onDelete }) => {
               height: "100%",
               display: "flex",
               justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <img
-              src={file?.url}
-              alt={file?.name}
-              style={{ height: "100%", zIndex: 1000000 }}
-            />
+            {type?.label === "Image" ? (
+              <img
+                src={file?.url}
+                alt={file?.name}
+                style={{ height: "100%", zIndex: 1000000 }}
+              />
+            ) : (
+              type?.icon
+            )}
           </Box>
         }
       />
@@ -95,26 +108,38 @@ const MediaCard = ({ file, index, percent, onSelect, onDelete }) => {
         ) : onSelect ? (
           <Checkbox />
         ) : (
-          <Stack
-            direction="row"
-            gap={0}
-            sx={{
-              display: "none",
-              ".MuiCard-root:hover &": {
+          <>
+            <Box
+              sx={{
                 display: "flex",
-              },
-            }}
-          >
-            <IconButton
-              size="micro"
-              onClick={() => window.open(file?.url, "_blank")}
+                ".MuiCard-root:hover &": {
+                  display: "none",
+                },
+              }}
             >
-              <Link />
-            </IconButton>
-            <IconButton size="micro" onClick={() => onDelete(file?.id)}>
-              <Delete />
-            </IconButton>
-          </Stack>
+              <MimeType data={file?.type} />
+            </Box>
+            <Stack
+              direction="row"
+              gap={0}
+              sx={{
+                display: "none",
+                ".MuiCard-root:hover &": {
+                  display: "flex",
+                },
+              }}
+            >
+              <IconButton
+                size="micro"
+                onClick={() => window.open(file?.url, "_blank")}
+              >
+                <Link />
+              </IconButton>
+              <IconButton size="micro" onClick={() => onDelete(file?.id)}>
+                <Delete />
+              </IconButton>
+            </Stack>
+          </>
         )}
       </CardContent>
     </Card>
