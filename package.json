@@ -21,10 +21,7 @@
     "release": "release-it",
     "dev": "nodestation dev",
     "start": "nodestation start",
-    "build": "nodestation build",
-    "dev:client": "npm --prefix ./packages/client start",
-    "build:client": "npm --prefix ./packages/client run build",
-    "dev:server": "nodemon ./packages/nodestation/index.js"
+    "build": "nodestation build"
   },
   "devDependencies": {
     "@release-it-plugins/workspaces": "^4.2.0",

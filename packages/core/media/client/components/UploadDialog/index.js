@@ -45,20 +45,21 @@ const UploadDialog = ({ open, onClose }) => {
     <Dialog
       open={open}
       onClose={onClose}
+      scroll="body"
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       sx={{
         "& .MuiDialog-paper": {
           width: "100%",
-          maxWidth: 830,
+          maxWidth: 650,
         },
       }}
     >
-      {!!uploading_files?.length ? (
-        <UploadedItems files={uploading_files} percent={percent} />
-      ) : (
-        <DragAndDrop onChange={handleChange} />
-      )}
+      <DragAndDrop
+        percent={percent}
+        files={uploading_files}
+        onChange={handleChange}
+      />
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
       </DialogActions>
