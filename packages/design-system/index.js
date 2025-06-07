@@ -1,3 +1,5 @@
+import "./styles/app.scss";
+
 import IconifyIcon from "./components/IconifyIcon.js";
 import AsideModal from "./components/AsideModal.js";
 import PageLoader from "./components/PageLoader/index.js";

@@ -417,6 +417,9 @@ export const inputsCustomizations = {
         "&.Mui-disabled": {
           opacity: 0.5,
         },
+        // "&.Mui-focused": {
+        //   opacity: "hsl(0, 0%, 100%)",
+        // },
         variants: [
           {
             props: {

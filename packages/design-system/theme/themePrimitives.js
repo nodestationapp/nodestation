@@ -10,29 +10,29 @@ const defaultTheme = createTheme();
 const customShadows = [...defaultTheme.shadows];
 
 export const brand = {
-  50: "hsl(210, 100%, 95%)",
-  100: "hsl(210, 100%, 92%)",
-  200: "hsl(210, 100%, 80%)",
-  300: "hsl(210, 100%, 65%)",
-  400: "hsl(210, 98%, 48%)",
-  500: "hsl(210, 98%, 42%)",
-  600: "hsl(210, 98%, 55%)",
-  700: "hsl(210, 100%, 35%)",
-  800: "hsl(210, 100%, 16%)",
-  900: "hsl(210, 100%, 21%)",
+  50: "hsl(265, 100%, 97%)",
+  100: "hsl(265, 90%, 90%)",
+  200: "hsl(265, 85%, 80%)",
+  300: "hsl(265, 80%, 70%)",
+  400: "hsl(265, 75%, 60%)",
+  500: "hsl(265, 70%, 50%)", // główny kolor (np. przycisk)
+  600: "hsl(265, 65%, 40%)",
+  700: "hsl(265, 60%, 30%)",
+  800: "hsl(265, 55%, 22%)",
+  900: "hsl(265, 50%, 15%)",
 };
 
 export const gray = {
-  50: "hsl(220, 15%, 97%)",
-  100: "hsl(220, 14%, 92%)",
-  200: "hsl(220, 14%, 82%)",
-  300: "hsl(220, 14%, 70%)",
-  400: "hsl(220, 14%,  55%)",
-  500: "hsl(220, 14%, 40%)",
-  600: "hsl(220, 14%, 30%)",
-  700: "hsl(220, 13%, 22%)",
-  800: "hsl(220, 13%, 18%)",
-  900: "hsl(220, 13%, 15%)",
+  50: "hsl(240, 5%, 96%)",
+  100: "hsl(240, 5%, 90%)",
+  200: "hsl(240, 5%, 75%)",
+  300: "hsl(240, 5%, 60%)",
+  400: "hsl(240, 5%, 45%)",
+  500: "hsl(240, 5%, 30%)",
+  600: "hsl(240, 5%, 20%)",
+  700: "hsl(240, 4%, 13%)",
+  800: "hsl(240, 4%, 9%)",
+  900: "hsl(240, 4%, 6%)",
 };
 
 export const green = {
@@ -159,16 +159,16 @@ export const getDesignTokens = (mode) => {
         paper: "hsl(220, 35%, 97%)",
         ...(mode === "dark" && {
           default: gray[900],
-          paper: "hsl(220, 30%, 7%)",
+          paper: gray[900],
         }),
       },
       text: {
-        primary: gray[800],
+        primary: gray[900],
         secondary: gray[600],
         warning: orange[400],
         ...(mode === "dark" && {
           primary: "hsl(0, 0%, 100%)",
-          secondary: gray[400],
+          secondary: "#fff",
         }),
       },
       action: {
@@ -230,7 +230,7 @@ export const getDesignTokens = (mode) => {
       },
     },
     shape: {
-      borderRadius: 8,
+      borderRadius: 6,
     },
     shadows: customShadows,
   };
@@ -271,8 +271,8 @@ export const colorSchemes = {
       },
       divider: alpha(gray[300], 0.4),
       background: {
-        default: "hsl(0, 0%, 99%)",
-        paper: "hsl(220, 35%, 97%)",
+        default: "hsl(0, 0%, 100%)",
+        paper: "#fff",
       },
       text: {
         primary: gray[800],
@@ -319,14 +319,14 @@ export const colorSchemes = {
       grey: {
         ...gray,
       },
-      divider: alpha(gray[600], 0.5),
+      divider: alpha(gray[500], 0.6),
       background: {
         default: gray[900],
-        paper: "hsl(210, 13%, 18%)",
+        paper: gray[900],
       },
       text: {
         primary: "hsl(0, 0%, 100%)",
-        secondary: gray[400],
+        secondary: gray[200],
       },
       action: {
         hover: alpha(gray[600], 0.2),
@@ -389,7 +389,7 @@ export const typography = {
 };
 
 export const shape = {
-  borderRadius: 7,
+  borderRadius: 6,
 };
 
 const defaultShadows = [

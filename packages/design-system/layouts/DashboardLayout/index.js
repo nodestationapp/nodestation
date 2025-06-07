@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import Box from "@mui/material/Box";
@@ -8,9 +9,11 @@ import Header from "./components/Header/index.js";
 import Sidebar from "./components/Sidebar/index.js";
 
 const DashboardLayout = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <Box sx={{ display: "flex", height: "100%" }}>
-      <Sidebar />
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <Box
         component="main"
         sx={(theme) => ({
@@ -26,12 +29,11 @@ const DashboardLayout = () => {
           sx={{
             height: "100%",
             alignItems: "center",
-            mx: 3,
             pb: 3,
-            mt: { xs: 8, md: 0 },
+            mx: { xs: 2, md: 3 },
           }}
         >
-          <Header />
+          <Header onSidebarOpen={() => setSidebarOpen(true)} />
           <Box
             sx={{
               width: "100%",

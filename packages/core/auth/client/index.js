@@ -7,14 +7,14 @@ export default {
   register(app) {
     app.addMenuLink({
       order: 2,
-      icon: "mdi:people",
+      icon: "lucide:users",
       to: `/authentication`,
       label: "Authentication",
       Component: App,
     });
 
     app.addMenuLink({
-      icon: "mdi:settings",
+      icon: "lucide:settings",
       to: `/settings`,
       label: "Settings",
       placement: "bottom",

@@ -64,7 +64,7 @@ const MediaProviders = () => {
   return (
     <Stack direction="row" gap={1.5} flexWrap="wrap">
       {media_type_data?.map((item, index) => (
-        <Card key={index} sx={{ padding: 0, width: 230 }}>
+        <Card key={index} sx={{ padding: 0, width: { xs: "100%", sm: 230 } }}>
           <CardActionArea
             onClick={() => setProviderSettingsModal(item?.value)}
             sx={{

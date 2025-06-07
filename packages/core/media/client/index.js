@@ -7,7 +7,7 @@ export default {
       to: `/media`,
       order: 3,
       Component: App,
-      icon: "mdi:image",
+      icon: "lucide:image",
       label: "Media",
     });
 

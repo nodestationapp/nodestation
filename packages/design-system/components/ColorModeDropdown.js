@@ -13,12 +13,12 @@ const ColorModeDropdown = () => {
   };
 
   const icon = {
-    light: <LightModeIcon />,
-    dark: <DarkModeIcon />,
+    dark: <LightModeIcon />,
+    light: <DarkModeIcon />,
   }[currentMode];
 
   return (
-    <IconButton onClick={toggleMode} disableRipple size="small">
+    <IconButton onClick={toggleMode} disableRipple size="micro">
       {icon}
     </IconButton>
   );

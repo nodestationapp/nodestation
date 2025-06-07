@@ -6,7 +6,7 @@ export default {
       to: `/`,
       order: 1,
       Component: App,
-      icon: "mdi:home",
+      icon: "lucide:home",
       label: "Dashboard",
     });
   },

@@ -64,6 +64,7 @@ const ForgetPasswordContent = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        px: 3,
       }}
     >
       <Box sx={{ width: "100%", maxWidth: 380 }}>

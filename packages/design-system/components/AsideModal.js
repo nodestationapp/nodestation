@@ -56,9 +56,10 @@ const AsideModal = ({
       variant="temporary"
       ModalProps={{ keepMounted: true }}
       onClose={onCloseHandler}
+      ful
       sx={{
         "& .MuiDrawer-paper": {
-          width: { xs: 300, sm: 400 },
+          width: { xs: "100%", sm: 400 },
         },
       }}
     >

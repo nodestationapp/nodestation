@@ -74,7 +74,14 @@ export default function NavbarBreadcrumbs() {
           }}
         >
           {!!item.icon && (
-            <Box sx={{ height: 16, width: 16, mr: 1 }}>
+            <Box
+              sx={{
+                height: 16,
+                width: 16,
+                mr: 1,
+                display: { xs: "none", md: "flex" },
+              }}
+            >
               <IconifyIcon icon={item?.icon} />
             </Box>
           )}

@@ -8,7 +8,16 @@ const SettingsForm = ({ data }) => {
     <Stack direction="column" gap={4}>
       {data?.map((item, index) => (
         <>
-          <Stack key={index} direction="row">
+          <Stack
+            key={index}
+            direction={{ sx: "column", md: "row" }}
+            sx={{
+              gap: {
+                xs: 2,
+                md: 0,
+              },
+            }}
+          >
             <Typography sx={{ fontWeight: 500, minWidth: 180 }}>
               {item?.label}
             </Typography>

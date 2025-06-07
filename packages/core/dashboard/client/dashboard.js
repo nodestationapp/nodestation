@@ -25,9 +25,9 @@ const Dashboard = () => {
         }}
       >
         <Typography variant="h5">Welcome {user?.first_name} 👋</Typography>
-        <span>
+        <Typography variant="body" textAlign="center">
           Get familiar with dashboard, here are some ways to get started.
-        </span>
+        </Typography>
         <Button
           type="submit"
           variant="contained"

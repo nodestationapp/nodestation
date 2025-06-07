@@ -22,7 +22,7 @@ module.exports = (env) => {
     },
     devtool: "source-map",
     devServer: {
-      static: path.join(__dirname, "dist"),
+      static: path.join(process.env.ROOT_DIR, "build"),
       port: 1337,
       hot: true,
       historyApiFallback: true,

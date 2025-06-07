@@ -40,6 +40,7 @@ const Verify = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        px: 3,
       }}
     >
       <Box

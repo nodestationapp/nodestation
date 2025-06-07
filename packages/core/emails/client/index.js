@@ -4,7 +4,7 @@ export default {
   register(app) {
     app.addMenuLink({
       order: 4,
-      icon: "mdi:email",
+      icon: "lucide:send-horizontal",
       to: `/emails`,
       label: "Emails",
       Component: App,

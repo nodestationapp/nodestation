@@ -28,7 +28,9 @@ export const dataDisplayCustomizations = {
                 padding: 0,
                 borderRadius: 0,
                 backgroundColor: (theme.vars || theme).palette.background.paper,
-                borderBottom: `1px solid ${(theme.vars || theme).palette.divider}`,
+                borderBottom: `1px solid ${
+                  (theme.vars || theme).palette.divider
+                }`,
                 "&:first-child": {
                   borderTopLeftRadius: (theme.vars || theme).shape.borderRadius,
                   borderTopRightRadius: (theme.vars || theme).shape
@@ -68,18 +70,17 @@ export const dataDisplayCustomizations = {
           gap: 8,
           padding: "2px 8px",
           borderRadius: (theme.vars || theme).shape.borderRadius,
-          opacity: 0.7,
           "&.Mui-selected": {
             opacity: 1,
-            backgroundColor: alpha(theme.palette.action.selected, 0.3),
+            backgroundColor: alpha(theme.palette.action.selected, 0.15),
             [`& .${svgIconClasses.root}`]: {
               color: (theme.vars || theme).palette.text.primary,
             },
             "&:focus-visible": {
-              backgroundColor: alpha(theme.palette.action.selected, 0.3),
+              backgroundColor: alpha(theme.palette.action.selected, 0.2),
             },
             "&:hover": {
-              backgroundColor: alpha(theme.palette.action.selected, 0.5),
+              backgroundColor: alpha(theme.palette.action.selected, 0.3),
             },
           },
           "&:focus-visible": {
@@ -115,9 +116,10 @@ export const dataDisplayCustomizations = {
   },
   MuiListItemIcon: {
     styleOverrides: {
-      root: {
+      root: ({ theme }) => ({
         minWidth: 0,
-      },
+        color: (theme.vars || theme).palette.text.primary,
+      }),
     },
   },
   MuiChip: {

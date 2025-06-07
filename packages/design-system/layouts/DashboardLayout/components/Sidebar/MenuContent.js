@@ -18,9 +18,9 @@ const MenuContent = () => {
     ?.sort((a, b) => a.order - b.order);
 
   return (
-    <Stack sx={{ flexGrow: 1, p: 1, justifyContent: "space-between" }}>
+    <Stack sx={{ flexGrow: 1, justifyContent: "space-between" }}>
       <Stack>
-        <List dense>
+        <List dense sx={{ gap: 0.5 }}>
           {topMenuLinks.map((item, index) => (
             <ListItemComponent key={index} item={item} />
           ))}
@@ -28,7 +28,7 @@ const MenuContent = () => {
         <Divider />
         <TablesList />
       </Stack>
-      <List dense>
+      <List dense sx={{ gap: 0.5 }}>
         {bottomMenuLinks.map((item, index) => (
           <ListItemComponent key={index} item={item} />
         ))}

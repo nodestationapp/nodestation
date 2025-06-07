@@ -9,8 +9,13 @@ import DialogContent from "@mui/material/DialogContent";
 
 import CodeEditor from "../CodeEditor/index.js";
 import { useEmails } from "../../contexts/emails.js";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const EmailEditorModal = ({ open, onClose }) => {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
   const { addEmail } = useEmails();
 
   const onSubmit = async (values, { setSubmitting }) => {
@@ -41,12 +46,16 @@ const EmailEditorModal = ({ open, onClose }) => {
     <Dialog
       open={open}
       onClose={onClose}
+      fullScreen={fullScreen}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       sx={{
         "& .MuiDialog-paper": {
           maxWidth: 830,
           width: "100%",
+          ...(fullScreen && {
+            borderRadius: 0,
+          }),
         },
       }}
     >

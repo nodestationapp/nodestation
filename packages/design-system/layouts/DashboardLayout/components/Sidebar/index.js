@@ -1,8 +1,10 @@
+import { useEffect } from "react";
+
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import MuiDrawer, { drawerClasses } from "@mui/material/Drawer";
 
@@ -11,7 +13,8 @@ import OptionsMenu from "./OptionsMenu.js";
 import ProjectName from "./ProjectName.js";
 
 import { useAuth } from "@nstation/auth/client/contexts/authMiddleware.js";
-
+import { useMediaQuery } from "@mui/material";
+import { useLocation } from "react-router-dom";
 const drawerWidth = 240;
 
 const Drawer = styled(MuiDrawer)({
@@ -25,14 +28,26 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-const Sidebar = () => {
+const Sidebar = ({ open, onClose }) => {
+  const location = useLocation();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
   const { user } = useAuth();
+
+  useEffect(() => {
+    if (open) {
+      onClose();
+    }
+  }, [location]);
 
   return (
     <Drawer
-      variant="permanent"
+      open={open}
+      onClose={onClose}
+      variant={fullScreen ? "temporary" : "permanent"}
       sx={{
-        display: { xs: "none", md: "block" },
+        display: { md: "block" },
         [`& .${drawerClasses.paper}`]: {
           backgroundColor: "background.paper",
         },

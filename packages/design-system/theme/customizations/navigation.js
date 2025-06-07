@@ -192,12 +192,12 @@ export const navigationCustomizations = {
         borderColor: "transparent",
         ":hover": {
           color: (theme.vars || theme).palette.text.primary,
-          backgroundColor: gray[100],
+          backgroundColor: gray[50],
           borderColor: gray[200],
         },
         [`&.${tabClasses.selected}`]: {
           color: (theme.vars || theme).palette.text.primary,
-          backgroundColor: gray[100],
+          backgroundColor: gray[50],
           borderColor: gray[200],
         },
         ...theme.applyStyles("dark", {
@@ -208,8 +208,8 @@ export const navigationCustomizations = {
           },
           [`&.${tabClasses.selected}`]: {
             color: (theme.vars || theme).palette.text.primary,
-            backgroundColor: gray[800],
-            borderColor: gray[700],
+            backgroundColor: gray[700],
+            borderColor: gray[600],
           },
         }),
       }),

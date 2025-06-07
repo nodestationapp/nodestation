@@ -69,7 +69,7 @@ const TablesList = () => {
   const tableLinks = !!tables?.length
     ? tables?.map((table) => ({
         ...table,
-        icon: "mdi:table",
+        icon: "lucide:table",
         label: table?.name,
         to: `/tables/${table?.tableName}`,
       }))
