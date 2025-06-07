@@ -10,7 +10,7 @@ const Dashboard = () => {
   return (
     <Box
       sx={{
-        height: "calc(100vh - 150px)",
+        minHeight: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

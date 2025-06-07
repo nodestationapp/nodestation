@@ -20,7 +20,7 @@ const DragAndDrop = ({ percent, files, onChange }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <Card>
+    <Card sx={{ flex: 1 }}>
       <input {...getInputProps()} />
       <Stack
         {...getRootProps()}

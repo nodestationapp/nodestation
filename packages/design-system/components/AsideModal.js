@@ -9,6 +9,8 @@ import DialogContent from "@mui/material/DialogContent";
 
 import Close from "@mui/icons-material/Close";
 
+import { useTheme, useMediaQuery } from "@mui/material";
+
 const AsideModal = ({
   open,
   header,
@@ -19,6 +21,9 @@ const AsideModal = ({
   submitLabel = "Save",
   cancelLabel = "Cancel",
 }) => {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
   const [is_open, setIsOpen] = useState(open);
 
   const onSubmitHandler = async (e, type) => {
@@ -52,7 +57,7 @@ const AsideModal = ({
   return (
     <Drawer
       open={is_open}
-      anchor="right"
+      anchor={fullScreen ? "bottom" : "right"}
       variant="temporary"
       ModalProps={{ keepMounted: true }}
       onClose={onCloseHandler}

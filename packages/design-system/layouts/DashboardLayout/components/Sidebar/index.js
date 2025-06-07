@@ -1,11 +1,13 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
-import { styled, useTheme } from "@mui/material/styles";
+import { useMediaQuery } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { styled, useTheme } from "@mui/material/styles";
 import MuiDrawer, { drawerClasses } from "@mui/material/Drawer";
 
 import MenuContent from "./MenuContent.js";
@@ -13,9 +15,8 @@ import OptionsMenu from "./OptionsMenu.js";
 import ProjectName from "./ProjectName.js";
 
 import { useAuth } from "@nstation/auth/client/contexts/authMiddleware.js";
-import { useMediaQuery } from "@mui/material";
-import { useLocation } from "react-router-dom";
-const drawerWidth = 240;
+
+const drawerWidth = 255;
 
 const Drawer = styled(MuiDrawer)({
   width: drawerWidth,

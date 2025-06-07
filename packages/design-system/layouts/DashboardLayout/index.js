@@ -12,7 +12,7 @@ const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <Box sx={{ display: "flex", height: "100%" }}>
+    <Box sx={{ display: "flex", height: "100%", width: "100%" }}>
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <Box
         component="main"

@@ -1,4 +1,11 @@
 html {
     // -webkit-font-smoothing: antialiased;
     // text-rendering: optimizelegibility;
+    height: 100%;
+}
+
+body, #root{
+    min-height: 100%;
+    display: flex;
+    width: 100%;
 }

@@ -94,7 +94,13 @@ const MuiTable = ({
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
+      }}
+    >
       <Toolbar
         tabs={tabs}
         action={action}
@@ -103,76 +109,83 @@ const MuiTable = ({
         selectedRows={selectedRows}
         selectActions={selectActions}
       />
-      <DataGrid
-        pagination
-        rows={rows || []}
-        checkboxSelection
-        loading={loading}
-        columns={columns}
-        getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-        }
-        onRowClick={onRowClick}
-        filterDebounceMs={300}
-        onColumnResize={onColumnResize}
-        columnVisibilityModel={columnVisibility}
-        onColumnVisibilityModelChange={onColumnVisibilityChange}
-        sortModel={sort || []}
-        onSortModelChange={onSortModelChange}
-        filterMode="server"
-        sortingMode="server"
-        paginationMode="server"
-        filterModel={
-          !!filters
-            ? {
-                items: filters,
-              }
-            : undefined
-        }
-        onFilterModelChange={onFilterModelChange}
-        rowCount={pagination?.count || 0}
-        paginationModel={{
-          page: parseInt(page || 0),
-          pageSize: pagination?.pageSize || 20,
+      <Box
+        sx={{
+          width: "100%",
+          overflowX: "auto", // WŁĄCZA poziomy scroll wewnątrz, NIE strony
         }}
-        onPaginationModelChange={onPaginationModelChange}
-        pageSizeOptions={[20]}
-        rowHeight={rowHeight}
-        disableRowSelectionOnClick
-        columnHeaderHeight={42}
-        onRowSelectionModelChange={setSelectedRows}
-        rowSelectionModel={selectedRows}
-        slotProps={{
-          loadingOverlay: {
-            variant: "skeleton",
-            noRowsVariant: "skeleton",
-          },
-          filterPanel: {
-            filterFormProps: {
-              logicOperatorInputProps: {
-                variant: "outlined",
-                size: "small",
-              },
-              columnInputProps: {
-                variant: "outlined",
-                size: "small",
-                sx: { mt: "auto" },
-              },
-              operatorInputProps: {
-                variant: "outlined",
-                size: "small",
-                sx: { mt: "auto" },
-              },
-              valueInputProps: {
-                InputComponentProps: {
+      >
+        <DataGrid
+          pagination
+          rows={rows || []}
+          checkboxSelection
+          loading={loading}
+          columns={columns}
+          getRowClassName={(params) =>
+            params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+          }
+          onRowClick={onRowClick}
+          filterDebounceMs={300}
+          onColumnResize={onColumnResize}
+          columnVisibilityModel={columnVisibility}
+          onColumnVisibilityModelChange={onColumnVisibilityChange}
+          sortModel={sort || []}
+          onSortModelChange={onSortModelChange}
+          filterMode="server"
+          sortingMode="server"
+          paginationMode="server"
+          filterModel={
+            !!filters
+              ? {
+                  items: filters,
+                }
+              : undefined
+          }
+          onFilterModelChange={onFilterModelChange}
+          rowCount={pagination?.count || 0}
+          paginationModel={{
+            page: parseInt(page || 0),
+            pageSize: pagination?.pageSize || 20,
+          }}
+          onPaginationModelChange={onPaginationModelChange}
+          pageSizeOptions={[20]}
+          rowHeight={rowHeight}
+          disableRowSelectionOnClick
+          columnHeaderHeight={42}
+          onRowSelectionModelChange={setSelectedRows}
+          rowSelectionModel={selectedRows}
+          slotProps={{
+            loadingOverlay: {
+              variant: "skeleton",
+              noRowsVariant: "skeleton",
+            },
+            filterPanel: {
+              filterFormProps: {
+                logicOperatorInputProps: {
                   variant: "outlined",
                   size: "small",
                 },
+                columnInputProps: {
+                  variant: "outlined",
+                  size: "small",
+                  sx: { mt: "auto" },
+                },
+                operatorInputProps: {
+                  variant: "outlined",
+                  size: "small",
+                  sx: { mt: "auto" },
+                },
+                valueInputProps: {
+                  InputComponentProps: {
+                    variant: "outlined",
+                    size: "small",
+                  },
+                },
               },
             },
-          },
-        }}
-      />
+          }}
+        />
+      </Box>
     </Box>
   );
 };

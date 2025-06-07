@@ -96,7 +96,7 @@ const TablesList = () => {
           </IconButton>
         )}
       </Stack>
-      <List dense sx={{ pt: 0.5 }}>
+      <List dense sx={{ gap: 0.5 }}>
         {tableLinks.map((item, index) => (
           <ListItemComponent key={index} item={item} />
         ))}

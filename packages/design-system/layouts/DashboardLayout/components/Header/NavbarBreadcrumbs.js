@@ -54,6 +54,13 @@ export default function NavbarBreadcrumbs() {
   return (
     <StyledBreadcrumbs
       aria-label="breadcrumb"
+      sx={{
+        "& .MuiBreadcrumbs-ol": {
+          overflow: "hidden",
+          flexWrap: "nowrap",
+          textOverflow: "ellipsis",
+        },
+      }}
       separator={<NavigateNextRoundedIcon fontSize="small" />}
     >
       {breadcrumbs?.map((item, index) => (

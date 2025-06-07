@@ -35,8 +35,26 @@ const Header = ({ onSidebarOpen }) => {
         }}
         spacing={2}
       >
-        <Stack direction="row" sx={{ gap: 1, alignItems: "center" }}>
-          <IconButton size="micro" onClick={onSidebarOpen}>
+        <Stack
+          direction="row"
+          sx={{
+            gap: 1,
+            alignItems: "center",
+            overflow: "hidden",
+            flexWrap: "nowrap",
+            textOverflow: "ellipsis",
+          }}
+        >
+          <IconButton
+            size="micro"
+            onClick={onSidebarOpen}
+            sx={{
+              display: {
+                sm: "flex",
+                md: "none",
+              },
+            }}
+          >
             <MenuIcon />
           </IconButton>
           <NavbarBreadcrumbs />

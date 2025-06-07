@@ -4,6 +4,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DragAndDrop from "./DragAndDrop.js";
 import { useMedia } from "../../contexts/media.js";
 import UploadedItems from "./UploadedItems.js";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const generateBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -14,6 +16,9 @@ const generateBase64 = (file) =>
   });
 
 const UploadDialog = ({ open, onClose }) => {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
   const { uploading_files, setUploadingFiles, percent, uploadFiles } =
     useMedia();
 
@@ -46,12 +51,19 @@ const UploadDialog = ({ open, onClose }) => {
       open={open}
       onClose={onClose}
       scroll="body"
+      fullScreen={fullScreen}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       sx={{
         "& .MuiDialog-paper": {
           width: "100%",
           maxWidth: 650,
+          ...(fullScreen && {
+            borderRadius: 0,
+            display: "flex",
+            flexDirection: "column",
+            flex: 1,
+          }),
         },
       }}
     >
