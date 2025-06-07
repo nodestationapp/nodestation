@@ -1,6 +1,6 @@
 {
   "name": "@nstation/design-system",
-  "version": "1.18.0",
+  "version": "1.18.1-beta.2",
   "type": "module",
   "main": "./index.js",
   "exports": {
@@ -15,7 +15,8 @@
     "./theme",
     "./utils",
     "./index.js",
-    "./package.json"
+    "./package.json",
+    "./styles"
   ],
   "dependencies": {
     "@fontsource/inter": "^5.2.5",
