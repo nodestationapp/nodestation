@@ -29,7 +29,15 @@ module.exports = (env) => {
     },
     module: {
       rules: [
-        { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader" },
+        {
+          test: /\.jsx?$/,
+          include: [
+            path.resolve(process.env.ROOT_DIR, "plugins"),
+            path.resolve(process.env.ROOT_DIR, "node_modules/@nstation"),
+            path.resolve(process.env.ROOT_DIR, "packages"),
+          ],
+          loader: "babel-loader",
+        },
         {
           test: /\.css$/i,
           use: ["style-loader", "css-loader"],

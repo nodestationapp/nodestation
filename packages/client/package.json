@@ -36,7 +36,7 @@
     "react": "19.1.0",
     "react-cookie": "^7.1.4",
     "react-dom": "19.1.0",
-    "react-router-dom": "^6.23.0",
+    "react-router-dom": "^7.6.2",
     "formik": "^2.4.6",
     "query-string": "^9.1.2",
     "@mui/x-date-pickers": "^7.28.3",
