@@ -1,6 +1,6 @@
 {
   "name": "@nodestation/root",
-  "version": "1.18.1-beta.2",
+  "version": "1.18.1-beta.3",
   "main": "index.js",
   "type": "module",
   "license": "MIT",
@@ -26,7 +26,6 @@
   "devDependencies": {
     "@release-it-plugins/workspaces": "^4.2.0",
     "@release-it/conventional-changelog": "^9.0.3",
-    "dotenv-webpack": "^8.1.0",
     "release-it": "^17.10.0",
     "supertest": "^7.0.0",
     "vitest": "^2.1.8"
