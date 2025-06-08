@@ -2,9 +2,12 @@ import { fs } from "@nstation/utils";
 import { knex, queryBuilder } from "@nstation/db";
 
 export default async (req, res) => {
-  const pageSize = 20;
   let { id } = req?.params;
-  let { view, page = 0, sort, filters } = req?.query || {};
+  let { view, page = 0, sort, filters, pageSize = 20 } = req?.query || {};
+
+  if (!id) {
+    id = req?.route?.path?.split("/")?.[4];
+  }
 
   if (sort) {
     sort = sort?.split(":");
@@ -101,8 +104,8 @@ export default async (req, res) => {
     return res.status(200).json({
       table,
       entries: entries?.items,
-      preferences,
-      views,
+      // preferences,
+      // views,
       pagination: { page, pageSize, count: entries?.count },
     });
   } catch (err) {

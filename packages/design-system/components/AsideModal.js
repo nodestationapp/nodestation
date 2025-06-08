@@ -25,7 +25,7 @@ const AsideModal = ({
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [is_open, setIsOpen] = useState(open);
+  const [is_open, setIsOpen] = useState(null);
 
   const onSubmitHandler = async (e, type) => {
     if (e.key === "Escape") {

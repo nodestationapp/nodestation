@@ -67,9 +67,9 @@ const TableManagerContent = ({
 
   const action = () => (
     <>
-      {/* <IconButton size="micro" onClick={() => setTableDocs(true)}>
+      <IconButton size="micro" onClick={() => setTableDocs(true)}>
         <HelpOutlineIcon />
-      </IconButton> */}
+      </IconButton>
       <IconButton
         size="micro"
         sx={(theme) => ({
