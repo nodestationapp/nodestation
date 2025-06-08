@@ -7,6 +7,7 @@ import Select from "./components/Select/index.js";
 import Boolean from "./components/Boolean/index.js";
 import Json from "./components/Json/index.js";
 import Numeric from "./components/Numeric/index.js";
+import { Divider } from "@mui/material";
 
 const extra_input_render = (type, locked) => {
   switch (type) {
@@ -38,6 +39,7 @@ const ExtraInputs = ({ locked, type }) => {
 
   return (
     <Stack direction="column" gap={2}>
+      <Divider />
       {extra_input_render(type, locked)}
     </Stack>
   );

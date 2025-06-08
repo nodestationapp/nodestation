@@ -94,7 +94,7 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
           fullWidth
           name="name"
           label="Name"
-          variant="outlined"
+          variant="standard"
           value={formik.values.name}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -102,12 +102,12 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
           helperText={formik.errors.name}
           disabled={form?.origin === "system"}
         />
-        <FormControl fullWidth>
+        <Stack>
           <InputLabel id="type-select-label">Type</InputLabel>
           <Select
             name="type"
             label="Type"
-            variant="outlined"
+            variant="standard"
             labelId="type-select-label"
             value={formik.values.type}
             onChange={formik.handleChange}
@@ -125,7 +125,7 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
+        </Stack>
         <FormikContext.Provider value={formik}>
           <ExtraInputs
             locked={form?.origin === "system"}

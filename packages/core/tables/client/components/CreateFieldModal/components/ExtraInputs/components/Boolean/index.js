@@ -1,7 +1,6 @@
 import { useFormikContext } from "formik";
 
 import Select from "@mui/material/Select";
-import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
@@ -25,29 +24,26 @@ const Boolean = ({ locked }) => {
   const { values, errors, setFieldValue, handleBlur } = useFormikContext();
 
   return (
-    <>
-      <Divider />
-      <FormControl fullWidth>
-        <InputLabel id="default-select-label">Default</InputLabel>
-        <Select
-          key={values?.default}
-          name="default"
-          label="Default"
-          disabled={locked}
-          variant="outlined"
-          labelId="default-select-label"
-          value={values.default}
-          onChange={(e) => setFieldValue("default", e.target.value)}
-          onBlur={handleBlur}
-          error={errors.default}
-          helperText={errors.default}
-        >
-          {default_options?.map((item) => (
-            <MenuItem value={item?.value}>{item?.label}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </>
+    <FormControl fullWidth>
+      <InputLabel id="default-select-label">Default</InputLabel>
+      <Select
+        key={values?.default}
+        name="default"
+        label="Default"
+        disabled={locked}
+        variant="outlined"
+        labelId="default-select-label"
+        value={values.default}
+        onChange={(e) => setFieldValue("default", e.target.value)}
+        onBlur={handleBlur}
+        error={errors.default}
+        helperText={errors.default}
+      >
+        {default_options?.map((item) => (
+          <MenuItem value={item?.value}>{item?.label}</MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 

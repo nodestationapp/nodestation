@@ -19,7 +19,8 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@microlink/react-json-view": "^1.26.1",
     "slugify": "^1.6.6",
-    "glob": "^11.0.1"
+    "glob": "^11.0.1",
+    "react-collapse": "^5.1.1"
   },
   "files": [
     "./client",

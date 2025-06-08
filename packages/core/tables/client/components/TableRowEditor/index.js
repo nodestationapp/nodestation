@@ -56,7 +56,7 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
         submitLoading={formik.isSubmitting}
         header={open?.[table_data?.table?.displayName || "id"] || "Add entry"}
       >
-        <Stack gap={2} direction="column">
+        <Stack gap={1.5} direction="column">
           {table_data?.table?.fields?.map((item, index) => {
             if (!!!open?.id) {
               if (item?.slug === "id") return null;

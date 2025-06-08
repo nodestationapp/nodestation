@@ -16,6 +16,8 @@ import tableColumnsRender from "../../utils/tableColumnsRender.js";
 import AddIcon from "@mui/icons-material/Add";
 import Settings from "@mui/icons-material/Settings";
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import TableDocs from "../TableDocs/index.js";
 
 const TableManagerContent = ({
   hiddenColumns,
@@ -48,6 +50,7 @@ const TableManagerContent = ({
     saveTableTransaction,
   } = useTable();
   const [content_editor, setContentEditor] = useState(null);
+  const [tableDocs, setTableDocs] = useState(false);
   const [entriesDeleteModal, setEntriesDeleteModal] = useState(false);
 
   let columnsToShow = table?.fields || [];
@@ -64,6 +67,9 @@ const TableManagerContent = ({
 
   const action = () => (
     <>
+      {/* <IconButton size="micro" onClick={() => setTableDocs(true)}>
+        <HelpOutlineIcon />
+      </IconButton> */}
       <IconButton
         size="micro"
         sx={(theme) => ({
@@ -146,6 +152,9 @@ const TableManagerContent = ({
           onEntrySubmit={onEntrySubmit}
           onClose={() => setContentEditor(null)}
         />
+      )}
+      {!!tableDocs && (
+        <TableDocs open={tableDocs} onClose={() => setTableDocs(false)} />
       )}
       <EntriesDeleteModal
         open={entriesDeleteModal}

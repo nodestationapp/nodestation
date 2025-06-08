@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useFormikContext } from "formik";
 
 import Switch from "@mui/material/Switch";
-import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
@@ -17,14 +16,15 @@ const Json = ({ locked }) => {
 
   return (
     <>
-      <Divider />
       <TextField
         fullWidth
         multiline
         name="default"
         label="Default"
-        variant="outlined"
+        // variant="outlined"
+        InputLabelProps={{ shrink: true }}
         value={values.default}
+        placeholder="Enter JSON"
         disabled={locked}
         onBlur={handleBlur}
         error={errors.default}

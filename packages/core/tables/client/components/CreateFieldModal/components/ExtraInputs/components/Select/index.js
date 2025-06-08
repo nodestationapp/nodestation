@@ -1,6 +1,6 @@
 import { useFormikContext } from "formik";
 
-import { Divider } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -26,14 +26,14 @@ const SelectInput = ({ locked }) => {
 
   return (
     <>
-      <FormControl fullWidth>
+      <Stack>
         <InputLabel id="variant-select-label">Variant</InputLabel>
         <Select
           key={values?.variant}
           name="multi"
           label="Variant"
           disabled={locked}
-          variant="outlined"
+          variant="standard"
           labelId="variant-select-label"
           value={values.variant}
           onChange={(e) => setFieldValue("variant", e.target.value)}
@@ -45,13 +45,13 @@ const SelectInput = ({ locked }) => {
             <MenuItem value={item?.value}>{item?.label}</MenuItem>
           ))}
         </Select>
-      </FormControl>
+      </Stack>
       <TextField
         fullWidth
         multiline
         name="default"
         label="Default"
-        variant="outlined"
+        variant="standard"
         value={values.default}
         onBlur={handleBlur}
         error={errors.default}

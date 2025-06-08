@@ -13,6 +13,7 @@ import { useTheme, useMediaQuery } from "@mui/material";
 
 const AsideModal = ({
   open,
+  width = 400,
   header,
   children,
   onClose,
@@ -22,7 +23,7 @@ const AsideModal = ({
   cancelLabel = "Cancel",
 }) => {
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [is_open, setIsOpen] = useState(open);
 
@@ -61,10 +62,9 @@ const AsideModal = ({
       variant="temporary"
       ModalProps={{ keepMounted: true }}
       onClose={onCloseHandler}
-      ful
       sx={{
         "& .MuiDrawer-paper": {
-          width: { xs: "100%", sm: 400 },
+          width: { xs: "100%", sm: width },
         },
       }}
     >
@@ -76,13 +76,15 @@ const AsideModal = ({
       </DialogTitle>
       <DialogContent dividers>{children}</DialogContent>
       <DialogActions>
-        <Button
-          loading={submitLoading}
-          onClick={(e) => onSubmitHandler(e, "submit")}
-          variant="contained"
-        >
-          {submitLabel}
-        </Button>
+        {!!onSubmit && (
+          <Button
+            loading={submitLoading}
+            onClick={(e) => onSubmitHandler(e, "submit")}
+            variant="contained"
+          >
+            {submitLabel}
+          </Button>
+        )}
         <Button variant="text" onClick={onCloseHandler}>
           {cancelLabel}
         </Button>

@@ -399,9 +399,45 @@ export const inputsCustomizations = {
   },
   MuiInputBase: {
     styleOverrides: {
-      root: {
-        border: "none",
-      },
+      root: ({ theme }) => ({
+        "&.MuiInput-underline": {
+          border: "1px solid ",
+          borderColor: alpha(gray[300], 0.8),
+          padding: "4px 12px",
+          marginTop: "0px !important",
+          borderRadius: (theme.vars || theme).shape.borderRadius,
+
+          "&:hover": {
+            borderColor: "#000",
+          },
+
+          "&.Mui-focused": {
+            outline: 0,
+            borderColor: "#000",
+          },
+
+          "&.Mui-disabled": {
+            pointerEvents: "none",
+          },
+
+          ...theme.applyStyles("dark", {
+            "&:hover": {
+              borderColor: "#fff",
+            },
+
+            "&.Mui-focused": {
+              outline: 0,
+              borderColor: "#fff",
+            },
+          }),
+        },
+        "&:before": {
+          display: "none",
+        },
+        "&:after": {
+          display: "none",
+        },
+      }),
       input: {
         "&::placeholder": {
           opacity: 0.7,
@@ -453,6 +489,9 @@ export const inputsCustomizations = {
             height: "fit-content",
           },
         },
+        "& .MuiInputBase-root": {
+          padding: "6px 9px",
+        },
       },
       endAdornment: {
         ".MuiButtonBase-root": {
@@ -491,6 +530,23 @@ export const inputsCustomizations = {
         marginBottom: 0,
         top: -5,
         transitionProperty: "color, transform, max-width, top",
+        "&.MuiInputLabel-standard": {
+          position: "relative",
+          transform: "none",
+          marginBottom: "6px !important",
+          top: 0,
+          fontSize: theme.typography.body,
+
+          "&.Mui-focused": {
+            color: "#000",
+          },
+
+          ...theme.applyStyles("dark", {
+            "&.Mui-focused": {
+              color: "#fff",
+            },
+          }),
+        },
       }),
       shrink: {
         top: 0,

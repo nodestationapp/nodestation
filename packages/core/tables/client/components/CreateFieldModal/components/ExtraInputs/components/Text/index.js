@@ -3,7 +3,6 @@ import { useFormikContext } from "formik";
 
 import Select from "@mui/material/Select";
 import Switch from "@mui/material/Switch";
-import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
@@ -32,7 +31,6 @@ const Text = ({ locked }) => {
 
   return (
     <>
-      <Divider />
       <FormControl fullWidth>
         <InputLabel id="variant-select-label">Variant</InputLabel>
         <Select
