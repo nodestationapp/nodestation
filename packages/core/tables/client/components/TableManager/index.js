@@ -53,6 +53,8 @@ const TableManagerContent = ({
   const [tableDocs, setTableDocs] = useState(false);
   const [entriesDeleteModal, setEntriesDeleteModal] = useState(false);
 
+  console.log(table);
+
   let columnsToShow = table?.fields || [];
   columnsToShow = columnsToShow?.filter(
     (item) => !hiddenColumns.includes(item?.slug)
@@ -154,7 +156,11 @@ const TableManagerContent = ({
         />
       )}
       {!!tableDocs && (
-        <TableDocs open={tableDocs} onClose={() => setTableDocs(false)} />
+        <TableDocs
+          data={table}
+          open={tableDocs}
+          onClose={() => setTableDocs(false)}
+        />
       )}
       <EntriesDeleteModal
         open={entriesDeleteModal}

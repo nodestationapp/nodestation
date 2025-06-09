@@ -20,7 +20,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 
-const boolean_options = [
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@nstation/design-system/utils";
+
+const permissions_options = [
   {
     label: "Public",
     value: "public",
@@ -28,18 +31,28 @@ const boolean_options = [
   },
   {
     label: "Client",
-    value: 1,
+    value: "client",
   },
   {
     label: "Admin",
-    value: 0,
+    value: "admin",
   },
 ];
 
-const TableDocs = ({ open, onClose }) => {
+const TableDocs = ({ open, data, onClose }) => {
   const [copied, setCopied] = useState(false);
   const [collapse, setCollapse] = useState(null);
   const [permissions, setPermissions] = useState([]);
+
+  const {
+    isLoading: crudLoading,
+    data: crud,
+    refetch: refetchCrud,
+  } = useQuery({
+    queryKey: ["client_tables_crud"],
+    queryFn: () => api.get(`/tables/${data?.id}/crud`),
+    enabled: !!data?.id,
+  });
 
   const onChangePermissions = (value) => {
     const lastValue = value[value.length - 1];
@@ -56,21 +69,21 @@ const TableDocs = ({ open, onClose }) => {
     setCollapse(index === collapse ? null : index);
   };
 
-  const docs_data = [
-    {
-      method: "POST",
-      description: "Create a new project",
-      url: "/tables/projects",
+  console.log(data?.fields);
+
+  const docs_data = crud?.map((item) => {
+    return {
+      ...item,
       items: [
         {
           title: "Security",
           card: {
-            icon: permissions?.includes("public") ? (
+            icon: item?.permissions?.includes("public") ? (
               <PublicOutlinedIcon fontSize="small" />
             ) : (
               <LockOutlinedIcon fontSize="small" />
             ),
-            title: permissions?.includes("public")
+            title: item?.permissions?.includes("public")
               ? "Public Access"
               : "Access Token",
             action: (
@@ -81,7 +94,7 @@ const TableDocs = ({ open, onClose }) => {
                   displayEmpty
                   size="medium"
                   variant="outlined"
-                  value={permissions}
+                  value={item?.permissions}
                   onChange={(e) => onChangePermissions(e.target.value)}
                   renderValue={(selected) => {
                     if (selected.length === 0) {
@@ -89,7 +102,7 @@ const TableDocs = ({ open, onClose }) => {
                     }
 
                     selected = selected?.map((item, index) => {
-                      const part = boolean_options?.find(
+                      const part = permissions_options?.find(
                         (part) => part?.value === item
                       );
 
@@ -107,7 +120,7 @@ const TableDocs = ({ open, onClose }) => {
                     return selected;
                   }}
                 >
-                  {boolean_options?.map((item) => (
+                  {permissions_options?.map((item) => (
                     <MenuItem value={item?.value} sx={{ gap: 1 }}>
                       {item?.icon}
                       {item?.label}
@@ -118,10 +131,10 @@ const TableDocs = ({ open, onClose }) => {
             ),
             items: [
               {
-                title: permissions?.includes("public")
+                title: item?.permissions?.includes("public")
                   ? "Everyone can access the table"
                   : "Header parameter name",
-                badges: !!permissions?.includes("public")
+                badges: !!item?.permissions?.includes("public")
                   ? []
                   : [{ label: "access_token", color: "error.light" }],
               },
@@ -131,309 +144,419 @@ const TableDocs = ({ open, onClose }) => {
         {
           title: "Body parameters",
           card: {
-            items: [
-              {
-                title: "category_id",
+            items: data?.fields?.map((item) => {
+              return {
+                title: item?.slug,
                 badges: [
-                  { label: "String" },
-                  { label: "Required", color: "error.light" },
+                  { label: item?.type },
+                  ...(item?.required
+                    ? [{ label: "Required", color: "error.light" }]
+                    : []),
                 ],
-              },
-              {
-                title: "category_id",
-                badges: [
-                  { label: "String" },
-                  { label: "Required", color: "error.light" },
-                ],
-              },
-            ],
+              };
+            }),
+            // [
+            //   {
+            //     title: "category_id",
+            //     badges: [
+            //       { label: "String" },
+            //       { label: "Required", color: "error.light" },
+            //     ],
+            //   },
+            //   {
+            //     title: "category_id",
+            //     badges: [
+            //       { label: "String" },
+            //       { label: "Required", color: "error.light" },
+            //     ],
+            //   },
+            // ],
           },
         },
       ],
-    },
-    {
-      method: "GET",
-      description: "Get all projects",
-      url: "/tables/projects",
-      items: [
-        {
-          title: "Security",
-          card: {
-            icon: permissions?.includes("public") ? (
-              <PublicOutlinedIcon fontSize="small" />
-            ) : (
-              <LockOutlinedIcon fontSize="small" />
-            ),
-            title: permissions?.includes("public")
-              ? "Public Access"
-              : "Access Token",
-            action: (
-              <>
-                <Select
-                  multiple={true}
-                  fullWidth
-                  displayEmpty
-                  size="medium"
-                  variant="outlined"
-                  value={permissions}
-                  onChange={(e) => onChangePermissions(e.target.value)}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return <em>Select permissions</em>;
-                    }
+    };
+  });
 
-                    selected = selected?.map((item, index) => {
-                      const part = boolean_options?.find(
-                        (part) => part?.value === item
-                      );
+  console.log(docs_data);
 
-                      return (
-                        <>
-                          <Stack direction="row" alignItems="center" gap={1}>
-                            {index > 0 && ", "}
-                            {part?.icon}
-                            {part?.label}
-                          </Stack>
-                        </>
-                      );
-                    });
+  // const docs_data = [
+  //   {
+  //     method: "POST",
+  //     description: "Create a new project",
+  //     path: "/tables/projects",
+  //     items: [
+  //       {
+  //         title: "Security",
+  //         card: {
+  //           icon: permissions?.includes("public") ? (
+  //             <PublicOutlinedIcon fontSize="small" />
+  //           ) : (
+  //             <LockOutlinedIcon fontSize="small" />
+  //           ),
+  //           title: permissions?.includes("public")
+  //             ? "Public Access"
+  //             : "Access Token",
+  //           action: (
+  //             <>
+  //               <Select
+  //                 multiple={true}
+  //                 fullWidth
+  //                 displayEmpty
+  //                 size="medium"
+  //                 variant="outlined"
+  //                 value={permissions}
+  //                 onChange={(e) => onChangePermissions(e.target.value)}
+  //                 renderValue={(selected) => {
+  //                   if (selected.length === 0) {
+  //                     return <em>Select permissions</em>;
+  //                   }
 
-                    return selected;
-                  }}
-                >
-                  {boolean_options?.map((item) => (
-                    <MenuItem value={item?.value} sx={{ gap: 1 }}>
-                      {item?.icon}
-                      {item?.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </>
-            ),
-            items: [
-              {
-                title: permissions?.includes("public")
-                  ? "Everyone can access the table"
-                  : "Header parameter name",
-                badges: !!permissions?.includes("public")
-                  ? []
-                  : [{ label: "access_token", color: "error.light" }],
-              },
-            ],
-          },
-        },
-        {
-          title: "Body parameters",
-          card: {
-            items: [
-              {
-                title: "category_id",
-                badges: [
-                  { label: "String" },
-                  { label: "Required", color: "error.light" },
-                ],
-              },
-              {
-                title: "category_id",
-                badges: [
-                  { label: "String" },
-                  { label: "Required", color: "error.light" },
-                ],
-              },
-            ],
-          },
-        },
-      ],
-    },
-    {
-      method: "PUT",
-      description: "Update a project",
-      url: "/tables/projects/:id",
-      items: [
-        {
-          title: "Security",
-          card: {
-            icon: permissions?.includes("public") ? (
-              <PublicOutlinedIcon fontSize="small" />
-            ) : (
-              <LockOutlinedIcon fontSize="small" />
-            ),
-            title: permissions?.includes("public")
-              ? "Public Access"
-              : "Access Token",
-            action: (
-              <>
-                <Select
-                  multiple={true}
-                  fullWidth
-                  displayEmpty
-                  size="medium"
-                  variant="outlined"
-                  value={permissions}
-                  onChange={(e) => onChangePermissions(e.target.value)}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return <em>Select permissions</em>;
-                    }
+  //                   selected = selected?.map((item, index) => {
+  //                     const part = permissions_options?.find(
+  //                       (part) => part?.value === item
+  //                     );
 
-                    selected = selected?.map((item, index) => {
-                      const part = boolean_options?.find(
-                        (part) => part?.value === item
-                      );
+  //                     return (
+  //                       <>
+  //                         <Stack direction="row" alignItems="center" gap={1}>
+  //                           {index > 0 && ", "}
+  //                           {part?.icon}
+  //                           {part?.label}
+  //                         </Stack>
+  //                       </>
+  //                     );
+  //                   });
 
-                      return (
-                        <>
-                          <Stack direction="row" alignItems="center" gap={1}>
-                            {index > 0 && ", "}
-                            {part?.icon}
-                            {part?.label}
-                          </Stack>
-                        </>
-                      );
-                    });
+  //                   return selected;
+  //                 }}
+  //               >
+  //                 {permissions_options?.map((item) => (
+  //                   <MenuItem value={item?.value} sx={{ gap: 1 }}>
+  //                     {item?.icon}
+  //                     {item?.label}
+  //                   </MenuItem>
+  //                 ))}
+  //               </Select>
+  //             </>
+  //           ),
+  //           items: [
+  //             {
+  //               title: permissions?.includes("public")
+  //                 ? "Everyone can access the table"
+  //                 : "Header parameter name",
+  //               badges: !!permissions?.includes("public")
+  //                 ? []
+  //                 : [{ label: "access_token", color: "error.light" }],
+  //             },
+  //           ],
+  //         },
+  //       },
+  //       {
+  //         title: "Body parameters",
+  //         card: {
+  //           items: [
+  //             {
+  //               title: "category_id",
+  //               badges: [
+  //                 { label: "String" },
+  //                 { label: "Required", color: "error.light" },
+  //               ],
+  //             },
+  //             {
+  //               title: "category_id",
+  //               badges: [
+  //                 { label: "String" },
+  //                 { label: "Required", color: "error.light" },
+  //               ],
+  //             },
+  //           ],
+  //         },
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     method: "GET",
+  //     description: "Get all projects",
+  //     path: "/tables/projects",
+  //     items: [
+  //       {
+  //         title: "Security",
+  //         card: {
+  //           icon: permissions?.includes("public") ? (
+  //             <PublicOutlinedIcon fontSize="small" />
+  //           ) : (
+  //             <LockOutlinedIcon fontSize="small" />
+  //           ),
+  //           title: permissions?.includes("public")
+  //             ? "Public Access"
+  //             : "Access Token",
+  //           action: (
+  //             <>
+  //               <Select
+  //                 multiple={true}
+  //                 fullWidth
+  //                 displayEmpty
+  //                 size="medium"
+  //                 variant="outlined"
+  //                 value={permissions}
+  //                 onChange={(e) => onChangePermissions(e.target.value)}
+  //                 renderValue={(selected) => {
+  //                   if (selected.length === 0) {
+  //                     return <em>Select permissions</em>;
+  //                   }
 
-                    return selected;
-                  }}
-                >
-                  {boolean_options?.map((item) => (
-                    <MenuItem value={item?.value} sx={{ gap: 1 }}>
-                      {item?.icon}
-                      {item?.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </>
-            ),
-            items: [
-              {
-                title: permissions?.includes("public")
-                  ? "Everyone can access the table"
-                  : "Header parameter name",
-                badges: !!permissions?.includes("public")
-                  ? []
-                  : [{ label: "access_token", color: "error.light" }],
-              },
-            ],
-          },
-        },
-        {
-          title: "Body parameters",
-          card: {
-            items: [
-              {
-                title: "category_id",
-                badges: [
-                  { label: "String" },
-                  { label: "Required", color: "error.light" },
-                ],
-              },
-              {
-                title: "category_id",
-                badges: [
-                  { label: "String" },
-                  { label: "Required", color: "error.light" },
-                ],
-              },
-            ],
-          },
-        },
-      ],
-    },
-    {
-      method: "DELETE",
-      description: "Delete a project",
-      url: "/tables/projects/:id",
-      items: [
-        {
-          title: "Security",
-          card: {
-            icon: permissions?.includes("public") ? (
-              <PublicOutlinedIcon fontSize="small" />
-            ) : (
-              <LockOutlinedIcon fontSize="small" />
-            ),
-            title: permissions?.includes("public")
-              ? "Public Access"
-              : "Access Token",
-            action: (
-              <>
-                <Select
-                  multiple={true}
-                  fullWidth
-                  displayEmpty
-                  size="medium"
-                  variant="outlined"
-                  value={permissions}
-                  onChange={(e) => onChangePermissions(e.target.value)}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return <em>Select permissions</em>;
-                    }
+  //                   selected = selected?.map((item, index) => {
+  //                     const part = permissions_options?.find(
+  //                       (part) => part?.value === item
+  //                     );
 
-                    selected = selected?.map((item, index) => {
-                      const part = boolean_options?.find(
-                        (part) => part?.value === item
-                      );
+  //                     return (
+  //                       <>
+  //                         <Stack direction="row" alignItems="center" gap={1}>
+  //                           {index > 0 && ", "}
+  //                           {part?.icon}
+  //                           {part?.label}
+  //                         </Stack>
+  //                       </>
+  //                     );
+  //                   });
 
-                      return (
-                        <>
-                          <Stack direction="row" alignItems="center" gap={1}>
-                            {index > 0 && ", "}
-                            {part?.icon}
-                            {part?.label}
-                          </Stack>
-                        </>
-                      );
-                    });
+  //                   return selected;
+  //                 }}
+  //               >
+  //                 {permissions_options?.map((item) => (
+  //                   <MenuItem value={item?.value} sx={{ gap: 1 }}>
+  //                     {item?.icon}
+  //                     {item?.label}
+  //                   </MenuItem>
+  //                 ))}
+  //               </Select>
+  //             </>
+  //           ),
+  //           items: [
+  //             {
+  //               title: permissions?.includes("public")
+  //                 ? "Everyone can access the table"
+  //                 : "Header parameter name",
+  //               badges: !!permissions?.includes("public")
+  //                 ? []
+  //                 : [{ label: "access_token", color: "error.light" }],
+  //             },
+  //           ],
+  //         },
+  //       },
+  //       {
+  //         title: "Body parameters",
+  //         card: {
+  //           items: [
+  //             {
+  //               title: "category_id",
+  //               badges: [
+  //                 { label: "String" },
+  //                 { label: "Required", color: "error.light" },
+  //               ],
+  //             },
+  //             {
+  //               title: "category_id",
+  //               badges: [
+  //                 { label: "String" },
+  //                 { label: "Required", color: "error.light" },
+  //               ],
+  //             },
+  //           ],
+  //         },
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     method: "PUT",
+  //     description: "Update a project",
+  //     path: "/tables/projects/:id",
+  //     items: [
+  //       {
+  //         title: "Security",
+  //         card: {
+  //           icon: permissions?.includes("public") ? (
+  //             <PublicOutlinedIcon fontSize="small" />
+  //           ) : (
+  //             <LockOutlinedIcon fontSize="small" />
+  //           ),
+  //           title: permissions?.includes("public")
+  //             ? "Public Access"
+  //             : "Access Token",
+  //           action: (
+  //             <>
+  //               <Select
+  //                 multiple={true}
+  //                 fullWidth
+  //                 displayEmpty
+  //                 size="medium"
+  //                 variant="outlined"
+  //                 value={permissions}
+  //                 onChange={(e) => onChangePermissions(e.target.value)}
+  //                 renderValue={(selected) => {
+  //                   if (selected.length === 0) {
+  //                     return <em>Select permissions</em>;
+  //                   }
 
-                    return selected;
-                  }}
-                >
-                  {boolean_options?.map((item) => (
-                    <MenuItem value={item?.value} sx={{ gap: 1 }}>
-                      {item?.icon}
-                      {item?.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </>
-            ),
-            items: [
-              {
-                title: permissions?.includes("public")
-                  ? "Everyone can access the table"
-                  : "Header parameter name",
-                badges: !!permissions?.includes("public")
-                  ? []
-                  : [{ label: "access_token", color: "error.light" }],
-              },
-            ],
-          },
-        },
-        {
-          title: "Body parameters",
-          card: {
-            items: [
-              {
-                title: "category_id",
-                badges: [
-                  { label: "String" },
-                  { label: "Required", color: "error.light" },
-                ],
-              },
-              {
-                title: "category_id",
-                badges: [
-                  { label: "String" },
-                  { label: "Required", color: "error.light" },
-                ],
-              },
-            ],
-          },
-        },
-      ],
-    },
-  ];
+  //                   selected = selected?.map((item, index) => {
+  //                     const part = permissions_options?.find(
+  //                       (part) => part?.value === item
+  //                     );
+
+  //                     return (
+  //                       <>
+  //                         <Stack direction="row" alignItems="center" gap={1}>
+  //                           {index > 0 && ", "}
+  //                           {part?.icon}
+  //                           {part?.label}
+  //                         </Stack>
+  //                       </>
+  //                     );
+  //                   });
+
+  //                   return selected;
+  //                 }}
+  //               >
+  //                 {permissions_options?.map((item) => (
+  //                   <MenuItem value={item?.value} sx={{ gap: 1 }}>
+  //                     {item?.icon}
+  //                     {item?.label}
+  //                   </MenuItem>
+  //                 ))}
+  //               </Select>
+  //             </>
+  //           ),
+  //           items: [
+  //             {
+  //               title: permissions?.includes("public")
+  //                 ? "Everyone can access the table"
+  //                 : "Header parameter name",
+  //               badges: !!permissions?.includes("public")
+  //                 ? []
+  //                 : [{ label: "access_token", color: "error.light" }],
+  //             },
+  //           ],
+  //         },
+  //       },
+  //       {
+  //         title: "Body parameters",
+  //         card: {
+  //           items: [
+  //             {
+  //               title: "category_id",
+  //               badges: [
+  //                 { label: "String" },
+  //                 { label: "Required", color: "error.light" },
+  //               ],
+  //             },
+  //             {
+  //               title: "category_id",
+  //               badges: [
+  //                 { label: "String" },
+  //                 { label: "Required", color: "error.light" },
+  //               ],
+  //             },
+  //           ],
+  //         },
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     method: "DELETE",
+  //     description: "Delete a project",
+  //     path: "/tables/projects/:id",
+  //     items: [
+  //       {
+  //         title: "Security",
+  //         card: {
+  //           icon: permissions?.includes("public") ? (
+  //             <PublicOutlinedIcon fontSize="small" />
+  //           ) : (
+  //             <LockOutlinedIcon fontSize="small" />
+  //           ),
+  //           title: permissions?.includes("public")
+  //             ? "Public Access"
+  //             : "Access Token",
+  //           action: (
+  //             <>
+  //               <Select
+  //                 multiple={true}
+  //                 fullWidth
+  //                 displayEmpty
+  //                 size="medium"
+  //                 variant="outlined"
+  //                 value={permissions}
+  //                 onChange={(e) => onChangePermissions(e.target.value)}
+  //                 renderValue={(selected) => {
+  //                   if (selected.length === 0) {
+  //                     return <em>Select permissions</em>;
+  //                   }
+
+  //                   selected = selected?.map((item, index) => {
+  //                     const part = permissions_options?.find(
+  //                       (part) => part?.value === item
+  //                     );
+
+  //                     return (
+  //                       <>
+  //                         <Stack direction="row" alignItems="center" gap={1}>
+  //                           {index > 0 && ", "}
+  //                           {part?.icon}
+  //                           {part?.label}
+  //                         </Stack>
+  //                       </>
+  //                     );
+  //                   });
+
+  //                   return selected;
+  //                 }}
+  //               >
+  //                 {permissions_options?.map((item) => (
+  //                   <MenuItem value={item?.value} sx={{ gap: 1 }}>
+  //                     {item?.icon}
+  //                     {item?.label}
+  //                   </MenuItem>
+  //                 ))}
+  //               </Select>
+  //             </>
+  //           ),
+  //           items: [
+  //             {
+  //               title: permissions?.includes("public")
+  //                 ? "Everyone can access the table"
+  //                 : "Header parameter name",
+  //               badges: !!permissions?.includes("public")
+  //                 ? []
+  //                 : [{ label: "access_token", color: "error.light" }],
+  //             },
+  //           ],
+  //         },
+  //       },
+  //       {
+  //         title: "Body parameters",
+  //         card: {
+  //           items: [
+  //             {
+  //               title: "category_id",
+  //               badges: [
+  //                 { label: "String" },
+  //                 { label: "Required", color: "error.light" },
+  //               ],
+  //             },
+  //             {
+  //               title: "category_id",
+  //               badges: [
+  //                 { label: "String" },
+  //                 { label: "Required", color: "error.light" },
+  //               ],
+  //             },
+  //           ],
+  //         },
+  //       },
+  //     ],
+  //   },
+  // ];
 
   return (
     <AsideModal
@@ -498,7 +621,8 @@ const TableDocs = ({ open, onClose }) => {
                     placement="top"
                   >
                     <Typography
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         navigator.clipboard.writeText("/tables/projects");
                         setCopied(true);
                       }}
@@ -510,7 +634,7 @@ const TableDocs = ({ open, onClose }) => {
                         },
                       })}
                     >
-                      /tables/projects
+                      {doc?.path}
                     </Typography>
                   </Tooltip>
                   <Stack direction="row" alignItems="center" gap={1} ml="auto">

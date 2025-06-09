@@ -42,16 +42,15 @@ export default async (req, res) => {
       JSON.stringify(formatted_body, null, 2)
     );
 
-    const crud_template = `import getTable from "@nstation/tables/server/api/getTable.js";
-import createTable from "@nstation/tables/server/api/createTableEntry.js";
-import updateTable from "@nstation/tables/server/api/updateTableEntry.js";
-import removeTable from "@nstation/tables/server/api/removeTableEntries.js";
+    const crud_template = `import getTable from "@nstation/tables/server/utils/crud/get.js";
+import upsertTable from "@nstation/tables/server/utils/crud/create.js";
+import deleteTable from "@nstation/tables/server/utils/crud/delete.js";
 
 export default [
   {
     method: "POST",
     path: "/p/tables/${slug}",
-    handler: createTable,
+    handler: upsertTable,
     middlewares: [],
   },
   {
@@ -62,14 +61,14 @@ export default [
   },
   {
     method: "PUT",
-    path: "/p/tables/${slug}/:entry_id",
-    handler: updateTable,
+    path: "/p/tables/${slug}/:id",
+    handler: upsertTable,
     middlewares: [],
   },
   {
     method: "DELETE",
-    path: "/p/tables/${slug}/:entry_id",
-    handler: removeTable,
+    path: "/p/tables/${slug}/:id",
+    handler: deleteTable,
     middlewares: [],
   },
 ];

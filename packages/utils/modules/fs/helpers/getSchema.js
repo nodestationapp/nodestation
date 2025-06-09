@@ -17,6 +17,8 @@ function findSchemasWithTableName(
 
       if (jsonData.tableName === targetTableName) {
         schema = jsonData;
+        schema.id = jsonData.tableName;
+        break;
       }
     } catch (err) {
       console.error(err);
