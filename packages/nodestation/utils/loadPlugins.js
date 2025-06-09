@@ -17,26 +17,19 @@ const loadPlugins = async (router) => {
   const plugins = glob.sync(path.join(rootPath, "plugins", "**", "server"));
   core.push(...plugins);
 
+  const tables = glob.sync(path.join(rootPath, "src", "tables", "*/"));
+
+  core.push(...tables);
+
   const table_schemas = glob.sync(
-    path.join(rootPath, "src", "tables", "*.json"),
+    path.join(rootPath, "src", "tables", "**", "schemas", "*.json"),
     {
       nodir: true,
     }
   );
-
-  const { default: crud } = await import(`@nstation/tables/server/api/crud.js`);
   for await (const schema of table_schemas) {
     let file = fs_sys.readFileSync(schema, "utf-8");
     file = JSON.parse(file);
-
-    let crud_routes = [...crud];
-
-    crud_routes = crud_routes?.map((item) => ({
-      ...item,
-      path: item.path.replace(/:id/g, file?.tableName),
-    }));
-
-    await loadRoute(router, crud_routes);
 
     await upsertTable(file);
   }

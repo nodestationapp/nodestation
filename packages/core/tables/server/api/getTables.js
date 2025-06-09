@@ -6,7 +6,7 @@ import { rootPath } from "@nstation/utils";
 export default async (req, res) => {
   try {
     const tableFiles = glob.sync(
-      path.join(rootPath, "src", "tables", "*.json")
+      path.join(rootPath, "src", "tables", "**", "schemas", "*.json")
     );
 
     let tables = [];

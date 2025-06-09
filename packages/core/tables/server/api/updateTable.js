@@ -31,7 +31,7 @@ export default async (req, res) => {
 
       await fs.updateFile({
         content,
-        path: `/src/tables/${id}.json`,
+        path: `/src/tables/${id}/schemas/${id}.json`,
       });
     }
 

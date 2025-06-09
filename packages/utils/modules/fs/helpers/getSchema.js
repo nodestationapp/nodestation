@@ -55,7 +55,7 @@ const getSchema = (tableName) => {
     );
 
     const table_schemas = glob.sync(
-      path.join(rootPath, "src", "tables", "*.json"),
+      path.join(rootPath, "src", "tables", "**", "schemas", "*.json"),
       {
         nodir: true,
       }
