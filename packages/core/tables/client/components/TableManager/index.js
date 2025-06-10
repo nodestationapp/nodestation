@@ -16,8 +16,8 @@ import tableColumnsRender from "../../utils/tableColumnsRender.js";
 import AddIcon from "@mui/icons-material/Add";
 import Settings from "@mui/icons-material/Settings";
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import TableDocs from "../TableDocs/index.js";
+
+import { useSlot } from "contexts/slots.js";
 
 const TableManagerContent = ({
   hiddenColumns,
@@ -27,6 +27,8 @@ const TableManagerContent = ({
   onEntrySubmit,
   onNewClick,
 }) => {
+  const actionSlot = useSlot("tables.actions");
+
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const queryParams = new URLSearchParams(search);
@@ -50,10 +52,7 @@ const TableManagerContent = ({
     saveTableTransaction,
   } = useTable();
   const [content_editor, setContentEditor] = useState(null);
-  const [tableDocs, setTableDocs] = useState(false);
   const [entriesDeleteModal, setEntriesDeleteModal] = useState(false);
-
-  console.log(table);
 
   let columnsToShow = table?.fields || [];
   columnsToShow = columnsToShow?.filter(
@@ -69,9 +68,7 @@ const TableManagerContent = ({
 
   const action = () => (
     <>
-      <IconButton size="micro" onClick={() => setTableDocs(true)}>
-        <HelpOutlineIcon />
-      </IconButton>
+      {actionSlot.map((item) => item(table))}
       <IconButton
         size="micro"
         sx={(theme) => ({
@@ -153,13 +150,6 @@ const TableManagerContent = ({
           open={content_editor}
           onEntrySubmit={onEntrySubmit}
           onClose={() => setContentEditor(null)}
-        />
-      )}
-      {!!tableDocs && (
-        <TableDocs
-          data={table}
-          open={tableDocs}
-          onClose={() => setTableDocs(false)}
         />
       )}
       <EntriesDeleteModal

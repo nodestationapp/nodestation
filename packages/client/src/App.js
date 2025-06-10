@@ -6,7 +6,6 @@ import { useApp } from "contexts/app";
 
 const App = () => {
   const { menuLinks } = useApp();
-
   const formattedMenuLinks = menuLinks?.filter((item) => !!item?.Component);
 
   return (

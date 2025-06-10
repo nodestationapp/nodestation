@@ -35,7 +35,7 @@ const Toolbar = ({
         />
       )}
 
-      <Stack direction="row" spacing={1} alignItems="center">
+      <Stack direction="row" gap={1} alignItems="center">
         {action?.()}
       </Stack>
     </Stack>

@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import App from "./App";
 import AppProvider from "contexts/app";
+import { SlotProvider } from "contexts/slots";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -18,9 +19,11 @@ root.render(
       <CookiesProvider defaultSetOptions={{ path: "/" }}>
         <AppTheme>
           <CssBaseline />
-          <AppProvider>
-            <App />
-          </AppProvider>
+          <SlotProvider>
+            <AppProvider>
+              <App />
+            </AppProvider>
+          </SlotProvider>
         </AppTheme>
       </CookiesProvider>
     </QueryClientProvider>

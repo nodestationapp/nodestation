@@ -12,7 +12,6 @@ import createTableEntry from "./createTableEntry.js";
 import upsertPreferences from "./upsertPreferences.js";
 import removeTableEntries from "./removeTableEntries.js";
 import getAllTables from "./getAllTables.js";
-import getTableCrud from "./getTableCrud.js";
 
 import auth from "@nstation/auth/utils/authMiddleware.js";
 
@@ -106,10 +105,5 @@ export default [
     path: "/tables/:id",
     handler: removeTable,
     middlewares: [auth(["admin"])],
-  },
-  {
-    method: "GET",
-    path: "/tables/:id/crud",
-    handler: getTableCrud,
   },
 ];
