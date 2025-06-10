@@ -69,5 +69,8 @@
         ]
       }
     }
+  },
+  "dependencies": {
+    "@nstation/docs": "file:plugins/docs"
   }
 }
