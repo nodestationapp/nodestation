@@ -79,6 +79,7 @@ module.exports = (env) => {
         icons: path.resolve(__dirname, "src/icons"),
         contexts: path.resolve(__dirname, "src/contexts"),
         plugins: path.join(process.env.ROOT_DIR, "plugins"),
+        root: process.env.ROOT_DIR,
       },
     },
   };

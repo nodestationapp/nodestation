@@ -1,20 +1,20 @@
 # TEMP
-src/
-build/
+/src/
+/build/
 nodestation-config.js
 
 # DATABASE
-.db/
-.db-test/
+/.db/
+/.db-test/
 
 # ENV
 .env
 
 # UPLOADS
-uploads/
+/uploads/
 
 # PLUGINS
-plugins/
+/plugins/
 # NODE_MODULES
 node_modules/
 package-lock.json

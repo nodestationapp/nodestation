@@ -71,6 +71,6 @@
     }
   },
   "dependencies": {
-    "@nstation/docs": "file:plugins/docs"
+    "@nstation/addon-docs": "file:plugins/docs"
   }
 }
