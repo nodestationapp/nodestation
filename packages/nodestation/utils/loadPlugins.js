@@ -14,8 +14,18 @@ let core = [
 ];
 
 const loadPlugins = async (router) => {
-  const plugins = glob.sync(path.join(rootPath, "plugins", "**", "server"));
-  core.push(...plugins);
+  let pluginsConfig = fs_sys.readFileSync(
+    path.join(rootPath, "nodestation.config.js"),
+    "utf-8"
+  );
+
+  const match = pluginsConfig.match(/plugins\s*:\s*\[([^\]]*)\]/)?.[1];
+
+  const plugins = match
+    .split(",")
+    .map((str) => str.trim().replace(/^["']|["']$/g, ""));
+
+  core.push(...plugins?.map((plugin) => `${plugin}/server`));
 
   const tables = glob.sync(path.join(rootPath, "src", "tables", "*/"));
 

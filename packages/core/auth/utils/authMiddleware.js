@@ -3,7 +3,7 @@ import passport from "passport";
 const authMiddleware = (roles) => {
   return (req, res, next) => {
     passport.authenticate("jwt", { session: false }, async (err, user) => {
-      if (roles?.length > 0) {
+      if (roles?.length > 0 && !roles?.includes("public")) {
         if (roles?.includes(user?.type)) {
           req.user = user;
           return next();

@@ -18,6 +18,7 @@ const AsideModal = ({
   children,
   onClose,
   onSubmit,
+  submitDisabled = false,
   submitLoading = false,
   submitLabel = "Save",
   cancelLabel = "Cancel",
@@ -79,6 +80,7 @@ const AsideModal = ({
         {!!onSubmit && (
           <Button
             loading={submitLoading}
+            disabled={submitDisabled}
             onClick={(e) => onSubmitHandler(e, "submit")}
             variant="contained"
           >

@@ -30,15 +30,20 @@
     "supertest": "^7.0.0",
     "vitest": "^2.1.8"
   },
+  "overrides": {
+    "glob": "^11.0.0"
+  },
   "release-it": {
     "git": {
       "commitMessage": "chore: release v${version}",
       "tagName": "v${version}",
       "requireCleanWorkingDir": false
     },
-    "npm": false,
+    "npm": {
+      "publish": true
+    },
     "github": {
-      "release": true
+      "release": false
     },
     "plugins": {
       "@release-it/conventional-changelog": {
@@ -71,6 +76,6 @@
     }
   },
   "dependencies": {
-    "@nstation/addon-docs": "file:plugins/docs"
+    "@nstation/addon-documentation": "^0.0.2"
   }
 }

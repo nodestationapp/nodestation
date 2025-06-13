@@ -6,39 +6,19 @@ const core = [
   import("@nstation/emails/client/index.js"),
 ];
 
+import pluginLoader from "@nstation/config/plugin-imports.js";
+
 export default async (app) => {
   try {
-    // const context = require.context("plugins", true, /client\/index\.js$/);
-
-    const configContext = require.context(
-      "root",
-      false,
-      /nodestation-config\.js$/
+    const clientPlugins = pluginLoader?.plugins?.map(
+      (plugin) => plugin?.client
     );
-    const configModule =
-      configContext.keys().length > 0
-        ? configContext(configContext.keys()[0])
-        : null;
 
-    const pluginsFromConfig = configModule.default.plugins || {};
+    const allAddons = [...core, ...clientPlugins];
 
-    console.log(pluginsFromConfig);
-
-    for await (const item of core) {
+    for await (const item of allAddons) {
       const plugin = await item;
       plugin.default.register(app);
-    }
-
-    // for await (const key of context.keys()) {
-    //   const plugin = await context(key);
-    //   plugin.default.register(app);
-    //   core.push(plugin);
-    // }
-
-    for await (const pkgName of Object.keys(pluginsFromConfig)) {
-      const plugin = await pluginsFromConfig[pkgName];
-      plugin.default.register(app);
-      core.push(plugin);
     }
 
     return core;
