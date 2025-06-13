@@ -18,10 +18,15 @@ const plugins = match
 const pluginImportCode = `
 export default {
   plugins: [${plugins
-    .map(
-      (name) =>
-        ` {client: import("${name}/client/index.js"), server: "${name}/server"}`
-    )
+    .map((plugin) => {
+      if (plugin.startsWith("./")) {
+        plugin = plugin.replace("./", `${process.env.ROOT_DIR}/`);
+      }
+
+      const client = path.join(plugin, "client/index.js");
+
+      return ` import("${client}")`;
+    })
     .join(",\n")}],
 };`;
 

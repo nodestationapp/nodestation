@@ -23,7 +23,14 @@ const loadPlugins = async (router) => {
 
   const plugins = match
     .split(",")
-    .map((str) => str.trim().replace(/^["']|["']$/g, ""));
+    ?.map((str) => str.trim().replace(/^["']|["']$/g, ""))
+    ?.map((plugin) => {
+      if (plugin.startsWith("./")) {
+        plugin = plugin.replace("./", `${rootPath}/`);
+      }
+
+      return plugin;
+    });
 
   core.push(...plugins?.map((plugin) => `${plugin}/server`));
 
