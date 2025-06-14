@@ -39,11 +39,9 @@
       "tagName": "v${version}",
       "requireCleanWorkingDir": false
     },
-    "npm": {
-      "publish": true
-    },
+    "npm": false,
     "github": {
-      "release": false
+      "release": true
     },
     "plugins": {
       "@release-it/conventional-changelog": {
