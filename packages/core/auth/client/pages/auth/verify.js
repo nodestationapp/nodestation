@@ -37,6 +37,7 @@ const Verify = () => {
     <Box
       sx={{
         height: "100vh",
+        width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

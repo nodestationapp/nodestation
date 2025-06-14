@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 const mailgun = async (data) => {
-  const settings = JSON.parse(data?.settings?.mailgun);
+  const settings = data?.settings?.mailgun;
 
   try {
     const config = {

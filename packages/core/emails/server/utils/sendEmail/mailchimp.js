@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 const mailchimp = async (data) => {
-  const settings = JSON.parse(data?.settings?.mailchimp);
+  const settings = data?.settings?.mailchimp;
 
   try {
     const user = settings?.email?.split("@")?.[0];

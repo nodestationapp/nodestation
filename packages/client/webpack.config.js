@@ -16,8 +16,6 @@ const plugins = match
   .map((str) => str.trim().replace(/^["']|["']$/g, ""))
   .filter((item) => item !== "");
 
-console.log(plugins);
-
 const pluginImportCode = `
 export default {
   plugins: [${plugins

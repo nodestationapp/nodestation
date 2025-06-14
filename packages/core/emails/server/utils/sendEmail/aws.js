@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 const aws = async (data) => {
-  const settings = JSON.parse(data?.settings?.aws);
+  const settings = data?.settings?.aws;
 
   try {
     const config = {

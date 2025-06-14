@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const elastic = async (data) => {
-  const settings = JSON.parse(data?.settings?.elastic);
+  const settings = data?.settings?.elastic;
 
   const url = "https://api.elasticemail.com/v4/emails/transactional";
 
