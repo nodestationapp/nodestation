@@ -30,7 +30,8 @@ const loadPlugins = async (router) => {
       }
 
       return plugin;
-    });
+    })
+    ?.filter((item) => item !== "");
 
   core.push(...plugins?.map((plugin) => `${plugin}/server`));
 

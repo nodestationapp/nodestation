@@ -13,7 +13,10 @@ const match = config.match(/plugins\s*:\s*\[([^\]]*)\]/)?.[1];
 
 const plugins = match
   .split(",")
-  .map((str) => str.trim().replace(/^["']|["']$/g, ""));
+  .map((str) => str.trim().replace(/^["']|["']$/g, ""))
+  .filter((item) => item !== "");
+
+console.log(plugins);
 
 const pluginImportCode = `
 export default {
@@ -31,10 +34,7 @@ export default {
 };`;
 
 const virtualModules = new VirtualModulesPlugin({
-  [`${path.join(
-    process.env.ROOT_DIR,
-    "node_modules/@nstation/config/plugin-imports.js"
-  )}`]: pluginImportCode,
+  "node_modules/@nstation/config/plugin-imports.js": pluginImportCode,
 });
 
 // const BundleAnalyzerPlugin =

@@ -114,6 +114,14 @@ async function installNodestation(projectPath) {
         recursive: true,
       }
     );
+
+    await fs_promise.cp(
+      path.join(__dirname, "/templates/nodestation.config.js"),
+      path.join(projectPath, "nodestation.config.js"),
+      {
+        recursive: true,
+      }
+    );
     await fs_promise.writeFile(path.join(projectPath, ".env"), envString);
     await fs_promise.writeFile(
       path.join(projectPath, "package.json"),

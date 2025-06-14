@@ -10,16 +10,6 @@ import pluginLoader from "@nstation/config/plugin-imports.js";
 
 export default async (app) => {
   try {
-    // const clientPlugins = pluginLoader?.plugins?.map((plugin) => {
-    //   const client = plugin?.client;
-
-    //   if (plugin.startsWith("./")) {
-    //     plugin = plugin.replace("./", `${rootPath}/`);
-    //   }
-
-    //   return plugin;
-    // });
-
     const allAddons = [...core, ...pluginLoader?.plugins];
 
     for await (const item of allAddons) {
