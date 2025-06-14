@@ -48,7 +48,6 @@ const SelectInput = ({ locked }) => {
       </Stack>
       <TextField
         fullWidth
-        multiline
         name="default"
         label="Default"
         variant="standard"

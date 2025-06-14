@@ -35,6 +35,7 @@ const UserInput = ({ label, slug, value, onChange }) => {
       onClose={handleClose}
       getOptionLabel={(option) => (
         <UserProfile
+          size={30}
           data={{
             id: option?.id,
             first_name: option?.first_name,
@@ -58,6 +59,8 @@ const UserInput = ({ label, slug, value, onChange }) => {
           {...params}
           label={label}
           name={slug}
+          variant="standard"
+          size="medium"
           slotProps={{
             input: {
               ...params.InputProps,
@@ -75,6 +78,7 @@ const UserInput = ({ label, slug, value, onChange }) => {
       )}
       renderValue={(tagValue) => (
         <UserProfile
+          size={30}
           data={{
             id: tagValue?.id,
             first_name: tagValue?.first_name,

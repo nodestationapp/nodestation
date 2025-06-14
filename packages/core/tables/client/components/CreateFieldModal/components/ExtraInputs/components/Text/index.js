@@ -31,14 +31,13 @@ const Text = ({ locked }) => {
 
   return (
     <>
-      <FormControl fullWidth>
+      <FormControl fullWidth variant="standard">
         <InputLabel id="variant-select-label">Variant</InputLabel>
         <Select
           key={values?.variant}
           name="variant"
           label="Variant"
           disabled={locked}
-          variant="outlined"
           labelId="variant-select-label"
           value={values.variant}
           onChange={(e) => setFieldValue("variant", e.target.value)}
@@ -53,10 +52,9 @@ const Text = ({ locked }) => {
       </FormControl>
       <TextField
         fullWidth
-        multiline
         name="default"
         label="Default"
-        variant="outlined"
+        variant="standard"
         value={values.default}
         disabled={locked}
         onBlur={handleBlur}

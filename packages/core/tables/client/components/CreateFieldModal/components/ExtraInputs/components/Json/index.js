@@ -18,10 +18,9 @@ const Json = ({ locked }) => {
     <>
       <TextField
         fullWidth
-        multiline
         name="default"
         label="Default"
-        // variant="outlined"
+        variant="standard"
         InputLabelProps={{ shrink: true }}
         value={values.default}
         placeholder="Enter JSON"

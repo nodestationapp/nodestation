@@ -2,38 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const WebpackBar = require("webpackbar");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const VirtualModulesPlugin = require("webpack-virtual-modules");
-const fs = require("fs");
-const config = fs.readFileSync(
-  `${process.env.ROOT_DIR}/nodestation.config.js`,
-  "utf8"
-);
-
-const match = config.match(/plugins\s*:\s*\[([^\]]*)\]/)?.[1];
-
-const plugins = match
-  .split(",")
-  .map((str) => str.trim().replace(/^["']|["']$/g, ""))
-  .filter((item) => item !== "");
-
-const pluginImportCode = `
-export default {
-  plugins: [${plugins
-    .map((plugin) => {
-      if (plugin.startsWith("./")) {
-        plugin = plugin.replace("./", `${process.env.ROOT_DIR}/`);
-      }
-
-      const client = path.join(plugin, "client/index.js");
-
-      return ` import("${client}")`;
-    })
-    .join(",\n")}],
-};`;
-
-const virtualModules = new VirtualModulesPlugin({
-  "node_modules/@nstation/config/plugin-imports.js": pluginImportCode,
-});
+const webpackConfigImports = require("./webpackConfigImports.js");
 
 // const BundleAnalyzerPlugin =
 //   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
@@ -91,7 +60,7 @@ module.exports = (env) => {
       ],
     },
     plugins: [
-      virtualModules,
+      webpackConfigImports(),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "public/index.html"),
         favicon: path.resolve(__dirname, "public/favicon.ico"),

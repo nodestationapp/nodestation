@@ -29,10 +29,9 @@ const Numeric = ({ locked }) => {
     <>
       <TextField
         fullWidth
-        multiline
         name="default"
         label="Default"
-        variant="outlined"
+        variant="standard"
         value={values.default}
         disabled={locked}
         onBlur={handleBlur}

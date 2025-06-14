@@ -19,14 +19,13 @@ const Date = ({ locked }) => {
 
   return (
     <>
-      <FormControl fullWidth>
+      <FormControl fullWidth variant="standard">
         <InputLabel id="default-select-label">Default</InputLabel>
         <Select
           key={values?.default}
           name="default"
           label="Default"
           disabled={locked}
-          variant="outlined"
           labelId="default-select-label"
           value={values.default}
           onChange={(e) => setFieldValue("default", e.target.value)}
