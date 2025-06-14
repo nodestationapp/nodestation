@@ -31,7 +31,10 @@ export default {
 };`;
 
 const virtualModules = new VirtualModulesPlugin({
-  "node_modules/@nstation/config/plugin-imports.js": pluginImportCode,
+  [`${path.join(
+    process.env.ROOT_DIR,
+    "node_modules/@nstation/config/plugin-imports.js"
+  )}`]: pluginImportCode,
 });
 
 // const BundleAnalyzerPlugin =
