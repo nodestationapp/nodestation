@@ -19,7 +19,7 @@ const RegisterContent = () => {
 
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      await api.post("/auth/register", values);
+      await api.post("/admin-api/auth/register", values);
       setIsAdmin(true);
       navigate("/login");
     } catch (err) {

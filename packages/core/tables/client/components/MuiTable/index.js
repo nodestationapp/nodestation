@@ -15,7 +15,6 @@ const MuiTable = ({
   views,
   action,
   pagination,
-  preferences,
   saveTransaction,
   selectActions,
   onRowClick,

@@ -24,12 +24,12 @@ const TablesList = () => {
 
   const { data: tables, refetch: tablesRefetch } = useQuery({
     queryKey: ["tables"],
-    queryFn: () => api.get("/tables"),
+    queryFn: () => api.get("/admin-api/tables"),
   });
 
   const onSubmit = async (values) => {
     try {
-      const create = await api.post("/tables", {
+      const create = await api.post("/admin-api/tables", {
         name: values?.name,
       });
 

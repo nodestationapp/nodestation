@@ -25,7 +25,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     (async function () {
-      const { is_admin } = await api.get("/auth/check-admin");
+      const { is_admin } = await api.get("/admin-api/auth/check-admin");
       setIsAdmin(is_admin);
 
       await getUserData(cookies?.access_token);
@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
   const getUserData = async (access_token) => {
     try {
       if (!!access_token) {
-        const me = await api.get(`/auth/me`, {
+        const me = await api.get(`/admin-api/auth/me`, {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
@@ -70,7 +70,7 @@ const AuthProvider = ({ children }) => {
   const userUpdate = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.put("/auth/me", { ...values });
+        await api.put("/admin-api/auth/me", { ...values });
 
         getUserData(cookies?.access_token);
         resolve();
@@ -83,7 +83,7 @@ const AuthProvider = ({ children }) => {
   const login = ({ email, password }) =>
     new Promise(async (resolve, reject) => {
       try {
-        const data = await api.post(`/auth/login`, {
+        const data = await api.post(`/admin-api/auth/login`, {
           email,
           password,
         });

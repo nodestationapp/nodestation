@@ -9,7 +9,7 @@ const TablesContext = createContext();
 const TablesProvider = ({ children }) => {
   const { isLoading: loading, data: tables } = useQuery({
     queryKey: ["client_tables"],
-    queryFn: () => api.get("/tables/all"),
+    queryFn: () => api.get("/admin-api/tables/all"),
   });
 
   const {
@@ -18,7 +18,7 @@ const TablesProvider = ({ children }) => {
     refetch: refetchPreferences,
   } = useQuery({
     queryKey: ["client_tables_preferences"],
-    queryFn: () => api.get("/preferences"),
+    queryFn: () => api.get("/admin-api/preferences"),
   });
 
   const value = useMemo(() => {

@@ -9,31 +9,31 @@ import authMiddleware from "@nstation/auth/utils/authMiddleware.js";
 export default [
   {
     method: "GET",
-    path: "/emails",
+    path: "/admin-api/emails",
     handler: getEmails,
     middlewares: [authMiddleware(["admin"])],
   },
   {
     method: "POST",
-    path: "/emails",
+    path: "/admin-api/emails",
     handler: addEmail,
     middlewares: [authMiddleware(["admin"])],
   },
   {
     method: "DELETE",
-    path: "/emails/:id",
+    path: "/admin-api/emails/:id",
     handler: deleteEmail,
     middlewares: [authMiddleware(["admin"])],
   },
   {
     method: "GET",
-    path: "/emails/settings",
+    path: "/admin-api/emails/settings",
     handler: getEmailSettings,
     middlewares: [authMiddleware(["admin"])],
   },
   {
     method: "PUT",
-    path: "/emails/settings",
+    path: "/admin-api/emails/settings",
     handler: updateEmailSettings,
     middlewares: [authMiddleware(["admin"])],
   },

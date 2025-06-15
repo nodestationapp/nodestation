@@ -75,7 +75,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
     queryKey: ["tables", currentView, page, sort, filters],
     queryFn: () =>
       api.get(
-        `/tables/${id}?${queryString.stringify({
+        `/admin-api/tables/${id}?${queryString.stringify({
           view,
           page: parseInt(page || 0),
           sort: !!sort?.[0]
@@ -99,7 +99,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
           }
         });
 
-        await api.put(`/tables/${id}?extendable=${extendable}`, temp);
+        await api.put(`/admin-api/tables/${id}?extendable=${extendable}`, temp);
 
         tableRefetch();
 
@@ -112,7 +112,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
   const deleteTable = () =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.delete(`/tables/${id}`);
+        await api.delete(`/admin-api/tables/${id}`);
 
         resolve();
       } catch (err) {
@@ -123,7 +123,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
   const addTableEntry = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.post(`/tables/${id}/entry`, values);
+        await api.post(`/admin-api/tables/${id}/entry`, values);
 
         tableRefetch();
 
@@ -136,7 +136,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
   const updateTableEntry = (entry_id, values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.put(`/tables/${id}/entry/${entry_id}`, values, {
+        await api.put(`/admin-api/tables/${id}/entry/${entry_id}`, values, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -153,7 +153,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
   const deleteTableEntries = (entry_id) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.delete(`/tables/${id}/entry/${entry_id}`);
+        await api.delete(`/admin-api/tables/${id}/entry/${entry_id}`);
 
         tableRefetch();
 
@@ -164,7 +164,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
     });
 
   const saveTableTransaction = (values) => {
-    api.post("/preferences", {
+    api.post("/admin-api/preferences", {
       view,
       table_id: id,
       ...values,

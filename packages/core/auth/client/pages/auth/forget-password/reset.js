@@ -24,7 +24,7 @@ const ForgetPasswordContent = () => {
   useEffect(() => {
     (async () => {
       try {
-        await api.get(`/auth/reset-password?token=${token}`);
+        await api.get(`/admin-api/auth/reset-password?token=${token}`);
         setLoading(false);
       } catch (err) {
         navigate("/");
@@ -35,7 +35,7 @@ const ForgetPasswordContent = () => {
 
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      await api.post("/auth/reset-password/confirm", {
+      await api.post("/admin-api/auth/reset-password/confirm", {
         ...values,
         token,
       });

@@ -9,7 +9,7 @@ import { api } from "@nstation/design-system/utils";
 const ChangePasswordForm = () => {
   const onSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {
     try {
-      await api.put("/auth/change-password", values);
+      await api.put("/admin-api/auth/change-password", values);
       resetForm({ current_password: "", new_password: "", new_password2: "" });
     } catch (err) {
       setErrors(err?.response?.data?.errors);

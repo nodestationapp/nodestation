@@ -12,7 +12,7 @@ const RelationInput = ({ label, slug, value, onChange, relation }) => {
     setOpen(true);
 
     setLoading(true);
-    const data = await api.get(`/tables/${relation?.table}?page=0`);
+    const data = await api.get(`/admin-api/tables/${relation?.table}?page=0`);
     setLoading(false);
 
     setOptions([...data?.entries]);

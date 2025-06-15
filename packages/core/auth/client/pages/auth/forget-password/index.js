@@ -16,7 +16,7 @@ const ForgetPasswordContent = () => {
 
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      await api.post("/auth/reset-password", values);
+      await api.post("/admin-api/auth/reset-password", values);
       setResetSent(true);
     } catch (err) {
       setErrors(err?.response?.data?.errors);

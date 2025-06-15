@@ -32,7 +32,7 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink, loading }) => {
       let create;
 
       if (!!!values?.id) {
-        create = await api.post("/preferences/create", {
+        create = await api.post("/admin-api/preferences/create", {
           name: values?.name,
           table: table?.id,
           view: table?.view,
@@ -42,7 +42,7 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink, loading }) => {
 
         navigate(`${pathname}?v=${create?.id}`);
       } else {
-        await api.put(`/preferences/${values?.id}`, {
+        await api.put(`/admin-api/preferences/${values?.id}`, {
           name: values?.name,
         });
 
@@ -70,7 +70,7 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink, loading }) => {
       const lastView = table?.views?.[table?.views?.length - 2]?.id;
 
       setDeleteLoading(true);
-      await api.delete(`/preferences/${table?.view}`);
+      await api.delete(`/admin-api/preferences/${table?.view}`);
 
       setAnchorEl(null);
       queryClient.refetchQueries("tables");
@@ -202,7 +202,7 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink, loading }) => {
               >
                 {!!formik?.values?.id ? "Update" : "Create"}
               </Button>
-              {!!formik?.values?.id && table?.data?.views?.length > 1 && (
+              {!!formik?.values?.id && table?.views?.length > 1 && (
                 <IconButton
                   size="micro"
                   onClick={onDeleteView}

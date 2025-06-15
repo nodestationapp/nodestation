@@ -49,25 +49,25 @@ import deleteTable from "@nstation/tables/server/utils/crud/delete.js";
 export default [
   {
     method: "POST",
-    path: "/p/tables/${slug}",
+    path: "/api/tables/${slug}",
     handler: upsertTable,
     middlewares: [],
   },
   {
     method: "GET",
-    path: "/p/tables/${slug}",
+    path: "/api/tables/${slug}",
     handler: getTable,
     middlewares: [],
   },
   {
     method: "PUT",
-    path: "/p/tables/${slug}/:id",
+    path: "/api/tables/${slug}/:id",
     handler: upsertTable,
     middlewares: [],
   },
   {
     method: "DELETE",
-    path: "/p/tables/${slug}/:id",
+    path: "/api/tables/${slug}/:id",
     handler: deleteTable,
     middlewares: [],
   },

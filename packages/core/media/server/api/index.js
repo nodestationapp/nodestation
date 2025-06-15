@@ -10,31 +10,31 @@ import uploader from "../utils/uploader/index.js";
 export default [
   {
     method: "GET",
-    path: "/media",
+    path: "/admin-api/media",
     handler: getMedia,
     middlewares: [authMiddleware(["admin"])],
   },
   {
     method: "POST",
-    path: "/media",
+    path: "/admin-api/media",
     handler: addMedia,
     middlewares: [authMiddleware(["admin"]), uploader],
   },
   {
     method: "DELETE",
-    path: "/media/:id",
+    path: "/admin-api/media/:id",
     handler: deleteMedia,
     middlewares: [authMiddleware(["admin"])],
   },
   {
     method: "PUT",
-    path: "/media/settings",
+    path: "/admin-api/media/settings",
     handler: updateMediaSettings,
     middlewares: [authMiddleware(["admin"])],
   },
   {
     method: "GET",
-    path: "/media/settings",
+    path: "/admin-api/media/settings",
     handler: getMediaSettings,
     middlewares: [authMiddleware(["admin"])],
   },

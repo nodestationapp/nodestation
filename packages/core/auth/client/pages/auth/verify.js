@@ -20,7 +20,7 @@ const Verify = () => {
     const token = query.get("token");
     (async () => {
       try {
-        await api.post(`/auth/activation`, {
+        await api.post(`/admin-api/auth/activation`, {
           token,
         });
         setEmailConfirmed(true);

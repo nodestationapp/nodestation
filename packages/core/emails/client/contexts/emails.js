@@ -14,7 +14,7 @@ const EmailsProvider = ({ children }) => {
     refetch: refetchEmails,
   } = useQuery({
     queryKey: ["emails"],
-    queryFn: () => api.get("/emails"),
+    queryFn: () => api.get("/admin-api/emails"),
   });
 
   const {
@@ -23,13 +23,13 @@ const EmailsProvider = ({ children }) => {
     refetch: refetchEmailSettings,
   } = useQuery({
     queryKey: ["email_settings"],
-    queryFn: () => api.get("/emails/settings"),
+    queryFn: () => api.get("/admin-api/emails/settings"),
   });
 
   const addEmail = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.post(`/emails`, { ...values });
+        await api.post(`/admin-api/emails`, { ...values });
 
         refetchEmails();
 
@@ -42,7 +42,7 @@ const EmailsProvider = ({ children }) => {
   const deleteEmail = (id) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.delete(`/emails/${id}`);
+        await api.delete(`/admin-api/emails/${id}`);
 
         refetchEmails();
 
@@ -55,7 +55,7 @@ const EmailsProvider = ({ children }) => {
   const updateEmailSettings = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.put(`/emails/settings`, { ...values });
+        await api.put(`/admin-api/emails/settings`, { ...values });
 
         refetchEmailSettings();
 

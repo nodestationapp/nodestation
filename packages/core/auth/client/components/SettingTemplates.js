@@ -15,7 +15,7 @@ const SettingTemplates = () => {
 
   const { data: emails } = useQuery({
     queryKey: ["emails"],
-    queryFn: () => api.get("/emails"),
+    queryFn: () => api.get("/admin-api/emails"),
   });
 
   const formatted_emails = emails?.map((item) => ({
@@ -25,7 +25,7 @@ const SettingTemplates = () => {
 
   const onSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      await api.put("/auth/templates", values);
+      await api.put("/admin-api/auth/templates", values);
       resetForm({ values });
     } catch (err) {
       console.error(err);

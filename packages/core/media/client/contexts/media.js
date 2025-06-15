@@ -16,7 +16,7 @@ const MediaProvider = ({ children }) => {
     refetch: refetchMedia,
   } = useQuery({
     queryKey: ["media"],
-    queryFn: () => api.get("/media"),
+    queryFn: () => api.get("/admin-api/media"),
   });
 
   const {
@@ -25,7 +25,7 @@ const MediaProvider = ({ children }) => {
     refetch: refetchMediaSettings,
   } = useQuery({
     queryKey: ["media_settings"],
-    queryFn: () => api.get("/media/settings"),
+    queryFn: () => api.get("/admin-api/media/settings"),
   });
 
   const uploadFiles = (values) =>
@@ -65,7 +65,7 @@ const MediaProvider = ({ children }) => {
   const updateMediaSettings = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.put(`/media/settings`, { ...values });
+        await api.put(`/admin-api/media/settings`, { ...values });
 
         refetchMediaSettings();
 
@@ -77,7 +77,7 @@ const MediaProvider = ({ children }) => {
 
   const deleteFile = async (id) => {
     try {
-      await api.delete(`/media/${id}`);
+      await api.delete(`/admin-api/media/${id}`);
 
       refetchMedia();
       onClose();
@@ -93,7 +93,7 @@ const MediaProvider = ({ children }) => {
   };
 
   const saveTableTransaction = async (values) => {
-    await api.post("/preferences", {
+    await api.post("/admin-api/preferences", {
       table_id: "nodestation_media",
       view: null,
       ...values,

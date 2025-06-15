@@ -7,10 +7,22 @@ import { rootPath } from "@nstation/utils";
 import loadRoute from "./loadRoute.js";
 
 let core = [
-  "@nstation/auth/server",
-  "@nstation/media/server",
-  "@nstation/tables/server",
-  "@nstation/emails/server",
+  {
+    name: "@nstation/auth/server",
+    type: "system",
+  },
+  {
+    name: "@nstation/media/server",
+    type: "system",
+  },
+  {
+    name: "@nstation/tables/server",
+    type: "system",
+  },
+  {
+    name: "@nstation/emails/server",
+    type: "system",
+  },
 ];
 
 const loadPlugins = async (router) => {
@@ -33,11 +45,18 @@ const loadPlugins = async (router) => {
     })
     ?.filter((item) => item !== "");
 
-  core.push(...plugins?.map((plugin) => `${plugin}/server`));
-
   const tables = glob.sync(path.join(rootPath, "src", "tables", "*/"));
 
-  core.push(...tables);
+  core.push(
+    ...plugins?.map((plugin) => ({
+      name: `${plugin}/server`,
+      type: "plugin",
+    })),
+    ...tables?.map((table) => ({
+      name: table,
+      type: "plugin",
+    }))
+  );
 
   const table_schemas = glob.sync(
     path.join(rootPath, "src", "tables", "**", "schemas", "*.json"),
@@ -54,11 +73,11 @@ const loadPlugins = async (router) => {
 
   for await (const plugin of core) {
     //ROUTES
-    const { default: routes } = await import(`${plugin}/api/index.js`);
-    await loadRoute(router, routes);
+    const { default: routes } = await import(`${plugin?.name}/api/index.js`);
+    await loadRoute(router, routes, plugin?.type);
 
     //SCHEMAS
-    let resolved = import.meta.resolve(plugin);
+    let resolved = import.meta.resolve(plugin?.name);
     resolved = resolved.replace(/^file:\/*/, "/");
 
     const schemas = glob.sync(path.join(resolved, "schemas", "*.json"), {

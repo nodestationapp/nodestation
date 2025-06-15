@@ -19,7 +19,7 @@ const PhotoInput = () => {
       const formData = new FormData();
       formData.append("photo", photo);
 
-      await api.put(`/auth/me`, formData, {
+      await api.put(`/admin-api/auth/me`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

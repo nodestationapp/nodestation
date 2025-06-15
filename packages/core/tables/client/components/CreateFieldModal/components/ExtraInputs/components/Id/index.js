@@ -28,7 +28,7 @@ const Id = ({ locked }) => {
 
   const { data: tables, isLoading: tablesLoading } = useQuery({
     queryKey: ["tables"],
-    queryFn: () => api.get("/tables"),
+    queryFn: () => api.get("/admin-api/tables"),
     enabled: !!open,
   });
 

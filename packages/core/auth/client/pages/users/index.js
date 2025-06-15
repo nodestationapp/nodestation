@@ -5,7 +5,7 @@ const Users = () => {
   const onEntrySubmit = async (entry) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.post("/p/auth/user", entry);
+        await api.post("/admin-api/auth/user", entry);
 
         resolve();
       } catch (err) {

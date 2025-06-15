@@ -14,7 +14,9 @@ const UserInput = ({ label, slug, value, onChange }) => {
     setOpen(true);
 
     setLoading(true);
-    const { entries } = await api.get("/tables/nodestation_users?page=0");
+    const { entries } = await api.get(
+      "/admin-api/tables/nodestation_users?page=0"
+    );
     setLoading(false);
 
     setOptions([...entries]);
