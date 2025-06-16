@@ -24,6 +24,7 @@ const MuiTable = ({
   setSort,
   filters,
   setFilters,
+  hideToolbar,
   columnSizes,
   setColumnSizes,
   columnVisibility,
@@ -100,18 +101,20 @@ const MuiTable = ({
         flex: 1,
       }}
     >
-      <Toolbar
-        tabs={tabs}
-        action={action}
-        loading={loading}
-        noAddTab={noAddTab}
-        selectedRows={selectedRows}
-        selectActions={selectActions}
-      />
+      {!hideToolbar && (
+        <Toolbar
+          tabs={tabs}
+          action={action}
+          loading={loading}
+          noAddTab={noAddTab}
+          selectedRows={selectedRows}
+          selectActions={selectActions}
+        />
+      )}
       <Box
         sx={{
           width: "100%",
-          overflowX: "auto", // WŁĄCZA poziomy scroll wewnątrz, NIE strony
+          overflowX: "auto",
         }}
       >
         <DataGrid

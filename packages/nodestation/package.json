@@ -41,6 +41,7 @@
     "@nstation/tables": "^1.19.0",
     "@nstation/utils": "^1.19.0",
     "@nstation/dashboard": "^1.19.0",
+    "@nstation/logger": "^1.19.0",
     "axios": "^1.6.1",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",

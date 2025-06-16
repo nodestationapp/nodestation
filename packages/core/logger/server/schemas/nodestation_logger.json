@@ -1,0 +1,68 @@
+{
+  "tableName": "nodestation_logger",
+  "fields": [
+    {
+      "name": "ID",
+      "slug": "id",
+      "type": "id",
+      "primary_key": true,
+      "default": "generate_id()"
+    },
+    {
+      "name": "Level",
+      "slug": "level",
+      "type": "text"
+    },
+    {
+      "name": "Method",
+      "slug": "method",
+      "type": "text"
+    },
+    {
+      "name": "Url",
+      "slug": "url",
+      "type": "text"
+    },
+    {
+      "name": "Status",
+      "slug": "status",
+      "type": "text"
+    },
+    {
+      "name": "Res",
+      "slug": "res",
+      "type": "text"
+    },
+    {
+      "name": "IP",
+      "slug": "ip",
+      "type": "text"
+    },
+    {
+      "name": "Headers",
+      "slug": "headers",
+      "type": "json"
+    },
+    {
+      "name": "Body",
+      "slug": "body",
+      "type": "json"
+    },
+    {
+      "name": "Is read",
+      "slug": "is_read",
+      "type": "numeric"
+    },
+    {
+      "name": "Response time",
+      "slug": "response_time",
+      "type": "text"
+    },
+    {
+      "name": "Created at",
+      "slug": "created_at",
+      "type": "date",
+      "default": "now()"
+    }
+  ]
+}

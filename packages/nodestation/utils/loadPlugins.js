@@ -23,6 +23,10 @@ let core = [
     name: "@nstation/emails/server",
     type: "system",
   },
+  {
+    name: "@nstation/logger/server",
+    type: "system",
+  },
 ];
 
 const loadPlugins = async (router) => {

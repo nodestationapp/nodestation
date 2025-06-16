@@ -4,6 +4,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import loadPlugins from "./loadPlugins.js";
 import { rootPath, cors } from "@nstation/utils";
+import { logger } from "@nstation/logger";
 
 const clientPath = path.join(rootPath, "build");
 
@@ -21,7 +22,7 @@ function createApp() {
     app.express.set("trust proxy", "127.0.0.1");
 
     app.express.use(cors);
-    // app.express.use(logger);
+    app.express.use(logger);
     app.express.use(bodyParser.urlencoded({ extended: true }));
     app.express.use((req, res, next) => {
       app.router(req, res, next);

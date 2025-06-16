@@ -1,21 +1,18 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
-import NavbarBreadcrumbs from "./NavbarBreadcrumbs.js";
-import { ColorModeDropdown } from "@nstation/design-system";
-import { IconButton } from "@mui/material";
 
-import MenuIcon from "@mui/icons-material/Menu";
+import { useSlot } from "contexts/slots.js";
 
-// import Search from "./Search.js";
+const Bottom = () => {
+  const actionSlot = useSlot("footer.main");
 
-const Bottom = ({ onSidebarOpen }) => {
   return (
     <Box
       sx={(theme) => ({
-        width: "100%",
         position: "fixed",
         left: 254,
+        right: 0,
         bottom: 0,
         height: 35,
         zIndex: 1000,
@@ -33,10 +30,12 @@ const Bottom = ({ onSidebarOpen }) => {
           width: "100%",
           height: "100%",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "flex-end",
         }}
         spacing={2}
-      ></Stack>
+      >
+        {actionSlot.map((item) => item())}
+      </Stack>
     </Box>
   );
 };

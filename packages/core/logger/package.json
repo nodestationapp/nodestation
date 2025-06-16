@@ -1,0 +1,30 @@
+{
+  "name": "@nstation/logger",
+  "version": "1.19.0",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "description": "Nodestation's logger",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodestationapp/nodestation.git"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0",
+    "react-router-dom": ">=6.23.0"
+  },
+  "dependencies": {
+    "morgan": "^1.10.0",
+    "@nstation/db": "^1.19.0"
+  },
+  "files": [
+    "./client",
+    "./server",
+    "./package.json"
+  ],
+  "author": {
+    "name": "Nodestation",
+    "email": "ceo@nodestation.app"
+  }
+}
