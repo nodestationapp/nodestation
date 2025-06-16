@@ -18,7 +18,7 @@ import Add from "@mui/icons-material/Add";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
 
-const ToolbarTabs = ({ tabs, noAddTab, backButtonLink, loading }) => {
+const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
   const navigate = useNavigate();
 
   const table = useTable();
@@ -35,7 +35,7 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink, loading }) => {
         create = await api.post("/admin-api/preferences/create", {
           name: values?.name,
           table: table?.id,
-          view: table?.view,
+          view: table?.preferences?.id,
         });
 
         await queryClient.refetchQueries("tables");
@@ -70,7 +70,7 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink, loading }) => {
       const lastView = table?.views?.[table?.views?.length - 2]?.id;
 
       setDeleteLoading(true);
-      await api.delete(`/admin-api/preferences/${table?.view}`);
+      await api.delete(`/admin-api/preferences/${table?.preferences?.id}`);
 
       setAnchorEl(null);
       queryClient.refetchQueries("tables");
@@ -135,7 +135,7 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink, loading }) => {
                           ? onViewPopover(
                               e.currentTarget,
                               item.title,
-                              table?.view
+                              table?.preferences?.id
                             )
                           : {}
                     : () => {}
