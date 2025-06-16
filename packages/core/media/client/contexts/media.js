@@ -36,7 +36,7 @@ const MediaProvider = ({ children }) => {
           formData.append("files", item);
 
           api
-            .post(`/media`, formData, {
+            .post(`/admin-api/media`, formData, {
               headers: {
                 "Content-Type": "multipart/form-data",
               },

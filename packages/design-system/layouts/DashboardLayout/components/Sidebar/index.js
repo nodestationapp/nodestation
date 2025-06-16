@@ -77,18 +77,20 @@ const Sidebar = ({ open, onClose }) => {
       <Stack
         direction="row"
         sx={{
-          p: 2,
+          px: 1,
           gap: 1,
+          height: 35,
           alignItems: "center",
           borderTop: "1px solid",
           borderColor: "divider",
           overflow: "hidden",
+          flexShrink: 0,
         }}
       >
         <Avatar
           sizes="small"
           src={user?.photo?.url}
-          sx={{ width: 36, height: 36 }}
+          sx={{ width: 22, height: 22, borderRadius: 0.5 }}
         />
         <Box
           sx={{
@@ -109,13 +111,13 @@ const Sidebar = ({ open, onClose }) => {
             >
               {user?.first_name} {user?.last_name}
             </Typography>
-            <Typography
+            {/* <Typography
               variant="caption"
               sx={{ color: "text.secondary" }}
               noWrap
             >
               {user?.email}
-            </Typography>
+            </Typography> */}
           </Box>
           <OptionsMenu />
         </Box>

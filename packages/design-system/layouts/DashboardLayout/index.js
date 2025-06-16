@@ -7,12 +7,13 @@ import { alpha } from "@mui/material/styles";
 
 import Header from "./components/Header/index.js";
 import Sidebar from "./components/Sidebar/index.js";
+import Bottom from "./components/Bottom/index.js";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <Box sx={{ display: "flex", height: "100%", width: "100%" }}>
+    <Box sx={{ display: "flex", minHeight: "100%", width: "100%" }}>
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <Box
         component="main"
@@ -29,7 +30,7 @@ const DashboardLayout = () => {
           sx={{
             height: "100%",
             alignItems: "center",
-            pb: 3,
+            pb: 7,
             mx: { xs: 2, md: 3 },
           }}
         >
@@ -45,6 +46,7 @@ const DashboardLayout = () => {
           </Box>
         </Stack>
       </Box>
+      <Bottom />
     </Box>
   );
 };
