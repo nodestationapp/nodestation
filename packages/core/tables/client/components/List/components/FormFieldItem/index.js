@@ -25,6 +25,7 @@ const FormFieldItem = ({
   primary_key,
   origin,
   disabled,
+  required,
 }) => {
   const {
     attributes,
@@ -83,8 +84,9 @@ const FormFieldItem = ({
               </Typography>
             </Stack>
           </Stack>
-          <Stack direction="row" alignItems="center" gap={2} sx={{ ml: 3 }}>
+          <Stack direction="row" alignItems="center" gap={1} sx={{ ml: 3 }}>
             {!!primary_key && <Chip label="Primary key" size="small" />}
+            {!!required && <Chip label="Required" size="small" />}
           </Stack>
           {(origin === "system" || process.env.NODE_ENV !== "development") && (
             <LockOutline sx={{ ml: "auto" }} />

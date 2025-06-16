@@ -8,6 +8,7 @@ import aws from "./aws.js";
 import elastic from "./elastic.js";
 import mailgun from "./mailgun.js";
 import mailchimp from "./mailchimp.js";
+import local from "./local.js";
 
 const emailProvider = (data) => {
   switch (data?.settings?.active) {
@@ -19,6 +20,8 @@ const emailProvider = (data) => {
       return mailgun(data);
     case "aws":
       return aws(data);
+    case "smtp":
+      return local(data);
     default:
       return null;
   }

@@ -1,26 +1,31 @@
-import fs from "fs";
-import path from "path";
-import multer from "multer";
-import rootPath from "#modules/rootPath.js";
+import nodemailer from "nodemailer";
 
-let upload_folder = path.join(rootPath, "uploads");
+const local = async (data) => {
+  const settings = data?.settings?.smtp;
 
-const storage = multer.diskStorage({
-  destination: function (_, _, cb) {
-    const current_date = Date.now();
-    const current_path = path.join(upload_folder, `${current_date}`);
+  const config = {
+    header: settings?.header,
+    host: settings?.host,
+    port: settings?.port,
+    secure: settings?.tls === "ssl" ? true : false,
+    auth: {
+      user: settings?.email,
+      pass: settings?.password,
+    },
+  };
 
-    if (!fs.existsSync(current_path)) {
-      fs.mkdirSync(current_path, { recursive: true });
-    }
+  const transporter = nodemailer.createTransport(config);
 
-    cb(null, current_path);
-  },
-  filename: function (_, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-const local = multer({ storage }).any();
+  try {
+    await transporter.sendMail({
+      from: `${config?.header} <${config?.auth?.user}>`,
+      to: data?.options?.recipients,
+      subject: data?.template?.subject,
+      html: data?.template?.content,
+    });
+  } catch (error) {
+    console.error(error.response?.data || error.message);
+  }
+};
 
 export default local;

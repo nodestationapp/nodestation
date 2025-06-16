@@ -30,13 +30,12 @@ const tableInputRender = (item, formik) => {
   switch (item?.type) {
     case "list":
       return (
-        <FormControl fullWidth>
+        <FormControl fullWidth variant="standard">
           <InputLabel id={item?.slug}>{item?.name}</InputLabel>
           <Select
             fullWidth
             label={item?.name}
             size="medium"
-            variant="outlined"
             name={item?.slug}
             labelId={item?.slug}
             onChange={formik.handleChange}
