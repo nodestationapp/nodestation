@@ -1,12 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 
-import Emails from "./pages/emails/index.js";
-import EmailsSettings from "./pages/emails/settings.js";
-
-import EmailsProvider from "./contexts/emails.js";
+import Logger from "./pages/index.js";
 
 const App = () => {
-  return null;
+  return (
+    <Routes>
+      <Route index element={<Logger />} />
+    </Routes>
+  );
 };
 
 export default App;

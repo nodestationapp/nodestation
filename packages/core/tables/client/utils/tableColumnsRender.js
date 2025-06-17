@@ -1,4 +1,3 @@
-import Chip from "@mui/material/Chip";
 import Json from "../components/MuiTable/components/Json.js";
 import Date from "../components/MuiTable/components/Date/index.js";
 import Boolean from "../components/MuiTable/components/Boolean.js";
@@ -6,6 +5,9 @@ import Media from "../components/MuiTable/components/Media/index.js";
 import UserProfile from "../components/MuiTable/components/UserProfile/index.js";
 import Relation from "../components/MuiTable/components/Relation/index.js";
 import Select from "../components/MuiTable/components/Select.js";
+import Endpoint from "../components/MuiTable/components/Endpoint.js";
+import EndpointStatus from "../components/MuiTable/components/EndpointStatus.js";
+import EndpointMethod from "../components/MuiTable/components/EndpointMethod.js";
 
 const render_options = (column, data) => {
   const isObject = (val) =>
@@ -25,6 +27,10 @@ const render_options = (column, data) => {
       return <Media data={data} />;
     case "json":
       return <Json data={data} />;
+    case "endpoint_status":
+      return <EndpointStatus data={data} />;
+    case "endpoint_method":
+      return <EndpointMethod data={data} />;
     default:
       return !!!isObject(data) ? (
         data
@@ -39,11 +45,12 @@ const render_options = (column, data) => {
 const tableColumnsRender = ({ columns, columnSizes }) => {
   return !!columns?.length
     ? columns?.map((column) => {
-        let width = columnSizes?.[column?.slug] || undefined;
+        let width = columnSizes?.[column?.slug] || column?.width || undefined;
 
         return {
           width: width,
           minWidth: 100,
+          flex: column?.flex || 0,
           field: column?.slug,
           headerName: column?.name,
           renderCell: (params) =>

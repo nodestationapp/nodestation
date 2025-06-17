@@ -29,6 +29,7 @@ const MuiTable = ({
   setColumnSizes,
   columnVisibility,
   setColumnVisibility,
+  tableHeight = "unset",
 }) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
@@ -115,6 +116,7 @@ const MuiTable = ({
         sx={{
           width: "100%",
           overflowX: "auto",
+          height: tableHeight,
         }}
       >
         <DataGrid
