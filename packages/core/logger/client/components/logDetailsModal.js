@@ -6,10 +6,11 @@ import ReactJsonViewRaw from "@microlink/react-json-view";
 import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+import { useColorScheme } from "@mui/material";
 
 const ReactJsonView = ReactJsonViewRaw.default;
 
-const value_render = ({ label, type, value }) => {
+const value_render = ({ label, type, value, theme_mode }) => {
   switch (type) {
     case "short_text":
     case "enumeration":
@@ -21,7 +22,7 @@ const value_render = ({ label, type, value }) => {
         <ReactJsonView
           src={value}
           name={label}
-          theme="ocean"
+          theme={theme_mode === "dark" ? "ocean" : "rjv-default"}
           enableClipboard={false}
           displayDataTypes={false}
           style={{ width: "100%" }}
@@ -36,6 +37,8 @@ const value_render = ({ label, type, value }) => {
 };
 
 const LogDetailsModal = ({ data, onClose }) => {
+  const { mode } = useColorScheme();
+
   const details_data = [
     {
       label: "General",
@@ -120,6 +123,7 @@ const LogDetailsModal = ({ data, onClose }) => {
                     label: element?.label,
                     type: element?.type,
                     value: element?.value,
+                    theme_mode: mode,
                   })}
                 </Stack>
               ))}

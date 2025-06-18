@@ -84,28 +84,28 @@ const FormFieldItem = ({
               </Typography>
             </Stack>
           </Stack>
-          <Stack direction="row" alignItems="center" gap={1} sx={{ ml: 3 }}>
+          <Stack direction="row" alignItems="center" gap={1} ml="auto">
             {!!primary_key && <Chip label="Primary key" size="small" />}
             {!!required && <Chip label="Required" size="small" />}
+            {(origin === "system" ||
+              process.env.NODE_ENV !== "development") && (
+              <LockOutline sx={{ ml: "auto" }} />
+            )}
+            {origin !== "system" && process.env.NODE_ENV === "development" && (
+              <IconButton
+                sx={{ ml: "auto" }}
+                color="secondary"
+                size="micro"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemoveClick();
+                }}
+              >
+                <DeleteOutline />
+              </IconButton>
+            )}
           </Stack>
-          {(origin === "system" || process.env.NODE_ENV !== "development") && (
-            <LockOutline sx={{ ml: "auto" }} />
-          )}
           {/* //todo */}
-          {origin !== "system" && process.env.NODE_ENV === "development" && (
-            <IconButton
-              sx={{ ml: "auto" }}
-              color="secondary"
-              size="micro"
-              onClick={(e) => {
-                e.stopPropagation();
-                onRemoveClick();
-              }}
-              // icon={<TrashIcon color="#FF3636" />}
-            >
-              <DeleteOutline />
-            </IconButton>
-          )}
         </ListItemButton>
       </ListItem>
       {/* {!!archive_modal && (
