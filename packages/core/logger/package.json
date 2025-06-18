@@ -1,6 +1,6 @@
 {
   "name": "@nstation/logger",
-  "version": "1.19.0",
+  "version": "1.20.0",
   "type": "module",
   "main": "index.js",
   "license": "MIT",
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "morgan": "^1.10.0",
-    "@nstation/db": "^1.19.0"
+    "@nstation/db": "^1.20.0"
   },
   "files": [
     "./client",
