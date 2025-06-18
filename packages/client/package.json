@@ -21,7 +21,8 @@
     "./package.json",
     "./jsconfig.json",
     "./babel.config.json",
-    "./webpack.config.js"
+    "./webpack.config.js",
+    "./webpackConfigImports.js"
   ],
   "dependencies": {
     "@babel/cli": "^7.27.0",
