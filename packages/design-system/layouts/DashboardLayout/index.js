@@ -13,13 +13,14 @@ const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <Box sx={{ display: "flex", minHeight: "100%", width: "100%" }}>
+    <Box sx={{ display: "flex", width: "100%" }}>
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <Box
         component="main"
         sx={(theme) => ({
           flexGrow: 1,
-          overflow: "hidden",
+          maxWidth: "100vw",
+          overflowX: "auto",
           backgroundColor: theme.vars
             ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
             : alpha(theme.palette.background.default, 1),
@@ -36,11 +37,15 @@ const DashboardLayout = () => {
         >
           <Header onSidebarOpen={() => setSidebarOpen(true)} />
           <Box
-            sx={{
-              width: "100%",
+            sx={(theme) => ({
               flex: 1,
+              width: "100%",
               maxWidth: { sm: "100%", md: "1700px" },
-            }}
+              height: "100%",
+              paddingBottom: "51px",
+              marginTop: "-3px !important",
+              pt: theme.spacing(2),
+            })}
           >
             <Outlet />
           </Box>

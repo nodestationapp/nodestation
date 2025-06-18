@@ -3,7 +3,7 @@ import { knex, queryBuilder } from "@nstation/db";
 
 export default async (req, res) => {
   let { id } = req?.params;
-  let { view, page = 0, sort, filters, pageSize = 20 } = req?.query || {};
+  let { view, page = 0, sort, filters, pageSize = 30 } = req?.query || {};
 
   if (!id) {
     id = req?.route?.path?.split("/")?.[4];

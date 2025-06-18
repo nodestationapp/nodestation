@@ -20,12 +20,14 @@ import DeleteOutline from "@mui/icons-material/DeleteOutline";
 import { useSlot } from "contexts/slots.js";
 
 const TableManagerContent = ({
+  rowHeight,
+  onNewClick,
+  onRowClick,
+  hideActions,
+  rowFullWidth,
   hiddenColumns,
   appendColumns,
-  rowHeight,
-  rowFullWidth,
   onEntrySubmit,
-  onNewClick,
 }) => {
   const actionSlot = useSlot("tables.actions");
 
@@ -36,7 +38,6 @@ const TableManagerContent = ({
 
   const {
     data,
-    page,
     sort,
     views,
     table,
@@ -44,6 +45,8 @@ const TableManagerContent = ({
     setSort,
     filters,
     preferences,
+    pagination_page,
+    setPaginationPage,
     setFilters,
     columnSizes,
     setColumnSizes,
@@ -124,8 +127,9 @@ const TableManagerContent = ({
   return (
     <>
       <MuiTable
-        page={page}
-        action={action}
+        page={pagination_page}
+        setPage={setPaginationPage}
+        action={!hideActions ? action : null}
         columns={columns}
         loading={loading}
         rowHeight={rowHeight}
@@ -143,7 +147,11 @@ const TableManagerContent = ({
         pagination={data?.pagination}
         preferences={preferences}
         saveTransaction={saveTableTransaction}
-        onRowClick={({ row }) => setContentEditor(row)}
+        onRowClick={
+          !!onRowClick
+            ? ({ row }) => onRowClick(row)
+            : ({ row }) => setContentEditor(row)
+        }
       />
       {!!content_editor && (
         <TableRowEditor
@@ -165,15 +173,19 @@ const TableManager = ({
   hiddenColumns = [],
   appendColumns = [],
   rowHeight = 42,
+  hideActions = false,
   rowFullWidth = undefined,
   onEntrySubmit,
   onNewClick,
+  onRowClick,
 }) => {
   return (
     <TableProvider id={table}>
       <TableManagerContent
         rowHeight={rowHeight}
+        onRowClick={onRowClick}
         onNewClick={onNewClick}
+        hideActions={hideActions}
         rowFullWidth={rowFullWidth}
         onEntrySubmit={onEntrySubmit}
         hiddenColumns={hiddenColumns}

@@ -1,20 +1,9 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-
+import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
-import { Box, Card, Divider, IconButton, Typography } from "@mui/material";
-import MuiTable from "@nstation/tables/client/components/MuiTable/index.js";
-import { api } from "@nstation/design-system/utils";
-import tableColumnsRender from "@nstation/tables/client/utils/tableColumnsRender.js";
 
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { Link } from "react-router-dom";
-
-const mainClass = "logger-main";
-
-const CustomButton = styled(Button)(({ theme }) => ({
+const CustomButton = styled(Button)(() => ({
   padding: "0 8px",
   height: "100%",
   borderRadius: 0,
@@ -26,26 +15,6 @@ const CustomButton = styled(Button)(({ theme }) => ({
   color: "#88fc85 !important",
   flexShrink: 0,
 }));
-
-const columnsToShow = [
-  {
-    flex: 1,
-    slug: "source",
-    name: "Source",
-    type: "endpoint",
-  },
-  {
-    flex: 1,
-    type: "date",
-    slug: "created_at",
-    name: "Date",
-  },
-  {
-    flex: 1,
-    slug: "message",
-    name: "Message",
-  },
-];
 
 const Logger = () => {
   return (

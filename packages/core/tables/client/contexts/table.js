@@ -31,6 +31,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
   const [currentView, setView] = useState(table_preferences?.id);
   const [sort, setSort] = useState(table_preferences?.sort || []);
   const [filters, setFilters] = useState(table_preferences?.filters || []);
+  const [pagination_page, setPaginationPage] = useState(0);
   const [columnVisibility, setColumnVisibility] = useState(
     table_preferences?.visibility || {}
   );
@@ -72,12 +73,12 @@ const TableProvider = ({ id, extendable = false, children }) => {
     isLoading: loading,
     refetch: tableRefetch,
   } = useQuery({
-    queryKey: ["tables", currentView, page, sort, filters],
+    queryKey: ["tables", currentView, sort, filters, page],
     queryFn: () =>
       api.get(
         `/admin-api/tables/${id}?${queryString.stringify({
           view,
-          page: parseInt(page || 0),
+          page,
           sort: !!sort?.[0]
             ? `${sort?.[0]?.field}:${sort?.[0]?.sort}`
             : undefined,
@@ -222,6 +223,8 @@ const TableProvider = ({ id, extendable = false, children }) => {
       addTableEntry,
       deleteTableEntries,
       saveTableTransaction,
+      pagination_page,
+      setPaginationPage,
     };
     // eslint-disable-next-line
   }, [
@@ -236,6 +239,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
     filters,
     columnSizes,
     columnVisibility,
+    pagination_page,
   ]);
 
   return (

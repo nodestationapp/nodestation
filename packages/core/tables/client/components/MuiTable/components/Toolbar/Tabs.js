@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useFormik } from "formik";
 import { useQueryClient } from "@tanstack/react-query";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
@@ -20,10 +25,11 @@ import DeleteOutline from "@mui/icons-material/DeleteOutline";
 
 const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const table = useTable();
   const queryClient = useQueryClient();
-  const { pathname, search } = useLocation();
+  const { pathname } = useLocation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
@@ -95,8 +101,8 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
 
   const default_view = tabs?.find((item) => item?.last_viewed);
 
-  const currentPath = !!search
-    ? `${pathname}${search}`
+  const currentPath = !!searchParams?.get("v")
+    ? `${pathname}?v=${searchParams?.get("v")}`
     : default_view?.href || pathname;
 
   return (

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
@@ -9,32 +9,30 @@ import Toolbar from "./components/Toolbar/index.js";
 let timer;
 
 const MuiTable = ({
-  columns,
+  sort,
   rows,
-  loading,
   views,
   action,
+  filters,
+  columns,
+  loading,
   pagination,
   saveTransaction,
   selectActions,
   onRowClick,
   rowHeight = 42,
   noAddTab,
-  sort,
   setSort,
-  filters,
   setFilters,
   hideToolbar,
   columnSizes,
   setColumnSizes,
   columnVisibility,
   setColumnVisibility,
-  tableHeight = "unset",
+  tableHeight = "100%",
 }) => {
-  const navigate = useNavigate();
-  const { pathname, search } = useLocation();
-  const queryParams = new URLSearchParams(search);
-  const page = queryParams.get("page");
+  const { pathname } = useLocation();
+  const [_, setSearchParams] = useSearchParams();
 
   const tabs = !!views?.length
     ? views?.map((view) => ({
@@ -85,12 +83,16 @@ const MuiTable = ({
   };
 
   const onPaginationModelChange = (pagination) => {
-    const params = new URLSearchParams(search);
-    params.set("page", pagination?.page);
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
 
-    navigate({
-      pathname: pathname,
-      search: params.toString(),
+      if (pagination?.page && pagination.page !== 0) {
+        newParams.set("page", pagination.page);
+      } else {
+        newParams.delete("page");
+      }
+
+      return newParams;
     });
   };
 
@@ -99,6 +101,7 @@ const MuiTable = ({
       sx={{
         display: "flex",
         flexDirection: "column",
+        height: "100%",
         flex: 1,
       }}
     >
@@ -116,7 +119,7 @@ const MuiTable = ({
         sx={{
           width: "100%",
           overflowX: "auto",
-          height: tableHeight,
+          maxHeight: tableHeight,
         }}
       >
         <DataGrid
@@ -148,11 +151,11 @@ const MuiTable = ({
           onFilterModelChange={onFilterModelChange}
           rowCount={pagination?.count || 0}
           paginationModel={{
-            page: parseInt(page || 0),
-            pageSize: pagination?.pageSize || 20,
+            page: parseInt(pagination?.page || 0),
+            pageSize: pagination?.pageSize || 30,
           }}
           onPaginationModelChange={onPaginationModelChange}
-          pageSizeOptions={[20]}
+          pageSizeOptions={[30]}
           rowHeight={rowHeight}
           disableRowSelectionOnClick
           columnHeaderHeight={42}

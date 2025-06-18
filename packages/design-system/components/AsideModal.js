@@ -12,7 +12,6 @@ import Close from "@mui/icons-material/Close";
 import { useTheme, useMediaQuery } from "@mui/material";
 
 const AsideModal = ({
-  open,
   width = 400,
   header,
   children,

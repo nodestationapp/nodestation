@@ -1,8 +1,26 @@
 import { knex, queryBuilder } from "@nstation/db";
 
 export default async (req, res) => {
-  const pageSize = 50;
-  const { page = 0 } = req?.query;
+  let { page = 0, sort, filters, pageSize = 10 } = req?.query || {};
+
+  if (sort) {
+    sort = sort?.split(":");
+    sort = {
+      field: sort?.[0],
+      sort: sort?.[1],
+    };
+  }
+
+  if (filters) {
+    filters = filters?.split(",");
+
+    filters = filters
+      ?.map((item) => {
+        item = item?.split(":");
+        return { field: item?.[0], operator: item?.[1], value: item?.[2] };
+      })
+      ?.filter((item) => item?.value !== "undefined");
+  }
 
   try {
     let preferences = await knex("nodestation_preferences")
@@ -43,23 +61,14 @@ export default async (req, res) => {
           },
         ],
       },
-      sort: { field: "created_at", sort: "desc" },
-      filters: preferences?.filters,
-      pagination: {
-        pageSize,
-        page,
-      },
+      sort,
+      filters,
+      pagination: { page, pageSize },
     });
-
-    const totalItems = await knex("nodestation_logger")
-      .count("id as count")
-      .first();
-    const hasNextPage = page * pageSize < totalItems.count;
 
     return res.status(200).json({
       items: data,
       preferences,
-      nextPage: !!hasNextPage ? parseInt(req?.query?.page) + 1 : null,
     });
   } catch (err) {
     console.error(err);

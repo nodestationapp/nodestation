@@ -36,7 +36,10 @@ const UploadedItems = ({ files, onSelect, onDelete }) => {
   const { getRootProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <Box {...getRootProps()} sx={{ height: "calc(100vh - 180px)" }}>
+    <Box
+      {...getRootProps()}
+      // sx={{ height: "calc(100vh - 180px)" }}
+    >
       {!!files?.length ? (
         <Grid
           container
