@@ -18,6 +18,7 @@
     "@nstation/utils": "^1.20.1",
     "@nstation/tables": "^1.20.1",
     "@nstation/emails": "^1.20.1",
+    "@nstation/design-system": "^1.20.1",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
     "passport": "^0.7.0",
