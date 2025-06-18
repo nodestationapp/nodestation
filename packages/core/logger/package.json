@@ -21,6 +21,7 @@
   "files": [
     "./client",
     "./server",
+    "./index.js",
     "./package.json"
   ],
   "author": {
