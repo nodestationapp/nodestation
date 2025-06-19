@@ -49,7 +49,7 @@ const logger = morgan((tokens, req, res) => {
     url: tokens.url(req, res),
     status: tokens.status(req, res),
     responseTime: tokens["response-time"](req, res),
-    res: res.locals.responseBody,
+    res: [],
     ip: req.ip,
     headers: req.headers,
     body: req.body,

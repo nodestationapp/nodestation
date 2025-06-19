@@ -21,16 +21,16 @@ function createApp() {
   app.init = async () => {
     app.express.set("trust proxy", "127.0.0.1");
 
-    app.express.use((req, res, next) => {
-      const originalSend = res.send;
+    // app.express.use((req, res, next) => {
+    //   const originalSend = res.send;
 
-      res.send = function (body) {
-        res.locals.responseBody = body;
-        return originalSend.call(this, body);
-      };
+    //   res.send = function (body) {
+    //     res.locals.responseBody = body;
+    //     return originalSend.call(this, body);
+    //   };
 
-      next();
-    });
+    //   next();
+    // });
 
     app.express.use(cors);
     app.express.use(logger);

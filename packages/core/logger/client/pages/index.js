@@ -16,6 +16,7 @@ const columnsToShow = [
   },
   {
     flex: 1,
+    minWidth: 250,
     slug: "url",
     name: "Source",
     type: "endpoint",

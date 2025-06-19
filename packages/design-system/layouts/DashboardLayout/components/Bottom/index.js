@@ -5,24 +5,28 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import { styled } from "@mui/material/styles";
+import { useColorScheme } from "@mui/material";
 
 import { useSlot } from "contexts/slots.js";
 
-const CustomButton = styled(Button)(() => ({
-  padding: "0 8px",
-  height: "100%",
-  borderRadius: 0,
-  fontWeight: 500,
-  display: "flex",
-  alignItems: "center",
-  gap: 5,
-  fontSize: 13,
-  color: "#88fc85 !important",
-  flexShrink: 0,
-}));
-
 const Bottom = () => {
+  const { mode } = useColorScheme();
   const actionSlot = useSlot("footer.main");
+
+  const CustomButton = styled(Button)(() => {
+    return {
+      padding: "0 8px",
+      height: "100%",
+      borderRadius: 0,
+      fontWeight: 500,
+      display: "flex",
+      alignItems: "center",
+      gap: 5,
+      fontSize: 13,
+      color: mode === "dark" ? "#88fc85 !important" : "#04A700 !important",
+      flexShrink: 0,
+    };
+  });
 
   return (
     <Box

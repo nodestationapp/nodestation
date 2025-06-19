@@ -49,7 +49,7 @@ const tableColumnsRender = ({ columns, columnSizes }) => {
 
         return {
           width: width,
-          minWidth: 100,
+          minWidth: column?.minWidth || 100,
           flex: column?.flex || 0,
           field: column?.slug,
           headerName: column?.name,

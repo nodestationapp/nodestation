@@ -1,3 +1,5 @@
+import moment from "moment";
+
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { AsideModal } from "@nstation/design-system";
@@ -64,6 +66,11 @@ const LogDetailsModal = ({ data, onClose }) => {
           label: "Response Time",
           value: `${data?.response_time} ms`,
         },
+        {
+          type: "short_text",
+          label: "Date",
+          value: moment?.unix(data?.created_at)?.format("DD MMM YYYY, hh:mm A"),
+        },
       ],
     },
     {
@@ -82,17 +89,17 @@ const LogDetailsModal = ({ data, onClose }) => {
         },
       ],
     },
-    {
-      label: "Response",
-      icon: <TrendingUpIcon />,
-      items: [
-        {
-          type: "json",
-          label: "Body",
-          value: data?.res || {},
-        },
-      ],
-    },
+    // {
+    //   label: "Response",
+    //   icon: <TrendingUpIcon />,
+    //   items: [
+    //     {
+    //       type: "json",
+    //       label: "Body",
+    //       value: data?.res || {},
+    //     },
+    //   ],
+    // },
   ];
 
   return (
