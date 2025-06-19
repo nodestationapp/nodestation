@@ -44,6 +44,13 @@ function createApp() {
     app.express.use("/uploads", express.static(path.join(rootPath, "uploads")));
     await loadPlugins(app.router);
 
+    app.express.use("/api", (_, res) => {
+      res.status(404).json({ error: "Not found" });
+    });
+    app.express.use("/admin-api", (_, res) => {
+      res.status(404).json({ error: "Not found" });
+    });
+
     //FRONTEND
     if (
       fs.existsSync(clientPath) &&
