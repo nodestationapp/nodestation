@@ -70,7 +70,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
 
   const {
     data,
-    isLoading: loading,
+    isFetching: loading,
     refetch: tableRefetch,
   } = useQuery({
     queryKey: ["tables", currentView, sort, filters, page],
@@ -88,6 +88,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
               ?.join(",") || undefined,
         })}`
       ),
+    placeholderData: (prev) => prev,
   });
 
   const updateTable = (values) =>
