@@ -1,6 +1,6 @@
 {
   "name": "@nstation/dashboard",
-  "version": "1.19.0",
+  "version": "1.20.3-beta.1",
   "type": "module",
   "license": "MIT",
   "description": "Nodestation's dashboard plugin",

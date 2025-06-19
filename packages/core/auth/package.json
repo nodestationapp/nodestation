@@ -1,6 +1,6 @@
 {
   "name": "@nstation/auth",
-  "version": "1.19.0",
+  "version": "1.20.3-beta.1",
   "type": "module",
   "license": "MIT",
   "description": "Nodestation's authentication plugin",
@@ -14,10 +14,10 @@
     "react-router-dom": ">=6.23.0"
   },
   "dependencies": {
-    "@nstation/db": "^1.19.0",
-    "@nstation/utils": "^1.19.0",
-    "@nstation/tables": "^1.19.0",
-    "@nstation/emails": "^1.19.0",
+    "@nstation/db": "^1.20.3-beta.1",
+    "@nstation/utils": "^1.20.3-beta.1",
+    "@nstation/tables": "^1.20.3-beta.1",
+    "@nstation/emails": "^1.20.3-beta.1",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
     "passport": "^0.7.0",
