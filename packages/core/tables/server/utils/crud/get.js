@@ -2,7 +2,7 @@ import { fs } from "@nstation/utils";
 import { queryBuilder } from "@nstation/db";
 
 export default async (req, res) => {
-  const id = req?.route?.path?.split("/")?.[4];
+  const id = req?.route?.path?.split("/")?.[3];
   let { page = 0, sort, filters, pageSize = 20 } = req?.query || {};
 
   page = parseInt(page);

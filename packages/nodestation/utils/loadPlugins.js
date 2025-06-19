@@ -3,6 +3,7 @@ import fs_sys from "fs";
 import { glob } from "glob";
 import { upsertTable } from "@nstation/db";
 import { rootPath } from "@nstation/utils";
+import requireFromString from "require-from-string";
 
 import loadRoute from "./loadRoute.js";
 
@@ -30,24 +31,30 @@ let core = [
 ];
 
 const loadPlugins = async (router) => {
-  let pluginsConfig = fs_sys.readFileSync(
+  const configExists = fs_sys.existsSync(
+    path.join(rootPath, "nodestation.config.js")
+  );
+
+  // if (!!configExists) {
+  //   return;
+  // }
+
+  let config = fs_sys.readFileSync(
     path.join(rootPath, "nodestation.config.js"),
     "utf-8"
   );
 
-  const match = pluginsConfig.match(/plugins\s*:\s*\[([^\]]*)\]/)?.[1];
+  const parsedConfig = requireFromString(config);
 
-  const plugins = match
-    .split(",")
-    ?.map((str) => str.trim().replace(/^["']|["']$/g, ""))
-    ?.map((plugin) => {
-      if (plugin.startsWith("./")) {
-        plugin = plugin.replace("./", `${rootPath}/`);
-      }
+  const plugins = parsedConfig.plugins.map((plugin) => {
+    const resolve = plugin.resolve || plugin;
 
-      return plugin;
-    })
-    ?.filter((item) => item !== "");
+    if (resolve.startsWith("./")) {
+      plugin = resolve.replace("./", `${rootPath}/`);
+    }
+
+    return plugin;
+  });
 
   const tables = glob.sync(path.join(rootPath, "src", "tables", "*/"));
 

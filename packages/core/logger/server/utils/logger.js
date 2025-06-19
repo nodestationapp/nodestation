@@ -1,5 +1,21 @@
+import fs from "fs";
+import path from "path";
 import morgan from "morgan";
 import { knex } from "@nstation/db";
+import micromatch from "micromatch";
+import { rootPath } from "@nstation/utils";
+import requireFromString from "require-from-string";
+
+const configExists = fs.existsSync(path.join(rootPath, "config", "logger.js"));
+
+let parsedConfig = {};
+if (!!configExists) {
+  let config = fs.readFileSync(
+    path.join(rootPath, "config", "logger.js"),
+    "utf-8"
+  );
+  parsedConfig = requireFromString(config);
+}
 
 const getLevel = (status) => {
   let level = null;
@@ -14,7 +30,7 @@ const getLevel = (status) => {
 };
 
 const sanitizeSensitiveData = (body) => {
-  const sensitiveFields = ["password", "access_token", "authorization"];
+  const sensitiveFields = parsedConfig?.sensitive || [];
 
   let sanitizedBody = body;
 
@@ -28,15 +44,6 @@ const sanitizeSensitiveData = (body) => {
 };
 
 const logger = morgan((tokens, req, res) => {
-  const allowedEndpoints = [
-    "/api",
-    "/admin-api/auth/login",
-    "/admin-api/auth/register",
-    "/admin-api/auth/password-reset",
-    "/admin-api/auth/change-password",
-    "/admin-api/auth/login",
-  ];
-
   const data = {
     method: tokens.method(req, res),
     url: tokens.url(req, res),
@@ -51,11 +58,7 @@ const logger = morgan((tokens, req, res) => {
 
   const level = getLevel(data?.status);
 
-  const canLogToDB = allowedEndpoints.some((endpoint) =>
-    data.url.startsWith(endpoint)
-  );
-
-  if (!!canLogToDB) {
+  if (!micromatch.isMatch(data.url, parsedConfig?.ignore || [])) {
     knex("nodestation_logger")
       .insert({
         level,
@@ -69,8 +72,6 @@ const logger = morgan((tokens, req, res) => {
         response_time: data.responseTime,
       })
       .catch((err) => console.error(err));
-
-    // req?.io?.emit("new_log");
   }
 
   return [

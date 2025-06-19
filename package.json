@@ -72,8 +72,5 @@
         ]
       }
     }
-  },
-  "dependencies": {
-    "@nstation/addon-documentation": "^0.0.2"
   }
 }

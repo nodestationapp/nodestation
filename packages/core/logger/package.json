@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "morgan": "^1.10.0",
-    "@nstation/db": "^1.19.0"
+    "@nstation/db": "^1.19.0",
+    "micromatch": "^4.0.8"
   },
   "files": [
     "./client",

@@ -2,7 +2,7 @@ import upsertEntry from "../../utils/upsertEntry.js";
 
 export default async (req, res) => {
   const body = req?.body;
-  const id = req?.route?.path?.split("/")?.[4];
+  const id = req?.route?.path?.split("/")?.[3];
   const entry_id = req?.params?.entry_id;
 
   try {

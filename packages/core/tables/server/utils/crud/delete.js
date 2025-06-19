@@ -2,7 +2,7 @@ import { knex } from "@nstation/db";
 
 export default async (req, res) => {
   let { entry_id } = req?.params;
-  const id = req?.route?.path?.split("/")?.[4];
+  const id = req?.route?.path?.split("/")?.[3];
 
   try {
     await knex(id).where({ id: entry_id }).del();

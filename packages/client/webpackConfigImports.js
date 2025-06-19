@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const VirtualModulesPlugin = require("webpack-virtual-modules");
+const requireFromString = require("require-from-string");
 
 const config = fs.readFileSync(
   `${process.env.ROOT_DIR}/nodestation.config.js`,
@@ -8,12 +9,11 @@ const config = fs.readFileSync(
 );
 
 module.exports = () => {
-  const match = config.match(/plugins\s*:\s*\[([^\]]*)\]/)?.[1];
+  const parsedConfig = requireFromString(config);
 
-  const plugins = match
-    .split(",")
-    .map((str) => str.trim().replace(/^["']|["']$/g, ""))
-    .filter((item) => item !== "");
+  const plugins = parsedConfig.plugins.map((plugin) => {
+    return plugin.resolve || plugin;
+  });
 
   const pluginImportCode = `
   export default {

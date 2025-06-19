@@ -4,10 +4,6 @@ export default async (req, res) => {
   const body = req?.body;
   let { id, entry_id } = req?.params;
 
-  if (!id) {
-    id = req?.route?.path?.split("/")?.[4];
-  }
-
   try {
     await upsertEntry({
       id,
