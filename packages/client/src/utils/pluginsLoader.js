@@ -1,10 +1,10 @@
 const core = [
+  import("@nstation/logger/client/index.js"),
   import("@nstation/auth/client/index.js"),
   import("@nstation/dashboard/client/index.js"),
   import("@nstation/tables/client/index.js"),
   import("@nstation/media/client/index.js"),
   import("@nstation/emails/client/index.js"),
-  import("@nstation/logger/client/index.js"),
 ];
 
 import pluginLoader from "@nstation/config/plugin-imports.js";

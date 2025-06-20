@@ -2,17 +2,21 @@ import { useState } from "react";
 
 import LogDetailsModal from "../components/logDetailsModal.js";
 import TableManager from "@nstation/tables/client/components/TableManager/index.js";
+import moment from "moment";
 
 const columnsToShow = [
   {
     slug: "status",
     name: "Status",
     type: "endpoint_status",
+    columnType: "number",
   },
   {
     slug: "method",
     name: "Method",
     type: "endpoint_method",
+    columnType: "singleSelect",
+    valueOptions: ["GET", "POST", "PUT", "DELETE"],
   },
   {
     flex: 1,
@@ -29,9 +33,9 @@ const columnsToShow = [
   },
   {
     width: 200,
+    name: "Date",
     type: "date",
     slug: "created_at",
-    name: "Date",
   },
 ];
 

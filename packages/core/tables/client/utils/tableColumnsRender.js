@@ -1,11 +1,12 @@
+import moment from "moment";
+
 import Json from "../components/MuiTable/components/Json.js";
+import Select from "../components/MuiTable/components/Select.js";
 import Date from "../components/MuiTable/components/Date/index.js";
 import Boolean from "../components/MuiTable/components/Boolean.js";
 import Media from "../components/MuiTable/components/Media/index.js";
-import UserProfile from "../components/MuiTable/components/UserProfile/index.js";
 import Relation from "../components/MuiTable/components/Relation/index.js";
-import Select from "../components/MuiTable/components/Select.js";
-import Endpoint from "../components/MuiTable/components/Endpoint.js";
+import UserProfile from "../components/MuiTable/components/UserProfile/index.js";
 import EndpointStatus from "../components/MuiTable/components/EndpointStatus.js";
 import EndpointMethod from "../components/MuiTable/components/EndpointMethod.js";
 
@@ -42,24 +43,42 @@ const render_options = (column, data) => {
   }
 };
 
+const getValueFormatter = (column) => {
+  switch (column?.type) {
+    case "date":
+      return (params) =>
+        !!params ? moment.unix(params).format("DD MMM YYYY, hh:mm A") : "-";
+    default:
+      return undefined;
+  }
+};
+
 const tableColumnsRender = ({ columns, columnSizes }) => {
   return !!columns?.length
     ? columns?.map((column) => {
         let width = columnSizes?.[column?.slug] || column?.width || undefined;
+        const valueFormatter =
+          column?.valueFormatter || getValueFormatter(column);
 
         return {
           width: width,
-          minWidth: column?.minWidth || 100,
-          flex: column?.flex || 0,
           field: column?.slug,
+          flex: column?.flex || 0,
           headerName: column?.name,
+          minWidth: column?.minWidth || 100,
+          type: column?.columnType || column?.type || "string",
+          valueOptions: column?.valueOptions || undefined,
+          valueGetter: column?.valueGetter || undefined,
+          valueFormatter: valueFormatter || undefined,
           renderCell: (params) =>
-            column?.renderCell
-              ? column?.renderCell(params)
-              : render_options(
-                  column,
-                  params.value !== undefined ? params.value : params?.row
-                ),
+            !!!valueFormatter
+              ? column?.renderCell
+                ? column?.renderCell(params)
+                : render_options(
+                    column,
+                    params.value !== undefined ? params.value : params?.row
+                  )
+              : undefined,
         };
       })
     : [];

@@ -9,7 +9,7 @@ const typesMap = {
   numeric: "integer",
   json: process.env.DATABASE_CLIENT === "sqlite" ? "text" : "jsonb",
   boolean: "integer",
-  date: "string",
+  date: "bigInteger",
   user: "string",
 };
 

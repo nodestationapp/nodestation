@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const filterQueryBuild = (item, query, table) => {
   switch (item?.operator) {
     case "contains":
@@ -14,12 +16,34 @@ const filterQueryBuild = (item, query, table) => {
         `%${item?.value}%`
       );
       break;
+    case "=":
+    case "is":
     case "equals":
       query.where(`${table?.tableName}.${item?.field}`, item?.value);
       break;
+    case "isDate":
+      query
+        .where(`${table?.tableName}.${item?.field}`, ">=", item?.value)
+        .andWhere(
+          `${table?.tableName}.${item?.field}`,
+          "<",
+          moment.unix(item?.value).endOf("day").unix()
+        );
+      break;
+    case "notDate":
+      query
+        .where(`${table?.tableName}.${item?.field}`, "<", item?.value)
+        .orWhere(
+          `${table?.tableName}.${item?.field}`,
+          ">=",
+          moment.unix(item?.value).endOf("day").unix()
+        );
+    case "!=":
+    case "not":
     case "doesNotEqual":
       query.whereNot(`${table?.tableName}.${item?.field}`, item?.value);
       break;
+
     case "startsWith":
       query.where(
         `${table?.tableName}.${item?.field}`,
@@ -55,14 +79,58 @@ const filterQueryBuild = (item, query, table) => {
         query.whereIn(`${table?.tableName}.${item?.field}`, item?.value);
       }
       break;
+    case ">":
+    case "after":
+      query.where(`${table?.tableName}.${item?.field}`, ">", item?.value);
+      break;
+    case ">=":
+    case "onOrAfter":
+      query.where(`${table?.tableName}.${item?.field}`, ">=", item?.value);
+      break;
+    case "<":
+    case "before":
+      query.where(`${table?.tableName}.${item?.field}`, "<", item?.value);
+      break;
+    case "<=":
+    case "onOrBefore":
+      query.where(`${table?.tableName}.${item?.field}`, "<=", item?.value);
+      break;
   }
 };
 
 const applyFilters = (query, filters, table) => {
   try {
-    const removeEmptyFilters = filters?.filter((item) => !!item?.value);
+    const formattedFilters = filters
+      ?.filter((item) => !!item?.value)
+      ?.map((item) => {
+        const field = table?.fields?.find(
+          (field) => field?.slug === item?.field
+        );
 
-    removeEmptyFilters.forEach((item) => {
+        if (field?.type === "date") {
+          if (typeof item.value !== "number") {
+            if (
+              typeof item.value === "string" &&
+              item.value.match(/^\d{4}-\d{2}-\d{2}T\d{2}$/)
+            ) {
+              item.value = moment(item?.value, "YYYY-MM-DDTHH").unix();
+            } else {
+              item.value = moment(item?.value, "ddd MMM DD YYYY HH").unix();
+            }
+          }
+
+          item.operator =
+            item.operator === "is"
+              ? "isDate"
+              : item.operator === "not"
+              ? "notDate"
+              : item.operator;
+        }
+
+        return item;
+      });
+
+    formattedFilters.forEach((item) => {
       filterQueryBuild(item, query, table);
     });
   } catch (err) {

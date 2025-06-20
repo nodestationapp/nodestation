@@ -7,7 +7,7 @@ import transformRelations from "./utils/transformRelations.js";
 
 export default async ({ table, filters, sort, pagination }) => {
   const countQuery = knex(table?.tableName);
-  if (filters) {
+  if (!!filters) {
     countQuery.modify(applyFilters, filters, table);
   }
   const [{ count }] = await countQuery.clone().count("* as count");

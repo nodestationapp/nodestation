@@ -7,7 +7,6 @@ import { alpha } from "@mui/material/styles";
 
 import Header from "./components/Header/index.js";
 import Sidebar from "./components/Sidebar/index.js";
-import Bottom from "./components/Bottom/index.js";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -42,7 +41,7 @@ const DashboardLayout = () => {
               width: "100%",
               maxWidth: { sm: "100%", md: "1700px" },
               height: "100%",
-              paddingBottom: "51px",
+              pb: 3,
               marginTop: "-3px !important",
               pt: theme.spacing(2),
             })}
@@ -51,7 +50,6 @@ const DashboardLayout = () => {
           </Box>
         </Stack>
       </Box>
-      <Bottom />
     </Box>
   );
 };

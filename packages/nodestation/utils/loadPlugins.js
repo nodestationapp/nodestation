@@ -31,14 +31,6 @@ let core = [
 ];
 
 const loadPlugins = async (router) => {
-  const configExists = fs_sys.existsSync(
-    path.join(rootPath, "nodestation.config.js")
-  );
-
-  // if (!!configExists) {
-  //   return;
-  // }
-
   let config = fs_sys.readFileSync(
     path.join(rootPath, "nodestation.config.js"),
     "utf-8"
