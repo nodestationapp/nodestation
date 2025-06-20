@@ -53,20 +53,30 @@ const getValueFormatter = (column) => {
   }
 };
 
+const getType = (column) => {
+  switch (column?.type) {
+    case "numeric":
+      return "number";
+    default:
+      return "string";
+  }
+};
+
 const tableColumnsRender = ({ columns, columnSizes }) => {
   return !!columns?.length
     ? columns?.map((column) => {
         let width = columnSizes?.[column?.slug] || column?.width || undefined;
         const valueFormatter =
           column?.valueFormatter || getValueFormatter(column);
+        const type = column?.columnType || getType(column);
 
         return {
-          width: width,
+          type,
+          width,
           field: column?.slug,
           flex: column?.flex || 0,
           headerName: column?.name,
           minWidth: column?.minWidth || 100,
-          type: column?.columnType || column?.type || "string",
           valueOptions: column?.valueOptions || undefined,
           valueGetter: column?.valueGetter || undefined,
           valueFormatter: valueFormatter || undefined,
