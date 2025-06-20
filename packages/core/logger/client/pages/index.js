@@ -22,6 +22,12 @@ const columnsToShow = [
     type: "endpoint",
   },
   {
+    width: 240,
+    slug: "user",
+    name: "User",
+    type: "user",
+  },
+  {
     width: 200,
     type: "date",
     slug: "created_at",

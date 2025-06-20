@@ -59,6 +59,11 @@
       "type": "text"
     },
     {
+      "slug": "user",
+      "name": "User",
+      "type": "user"
+    },
+    {
       "name": "Created at",
       "slug": "created_at",
       "type": "date",

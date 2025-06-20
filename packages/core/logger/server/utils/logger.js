@@ -44,48 +44,34 @@ const sanitizeSensitiveData = (body) => {
 };
 
 const logger = morgan((tokens, req, res) => {
+  const level = getLevel(tokens.status(req, res));
+
   const data = {
-    method: tokens.method(req, res),
-    url: tokens.url(req, res),
-    status: tokens.status(req, res),
-    responseTime: tokens["response-time"](req, res),
-    res: [],
+    level,
     ip: req.ip,
-    headers: req.headers,
-    body: req.body,
-    timestamp: tokens.date(req, res, "iso"),
+    user: req?.user?.id,
+    url: tokens.url(req, res),
+    method: tokens.method(req, res),
+    status: tokens.status(req, res),
+    body: sanitizeSensitiveData(req.body),
+    headers: sanitizeSensitiveData(req.headers),
+    response_time: tokens["response-time"](req, res),
   };
 
-  const level = getLevel(data?.status);
-  const ignore = [
-    ...(parsedConfig?.ignore || []),
-    "/",
-    "/*.*",
-    "/admin-api/health",
-  ];
+  const timestamp = tokens.date(req, res, "iso");
 
-  if (!micromatch.isMatch(data.url, ignore)) {
+  if (!micromatch.isMatch(data.url, parsedConfig?.ignore || [])) {
     knex("nodestation_logger")
-      .insert({
-        level,
-        method: data.method,
-        url: data.url,
-        status: data.status,
-        ip: data.ip,
-        res: data.res,
-        headers: sanitizeSensitiveData(data.headers),
-        body: sanitizeSensitiveData(data.body),
-        response_time: data.responseTime,
-      })
+      .insert(data)
       .catch((err) => console.error(err));
   }
 
   return [
-    data.timestamp.padEnd(24),
+    timestamp.padEnd(24),
     data.method.padEnd(3),
     String(data.status).padStart(1),
     data.url,
-    data.responseTime,
+    data.response_time,
   ].join(" ");
 });
 
