@@ -57,8 +57,14 @@ const logger = morgan((tokens, req, res) => {
   };
 
   const level = getLevel(data?.status);
+  const ignore = [
+    ...(parsedConfig?.ignore || []),
+    "/",
+    "/*.*",
+    "/admin-api/health",
+  ];
 
-  if (!micromatch.isMatch(data.url, parsedConfig?.ignore || [])) {
+  if (!micromatch.isMatch(data.url, ignore)) {
     knex("nodestation_logger")
       .insert({
         level,
