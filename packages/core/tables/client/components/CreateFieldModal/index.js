@@ -9,7 +9,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { AsideModal } from "@nstation/design-system";
 
 import ExtraInputs from "./components/ExtraInputs.js";
-import { clientContentTypes } from "@nstation/content-types";
+import { clientfieldTypes } from "@nstation/field-types";
 
 const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
   const onSubmit = async (formik_values) => {
@@ -80,8 +80,8 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
     onSubmit,
   });
 
-  const contentTypes = clientContentTypes()?.filter(
-    (item) => !item?.hiddenInContentTypeSelect
+  const fieldTypes = clientfieldTypes()?.filter(
+    (item) => !item?.hiddenInfieldTypeSelect
   );
 
   return (
@@ -118,7 +118,7 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
             helperText={formik.errors.type}
             disabled={form?.origin === "system"}
           >
-            {contentTypes?.map((item) => (
+            {fieldTypes?.map((item) => (
               <MenuItem value={item?.key}>
                 <Stack direction="row" gap={1.5} alignItems="center">
                   {item?.icon}

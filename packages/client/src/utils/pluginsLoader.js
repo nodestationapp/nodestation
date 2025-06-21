@@ -5,7 +5,7 @@ const core = [
   import("@nstation/tables/client/index.js"),
   import("@nstation/media/client/index.js"),
   import("@nstation/emails/client/index.js"),
-  import("@nstation/content-types/client/index.js"),
+  import("@nstation/field-types/client/index.js"),
 ];
 
 import pluginLoader from "@nstation/config/plugin-imports.js";

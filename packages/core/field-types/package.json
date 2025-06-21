@@ -1,9 +1,9 @@
 {
-  "name": "@nstation/content-types",
+  "name": "@nstation/field-types",
   "version": "1.20.6",
   "type": "module",
   "license": "MIT",
-  "description": "Nodestation's content-types plugin",
+  "description": "Nodestation's field-types plugin",
   "repository": {
     "type": "git",
     "url": "https://github.com/nodestationapp/nodestation.git"

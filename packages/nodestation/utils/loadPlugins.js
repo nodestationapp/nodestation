@@ -6,6 +6,7 @@ import { rootPath } from "@nstation/utils";
 import requireFromString from "require-from-string";
 
 import loadRoute from "./loadRoute.js";
+import { addFieldTypes, getFieldTypes } from "./loadFieldType.js";
 
 let core = [
   {
@@ -28,7 +29,15 @@ let core = [
     name: "@nstation/logger/server",
     type: "system",
   },
+  {
+    name: "@nstation/field-types/server",
+    type: "system",
+  },
 ];
+
+const app = {
+  addFieldTypes: (fieldTypes) => addFieldTypes(fieldTypes),
+};
 
 const loadPlugins = async (router) => {
   let config = fs_sys.readFileSync(
@@ -110,7 +119,22 @@ const loadPlugins = async (router) => {
 
       await upsertTable(file);
     }
+
+    const isServerFile = fs_sys.existsSync(
+      path.join(rootPath, "node_modules", plugin?.name, "index.js")
+    );
+
+    if (isServerFile) {
+      const { default: server } = await import(`${plugin?.name}/index.js`);
+      server.register(app);
+    }
+
+    // server.default.register(app);
+    // }
   }
+
+  const allTypes = getFieldTypes();
+  console.log(allTypes);
 
   return true;
 };

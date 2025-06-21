@@ -12,17 +12,17 @@ export default {
       icon: "lucide:list",
     });
 
-    app.addHook("content-types.add", [
+    app.addHook("field-types.add", [
       {
         label: "Endpoint Status",
         key: "logger:endpoint-status",
-        hiddenInContentTypeSelect: true,
+        hiddenInfieldTypeSelect: true,
         columnRender: (props) => <EndpointStatus {...props} />,
       },
       {
         label: "Endpoint Method",
         key: "logger:endpoint-method",
-        hiddenInContentTypeSelect: true,
+        hiddenInfieldTypeSelect: true,
         columnRender: (props) => <EndpointMethod {...props} />,
       },
     ]);

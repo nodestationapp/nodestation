@@ -34,19 +34,21 @@ import BooleanInput from "./inputRender/BooleanInput.js";
 import { useSlot } from "contexts/slots.js";
 
 export default () => {
-  const slot = useSlot("content-types.add");
+  const slot = useSlot("field-types.add");
 
   return [
     {
       key: "id",
       label: "ID",
       icon: <IdIcon />,
+      databaseType: "string",
       inputRender: (props) => <TextInput {...props} />,
       extraFields: (props) => <IdExtraFields {...props} />,
     },
     {
       key: "text",
       label: "Text",
+      databaseType: "string",
       icon: <ShortTextIcon />,
       inputRender: (props) => <TextInput {...props} />,
       extraFields: (props) => <TextExtraFields {...props} />,
@@ -55,6 +57,7 @@ export default () => {
       key: "boolean",
       label: "Boolean",
       icon: <BooleanIcon />,
+      databaseType: "integer",
       inputRender: (props) => <BooleanInput {...props} />,
       extraFields: (props) => <BooleanExtraFields {...props} />,
       columnRender: (props) => <BooleanColumn {...props} />,
@@ -62,6 +65,7 @@ export default () => {
     {
       key: "select",
       label: "Select",
+      databaseType: "string",
       icon: <EnumerationIcon />,
       inputRender: (props) => <SelectInput {...props} />,
       extraFields: (props) => <SelectExtraFields {...props} />,
@@ -71,6 +75,7 @@ export default () => {
       key: "numeric",
       label: "Number",
       icon: <NumericIcon />,
+      databaseType: "integer",
       inputRender: (props) => <TextInput {...props} type="number" />,
       extraFields: (props) => <NumericExtraFields {...props} />,
     },
@@ -78,6 +83,7 @@ export default () => {
       key: "media",
       label: "Media",
       icon: <MediaIcon />,
+      databaseType: "string",
       inputRender: (props) => <MediaInput {...props} />,
       columnRender: (props) => <MediaColumn {...props} />,
     },
@@ -85,6 +91,7 @@ export default () => {
       key: "user",
       label: "User",
       icon: <UserIcon />,
+      databaseType: "string",
       inputRender: (props) => <UserInput {...props} />,
       columnRender: (props) => <UserColumn {...props} />,
     },
@@ -92,6 +99,7 @@ export default () => {
       key: "json",
       label: "Json",
       icon: <JsonIcon />,
+      databaseType: "json",
       inputRender: (props) => <JsonInput {...props} />,
       extraFields: (props) => <JsonExtraFields {...props} />,
       columnRender: (props) => <JsonColumn {...props} />,
@@ -100,6 +108,7 @@ export default () => {
       key: "date",
       label: "Date",
       icon: <DateIcon />,
+      databaseType: "bigInteger",
       inputRender: (props) => <DateInput {...props} />,
       extraFields: (props) => <DateExtraFields {...props} />,
       columnRender: (props) => <DateColumn {...props} />,

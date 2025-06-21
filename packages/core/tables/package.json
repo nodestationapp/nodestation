@@ -22,7 +22,7 @@
     "glob": "^11.0.1",
     "react-collapse": "^5.1.1",
     "@nstation/design-system": "^1.20.6",
-    "@nstation/content-types": "^1.20.6"
+    "@nstation/field-types": "^1.20.6"
   },
   "files": [
     "./client",
