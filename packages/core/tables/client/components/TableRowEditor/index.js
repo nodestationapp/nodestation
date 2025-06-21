@@ -2,12 +2,14 @@ import { useFormik } from "formik";
 import Stack from "@mui/material/Stack";
 
 import { AsideModal } from "@nstation/design-system";
+import { clientContentTypes } from "@nstation/content-types";
 
-import tableInputRender from "../TableRowEditor/components/tableInputRender.js";
+// import tableInputRender from "../TableRowEditor/components/tableInputRender.js";
 
 import { useTable } from "@nstation/tables/client/contexts/table.js";
 
 const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
+  const contentTypes = clientContentTypes();
   const { data: table_data, addTableEntry, tableRefetch } = useTable();
 
   const onSubmit = async (values, { setSubmitting, setErrors, resetForm }) => {
@@ -57,12 +59,20 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
         header={open?.[table_data?.table?.displayName || "id"] || "Add entry"}
       >
         <Stack gap={1.5} direction="column">
-          {table_data?.table?.fields?.map((item, index) => {
+          {table_data?.table?.fields?.map((data) => {
             if (!!!open?.id) {
-              if (item?.slug === "id") return null;
+              if (data?.slug === "id") return null;
             }
 
-            return <div key={index}>{tableInputRender(item, formik)}</div>;
+            const inputRender = contentTypes?.find(
+              (item) => data?.type === item?.key
+            )?.inputRender;
+
+            if (!!inputRender) {
+              return inputRender({ data, formik });
+            } else {
+              return null;
+            }
           })}
         </Stack>
       </AsideModal>

@@ -20,13 +20,12 @@ const boolean_options = [
 
 const BooleanInput = ({ data, formik }) => {
   return (
-    <FormControl fullWidth>
-      <InputLabel id={data?.slug}>{item?.name}</InputLabel>
+    <FormControl fullWidth variant="standard">
+      <InputLabel id={data?.slug}>{data?.name}</InputLabel>
       <Select
         fullWidth
-        label={item?.name}
+        label={data?.name}
         size="medium"
-        variant="outlined"
         name={data?.slug}
         labelId={data?.slug}
         onChange={formik.handleChange}
