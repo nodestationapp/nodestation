@@ -2,14 +2,14 @@ import { useFormik } from "formik";
 import Stack from "@mui/material/Stack";
 
 import { AsideModal } from "@nstation/design-system";
-import { clientfieldTypes } from "@nstation/field-types";
+import { clientFieldTypes } from "@nstation/field-types";
 
 // import tableInputRender from "../TableRowEditor/components/tableInputRender.js";
 
 import { useTable } from "@nstation/tables/client/contexts/table.js";
 
 const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
-  const fieldTypes = clientfieldTypes();
+  const fieldTypes = clientFieldTypes();
   const { data: table_data, addTableEntry, tableRefetch } = useTable();
 
   const onSubmit = async (values, { setSubmitting, setErrors, resetForm }) => {

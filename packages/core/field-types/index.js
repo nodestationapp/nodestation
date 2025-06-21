@@ -1,3 +1,3 @@
-import clientfieldTypes from "./client/utils/fieldTypeData/index.js";
+import clientFieldTypes from "./client/utils/fieldTypeData/index.js";
 
-export { clientfieldTypes };
+export { clientFieldTypes };

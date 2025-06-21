@@ -5,13 +5,13 @@ import Relation from "../components/MuiTable/components/Relation/index.js";
 // import EndpointMethod from "../components/MuiTable/components/EndpointMethod.js";
 
 // import fieldTypeData from "../utils/fieldTypeData/index.js";
-import { clientfieldTypes } from "@nstation/field-types";
+import { clientFieldTypes } from "@nstation/field-types";
 
 const columnRender = (column, data) => {
   const isObject = (val) =>
     val !== null && typeof val === "object" && !Array.isArray(val);
 
-  const columnInfo = clientfieldTypes()?.find(
+  const columnInfo = clientFieldTypes()?.find(
     (item) => item?.key === column?.type
   );
   if (!!columnInfo?.columnRender) {

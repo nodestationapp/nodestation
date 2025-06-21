@@ -16,7 +16,7 @@
     {
       "name": "Method",
       "slug": "method",
-      "type": "text"
+      "type": "logger:endpoint-method"
     },
     {
       "name": "Url",
@@ -26,7 +26,7 @@
     {
       "name": "Status",
       "slug": "status",
-      "type": "text"
+      "type": "logger:endpoint-status"
     },
     {
       "name": "Res",

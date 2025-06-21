@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ListItemButton from "@mui/material/ListItemButton";
-import { clientfieldTypes } from "@nstation/field-types";
+import { clientFieldTypes } from "@nstation/field-types";
 
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
@@ -43,7 +43,7 @@ const FormFieldItem = ({
     transition,
   };
 
-  const current_type = clientfieldTypes()?.find((item) => item?.key === type);
+  const current_type = clientFieldTypes()?.find((item) => item?.key === type);
 
   return (
     <>

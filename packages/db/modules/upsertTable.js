@@ -1,57 +1,10 @@
-import fs from "fs";
-import path from "path";
 import knex from "./knex.js";
-import { rootPath } from "@nstation/utils";
-
-function buildKeyDbTypeMap(source) {
-  const regex =
-    /{\s*key\s*:\s*["'`](\w+)["'`][\s\S]*?databaseType\s*:\s*([^,\n}]+)/g;
-
-  const result = {};
-  let match;
-
-  while ((match = regex.exec(source))) {
-    const key = match[1];
-    let value = match[2].trim();
-
-    if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'")) ||
-      (value.startsWith("`") && value.endsWith("`"))
-    ) {
-      value = value.slice(1, -1);
-    }
-
-    if (value === "json") {
-      result[key] = process.env.DATABASE_CLIENT === "sqlite" ? "text" : "jsonb";
-    } else {
-      result[key] = value;
-    }
-  }
-
-  return result;
-}
+import { getFieldTypes } from "nodestation/utils/loadFieldType.js";
 
 function createOrModifyColumn({ table, schema, dbColumns }) {
   let column;
 
-  const readClientfieldTypes = fs.readFileSync(
-    path.join(
-      rootPath,
-      "node_modules",
-      "@nstation",
-      "field-types",
-      "client",
-      "utils",
-      "fieldTypeData",
-      "index.js"
-    ),
-    "utf8"
-  );
-
-  const typesMap = buildKeyDbTypeMap(readClientfieldTypes);
-
-  const type = typesMap[schema?.type];
+  const type = getFieldTypes()[schema?.type] || "string";
 
   column = table?.[type]?.(schema?.slug);
 

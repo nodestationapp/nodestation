@@ -9,7 +9,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { AsideModal } from "@nstation/design-system";
 
 import ExtraInputs from "./components/ExtraInputs.js";
-import { clientfieldTypes } from "@nstation/field-types";
+import { clientFieldTypes } from "@nstation/field-types";
 
 const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
   const onSubmit = async (formik_values) => {
@@ -80,7 +80,7 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
     onSubmit,
   });
 
-  const fieldTypes = clientfieldTypes()?.filter(
+  const fieldTypes = clientFieldTypes()?.filter(
     (item) => !item?.hiddenInfieldTypeSelect
   );
 

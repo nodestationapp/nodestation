@@ -14,10 +14,10 @@
 // import BooleanInput from "./BooleanInput.js";
 // import RelationInput from "./RelationInput.js";
 
-import { clientfieldTypes } from "@nstation/field-types";
+import { clientFieldTypes } from "@nstation/field-types";
 
 const tableInputRender = (data, formik) => {
-  const fieldTypes = clientfieldTypes();
+  const fieldTypes = clientFieldTypes();
 
   const InputRender = fieldTypes?.find(
     (item) => data?.type === item?.key || "text"

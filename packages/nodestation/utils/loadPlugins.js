@@ -6,9 +6,13 @@ import { rootPath } from "@nstation/utils";
 import requireFromString from "require-from-string";
 
 import loadRoute from "./loadRoute.js";
-import { addFieldTypes, getFieldTypes } from "./loadFieldType.js";
+import { addFieldTypes } from "./loadFieldType.js";
 
 let core = [
+  {
+    name: "@nstation/field-types/server",
+    type: "system",
+  },
   {
     name: "@nstation/auth/server",
     type: "system",
@@ -27,10 +31,6 @@ let core = [
   },
   {
     name: "@nstation/logger/server",
-    type: "system",
-  },
-  {
-    name: "@nstation/field-types/server",
     type: "system",
   },
 ];
@@ -70,20 +70,16 @@ const loadPlugins = async (router) => {
     }))
   );
 
-  const table_schemas = glob.sync(
-    path.join(rootPath, "src", "tables", "**", "schemas", "*.json"),
-    {
-      nodir: true,
-    }
-  );
-  for await (const schema of table_schemas) {
-    let file = fs_sys.readFileSync(schema, "utf-8");
-    file = JSON.parse(file);
-
-    await upsertTable(file);
-  }
-
   for await (const plugin of core) {
+    const isServerFile = fs_sys.existsSync(
+      path.join(rootPath, "node_modules", plugin?.name, "index.js")
+    );
+
+    if (isServerFile) {
+      const { default: server } = await import(`${plugin?.name}/index.js`);
+      server.register(app);
+    }
+
     //ROUTES
     const { default: routes } = await import(`${plugin?.name}/api/index.js`);
     await loadRoute(router, routes, plugin?.type);
@@ -119,22 +115,21 @@ const loadPlugins = async (router) => {
 
       await upsertTable(file);
     }
-
-    const isServerFile = fs_sys.existsSync(
-      path.join(rootPath, "node_modules", plugin?.name, "index.js")
-    );
-
-    if (isServerFile) {
-      const { default: server } = await import(`${plugin?.name}/index.js`);
-      server.register(app);
-    }
-
-    // server.default.register(app);
-    // }
   }
 
-  const allTypes = getFieldTypes();
-  console.log(allTypes);
+  const table_schemas = glob.sync(
+    path.join(rootPath, "src", "tables", "**", "schemas", "*.json"),
+    {
+      nodir: true,
+    }
+  );
+
+  for await (const schema of table_schemas) {
+    let file = fs_sys.readFileSync(schema, "utf-8");
+    file = JSON.parse(file);
+
+    await upsertTable(file);
+  }
 
   return true;
 };

@@ -1,12 +1,12 @@
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 
-import { clientfieldTypes } from "@nstation/field-types";
+import { clientFieldTypes } from "@nstation/field-types";
 
 const ExtraInputs = ({ locked, type }) => {
   if (!!!type) return null;
 
-  const selected_type = clientfieldTypes()?.find((item) => item?.key === type);
+  const selected_type = clientFieldTypes()?.find((item) => item?.key === type);
 
   return (
     <Stack direction="column" gap={2}>
