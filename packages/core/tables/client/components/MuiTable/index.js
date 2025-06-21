@@ -1,3 +1,5 @@
+import "./styles.scss";
+
 import { useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 

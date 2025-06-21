@@ -8,13 +8,13 @@ const columnsToShow = [
   {
     slug: "status",
     name: "Status",
-    type: "endpoint_status",
+    type: "logger:endpoint-status",
     columnType: "number",
   },
   {
     slug: "method",
     name: "Method",
-    type: "endpoint_method",
+    type: "logger:endpoint-method",
     columnType: "singleSelect",
     valueOptions: ["GET", "POST", "PUT", "DELETE"],
   },

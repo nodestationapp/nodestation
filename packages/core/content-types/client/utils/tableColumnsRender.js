@@ -4,16 +4,13 @@ import Relation from "../components/MuiTable/components/Relation/index.js";
 // import EndpointStatus from "../components/MuiTable/components/EndpointStatus.js";
 // import EndpointMethod from "../components/MuiTable/components/EndpointMethod.js";
 
-// import fieldTypeData from "../utils/fieldTypeData/index.js";
-import { clientContentTypes } from "@nstation/content-types";
+import fieldTypeData from "./fieldTypeData/index.js";
 
 const columnRender = (column, data) => {
   const isObject = (val) =>
     val !== null && typeof val === "object" && !Array.isArray(val);
 
-  const columnInfo = clientContentTypes()?.find(
-    (item) => item?.key === column?.type
-  );
+  const columnInfo = fieldTypeData?.find((item) => item?.key === column?.type);
   if (!!columnInfo?.columnRender) {
     return columnInfo?.columnRender({ data, options: column?.options });
   } else {
@@ -69,8 +66,6 @@ const getType = (column) => {
   switch (column?.type) {
     case "numeric":
       return "number";
-    case "date":
-      return "date";
     default:
       return "string";
   }

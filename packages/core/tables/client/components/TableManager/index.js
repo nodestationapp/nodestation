@@ -24,7 +24,6 @@ const TableManagerContent = ({
   onNewClick,
   onRowClick,
   hideActions,
-  rowFullWidth,
   hiddenColumns,
   appendColumns,
   onEntrySubmit,
@@ -64,7 +63,6 @@ const TableManagerContent = ({
   columnsToShow = [...appendColumns, ...columnsToShow];
 
   const columns = tableColumnsRender({
-    flex: rowFullWidth,
     columns: columnsToShow,
     columnSizes,
   });

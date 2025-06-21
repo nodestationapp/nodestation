@@ -31,6 +31,8 @@ const getLevel = (status) => {
 
 const sanitizeSensitiveData = (body) => {
   const sensitiveFields = parsedConfig?.sensitive || [];
+  let ignore = parsedConfig?.ignore || [];
+  ignore = [...ignore, "/", "/*.*"];
 
   let sanitizedBody = body;
 

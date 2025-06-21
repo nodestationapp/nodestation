@@ -22,7 +22,7 @@ const Users = () => {
         {
           name: "User",
           sort: "first_name",
-          type: "user_profile",
+          type: "user",
           slug: "user",
           origin: "system",
         },

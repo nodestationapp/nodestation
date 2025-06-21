@@ -6,12 +6,10 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-
 import { AsideModal } from "@nstation/design-system";
-import ExtraInputs from "./components/ExtraInputs/index.js";
 
-import field_type_data from "../../utils/field_type_data.js";
+import ExtraInputs from "./components/ExtraInputs.js";
+import { clientContentTypes } from "@nstation/content-types";
 
 const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
   const onSubmit = async (formik_values) => {
@@ -82,6 +80,10 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
     onSubmit,
   });
 
+  const contentTypes = clientContentTypes()?.filter(
+    (item) => !item?.hiddenInContentTypeSelect
+  );
+
   return (
     <AsideModal
       header="Add field"
@@ -116,8 +118,8 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
             helperText={formik.errors.type}
             disabled={form?.origin === "system"}
           >
-            {field_type_data?.map((item) => (
-              <MenuItem value={item?.value}>
+            {contentTypes?.map((item) => (
+              <MenuItem value={item?.key}>
                 <Stack direction="row" gap={1.5} alignItems="center">
                   {item?.icon}
                   {item?.label}

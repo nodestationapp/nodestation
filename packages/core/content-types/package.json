@@ -1,9 +1,9 @@
 {
-  "name": "@nstation/tables",
+  "name": "@nstation/content-types",
   "version": "1.20.6",
   "type": "module",
   "license": "MIT",
-  "description": "Nodestation's tables plugin",
+  "description": "Nodestation's content-types plugin",
   "repository": {
     "type": "git",
     "url": "https://github.com/nodestationapp/nodestation.git"
@@ -21,8 +21,7 @@
     "slugify": "^1.6.6",
     "glob": "^11.0.1",
     "react-collapse": "^5.1.1",
-    "@nstation/design-system": "^1.20.6",
-    "@nstation/content-types": "^1.20.6"
+    "@nstation/design-system": "^1.20.6"
   },
   "files": [
     "./client",
