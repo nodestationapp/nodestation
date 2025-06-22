@@ -1,10 +1,4 @@
 import moment from "moment";
-
-import Relation from "../components/MuiTable/components/Relation/index.js";
-// import EndpointStatus from "../components/MuiTable/components/EndpointStatus.js";
-// import EndpointMethod from "../components/MuiTable/components/EndpointMethod.js";
-
-// import fieldTypeData from "../utils/fieldTypeData/index.js";
 import { clientFieldTypes } from "@nstation/field-types";
 
 const columnRender = (column, data) => {
@@ -15,44 +9,10 @@ const columnRender = (column, data) => {
     (item) => item?.key === column?.type
   );
   if (!!columnInfo?.columnRender) {
-    return columnInfo?.columnRender({ data, options: column?.options });
+    return columnInfo?.columnRender({ data, column });
   } else {
-    return !!!isObject(data) ? (
-      data
-    ) : !!column?.relation ? (
-      <Relation data={data} relation={column?.relation} />
-    ) : (
-      "-"
-    );
+    return !!!isObject(data) ? data : "-";
   }
-
-  // switch (column?.type) {
-  //   case "user_profile":
-  //   case "user":
-  //     return <UserProfile data={data} />;
-  //   case "select":
-  //     return <Select data={data} options={column?.options} />;
-  //   case "boolean":
-  //     return <Boolean data={data} />;
-  //   case "date":
-  //     return <Date data={data} />;
-  //   case "media":
-  //     return <Media data={data} />;
-  //   case "json":
-  //     return <Json data={data} />;
-  //   case "endpoint_status":
-  //     return <EndpointStatus data={data} />;
-  //   case "endpoint_method":
-  //     return <EndpointMethod data={data} />;
-  //   default:
-  //     return !!!isObject(data) ? (
-  //       data
-  //     ) : !!column?.relation ? (
-  //       <Relation data={data} relation={column?.relation} />
-  //     ) : (
-  //       "-"
-  //     );
-  // }
 };
 
 const getValueFormatter = (column) => {

@@ -1,8 +1,8 @@
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
-const Select = ({ data, options }) => {
-  const colors = options?.reduce((acc, item) => {
+const Select = ({ data, column }) => {
+  const colors = column?.options?.reduce((acc, item) => {
     acc[item?.value] = item?.color;
     return acc;
   }, {});

@@ -96,7 +96,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
       try {
         let temp = { ...values };
         temp?.fields?.forEach((item) => {
-          if (!!item?.relation) {
+          if (item?.type === "relation") {
             item.relation = item?.relation?.table;
           }
         });

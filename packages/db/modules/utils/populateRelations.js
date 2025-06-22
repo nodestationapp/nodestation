@@ -40,7 +40,7 @@ const populateRelations = (query, table) => {
         );
     }
 
-    if (!!item?.relation) {
+    if (item?.type === "relation") {
       const schema = fs.getSchema(item?.relation?.table);
 
       query = query
@@ -55,23 +55,6 @@ const populateRelations = (query, table) => {
           `${schema?.tableName}.${schema?.displayName} as ${item?.slug}.${schema?.displayName}`
         );
     }
-
-    // if (!!item?.relation) {
-    //   const tables = fs.getFiles(`/src/schemas/tables/${item?.relation}.json`);
-    //   const ref_table = tables?.[0];
-
-    //   query = query
-    //     .leftJoin(
-    //       ref_table?.tableName,
-    //       `${table?.tableName}.${item?.slug}`,
-    //       `${ref_table?.tableName}.id`
-    //     )
-    //     .select(
-    //       `${table?.tableName}.*`,
-    //       `${ref_table?.tableName}.id as ${item?.slug}.id`,
-    //       `${ref_table?.tableName}.${ref_table?.display_name} as ${item?.slug}.label`
-    //     );
-    // }
   });
 
   return query;

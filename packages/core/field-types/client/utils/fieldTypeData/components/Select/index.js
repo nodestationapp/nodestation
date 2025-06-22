@@ -1,13 +1,14 @@
 import { useFormikContext } from "formik";
 
-import { Divider, Stack } from "@mui/material";
+import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import Select from "@mui/material/Select";
+import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
+
 import Options from "./Options.js";
 
 const variant_options = [

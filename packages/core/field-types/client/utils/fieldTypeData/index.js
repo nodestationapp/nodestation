@@ -5,6 +5,7 @@ import UserIcon from "#client/icons/user.svg";
 import MediaIcon from "#client/icons/media.svg";
 import NumericIcon from "#client/icons/number.svg";
 import BooleanIcon from "#client/icons/boolean.svg";
+import RelationIcon from "#client/icons/relation.svg";
 import ShortTextIcon from "#client/icons/short-text.svg";
 import EnumerationIcon from "#client/icons/enumeration.svg";
 
@@ -14,6 +15,7 @@ import JsonExtraFields from "#client/utils/fieldTypeData/components/Json.js";
 import DateExtraFields from "#client/utils/fieldTypeData/components/Date.js";
 import NumericExtraFields from "#client/utils/fieldTypeData/components/Numeric.js";
 import BooleanExtraFields from "#client/utils/fieldTypeData/components/Boolean.js";
+import RelationExtraFields from "#client/utils/fieldTypeData/components/Relation.js";
 import SelectExtraFields from "#client/utils/fieldTypeData/components/Select/index.js";
 
 import JsonColumn from "#client/utils/fieldTypeData/columnRender/Json.js";
@@ -30,8 +32,10 @@ import JsonInput from "./inputRender/JsonInput.js";
 import MediaInput from "./inputRender/MediaInput.js";
 import SelectInput from "./inputRender/SelectInput.js";
 import BooleanInput from "./inputRender/BooleanInput.js";
+import RelationInput from "./inputRender/RelationInput.js";
 
 import { useSlot } from "contexts/slots.js";
+import Relation from "./columnRender/Relation.js";
 
 export default () => {
   const slot = useSlot("field-types.add");
@@ -87,6 +91,14 @@ export default () => {
       icon: <UserIcon />,
       inputRender: (props) => <UserInput {...props} />,
       columnRender: (props) => <UserColumn {...props} />,
+    },
+    {
+      key: "relation",
+      label: "Relation",
+      icon: <RelationIcon />,
+      columnRender: (props) => <Relation {...props} />,
+      inputRender: (props) => <RelationInput {...props} />,
+      extraFields: (props) => <RelationExtraFields {...props} />,
     },
     {
       key: "json",
