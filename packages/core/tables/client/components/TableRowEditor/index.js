@@ -4,8 +4,6 @@ import Stack from "@mui/material/Stack";
 import { AsideModal } from "@nstation/design-system";
 import { clientFieldTypes } from "@nstation/field-types";
 
-// import tableInputRender from "../TableRowEditor/components/tableInputRender.js";
-
 import { useTable } from "@nstation/tables/client/contexts/table.js";
 
 const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
