@@ -19,8 +19,6 @@ const MediaCard = ({ file, percent, onDelete }) => {
 
   const is_uploading = !!percent && percent !== 100;
 
-  console.log(type);
-
   return (
     <Card sx={{ width: "100%", p: 1, pb: 0, zIndex: -2 }}>
       <CardMedia
