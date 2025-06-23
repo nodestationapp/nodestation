@@ -26,7 +26,10 @@ const EndpointMethod = ({ data }) => {
       label={data}
       size="small"
       variant="filled"
-      sx={{ backgroundColor: `${methodColors[data]} !important` }}
+      sx={{
+        pointerEvents: "none",
+        backgroundColor: `${methodColors[data]} !important`,
+      }}
     />
   );
 };

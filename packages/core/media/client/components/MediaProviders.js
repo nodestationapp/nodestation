@@ -5,16 +5,19 @@ import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
+import { useColorScheme } from "@mui/material";
 
 import { useMedia } from "../contexts/media.js";
 import activeEmailChecker from "../utils/activeEmailChecker.js";
 import ProviderSettingsModal from "./ProviderSettingsModal.js";
 
 import AwsLogo from "../icons/aws.svg";
+import AwsLogoDark from "../icons/aws-dark.svg";
 import StorageIcon from "@mui/icons-material/Storage";
 import DigitalOceanLogo from "../icons/digitalocean.svg";
 
 const MediaProviders = () => {
+  const { mode } = useColorScheme();
   const { media_settings, updateMediaSettings } = useMedia();
   const [provider_settings_modal, setProviderSettingsModal] = useState(false);
 
@@ -29,7 +32,12 @@ const MediaProviders = () => {
       active: media_settings?.active === "local",
     },
     {
-      icon: <AwsLogo height={22} width={36} />,
+      icon:
+        mode === "dark" ? (
+          <AwsLogo height={22} width={36} />
+        ) : (
+          <AwsLogoDark height={22} width={36} />
+        ),
       label: "AWS S3",
       value: "aws",
       ready: media_active?.aws,

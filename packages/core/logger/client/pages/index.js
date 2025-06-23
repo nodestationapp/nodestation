@@ -9,14 +9,11 @@ const columnsToShow = [
     slug: "status",
     name: "Status",
     type: "logger:endpoint-status",
-    columnType: "number",
   },
   {
     slug: "method",
     name: "Method",
     type: "logger:endpoint-method",
-    columnType: "singleSelect",
-    valueOptions: ["GET", "POST", "PUT", "DELETE"],
   },
   {
     flex: 1,

@@ -1,6 +1,6 @@
+import Logger from "./pages/index.js";
 import EndpointMethod from "./components/EndpointMethod.js";
 import EndpointStatus from "./components/EndpointStatus.js";
-import Logger from "./pages/index.js";
 
 export default {
   register(app) {
@@ -14,6 +14,7 @@ export default {
 
     app.addHook("field-types.add", [
       {
+        columnType: "number",
         label: "Endpoint Status",
         key: "logger:endpoint-status",
         hiddenInfieldTypeSelect: true,
@@ -21,9 +22,16 @@ export default {
       },
       {
         label: "Endpoint Method",
+        columnType: "singleSelect",
         key: "logger:endpoint-method",
         hiddenInfieldTypeSelect: true,
         columnRender: (props) => <EndpointMethod {...props} />,
+        filterValueOptions: () => [
+          { value: "GET", label: "GET" },
+          { value: "POST", label: "POST" },
+          { value: "PUT", label: "PUT" },
+          { value: "DELETE", label: "DELETE" },
+        ],
       },
     ]);
   },

@@ -18,6 +18,7 @@ import BooleanExtraFields from "#client/utils/fieldTypeData/components/Boolean.j
 import RelationExtraFields from "#client/utils/fieldTypeData/components/Relation.js";
 import SelectExtraFields from "#client/utils/fieldTypeData/components/Select/index.js";
 
+import Relation from "./columnRender/Relation.js";
 import JsonColumn from "#client/utils/fieldTypeData/columnRender/Json.js";
 import DateColumn from "#client/utils/fieldTypeData/columnRender/Date.js";
 import MediaColumn from "#client/utils/fieldTypeData/columnRender/Media.js";
@@ -35,7 +36,6 @@ import BooleanInput from "./inputRender/BooleanInput.js";
 import RelationInput from "./inputRender/RelationInput.js";
 
 import { useSlot } from "contexts/slots.js";
-import Relation from "./columnRender/Relation.js";
 
 export default () => {
   const slot = useSlot("field-types.add");
@@ -59,21 +59,29 @@ export default () => {
       key: "boolean",
       label: "Boolean",
       icon: <BooleanIcon />,
+      columnType: "singleSelect",
       inputRender: (props) => <BooleanInput {...props} />,
       extraFields: (props) => <BooleanExtraFields {...props} />,
       columnRender: (props) => <BooleanColumn {...props} />,
+      filterValueOptions: () => [
+        { value: 1, label: "True" },
+        { value: 0, label: "False" },
+      ],
     },
     {
       key: "select",
       label: "Select",
       icon: <EnumerationIcon />,
+      columnType: "singleSelect",
       inputRender: (props) => <SelectInput {...props} />,
       extraFields: (props) => <SelectExtraFields {...props} />,
       columnRender: (props) => <SelectColumn {...props} />,
+      filterValueOptions: (props) => props,
     },
     {
       key: "numeric",
       label: "Number",
+      columnType: "number",
       icon: <NumericIcon />,
       inputRender: (props) => <TextInput {...props} type="number" />,
       extraFields: (props) => <NumericExtraFields {...props} />,
@@ -81,6 +89,7 @@ export default () => {
     {
       key: "media",
       label: "Media",
+      filterable: false,
       icon: <MediaIcon />,
       inputRender: (props) => <MediaInput {...props} />,
       columnRender: (props) => <MediaColumn {...props} />,
@@ -104,6 +113,7 @@ export default () => {
       key: "json",
       label: "Json",
       icon: <JsonIcon />,
+      filterable: false,
       inputRender: (props) => <JsonInput {...props} />,
       extraFields: (props) => <JsonExtraFields {...props} />,
       columnRender: (props) => <JsonColumn {...props} />,
@@ -112,6 +122,7 @@ export default () => {
       key: "date",
       label: "Date",
       icon: <DateIcon />,
+      columnType: "date",
       inputRender: (props) => <DateInput {...props} />,
       extraFields: (props) => <DateExtraFields {...props} />,
       columnRender: (props) => <DateColumn {...props} />,

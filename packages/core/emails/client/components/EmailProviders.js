@@ -3,21 +3,28 @@ import { useState } from "react";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
+import { useColorScheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 
 import { useEmails } from "../contexts/emails.js";
 import activeEmailChecker from "../utils/activeEmailChecker.js";
 
-import StorageIcon from "@mui/icons-material/Storage";
-
 import AwsLogo from "../icons/aws.svg";
 import MailgunLogo from "../icons/mailgun.svg";
+import AwsLogoDark from "../icons/aws-dark.svg";
 import MailchimpLogo from "../icons/mailchimp.svg";
+import MailgunLogoDark from "../icons/mailgun-dark.svg";
 import ElasticEmailLogo from "../icons/elastic-email.svg";
+import MailchimpLogoDark from "../icons/mailchimp-dark.svg";
 import ProviderSettingsModal from "./ProviderSettingsModal.js";
+import ElasticEmailLogoDark from "../icons/elastic-email-dark.svg";
+
+import StorageIcon from "@mui/icons-material/Storage";
 
 const EmailProviders = () => {
+  const { mode } = useColorScheme();
+
   const { email_settings, updateEmailSettings } = useEmails();
   const [provider_settings_modal, setProviderSettingsModal] = useState(false);
 
@@ -32,26 +39,46 @@ const EmailProviders = () => {
       active: email_settings?.active === "smtp",
     },
     {
-      icon: <MailchimpLogo width={95} height={24} />,
+      icon:
+        mode === "dark" ? (
+          <MailchimpLogo width={95} height={24} />
+        ) : (
+          <MailchimpLogoDark width={95} height={24} />
+        ),
       value: "mailchimp",
       ready: email_active?.mailchimp,
       active: email_settings?.active === "mailchimp",
     },
     {
-      icon: <MailgunLogo width={85} height={24} />,
+      icon:
+        mode === "dark" ? (
+          <MailgunLogo width={85} height={24} />
+        ) : (
+          <MailgunLogoDark width={85} height={24} />
+        ),
       value: "mailgun",
       ready: email_active?.mailgun,
       active: email_settings?.active === "mailgun",
     },
     {
-      icon: <AwsLogo height={22} width={36} />,
+      icon:
+        mode === "dark" ? (
+          <AwsLogo height={22} width={36} />
+        ) : (
+          <AwsLogoDark height={22} width={36} />
+        ),
       label: "Amazon SES",
       value: "aws",
       ready: email_active?.aws,
       active: email_settings?.active === "aws",
     },
     {
-      icon: <ElasticEmailLogo width={110} height={24} />,
+      icon:
+        mode === "dark" ? (
+          <ElasticEmailLogo width={110} height={24} />
+        ) : (
+          <ElasticEmailLogoDark width={110} height={24} />
+        ),
       value: "elastic",
       ready: email_active?.elastic,
       active: email_settings?.active === "elastic",

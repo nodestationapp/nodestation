@@ -1,13 +1,10 @@
 import moment from "moment";
 import { clientFieldTypes } from "@nstation/field-types";
 
-const columnRender = (column, data) => {
+const columnRender = (column, data, columnInfo) => {
   const isObject = (val) =>
     val !== null && typeof val === "object" && !Array.isArray(val);
 
-  const columnInfo = clientFieldTypes()?.find(
-    (item) => item?.key === column?.type
-  );
   if (!!columnInfo?.columnRender) {
     return columnInfo?.columnRender({ data, column });
   } else {
@@ -25,42 +22,47 @@ const getValueFormatter = (column) => {
   }
 };
 
-const getType = (column) => {
-  switch (column?.type) {
-    case "numeric":
-      return "number";
-    case "date":
-      return "date";
-    default:
-      return "string";
-  }
-};
-
 const tableColumnsRender = ({ columns, columnSizes }) => {
   return !!columns?.length
     ? columns?.map((column) => {
+        const columnInfo = clientFieldTypes()?.find(
+          (item) => item?.key === column?.type
+        );
+
+        const type = columnInfo?.columnType || "string";
         let width = columnSizes?.[column?.slug] || column?.width || undefined;
         const valueFormatter =
           column?.valueFormatter || getValueFormatter(column);
-        const type = column?.columnType || getType(column);
 
         return {
           type,
           width,
+          align: "left",
+          headerAlign: "left",
           field: column?.slug,
           flex: column?.flex || 0,
           headerName: column?.name,
           minWidth: column?.minWidth || 100,
-          valueOptions: column?.valueOptions || undefined,
+          filterable:
+            columnInfo?.filterable !== undefined
+              ? columnInfo?.filterable
+              : true,
+          valueOptions: !!columnInfo?.filterValueOptions
+            ? columnInfo?.filterValueOptions(column?.options)
+            : undefined,
           valueGetter: column?.valueGetter || undefined,
           valueFormatter: valueFormatter || undefined,
+          filterOperators: !!columnInfo?.filterOperators
+            ? columnInfo?.filterOperators(column)
+            : undefined,
           renderCell: (params) =>
             !!!valueFormatter
               ? column?.renderCell
                 ? column?.renderCell(params)
                 : columnRender(
                     column,
-                    params.value !== undefined ? params.value : params?.row
+                    params.value !== undefined ? params.value : params?.row,
+                    columnInfo
                   )
               : undefined,
         };
