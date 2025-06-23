@@ -10,7 +10,11 @@ const getFileType = (type) => {
       label: "Unknown",
       icon: (
         <InsertDriveFile
-          sx={{ height: 50, width: 50, color: "background.paper" }}
+          sx={(theme) => ({
+            height: 50,
+            width: 50,
+            color: (theme.vars || theme).palette.divider,
+          })}
         />
       ),
     };
@@ -20,14 +24,26 @@ const getFileType = (type) => {
       return {
         label: "Image",
         icon: (
-          <Image sx={{ height: 50, width: 50, color: "background.paper" }} />
+          <Image
+            sx={(theme) => ({
+              height: 50,
+              width: 50,
+              color: (theme.vars || theme).palette.divider,
+            })}
+          />
         ),
       };
     case type.startsWith("video/"):
       return {
         label: "Video",
         icon: (
-          <Videocam sx={{ height: 50, width: 50, color: "background.paper" }} />
+          <Videocam
+            sx={(theme) => ({
+              height: 50,
+              width: 50,
+              color: (theme.vars || theme).palette.divider,
+            })}
+          />
         ),
       };
     case type.startsWith("audio/"):
@@ -35,7 +51,11 @@ const getFileType = (type) => {
         label: "Audio",
         icon: (
           <MusicNote
-            sx={{ height: 50, width: 50, color: "background.paper" }}
+            sx={(theme) => ({
+              height: 50,
+              width: 50,
+              color: (theme.vars || theme).palette.divider,
+            })}
           />
         ),
       };
@@ -43,7 +63,13 @@ const getFileType = (type) => {
       return {
         label: "Text",
         icon: (
-          <Article sx={{ height: 50, width: 50, color: "background.paper" }} />
+          <Article
+            sx={(theme) => ({
+              height: 50,
+              width: 50,
+              color: (theme.vars || theme).palette.divider,
+            })}
+          />
         ),
       };
     case type.startsWith("application/"):
@@ -52,7 +78,11 @@ const getFileType = (type) => {
           label: "File",
           icon: (
             <InsertDriveFile
-              sx={{ height: 50, width: 50, color: "background.paper" }}
+              sx={(theme) => ({
+                height: 50,
+                width: 50,
+                color: (theme.vars || theme).palette.divider,
+              })}
             />
           ),
         };
@@ -61,7 +91,11 @@ const getFileType = (type) => {
           label: "Document",
           icon: (
             <Article
-              sx={{ height: 50, width: 50, color: "background.paper" }}
+              sx={(theme) => ({
+                height: 50,
+                width: 50,
+                color: (theme.vars || theme).palette.divider,
+              })}
             />
           ),
         };
@@ -70,7 +104,11 @@ const getFileType = (type) => {
         label: "File",
         icon: (
           <InsertDriveFile
-            sx={{ height: 50, width: 50, color: "background.paper" }}
+            sx={(theme) => ({
+              height: 50,
+              width: 50,
+              color: (theme.vars || theme).palette.divider,
+            })}
           />
         ),
       };

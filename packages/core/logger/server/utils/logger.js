@@ -31,8 +31,6 @@ const getLevel = (status) => {
 
 const sanitizeSensitiveData = (body) => {
   const sensitiveFields = parsedConfig?.sensitive || [];
-  let ignore = parsedConfig?.ignore || [];
-  ignore = [...ignore, "/", "/*.*"];
 
   let sanitizedBody = body;
 
@@ -62,7 +60,10 @@ const logger = morgan((tokens, req, res) => {
 
   const timestamp = tokens.date(req, res, "iso");
 
-  if (!micromatch.isMatch(data.url, parsedConfig?.ignore || [])) {
+  let ignore = parsedConfig?.ignore || [];
+  ignore = [...ignore, "/", "/*.*"];
+
+  if (!micromatch.isMatch(data.url, ignore || [])) {
     knex("nodestation_logger")
       .insert(data)
       .catch((err) => console.error(err));

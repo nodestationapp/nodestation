@@ -5,7 +5,6 @@ import Switch from "@mui/material/Switch";
 import Select from "@mui/material/Select";
 import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
@@ -47,17 +46,26 @@ const SelectInput = ({ locked }) => {
           ))}
         </Select>
       </Stack>
-      <TextField
-        fullWidth
-        name="default"
-        label="Default"
-        variant="standard"
-        value={values.default}
-        onBlur={handleBlur}
-        error={errors.default}
-        helperText={errors.default}
-        onChange={(e) => setFieldValue("default", e.target.value)}
-      />
+      <Stack>
+        <InputLabel id="variant-select-label">Default</InputLabel>
+        <Select
+          key={values?.default}
+          name="default"
+          label="Default"
+          disabled={locked}
+          variant="standard"
+          labelId="default-select-label"
+          value={values.default}
+          onChange={(e) => setFieldValue("default", e.target.value)}
+          onBlur={handleBlur}
+          error={errors.default}
+          helperText={errors.default}
+        >
+          {values.options?.map((item) => (
+            <MenuItem value={item?.value}>{item?.label}</MenuItem>
+          ))}
+        </Select>
+      </Stack>
       <FormControlLabel
         name="required"
         label="Required"
