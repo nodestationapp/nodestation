@@ -1,6 +1,6 @@
 {
   "name": "@nstation/emails",
-  "version": "1.20.7-beta.1",
+  "version": "1.20.7",
   "type": "module",
   "license": "MIT",
   "description": "Nodestation's emails plugin",
@@ -17,7 +17,7 @@
     "@monaco-editor/react": "^4.7.0",
     "glob": "^11.0.1",
     "nodemailer": "^7.0.3",
-    "@nstation/design-system": "1.20.7-beta.1"
+    "@nstation/design-system": "1.20.7"
   },
   "files": [
     "./client",
