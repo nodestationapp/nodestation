@@ -21,7 +21,7 @@ Endpoints, Crons, Forms, Authentication, Media, Logs, Tables — <strong>everyth
 <br />
 
 <p align="center">
-  <img src="https://nodestation-assets.s3.ap-southeast-1.amazonaws.com/authentication-visual.png" alt="Authentication page" />
+  <img src="https://nodestation-assets.s3.ap-southeast-1.amazonaws.com/authentication-visual-4.png" alt="Authentication pages" />
 </p>
 
 ---
@@ -56,6 +56,24 @@ To start the application, run:
 ```bash
 npm start
 ```
+
+## 🛠️ Development
+
+To start the app in development mode, run:
+
+```bash
+npm run dev
+```
+
+## 📦 Build
+
+To build the production-ready version of the app, run:
+
+```bash
+npm run build
+```
+
+This will create optimized build files ready for deployment.
 
 ## 🤝 Contributing
 
