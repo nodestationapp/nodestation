@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 
-import {
-  Autocomplete,
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { api } from "@nstation/design-system/utils";
 
 import UserProfile from "@nstation/tables/client/components/MuiTable/components/UserProfile/index.js";
@@ -69,13 +63,11 @@ const UserInput = ({ data, formik, size = "medium" }) => {
 
   return (
     <Autocomplete
-      fullWidth
       open={open}
       options={options}
       loading={loading}
       onOpen={handleOpen}
       onClose={handleClose}
-      labelId="default-select-label"
       sx={{ "& .MuiOutlinedInput-root": { pl: "14px !important" } }}
       getOptionLabel={(option) =>
         option !== "null" ? (
@@ -98,7 +90,7 @@ const UserInput = ({ data, formik, size = "medium" }) => {
       renderInput={(params) => (
         <TextField
           {...params}
-          label={data?.name}
+          label="Value"
           name={data?.slug}
           size={size}
           InputLabelProps={

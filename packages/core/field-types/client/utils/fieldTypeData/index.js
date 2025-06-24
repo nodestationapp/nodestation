@@ -35,8 +35,10 @@ import SelectInput from "./inputRender/SelectInput.js";
 import BooleanInput from "./inputRender/BooleanInput.js";
 import RelationInput from "./inputRender/RelationInput.js";
 
-import { useSlot } from "contexts/slots.js";
 import UserFilter from "./customFilters/User.js";
+import RelationFilter from "./customFilters/Relation.js";
+
+import { useSlot } from "contexts/slots.js";
 
 export default () => {
   const slot = useSlot("field-types.add");
@@ -110,6 +112,7 @@ export default () => {
       columnRender: (props) => <Relation {...props} />,
       inputRender: (props) => <RelationInput {...props} />,
       extraFields: (props) => <RelationExtraFields {...props} />,
+      filterOperators: (props) => RelationFilter(props),
     },
     {
       key: "json",
