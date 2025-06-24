@@ -1,14 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { api } from "@nstation/design-system/utils";
 
 import UserProfile from "@nstation/tables/client/components/MuiTable/components/UserProfile/index.js";
 
-const UserInput = ({ data, formik }) => {
+const UserInput = ({ data, formik, size = "medium", filterMode = false }) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [inputValue, setInputValue] = useState(null);
+
+  const value = formik.values[data?.slug]?.id || formik.values[data?.slug];
+
+  useEffect(() => {
+    if (!!!value) return;
+
+    (async () => {
+      const { entries } = await api.get(
+        `/admin-api/tables/nodestation_users?filters=id:equals:${value}`
+      );
+
+      setInputValue({
+        id: entries[0]?.id,
+        first_name: entries[0]?.first_name,
+        last_name: entries[0]?.last_name,
+        photo: entries[0]?.photo,
+      });
+    })();
+  }, []);
 
   const handleOpen = async () => {
     setOpen(true);
@@ -27,7 +47,17 @@ const UserInput = ({ data, formik }) => {
     setOptions([]);
   };
 
-  const value = formik.values[data?.slug];
+  const onChange = (_, newValue) => {
+    const value = {
+      id: newValue?.id,
+      first_name: newValue?.first_name,
+      last_name: newValue?.last_name,
+      photo: newValue?.photo,
+    };
+
+    setInputValue(value);
+    formik?.setFieldValue(data?.slug, value?.id);
+  };
 
   return (
     <Autocomplete
@@ -48,23 +78,16 @@ const UserInput = ({ data, formik }) => {
           }}
         />
       )}
-      value={value?.id ? value : null}
+      value={inputValue}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      onChange={(_, newValue) => {
-        formik?.setFieldValue(data?.slug, {
-          id: newValue?.id,
-          first_name: newValue?.first_name,
-          last_name: newValue?.last_name,
-          photo: newValue?.photo,
-        });
-      }}
+      onChange={onChange}
       renderInput={(params) => (
         <TextField
           {...params}
           label={data?.name}
           name={data?.slug}
           variant="standard"
-          size="medium"
+          size={size}
           slotProps={{
             input: {
               ...params.InputProps,

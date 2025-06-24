@@ -36,6 +36,7 @@ import BooleanInput from "./inputRender/BooleanInput.js";
 import RelationInput from "./inputRender/RelationInput.js";
 
 import { useSlot } from "contexts/slots.js";
+import UserFilter from "./customFilters/User.js";
 
 export default () => {
   const slot = useSlot("field-types.add");
@@ -100,6 +101,7 @@ export default () => {
       icon: <UserIcon />,
       inputRender: (props) => <UserInput {...props} />,
       columnRender: (props) => <UserColumn {...props} />,
+      filterOperators: (props) => UserFilter(props),
     },
     {
       key: "relation",
