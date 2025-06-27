@@ -5,11 +5,13 @@ import Typography from "@mui/material/Typography";
 import Toolbar from "@nstation/tables/client/components/MuiTable/components/Toolbar/index.js";
 
 const BaseLayout = ({
-  children,
   tabs,
   title,
-  subtitle,
   action,
+  subtitle,
+  children,
+  selectedRows,
+  selectActions,
   backButtonLink,
 }) => {
   return (
@@ -19,6 +21,8 @@ const BaseLayout = ({
           noAddTab
           tabs={tabs}
           action={action}
+          selectedRows={selectedRows}
+          selectActions={selectActions}
           backButtonLink={backButtonLink}
         />
       )}

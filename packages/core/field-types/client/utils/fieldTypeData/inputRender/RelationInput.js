@@ -19,8 +19,6 @@ const RelationInput = ({ data, formik, size }) => {
         `/admin-api/tables/${data?.relation?.table}?filters=id:equals:${value}`
       );
 
-      console.log(entries[0]);
-
       setInputValue({
         id: entries[0]?.id,
         [data?.relation?.displayName]:
@@ -55,8 +53,6 @@ const RelationInput = ({ data, formik, size }) => {
     setInputValue(value);
     formik?.setFieldValue(data?.slug, value?.id);
   };
-
-  console.log(data);
 
   return (
     <Autocomplete

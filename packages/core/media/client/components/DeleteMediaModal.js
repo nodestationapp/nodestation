@@ -7,10 +7,10 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 
-import { useTable } from "context/client/table";
+import { useMedia } from "#client/contexts/media.js";
 
-const EntriesDeleteModal = ({ open, onClose }) => {
-  const { deleteTableEntries } = useTable();
+const DeleteMediaModal = ({ open, onClose, setSelectedFiles }) => {
+  const { deleteFile } = useMedia();
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
@@ -18,14 +18,17 @@ const EntriesDeleteModal = ({ open, onClose }) => {
 
     try {
       for await (const item of open) {
-        await deleteTableEntries(item);
+        await deleteFile(item?.id);
       }
 
+      setSelectedFiles([]);
       onClose();
     } catch (err) {
       setLoading(false);
       console.error(err);
     }
+
+    setLoading(false);
   };
 
   return (
@@ -35,13 +38,12 @@ const EntriesDeleteModal = ({ open, onClose }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">
-        Deleting {open?.length} items
-      </DialogTitle>
+      <DialogTitle id="alert-dialog-title">Deleting media</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete{" "}
-          <strong>{open?.length} selected</strong> items?
+          {open?.length > 1
+            ? `Are you sure you want to delete ${open?.length} selected items?`
+            : "Are you sure you want to delete selected item?"}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -54,4 +56,4 @@ const EntriesDeleteModal = ({ open, onClose }) => {
   );
 };
 
-export default EntriesDeleteModal;
+export default DeleteMediaModal;

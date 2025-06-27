@@ -1,22 +1,35 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import queryString from "query-string";
+import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 import { createContext, useContext, useMemo, useState } from "react";
+
 import { api } from "@nstation/design-system/utils";
 
 const MediaContext = createContext();
 
 const MediaProvider = ({ children }) => {
-  const queryClient = useQueryClient();
+  const [searchParams] = useSearchParams();
 
   const [percent, setPercent] = useState([]);
+  const [dialogPage, setDialogPage] = useState(0);
   const [uploading_files, setUploadingFiles] = useState([]);
+
+  const page = searchParams.get("page") || dialogPage || 0;
+  const sort = searchParams.get("sort") || "created_at:desc";
 
   const {
     isLoading: loading,
     data: media,
     refetch: refetchMedia,
   } = useQuery({
-    queryKey: ["media"],
-    queryFn: () => api.get("/admin-api/media"),
+    queryKey: ["media", page, sort],
+    queryFn: () =>
+      api.get(
+        `/admin-api/media?${queryString.stringify({
+          page,
+          sort,
+        })}`
+      ),
   });
 
   const {
@@ -108,7 +121,10 @@ const MediaProvider = ({ children }) => {
       loading,
       uploadFiles,
       percent,
+      page,
+      sort,
       deleteFile,
+      setDialogPage,
       media_settings,
       settings_loading,
       uploading_files,
@@ -121,6 +137,8 @@ const MediaProvider = ({ children }) => {
     media,
     loading,
     percent,
+    page,
+    sort,
     media_settings,
     uploading_files,
     settings_loading,

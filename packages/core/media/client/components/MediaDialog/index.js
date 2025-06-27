@@ -2,28 +2,27 @@ import { useEffect, useState } from "react";
 
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import UploadedItems from "./UploadedItems.js";
+import { useTheme } from "@mui/material/styles";
+import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import DialogContent from "@mui/material/DialogContent";
 
-import { useTheme } from "@mui/material/styles";
-import { useMedia } from "../../contexts/media.js";
+import MediaGrid from "#client/components/MediaGrid.js";
+
+import { useMedia } from "#client/contexts/media.js";
 
 const MediaDialog = ({ open, onClose, onSubmit, value }) => {
-  const { media, percent } = useMedia();
+  const { media, percent, page, setDialogPage } = useMedia();
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [selectedFiles, setSelectedFiles] = useState({});
-
-  const handleSelect = (file) => {
-    setSelectedFiles(file);
-  };
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   useEffect(() => {
     if (value) {
-      setSelectedFiles(value);
+      setSelectedFiles([value]);
     }
   }, [value]);
 
@@ -37,28 +36,34 @@ const MediaDialog = ({ open, onClose, onSubmit, value }) => {
       sx={{
         "& .MuiDialog-paper": {
           width: "100%",
-          maxWidth: 830,
+          maxWidth: 1000,
           ...(fullScreen && {
             borderRadius: 0,
           }),
         },
       }}
     >
-      <UploadedItems
-        files={media}
-        percent={percent}
-        onSelect={handleSelect}
-        selected={selectedFiles}
-      />
-      {/* {!!uploading_files?.length ? (
-        <UploadedItems files={uploading_files} percent={percent} />
-      ) : (
-        <DragAndDrop onChange={handleChange} />
-      )} */}
+      <DialogTitle id="update-dialog-title">Choose media</DialogTitle>
+
+      <DialogContent>
+        <MediaGrid
+          variant="wide"
+          percent={percent}
+          files={media?.data}
+          count={media?.count}
+          page={parseInt(page)}
+          selected={selectedFiles}
+          onSelect={setSelectedFiles}
+          setDialogPage={setDialogPage}
+        />
+      </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        {!!selectedFiles?.id && (
-          <Button onClick={() => onSubmit(selectedFiles)} variant="contained">
+        {!!selectedFiles?.[0]?.id && (
+          <Button
+            onClick={() => onSubmit(selectedFiles?.[0])}
+            variant="contained"
+          >
             Confirm
           </Button>
         )}

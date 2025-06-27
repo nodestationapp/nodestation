@@ -15,7 +15,7 @@ import Delete from "@mui/icons-material/Delete";
 
 const UploadedItems = ({ files, percent, onSelect, onDelete, selected }) => {
   return (
-    <Grid container spacing={2} sx={{ p: 1 }}>
+    <Grid container spacing={2}>
       {files?.map((file, index) => (
         <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 4 }}>
           <Card sx={{ width: "100%", p: 1, pb: 0 }}>

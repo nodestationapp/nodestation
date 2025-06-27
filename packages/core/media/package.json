@@ -22,6 +22,10 @@
     "./server",
     "./package.json"
   ],
+  "imports": {
+    "#client/*": "./client/*",
+    "#server/*": "./server/*"
+  },
   "author": {
     "name": "Nodestation",
     "email": "ceo@nodestation.app"

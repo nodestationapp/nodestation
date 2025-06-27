@@ -44,7 +44,7 @@ const EntriesDeleteModal = ({ open, onClose }) => {
       aria-describedby="alert-dialog-description"
       sx={{
         "& .MuiDialog-paper": {
-          maxWidth: 830,
+          maxWidth: 420,
           width: "100%",
           ...(fullScreen && {
             borderRadius: 0,
