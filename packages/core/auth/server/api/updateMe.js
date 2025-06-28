@@ -2,7 +2,6 @@ import { knex } from "@nstation/db";
 
 export default async (req, res) => {
   const body = req.body;
-  const files = req?.files;
 
   try {
     let updateData = {};
@@ -13,14 +12,18 @@ export default async (req, res) => {
     if (body?.last_name !== undefined) {
       updateData.last_name = body.last_name;
     }
-    if (!!files?.length) {
-      updateData.photo = JSON.stringify({
-        name: files?.[0]?.originalname,
-        url: !!files?.[0]?.path
-          ? extractUploadPath(files?.[0]?.path)
-          : files?.[0]?.location,
-      });
+    if (body?.photo !== undefined) {
+      updateData.photo = body.photo;
     }
+
+    // if (!!files?.length) {
+    //   updateData.photo = JSON.stringify({
+    //     name: files?.[0]?.originalname,
+    //     url: !!files?.[0]?.path
+    //       ? extractUploadPath(files?.[0]?.path)
+    //       : files?.[0]?.location,
+    //   });
+    // }
 
     if (Object.keys(updateData).length > 0) {
       await knex("nodestation_users")

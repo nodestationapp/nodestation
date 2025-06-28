@@ -15,7 +15,7 @@ import MediaGrid from "#client/components/MediaGrid.js";
 import { useMedia } from "#client/contexts/media.js";
 import MediaSortButton from "../MediaSortButton.js";
 
-const MediaDialog = ({ open, onClose, onSubmit, value }) => {
+const MediaDialog = ({ open, onClose, onSubmit, value, loading }) => {
   const { media, percent, page, setDialogPage, sort, setDialogSort } =
     useMedia();
 
@@ -81,6 +81,7 @@ const MediaDialog = ({ open, onClose, onSubmit, value }) => {
         <Button onClick={onClose}>Cancel</Button>
         {!!selectedFiles?.[0]?.id && (
           <Button
+            loading={loading}
             onClick={() => onSubmit(selectedFiles?.[0])}
             variant="contained"
           >
