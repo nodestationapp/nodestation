@@ -11,7 +11,7 @@ const getSpacesEndpoint = (url) => {
 };
 
 const digitalocean = (data) => {
-  const settings = JSON.parse(data?.digitalocean);
+  const settings = data?.digitalocean;
 
   const s3 = new S3Client({
     endpoint: getSpacesEndpoint(settings.spaces_endpoint),

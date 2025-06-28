@@ -99,12 +99,6 @@ const MediaProvider = ({ children }) => {
     }
   };
 
-  const enterSubmitHandler = (e) => {
-    if (e.key === "Enter") {
-      onSubmit();
-    }
-  };
-
   const saveTableTransaction = async (values) => {
     await api.post("/admin-api/preferences", {
       table_id: "nodestation_media",

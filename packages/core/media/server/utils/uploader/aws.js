@@ -3,7 +3,7 @@ import multerS3 from "multer-s3";
 import { S3Client } from "@aws-sdk/client-s3";
 
 const aws = (data) => {
-  const settings = JSON.parse(data?.aws);
+  const settings = data?.aws;
 
   const s3 = new S3Client({
     region: settings?.region,

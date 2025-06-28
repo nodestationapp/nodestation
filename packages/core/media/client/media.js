@@ -67,8 +67,6 @@ const Media = () => {
     >
       <MediaGrid
         multiple
-        percent={[]}
-        loading={true}
         files={media?.data}
         count={media?.count}
         page={parseInt(page)}

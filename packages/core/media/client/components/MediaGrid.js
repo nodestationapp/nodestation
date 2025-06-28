@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -23,7 +22,6 @@ const MediaGrid = ({
   setDialogPage,
   selected = [],
 }) => {
-  const navigate = useNavigate();
   const { setUploadingFiles, percent, uploadFiles, loading } = useMedia();
   const updateQueryParam = useUpdateQueryParam();
 

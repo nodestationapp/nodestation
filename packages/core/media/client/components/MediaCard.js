@@ -45,12 +45,12 @@ const MediaCard = ({
 
   return (
     <Card
-      sx={(theme) => ({
+      sx={{
         width: "100%",
         p: 1,
         pb: 0,
         zIndex: -2,
-      })}
+      }}
     >
       <CardMedia
         sx={(theme) => ({
@@ -58,38 +58,11 @@ const MediaCard = ({
           height: 140,
           borderRadius: 0.5,
           overflow: "hidden",
-          backgroundColor: theme.vars
-            ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
-            : alpha(theme.palette.background.default, 1),
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "120%",
-            height: "120%",
-            backgroundImage: `url("${file?.url}")`,
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            overflow: "hidden",
-            "-webkit-filter": "blur(15px) brightness(0.6)",
-            "-moz-filter": "blur(15px) brightness(0.6)",
-            "-o-filter": "blur(15px) brightness(0.6)",
-            "-ms-filter": "blur(15px) brightness(0.6)",
-            filter: "blur(15px) brightness(0.6)",
-            "-webkit-transform": "scale(1.8, 1.8)",
-            "-moz-transform": "scale(1.8, 1.8)",
-            "-o-transform": "scale(1.8, 1.8)",
-            "-ms-transform": "scale(1.8, 1.8)",
-            transform: "scale(1.8, 1.8)",
-            zIndex: 0,
-            display: is_uploading ? "none" : "block",
-          },
           zIndex: 1,
+          backgroundColor: theme.vars
+            ? `rgba(${theme.vars.palette.background.defaultChannel} / 0.5)`
+            : alpha(theme.palette.background.default, 1),
         })}
-        image={is_uploading ? null : file?.url}
-        title="green iguana"
         children={
           <Box
             key={selected}
@@ -101,31 +74,18 @@ const MediaCard = ({
               alignItems: "center",
             }}
           >
-            {!!is_uploading ? (
-              <LinearProgress
-                variant="determinate"
-                value={percent || 0}
-                sx={(theme) => {
-                  return {
-                    width: "70%",
-                    height: "7px",
-                    backgroundColor: `${theme.palette.grey[700]} !important`,
-                  };
-                }}
-              />
-            ) : (
-              <>
-                {type?.label === "Image" ? (
-                  <img
-                    src={file?.url}
-                    alt={file?.name}
-                    style={{ height: "100%", zIndex: 10 }}
-                  />
-                ) : (
-                  type?.icon
-                )}
-              </>
-            )}
+            <>
+              {type?.label === "Image" ? (
+                <img
+                  src={file?.url}
+                  alt={file?.name}
+                  loading="lazy"
+                  style={{ height: "100%", zIndex: 10 }}
+                />
+              ) : (
+                type?.icon
+              )}
+            </>
             {!!onSelect && !is_uploading && (
               <Checkbox
                 key={selected}
