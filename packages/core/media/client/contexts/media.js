@@ -12,10 +12,11 @@ const MediaProvider = ({ children }) => {
 
   const [percent, setPercent] = useState([]);
   const [dialogPage, setDialogPage] = useState(0);
+  const [dialogSort, setDialogSort] = useState("created_at:desc");
   const [uploading_files, setUploadingFiles] = useState([]);
 
   const page = searchParams.get("page") || dialogPage || 0;
-  const sort = searchParams.get("sort") || "created_at:desc";
+  const sort = searchParams.get("sort") || dialogSort || "created_at:desc";
 
   const {
     isLoading: loading,
@@ -125,6 +126,7 @@ const MediaProvider = ({ children }) => {
       setUploadingFiles,
       updateMediaSettings,
       saveTableTransaction,
+      setDialogSort,
     };
     // eslint-disable-next-line
   }, [

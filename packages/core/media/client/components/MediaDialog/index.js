@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 
+import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
+import Divider from "@mui/material/Divider";
 import { useTheme } from "@mui/material/styles";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
@@ -11,9 +13,11 @@ import DialogContent from "@mui/material/DialogContent";
 import MediaGrid from "#client/components/MediaGrid.js";
 
 import { useMedia } from "#client/contexts/media.js";
+import MediaSortButton from "../MediaSortButton.js";
 
 const MediaDialog = ({ open, onClose, onSubmit, value }) => {
-  const { media, percent, page, setDialogPage } = useMedia();
+  const { media, percent, page, setDialogPage, sort, setDialogSort } =
+    useMedia();
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -35,8 +39,9 @@ const MediaDialog = ({ open, onClose, onSubmit, value }) => {
       aria-describedby="alert-dialog-description"
       sx={{
         "& .MuiDialog-paper": {
+          border: "none",
           width: "100%",
-          maxWidth: 1000,
+          maxWidth: 1100,
           ...(fullScreen && {
             borderRadius: 0,
           }),
@@ -44,6 +49,21 @@ const MediaDialog = ({ open, onClose, onSubmit, value }) => {
       }}
     >
       <DialogTitle id="update-dialog-title">Choose media</DialogTitle>
+      <Divider />
+      <Stack
+        direction="row"
+        justifyContent="flex-end"
+        px={2}
+        py={1}
+        sx={(theme) => ({
+          backgroundColor: theme.vars
+            ? `rgba(${theme.vars.palette.background.paperChannel} / 0.5)`
+            : alpha(theme.palette.background.paper, 1),
+        })}
+      >
+        <MediaSortButton sort={sort} setSort={setDialogSort} />
+      </Stack>
+      <Divider />
 
       <DialogContent>
         <MediaGrid

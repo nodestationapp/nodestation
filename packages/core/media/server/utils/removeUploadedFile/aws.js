@@ -9,7 +9,7 @@ const extractPathFromUrl = (url) => {
 const aws = async (url, data) =>
   new Promise(async (resolve, reject) => {
     try {
-      const settings = JSON.parse(data?.aws);
+      const settings = data?.aws;
 
       const s3 = new S3Client({
         region: settings?.region,

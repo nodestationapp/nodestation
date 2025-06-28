@@ -37,12 +37,18 @@ const options = [
   },
 ];
 
-const MediaSortButton = ({ sort }) => {
+const MediaSortButton = ({ sort, setSort }) => {
   const updateQueryParam = useUpdateQueryParam();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuItemClick = (value) => {
-    updateQueryParam("sort", value === "created_at:desc" ? undefined : value);
+    const sortValue = value === "created_at:desc" ? undefined : value;
+
+    if (!!setSort) {
+      setSort(sortValue);
+    } else {
+      updateQueryParam("sort", sortValue);
+    }
     setAnchorEl(null);
   };
 
