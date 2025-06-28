@@ -7,9 +7,9 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 
 import MuiTable from "@nstation/tables/client/components/MuiTable/index.js";
-import EmailEditorModal from "../../components/EmailEditorModal/index.js";
+import EmailEditorModal from "#client/components/EmailEditorModal.js";
 
-import { useEmails } from "../../contexts/emails.js";
+import { useEmails } from "#client/contexts/emails.js";
 
 import AddIcon from "@mui/icons-material/Add";
 import Settings from "@mui/icons-material/Settings";

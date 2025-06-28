@@ -7,8 +7,8 @@ import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 
-import CodeEditor from "../CodeEditor/index.js";
-import { useEmails } from "../../contexts/emails.js";
+import CodeEditor from "./CodeEditor.js";
+import { useEmails } from "../contexts/emails.js";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 

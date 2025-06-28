@@ -14,16 +14,22 @@
     "react-router-dom": ">=6.23.0"
   },
   "dependencies": {
-    "@monaco-editor/react": "^4.7.0",
     "glob": "^11.0.1",
     "nodemailer": "^7.0.3",
-    "@nstation/design-system": "1.20.7"
+    "@nstation/design-system": "1.20.7",
+    "@uiw/react-codemirror": "^4.23.14",
+    "@codemirror/lang-html": "^6.4.9",
+    "@uiw/codemirror-theme-basic": "4.23.14"
   },
   "files": [
     "./client",
     "./server",
     "./package.json"
   ],
+  "imports": {
+    "#client/*": "./client/*",
+    "#server/*": "./server/*"
+  },
   "author": {
     "name": "Nodestation",
     "email": "ceo@nodestation.app"
