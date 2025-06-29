@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -59,9 +60,21 @@ const EmailEditorModal = ({ open, onClose }) => {
         },
       }}
     >
-      <DialogContent sx={{ p: 0, pb: 1 }}>
-        <Stack gap={2} direction="column">
-          <Stack gap={2} direction="column" sx={{ p: 1.5, pb: 0 }}>
+      <DialogContent
+        sx={{
+          p: 0,
+          pb: 1,
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Stack gap={2} direction="column" sx={{ height: "100%" }}>
+          <Stack
+            gap={2}
+            direction="column"
+            sx={{ p: 1.5, pb: 0, flexShrink: 0 }}
+          >
             <TextField
               fullWidth
               type="text"

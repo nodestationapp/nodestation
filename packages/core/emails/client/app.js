@@ -1,3 +1,5 @@
+import "./styles.scss";
+
 import { Route, Routes } from "react-router-dom";
 
 import Emails from "./pages/emails/index.js";

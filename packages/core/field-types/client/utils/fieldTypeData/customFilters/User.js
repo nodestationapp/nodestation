@@ -7,7 +7,7 @@ const UserFilter = (column) => {
     ...op,
     InputComponent: (props) => (
       <UserInput
-        data={column}
+        data={{ ...column, name: "Value" }}
         formik={{
           values: {
             [column.slug]: props.item?.value,

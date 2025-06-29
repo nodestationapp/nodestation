@@ -57,8 +57,8 @@ const UserInput = ({ data, formik, size = "medium" }) => {
       photo: newValue?.photo,
     };
 
-    setInputValue(value);
-    formik?.setFieldValue(data?.slug, value?.id);
+    setInputValue(newValue ? value : null);
+    formik?.setFieldValue(data?.slug, newValue ? value?.id : null);
   };
 
   return (
@@ -90,7 +90,7 @@ const UserInput = ({ data, formik, size = "medium" }) => {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Value"
+          label={data?.name}
           name={data?.slug}
           size={size}
           InputLabelProps={

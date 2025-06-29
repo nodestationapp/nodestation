@@ -61,9 +61,13 @@ const logger = morgan((tokens, req, res) => {
   const timestamp = tokens.date(req, res, "iso");
 
   let ignore = parsedConfig?.ignore || [];
-  ignore = [...ignore, "/", "/*.*"];
+  let allow = parsedConfig?.allow || [];
+  allow = [...allow, "/api/**"];
 
-  if (!micromatch.isMatch(data.url, ignore || [])) {
+  if (
+    micromatch.isMatch(data.url, allow) &&
+    !micromatch.isMatch(data.url, ignore)
+  ) {
     knex("nodestation_logger")
       .insert(data)
       .catch((err) => console.error(err));

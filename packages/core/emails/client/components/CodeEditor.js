@@ -1,4 +1,5 @@
 import { html } from "@codemirror/lang-html";
+import { EditorView } from "@codemirror/view";
 import CodeMirror from "@uiw/react-codemirror";
 import { basicLight, basicDark } from "@uiw/codemirror-theme-basic";
 
@@ -11,8 +12,9 @@ const CodeEditor = ({ value, onChange }) => {
   return (
     <CodeMirror
       value={value}
-      height="200px"
-      extensions={[html()]}
+      minHeight="250px"
+      style={{ flex: 1 }}
+      extensions={[html(), EditorView.lineWrapping]}
       theme={currentMode === "dark" ? basicDark : basicLight}
       onChange={onChange}
     />
