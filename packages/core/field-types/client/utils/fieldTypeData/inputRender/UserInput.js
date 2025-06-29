@@ -11,23 +11,27 @@ const UserInput = ({ data, formik, size = "medium" }) => {
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState(null);
 
-  const value = formik.values[data?.slug]?.id || formik.values[data?.slug];
+  const value = formik.values[data?.slug];
 
   useEffect(() => {
-    if (!!!value) return;
+    if (value?.id) {
+      setInputValue(value);
+    } else {
+      if (!value) return;
 
-    (async () => {
-      const { entries } = await api.get(
-        `/admin-api/tables/nodestation_users?filters=id:equals:${value}`
-      );
+      (async () => {
+        const { entries } = await api.get(
+          `/admin-api/tables/nodestation_users?filters=id:equals:${value}`
+        );
 
-      setInputValue({
-        id: entries[0]?.id,
-        first_name: entries[0]?.first_name,
-        last_name: entries[0]?.last_name,
-        photo: entries[0]?.photo,
-      });
-    })();
+        setInputValue({
+          id: entries[0]?.id,
+          first_name: entries[0]?.first_name,
+          last_name: entries[0]?.last_name,
+          photo: entries[0]?.photo,
+        });
+      })();
+    }
   }, []);
 
   const handleOpen = async () => {

@@ -1,17 +1,16 @@
 import { useFormik } from "formik";
 
-import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import TextField from "@mui/material/TextField";
+import { useTheme } from "@mui/material/styles";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import CodeEditor from "./CodeEditor.js";
 import { useEmails } from "../contexts/emails.js";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 const EmailEditorModal = ({ open, onClose }) => {
   const theme = useTheme();
@@ -110,13 +109,15 @@ const EmailEditorModal = ({ open, onClose }) => {
       </DialogContent>
       <DialogActions sx={{ p: 1.5, pt: 1 }}>
         <Button onClick={onClose}>Cancel</Button>
-        <Button
-          onClick={formik.submitForm}
-          variant="contained"
-          loading={formik.isSubmitting}
-        >
-          Save
-        </Button>
+        {process.env.NODE_ENV === "development" && (
+          <Button
+            onClick={formik.submitForm}
+            variant="contained"
+            loading={formik.isSubmitting}
+          >
+            Save
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

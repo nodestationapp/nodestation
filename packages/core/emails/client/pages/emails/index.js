@@ -37,15 +37,17 @@ const Emails = () => {
       <IconButton size="micro" onClick={() => navigate(`${pathname}/settings`)}>
         <Settings />
       </IconButton>
-      <Button
-        size="small"
-        color="primary"
-        variant="contained"
-        startIcon={<AddIcon />}
-        onClick={() => setEmailEditorModal(true)}
-      >
-        New
-      </Button>
+      {process.env.NODE_ENV === "development" && (
+        <Button
+          size="small"
+          color="primary"
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => setEmailEditorModal(true)}
+        >
+          New
+        </Button>
+      )}
     </>
   );
 

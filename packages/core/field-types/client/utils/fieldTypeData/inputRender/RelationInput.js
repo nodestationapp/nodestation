@@ -9,22 +9,26 @@ const RelationInput = ({ data, formik, size }) => {
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState(null);
 
-  const value = formik.values[data?.slug]?.id || formik.values[data?.slug];
+  const value = formik.values[data?.slug];
 
   useEffect(() => {
-    if (!!!value) return;
+    if (value?.id) {
+      setInputValue(value);
+    } else {
+      if (!value) return;
 
-    (async () => {
-      const { entries } = await api.get(
-        `/admin-api/tables/${data?.relation?.table}?filters=id:equals:${value}`
-      );
+      (async () => {
+        const { entries } = await api.get(
+          `/admin-api/tables/${data?.relation?.table}?filters=id:equals:${value}`
+        );
 
-      setInputValue({
-        id: entries[0]?.id,
-        [data?.relation?.displayName]:
-          entries[0]?.[data?.relation?.displayName],
-      });
-    })();
+        setInputValue({
+          id: entries[0]?.id,
+          [data?.relation?.displayName]:
+            entries[0]?.[data?.relation?.displayName],
+        });
+      })();
+    }
   }, []);
 
   const handleOpen = async () => {
@@ -68,7 +72,7 @@ const RelationInput = ({ data, formik, size }) => {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Value"
+          label={data?.name}
           name={data?.slug}
           variant={size === "small" ? "outlined" : "standard"}
           sx={{ whiteSpace: "nowrap", height: "100%" }}

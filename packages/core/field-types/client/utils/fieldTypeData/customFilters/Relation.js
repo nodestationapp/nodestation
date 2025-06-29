@@ -7,7 +7,7 @@ const RelationFilter = (column) => {
     ...op,
     InputComponent: (props) => (
       <RelationInput
-        data={column}
+        data={{ ...column, name: "Value" }}
         formik={{
           values: {
             [column.slug]: props.item?.value,
