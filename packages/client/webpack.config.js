@@ -60,6 +60,7 @@ module.exports = (env) => {
       ],
     },
     plugins: [
+      new webpack.HotModuleReplacementPlugin(),
       webpackConfigImports(),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "public/index.html"),

@@ -20,7 +20,14 @@ if (process.argv[2] === "dev") {
 
   runCommand({
     cmd: "nodemon",
-    args: ["--watch", rootPath, "--quiet", "entry.js"],
+    args: [
+      "--watch",
+      rootPath,
+      "--ignore",
+      "**/client/**",
+      "--quiet",
+      "entry.js",
+    ],
     __dirname: server_cwd,
   });
 }
