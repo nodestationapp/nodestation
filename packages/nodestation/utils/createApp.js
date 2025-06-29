@@ -41,7 +41,11 @@ function createApp() {
 
     // io({ server: app.server, app: app.express });
 
-    app.express.use("/uploads", express.static(path.join(rootPath, "uploads")));
+    app.express.use("/", express.static(path.join(rootPath, "public")));
+    app.express.use(
+      "/uploads",
+      express.static(path.join(rootPath, "public", "uploads"))
+    );
     await loadPlugins(app.router);
 
     app.express.use("/api", (_, res) => {

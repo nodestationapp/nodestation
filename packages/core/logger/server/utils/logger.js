@@ -6,15 +6,19 @@ import micromatch from "micromatch";
 import { rootPath } from "@nstation/utils";
 import requireFromString from "require-from-string";
 
-const configExists = fs.existsSync(path.join(rootPath, "config", "logger.js"));
+const configExists = fs.existsSync(
+  path.join(rootPath, "nodestation.config.js")
+);
 
 let parsedConfig = {};
 if (!!configExists) {
   let config = fs.readFileSync(
-    path.join(rootPath, "config", "logger.js"),
+    path.join(rootPath, "nodestation.config.js"),
     "utf-8"
   );
+
   parsedConfig = requireFromString(config);
+  parsedConfig = parsedConfig.logger;
 }
 
 const getLevel = (status) => {

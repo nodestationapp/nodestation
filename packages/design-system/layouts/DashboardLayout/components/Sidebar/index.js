@@ -57,8 +57,7 @@ const Sidebar = ({ open, onClose }) => {
       <Box
         sx={{
           display: "flex",
-          mt: "calc(var(--template-frame-height, 0px) + 4px)",
-          p: 1.5,
+          p: 1.75,
         }}
       >
         <ProjectName />
@@ -90,7 +89,7 @@ const Sidebar = ({ open, onClose }) => {
         <Avatar
           sizes="small"
           src={user?.photo?.url}
-          sx={{ width: 22, height: 22, borderRadius: 0.5 }}
+          sx={{ width: 22, height: 22, borderRadius: 50 }}
         />
         <Box
           sx={{

@@ -10,7 +10,7 @@ import { ColorModeDropdown } from "@nstation/design-system";
 
 import { useAuth } from "../../contexts/authMiddleware.js";
 
-import LogoIcon from "icons/logo-sygnet.svg";
+import { Logo } from "@nstation/design-system";
 
 const LoginContent = () => {
   const { login } = useAuth();
@@ -53,7 +53,7 @@ const LoginContent = () => {
             alignItems: "center",
           }}
         >
-          <LogoIcon style={{ width: 50, height: 50 }} />
+          <Logo />
           <Typography
             component="h1"
             variant="h4"

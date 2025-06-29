@@ -3,7 +3,7 @@ import path from "path";
 import multer from "multer";
 import { rootPath } from "@nstation/utils";
 
-let upload_folder = path.join(rootPath, "uploads");
+let upload_folder = path.join(rootPath, "public", "uploads");
 
 const storage = multer.diskStorage({
   destination: function (_, __, cb) {

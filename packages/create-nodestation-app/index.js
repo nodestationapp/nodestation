@@ -122,6 +122,19 @@ async function installNodestation(projectPath) {
         recursive: true,
       }
     );
+
+    await fs_promise.mkdir(path.join(projectPath, "public"), {
+      recursive: true,
+    });
+
+    await fs_promise.cp(
+      path.join(__dirname, "/templates/public"),
+      path.join(projectPath, "public"),
+      {
+        recursive: true,
+      }
+    );
+
     await fs_promise.writeFile(path.join(projectPath, ".env"), envString);
     await fs_promise.writeFile(
       path.join(projectPath, "package.json"),

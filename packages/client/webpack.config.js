@@ -8,10 +8,15 @@ const webpackConfigImports = require("./webpackConfigImports.js");
 //   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = (env) => {
-  const isProduction = env.NODE_ENV === "production";
-  const envFile = isProduction ? ".env.production" : ".env.development";
-  const envPath = path.resolve(__dirname, envFile);
+  const envPath = path.resolve(process.env.ROOT_DIR, ".env");
   const envVars = require("dotenv").config({ path: envPath }).parsed || {};
+
+  const publicEnvVars = Object.keys(envVars)
+    .filter((key) => key.startsWith("PUBLIC_"))
+    .reduce((env, key) => {
+      env[key] = process.env[key];
+      return env;
+    }, {});
 
   return {
     entry: "./src/index.js",
@@ -26,7 +31,6 @@ module.exports = (env) => {
     devServer: {
       static: path.join(process.env.ROOT_DIR, "build"),
       port: 1337,
-      hot: true,
       historyApiFallback: true,
     },
     module: {
@@ -67,7 +71,7 @@ module.exports = (env) => {
         favicon: path.resolve(__dirname, "public/favicon.ico"),
       }),
       new webpack.DefinePlugin({
-        "process.env": JSON.stringify(envVars),
+        "process.env": JSON.stringify(publicEnvVars),
       }),
       new WebpackBar(),
       // new BundleAnalyzerPlugin(),

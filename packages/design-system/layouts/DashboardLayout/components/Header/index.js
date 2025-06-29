@@ -30,8 +30,8 @@ const Header = ({ onSidebarOpen }) => {
           width: "100%",
           alignItems: "center",
           justifyContent: "space-between",
-          pt: 1.3,
-          pb: 1.3,
+          pt: 1,
+          pb: 1,
         }}
         spacing={2}
       >

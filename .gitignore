@@ -1,6 +1,7 @@
 # TEMP
 /src/
 /build/
+/public/
 nodestation.config.js
 
 # DATABASE
