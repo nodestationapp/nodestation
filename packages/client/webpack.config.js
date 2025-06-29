@@ -8,9 +8,7 @@ const webpackConfigImports = require("./webpackConfigImports.js");
 //   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = (env) => {
-  const envPath = path.resolve(process.env.ROOT_DIR, ".env");
-  const envVars = require("dotenv").config({ path: envPath }).parsed || {};
-
+  const envVars = process.env;
   const publicEnvVars = Object.keys(envVars)
     .filter((key) => key.startsWith("PUBLIC_"))
     .reduce((env, key) => {
