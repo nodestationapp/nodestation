@@ -7,11 +7,18 @@ import { AppTheme } from "@nstation/design-system/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import App from "./App";
+
 import AppProvider from "contexts/app";
 import { SlotProvider } from "contexts/slots";
 
+import createApp from "utils/createApp";
+import pluginsLoader from "utils/pluginsLoader";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
+
+const app = createApp();
+pluginsLoader(app);
 
 root.render(
   <BrowserRouter>
@@ -20,7 +27,7 @@ root.render(
         <AppTheme>
           <CssBaseline />
           <SlotProvider>
-            <AppProvider>
+            <AppProvider app={app}>
               <App />
             </AppProvider>
           </SlotProvider>

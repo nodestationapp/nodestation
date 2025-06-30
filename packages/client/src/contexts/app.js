@@ -1,48 +1,29 @@
 import { PageLoader } from "@nstation/design-system";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import pluginsLoader from "utils/pluginsLoader";
+import { createContext, useContext, useEffect, useMemo } from "react";
 import { useRegisterSlot } from "./slots";
 
 const AppContext = createContext();
 
-const AppProvider = ({ children }) => {
-  const [menuLinks, setMenuLinks] = useState([]);
-  const [middlewares, setMiddlewares] = useState([]);
+const AppProvider = ({ children, app }) => {
   const registerSlot = useRegisterSlot();
 
-  const app = {
-    addMenuLink: (props) => {
-      setMenuLinks((prev) => {
-        const exists = prev.some((link) => link.to === props.to);
-        if (exists) return prev;
-        return [...prev, props];
-      });
-    },
-    addMiddleware: (props) => {
-      setMiddlewares((prev) => {
-        return [...prev, props];
-      });
-    },
-    addHook: (name, Component) => {
-      registerSlot(name, Component);
-    },
-  };
+  const menuLinks = app.getMenuLinks();
+  const middlewares = app.getMiddlewares();
+  const hooks = app.getHooks();
 
   useEffect(() => {
-    (async function () {
-      await pluginsLoader(app);
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    hooks.forEach((hook) => {
+      registerSlot(hook.name, hook.Component);
+    });
   }, []);
 
   const value = useMemo(() => {
     return {
-      app,
       menuLinks,
       middlewares,
     };
     // eslint-disable-next-line
-  }, [app, menuLinks, middlewares]);
+  }, [menuLinks, middlewares]);
 
   if (!!!middlewares?.length) return <PageLoader />;
 

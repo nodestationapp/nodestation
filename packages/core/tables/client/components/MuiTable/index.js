@@ -55,18 +55,26 @@ const MuiTable = ({
 
       setColumnSizes(temp);
 
-      saveTransaction({ content: temp });
+      if (!!saveTransaction) {
+        saveTransaction({ content: temp });
+      }
     }, 300);
   };
 
   const onColumnVisibilityChange = (params) => {
     setColumnVisibility(params);
-    saveTransaction({ visibility: params });
+
+    if (!!saveTransaction) {
+      saveTransaction({ visibility: params });
+    }
   };
 
   const onSortModelChange = (params) => {
     setSort(params);
-    saveTransaction({ sort: params || [] });
+
+    if (!!saveTransaction) {
+      saveTransaction({ sort: params || [] });
+    }
   };
 
   const onFilterModelChange = (params) => {
@@ -81,7 +89,10 @@ const MuiTable = ({
       : null;
 
     setFilters(filters || []);
-    saveTransaction({ filters });
+
+    if (!!saveTransaction) {
+      saveTransaction({ filters });
+    }
   };
 
   const onPaginationModelChange = (pagination) => {

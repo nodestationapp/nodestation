@@ -7,19 +7,22 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 
 import MuiTable from "@nstation/tables/client/components/MuiTable/index.js";
-import EmailEditorModal from "#client/components/EmailEditorModal.js";
 
+import EmailEditorModal from "#client/components/EmailEditorModal.js";
 import { useEmails } from "#client/contexts/emails.js";
 
 import AddIcon from "@mui/icons-material/Add";
 import Settings from "@mui/icons-material/Settings";
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
 
+import { useUpdateQueryParam } from "@nstation/design-system/hooks";
+
 const Emails = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const updateQueryParam = useUpdateQueryParam();
 
-  const { emails, email_settings, loading, deleteEmail } = useEmails();
+  const { emails, email_settings, loading, deleteEmail, sort } = useEmails();
   const [email_editor_modal, setEmailEditorModal] = useState(false);
 
   const deleteHandler = async (ids) => {
@@ -30,6 +33,13 @@ const Emails = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const sortHandler = (sort) => {
+    updateQueryParam(
+      "sort",
+      !!sort?.length ? `${sort?.[0]?.field}:${sort?.[0]?.sort}` : undefined
+    );
   };
 
   const action = () => (
@@ -88,6 +98,17 @@ const Emails = () => {
             href: "/emails",
           },
         ]}
+        sort={
+          !!sort
+            ? [
+                {
+                  field: sort?.split(":")[0],
+                  sort: sort?.split(":")[1],
+                },
+              ]
+            : null
+        }
+        setSort={sortHandler}
         action={action}
         loading={loading}
         noAddTab
@@ -99,12 +120,9 @@ const Emails = () => {
             renderCell: (params) => params?.value,
           },
         ]}
-        rows={emails}
+        rows={emails?.data}
         selectActions={selectActions}
-        pagination={{
-          count: 1,
-          pageSize: 10,
-        }}
+        pagination={emails?.meta}
         onRowClick={({ row }) => setEmailEditorModal(row)}
       />
       {email_editor_modal && (

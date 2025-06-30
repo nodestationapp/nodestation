@@ -2,19 +2,32 @@ import { createContext, useContext, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@nstation/design-system/utils";
-
+import { useSearchParams } from "react-router-dom";
+import queryString from "query-string";
 const EmailsContext = createContext();
 
 const EmailsProvider = ({ children }) => {
   const [archive_modal, setArchiveModal] = useState(null);
+
+  const [searchParams] = useSearchParams();
+
+  const page = searchParams.get("page");
+  const sort = searchParams.get("sort");
 
   const {
     isLoading: loading,
     data: emails,
     refetch: refetchEmails,
   } = useQuery({
-    queryKey: ["emails"],
-    queryFn: () => api.get("/admin-api/emails"),
+    queryKey: ["emails", page, sort],
+    queryFn: () =>
+      api.get(
+        `/admin-api/emails?${queryString.stringify({
+          page: page || 0,
+          pageSize: 20,
+          sort,
+        })}`
+      ),
   });
 
   const {
@@ -78,9 +91,10 @@ const EmailsProvider = ({ children }) => {
       updateEmailSettings,
       addEmail,
       deleteEmail,
+      sort,
     };
     // eslint-disable-next-line
-  }, [emails, email_settings, loading, archive_modal, settings_loading]);
+  }, [emails, email_settings, loading, archive_modal, settings_loading, sort]);
 
   return (
     <EmailsContext.Provider value={value}>{children}</EmailsContext.Provider>

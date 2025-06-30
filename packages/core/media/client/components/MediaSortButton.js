@@ -8,7 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 
-import useUpdateQueryParam from "#client/utils/useUpdateQueryParam.js";
+import { useUpdateQueryParam } from "@nstation/design-system/hooks";
 
 const options = [
   {

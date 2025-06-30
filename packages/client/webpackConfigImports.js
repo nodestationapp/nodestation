@@ -16,16 +16,22 @@ module.exports = () => {
   });
 
   const pluginImportCode = `
+  ${plugins
+    .map((plugin, index) => {
+      if (plugin.startsWith("./")) {
+        plugin = plugin.replace("./", `${process.env.ROOT_DIR}/`);
+      }
+
+      const client = path.join(plugin, "client/index.js");
+
+      return `import plugin${index} from "${client}"`;
+    })
+    .join("\n")}
+
   export default {
     plugins: [${plugins
-      .map((plugin) => {
-        if (plugin.startsWith("./")) {
-          plugin = plugin.replace("./", `${process.env.ROOT_DIR}/`);
-        }
-
-        const client = path.join(plugin, "client/index.js");
-
-        return ` import("${client}")`;
+      .map((_, index) => {
+        return `plugin${index}`;
       })
       .join(",\n")}],
   };`;

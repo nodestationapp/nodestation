@@ -1,25 +1,31 @@
-const core = [
-  import("@nstation/logger/client/index.js"),
-  import("@nstation/auth/client/index.js"),
-  import("@nstation/dashboard/client/index.js"),
-  import("@nstation/tables/client/index.js"),
-  import("@nstation/media/client/index.js"),
-  import("@nstation/emails/client/index.js"),
-  import("@nstation/field-types/client/index.js"),
-];
+import logger from "@nstation/logger/client/index.js";
+import auth from "@nstation/auth/client/index.js";
+import dashboard from "@nstation/dashboard/client/index.js";
+import tables from "@nstation/tables/client/index.js";
+import media from "@nstation/media/client/index.js";
+import emails from "@nstation/emails/client/index.js";
+import fieldTypes from "@nstation/field-types/client/index.js";
 
 import pluginLoader from "@nstation/config/plugin-imports.js";
 
-export default async (app) => {
+export default (app) => {
   try {
-    const allAddons = [...core, ...pluginLoader?.plugins];
+    const allAddons = [
+      logger,
+      auth,
+      dashboard,
+      tables,
+      media,
+      emails,
+      fieldTypes,
+      ...pluginLoader?.plugins,
+    ];
 
-    for await (const item of allAddons) {
-      const plugin = await item;
-      plugin.default.register(app);
+    for (const item of allAddons) {
+      item.register(app);
     }
 
-    return core;
+    return true;
   } catch (err) {
     console.error(err);
   }
