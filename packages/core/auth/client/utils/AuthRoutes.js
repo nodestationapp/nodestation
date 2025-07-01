@@ -8,13 +8,19 @@ import ForgetPasswordReset from "../pages/auth/forget-password/reset.js";
 
 import { useAuth } from "../contexts/authMiddleware.js";
 
+import { useSlot } from "contexts/slots.js";
+
 const AuthRoutes = () => {
   const { user, is_admin } = useAuth();
+  const slot = useSlot("auth.public-routes.add");
 
   return (
     <Routes>
       {is_admin ? (
         <>
+          {slot?.[0]?.map((route) => {
+            return <Route path={route.path} element={<route.Component />} />;
+          })}
           <Route path="/login" element={<Login />} />
           <Route path="/verify" element={<Verify />} />
           <Route path="/forget-password" element={<ForgetPassword />} />

@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
@@ -7,9 +9,8 @@ const SettingsForm = ({ data }) => {
   return (
     <Stack direction="column" gap={4}>
       {data?.map((item, index) => (
-        <>
+        <Fragment key={index}>
           <Stack
-            key={index}
             direction={{ sx: "column", md: "row" }}
             sx={{
               gap: {
@@ -24,7 +25,7 @@ const SettingsForm = ({ data }) => {
             <Box sx={{ flex: 1 }}>{item?.component}</Box>
           </Stack>
           <Divider />
-        </>
+        </Fragment>
       ))}
     </Stack>
   );
