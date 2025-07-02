@@ -89,6 +89,7 @@ const AuthProvider = ({ children }) => {
         });
 
         setCookie("access_token", data?.access_token, { maxAge: 1707109200 });
+        localStorage.setItem("refresh_token", data?.refresh_token);
         await getUserData(data?.access_token);
         navigate("/");
 

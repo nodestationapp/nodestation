@@ -31,15 +31,18 @@ const login = async ({ email, password }) =>
       }
 
       const access_token = jwt.sign(
-        {
-          id: result.id,
-          iat: new Date().getTime(),
-          exp: new Date().setDate(new Date().getDate() + 1),
-        },
-        process.env.TOKEN_SECRET
+        { id: result.id },
+        process.env.TOKEN_SECRET,
+        { expiresIn: "15m" }
       );
 
-      resolve({ access_token });
+      const refresh_token = jwt.sign(
+        { id: result.id },
+        process.env.TOKEN_SECRET,
+        { expiresIn: "7d" }
+      );
+
+      resolve({ access_token, refresh_token });
     } catch (err) {
       reject(err);
     }

@@ -4,9 +4,9 @@ export default async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const { access_token } = await login({ email, password });
+    const { access_token, refresh_token } = await login({ email, password });
 
-    return res.status(200).json({ access_token });
+    return res.status(200).json({ access_token, refresh_token });
   } catch (err) {
     console.error(err);
     return res.status(500).json(err);

@@ -6,6 +6,7 @@ import addUser from "./addUser.js";
 import register from "./register.js";
 import updateMe from "./updateMe.js";
 import checkAdmin from "./check-admin.js";
+import refreshToken from "./refreshToken.js";
 import changePassword from "./changePassword.js";
 import updateTemplates from "./updateTemplates.js";
 import emailActivation from "./emailActivation.js";
@@ -20,7 +21,6 @@ import authMiddleware from "../../utils/authMiddleware.js";
 import loginSchema from "../utils/validations/loginSchema.js";
 import resetPasswordSchema from "../utils/validations/resetPasswordSchema.js";
 import resetPasswordConfirmSchema from "../utils/validations/resetPasswordConfirmSchema.js";
-
 export default [
   {
     method: "POST",
@@ -102,5 +102,11 @@ export default [
     path: "/admin-api/auth/reset-password/confirm",
     handler: resetPasswordConfirm,
     middlewares: [validate({ schema: resetPasswordConfirmSchema })],
+  },
+  {
+    method: "POST",
+    path: "/admin-api/auth/refresh-token",
+    handler: refreshToken,
+    middlewares: [],
   },
 ];

@@ -11,6 +11,7 @@ const authMiddleware = (roles) => {
         return res.status(401).json({
           error:
             "Unauthorized access. Please authenticate yourself to proceed.",
+          code: "unauthorized",
         });
       } else {
         if (err || !user) {

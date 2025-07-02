@@ -7,8 +7,8 @@ import { queryBuilder } from "@nstation/db";
 passport.use(
   new JWTStrategy(
     {
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: process.env.TOKEN_SECRET,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     },
     async (jwtPayload, done) => {
       try {
