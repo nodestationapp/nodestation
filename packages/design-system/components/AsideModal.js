@@ -21,6 +21,8 @@ const AsideModal = ({
   submitLoading = false,
   submitLabel = "Save",
   cancelLabel = "Cancel",
+  preventOnClose = false,
+  removeActions = false,
 }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -39,10 +41,14 @@ const AsideModal = ({
   };
 
   const onCloseHandler = () => {
-    setIsOpen(false);
-    setTimeout(() => {
+    if (preventOnClose) {
       onClose();
-    }, 225);
+    } else {
+      setIsOpen(false);
+      setTimeout(() => {
+        onClose();
+      }, 225);
+    }
   };
 
   useEffect(() => {
@@ -75,21 +81,23 @@ const AsideModal = ({
         </IconButton>
       </DialogTitle>
       <DialogContent dividers>{children}</DialogContent>
-      <DialogActions>
-        {!!onSubmit && (
-          <Button
-            loading={submitLoading}
-            disabled={submitDisabled}
-            onClick={(e) => onSubmitHandler(e, "submit")}
-            variant="contained"
-          >
-            {submitLabel}
+      {!removeActions && (
+        <DialogActions>
+          {!!onSubmit && (
+            <Button
+              loading={submitLoading}
+              disabled={submitDisabled}
+              onClick={(e) => onSubmitHandler(e, "submit")}
+              variant="contained"
+            >
+              {submitLabel}
+            </Button>
+          )}
+          <Button variant="text" onClick={onCloseHandler}>
+            {cancelLabel}
           </Button>
-        )}
-        <Button variant="text" onClick={onCloseHandler}>
-          {cancelLabel}
-        </Button>
-      </DialogActions>
+        </DialogActions>
+      )}
     </Drawer>
   );
 };

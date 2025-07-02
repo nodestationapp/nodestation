@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useFormik } from "formik";
 import Stack from "@mui/material/Stack";
 
@@ -5,10 +6,12 @@ import { AsideModal } from "@nstation/design-system";
 import { clientFieldTypes } from "@nstation/field-types";
 
 import { useTable } from "@nstation/tables/client/contexts/table.js";
+import TableRowEditorPreview from "./Preview.js";
 
 const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
   const fieldTypes = clientFieldTypes();
   const { data: table_data, addTableEntry, tableRefetch } = useTable();
+  const [editMode, setEditMode] = useState(false);
 
   const onSubmit = async (values, { setSubmitting, setErrors, resetForm }) => {
     try {
@@ -47,27 +50,40 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
     <form onSubmit={formik.handleSubmit}>
       <AsideModal
         open={open}
-        onClose={onClose}
-        onSubmit={formik.handleSubmit}
+        onClose={editMode ? () => setEditMode(false) : onClose}
+        preventOnClose={!!editMode}
+        onSubmit={editMode ? formik.handleSubmit : null}
         submitLoading={formik.isSubmitting}
-        header={open?.[table_data?.table?.displayName || "id"] || "Add entry"}
+        header={"Details" || "Add entry"}
+        removeActions={!editMode}
       >
         <Stack gap={1.5} direction="column">
-          {table_data?.table?.fields?.map((data) => {
-            if (!!!open?.id) {
-              if (data?.slug === "id") return null;
-            }
+          {editMode ? (
+            <>
+              {table_data?.table?.fields?.map((data) => {
+                if (!!!open?.id) {
+                  if (data?.slug === "id") return null;
+                }
 
-            const inputRender = fieldTypes?.find(
-              (item) => data?.type === item?.key
-            )?.inputRender;
+                const inputRender = fieldTypes?.find(
+                  (item) => data?.type === item?.key
+                )?.inputRender;
 
-            if (!!inputRender) {
-              return inputRender({ data, formik });
-            } else {
-              return null;
-            }
-          })}
+                if (!!inputRender) {
+                  return inputRender({ data, formik });
+                } else {
+                  return null;
+                }
+              })}
+            </>
+          ) : (
+            <TableRowEditorPreview
+              data={open}
+              setEditMode={setEditMode}
+              table_data={table_data}
+              fieldTypes={fieldTypes}
+            />
+          )}
         </Stack>
       </AsideModal>
     </form>
