@@ -2,10 +2,12 @@ import fs from "fs";
 import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
+import { logger } from "@nstation/logger";
 import loadPlugins from "./loadPlugins.js";
 import { rootPath, cors } from "@nstation/utils";
-import { logger } from "@nstation/logger";
-import initRoute from "./initRoute.js";
+
+import initRoute from "./system-routes/init.js";
+import healthRoute from "./system-routes/health.js";
 
 const clientPath = path.join(rootPath, "build");
 
@@ -29,7 +31,8 @@ function createApp() {
       app.router(req, res, next);
     });
 
-    app.express.use("/admin-api/init", initRoute);
+    app.express.get("/admin-api/init", initRoute);
+    app.express.get("/admin-api/health", healthRoute);
 
     // io({ server: app.server, app: app.express });
 
