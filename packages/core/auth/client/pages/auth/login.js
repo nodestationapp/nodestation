@@ -9,11 +9,15 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { ColorModeDropdown } from "@nstation/design-system";
 
 import { useAuth } from "../../contexts/authMiddleware.js";
+import { useApp } from "contexts/app.js";
 
 import { Logo } from "@nstation/design-system";
 
 const LoginContent = () => {
   const { login } = useAuth();
+  const { site } = useApp();
+
+  console.log(site);
 
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {

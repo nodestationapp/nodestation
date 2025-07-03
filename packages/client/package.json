@@ -58,7 +58,8 @@
     "webpack-dev-server": "^5.2.1",
     "webpackbar": "^7.0.0",
     "webpack-virtual-modules": "^0.6.2",
-    "require-from-string": "^2.0.2"
+    "require-from-string": "^2.0.2",
+    "react-helmet": "^6.1.0"
   },
   "peerDependencies": {
     "react": ">=19.0.0",

@@ -1,25 +1,32 @@
 import { Routes, Route } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 import { DashboardLayout } from "@nstation/design-system/Layouts";
 
 import { useApp } from "contexts/app";
 
 const App = () => {
-  const { menuLinks } = useApp();
+  const { site, menuLinks } = useApp();
   const formattedMenuLinks = menuLinks?.filter((item) => !!item?.Component);
 
   return (
-    <Routes>
-      <Route element={<DashboardLayout />}>
-        {formattedMenuLinks.map((link) => (
-          <Route
-            key={link.to}
-            path={`${link.to}/*`}
-            element={<link.Component />}
-          />
-        ))}
-      </Route>
-    </Routes>
+    <>
+      <Helmet>
+        <title>{site?.title || "Nodestation"}</title>
+        <link rel="icon" href={site.favicon} />
+      </Helmet>
+      <Routes>
+        <Route element={<DashboardLayout />}>
+          {formattedMenuLinks.map((link) => (
+            <Route
+              key={link.to}
+              path={`${link.to}/*`}
+              element={<link.Component />}
+            />
+          ))}
+        </Route>
+      </Routes>
+    </>
   );
 };
 

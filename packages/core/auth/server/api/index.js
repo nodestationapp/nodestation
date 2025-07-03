@@ -21,6 +21,7 @@ import authMiddleware from "../../utils/authMiddleware.js";
 import loginSchema from "../utils/validations/loginSchema.js";
 import resetPasswordSchema from "../utils/validations/resetPasswordSchema.js";
 import resetPasswordConfirmSchema from "../utils/validations/resetPasswordConfirmSchema.js";
+
 export default [
   {
     method: "POST",

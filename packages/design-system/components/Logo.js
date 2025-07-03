@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
-
 import MuiAvatar from "@mui/material/Avatar";
+import { styled } from "@mui/material/styles";
 import DevicesRoundedIcon from "@mui/icons-material/DevicesRounded";
 
-const possibleLogos = ["logo.svg", "logo.png", "logo.jpg"];
+import { useApp } from "contexts/app";
 
 const Avatar = styled(MuiAvatar)(({ theme }) => ({
   width: 28,
@@ -14,34 +12,12 @@ const Avatar = styled(MuiAvatar)(({ theme }) => ({
   border: `1px solid ${(theme.vars || theme).palette.divider}`,
 }));
 
-const isImage = (res) => {
-  const contentType = res.headers.get("Content-Type");
-  return contentType && contentType.startsWith("image/");
-};
-
-const checkImages = async (setLogoSrc) => {
-  for (let file of possibleLogos) {
-    const url = `${process.env.PUBLIC_URL}/${file}`;
-    try {
-      const res = await fetch(url, { method: "HEAD" });
-      if (res.ok && isImage(res)) {
-        setLogoSrc(url);
-        break;
-      }
-    } catch (e) {}
-  }
-};
-
 const Logo = ({ size = 50, borderRadius = 2 }) => {
-  const [logoSrc, setLogoSrc] = useState(null);
+  const { site } = useApp();
 
-  useEffect(() => {
-    checkImages(setLogoSrc);
-  }, []);
-
-  return logoSrc ? (
+  return site?.logo ? (
     <MuiAvatar
-      src={logoSrc}
+      src={site?.logo}
       alt="logo"
       sx={{ borderRadius: 0, width: size, height: size }}
     />
