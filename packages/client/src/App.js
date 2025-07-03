@@ -13,7 +13,7 @@ const App = () => {
     <>
       <Helmet>
         <title>{site?.title || "Nodestation"}</title>
-        <link rel="icon" href={site.favicon} />
+        {!!site.favicon && <link rel="icon" href={site.favicon} />}
       </Helmet>
       <Routes>
         <Route element={<DashboardLayout />}>

@@ -106,6 +106,7 @@ const AuthProvider = ({ children }) => {
     });
 
     removeCookie("access_token");
+    localStorage.removeItem("refresh_token");
     window.location.replace("/login");
 
     setUser(null);

@@ -22,7 +22,7 @@ const AuthRoutes = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>{site?.title || "Nodestation"}</title>
-        <link rel="icon" href={site.favicon} />
+        {!!site.favicon && <link rel="icon" href={site.favicon} />}
       </Helmet>
       <Routes>
         {is_admin ? (
