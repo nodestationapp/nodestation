@@ -16,7 +16,6 @@ export default async (req, res) => {
     site.logo = `${process.env.PUBLIC_URL}${site.logo}`;
     site.favicon = `${process.env.PUBLIC_URL}${site.favicon}`;
 
-    console.log(site);
     return res.status(200).json(site);
   } catch (err) {
     console.error(err);

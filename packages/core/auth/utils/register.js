@@ -24,7 +24,7 @@ const register = async (body) =>
           password: hashedPassword,
           last_name: body?.last_name,
           first_name: body?.first_name,
-          status: body?.type === "admin" ? "active" : "inactive",
+          status: body?.type === "superadmin" ? "active" : "inactive",
         })
         .returning("id");
 

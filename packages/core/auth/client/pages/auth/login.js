@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 
@@ -9,15 +10,14 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { ColorModeDropdown } from "@nstation/design-system";
 
 import { useAuth } from "../../contexts/authMiddleware.js";
-import { useApp } from "contexts/app.js";
 
 import { Logo } from "@nstation/design-system";
+import PasswordVisibilityToggle from "../../components/PasswordVisibilityToggle.js";
 
 const LoginContent = () => {
   const { login } = useAuth();
-  const { site } = useApp();
 
-  console.log(site);
+  const [show_password, setShowPassword] = useState(false);
 
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
@@ -95,7 +95,7 @@ const LoginContent = () => {
           <TextField
             fullWidth
             name="password"
-            type="password"
+            type={show_password ? "text" : "password"}
             label="Password"
             variant="outlined"
             error={formik.errors.password}
@@ -107,24 +107,30 @@ const LoginContent = () => {
             slotProps={{
               input: {
                 endAdornment: (
-                  <InputAdornment position="end">
-                    <Typography
-                      component={Link}
-                      variant="caption"
-                      color="textSecondary"
-                      to="/forget-password"
-                      sx={{
-                        textDecoration: "none",
-                        "&:hover": { textDecoration: "underline" },
-                      }}
-                    >
-                      Forget password
-                    </Typography>
+                  <InputAdornment position="end" sx={{ mr: -1.5 }}>
+                    <PasswordVisibilityToggle
+                      show={show_password}
+                      setShow={setShowPassword}
+                    />
                   </InputAdornment>
                 ),
               },
             }}
           />
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <Typography
+              component={Link}
+              variant="caption"
+              color="textSecondary"
+              to="/forget-password"
+              sx={{
+                textDecoration: "underline",
+                "&:hover": { color: "text.primary" },
+              }}
+            >
+              Forget password
+            </Typography>
+          </Box>
           <Button
             type="submit"
             fullWidth

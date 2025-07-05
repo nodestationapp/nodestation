@@ -6,14 +6,16 @@ export default async (req, res) => {
 
   try {
     const usersCount = await knex("nodestation_users")
+      .where({
+        type: "superadmin",
+      })
       .count("* as count")
-      .first()
       .then((row) => row.count);
 
     if (!!!usersCount) {
-      body.type = "admin";
+      body.type = "superadmin";
     } else {
-      if (body?.type === "admin") {
+      if (body?.type === "superadmin") {
         return res.status(500).json({ error: "Something went wrong" });
       }
     }

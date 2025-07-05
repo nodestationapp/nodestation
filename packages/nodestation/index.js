@@ -25,6 +25,8 @@ if (process.argv[2] === "dev") {
       rootPath,
       "--ignore",
       "**/client/**",
+      "--ignore",
+      "**/design-system/**",
       "--quiet",
       "entry.js",
     ],

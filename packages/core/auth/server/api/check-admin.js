@@ -4,7 +4,7 @@ export default async (req, res) => {
   try {
     const count = await knex("nodestation_users")
       .where({
-        type: "admin",
+        type: "superadmin",
         status: "active",
       })
       .count("* as count")

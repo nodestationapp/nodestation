@@ -15,10 +15,12 @@ const SettingTemplates = () => {
 
   const { data: emails } = useQuery({
     queryKey: ["emails"],
-    queryFn: () => api.get("/admin-api/emails"),
+    queryFn: () => api.get("/admin-api/emails?per_page=10000"),
   });
 
-  const formatted_emails = emails?.map((item) => ({
+  console.log(emails);
+
+  const formatted_emails = emails?.data?.map((item) => ({
     label: item?.name,
     value: item?.id,
   }));

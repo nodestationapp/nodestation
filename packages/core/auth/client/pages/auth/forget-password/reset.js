@@ -7,9 +7,12 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import InputAdornment from "@mui/material/InputAdornment";
 
 import { api } from "@nstation/design-system/utils";
 import { ColorModeDropdown } from "@nstation/design-system";
+
+import PasswordVisibilityToggle from "../../../components/PasswordVisibilityToggle.js";
 
 const ForgetPasswordContent = () => {
   const { search } = useLocation();
@@ -17,6 +20,8 @@ const ForgetPasswordContent = () => {
 
   const [loading, setLoading] = useState(true);
   const [reset_sent, setResetSent] = useState(false);
+  const [show_password, setShowPassword] = useState(false);
+  const [show_password2, setShowPassword2] = useState(false);
 
   const query = new URLSearchParams(search);
   const token = query.get("token");
@@ -100,7 +105,7 @@ const ForgetPasswordContent = () => {
         >
           <TextField
             fullWidth
-            type="password"
+            type={show_password ? "text" : "password"}
             name="password"
             label="New password"
             variant="outlined"
@@ -109,10 +114,22 @@ const ForgetPasswordContent = () => {
             helperText={formik.errors.password}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end" sx={{ mr: -1.5 }}>
+                    <PasswordVisibilityToggle
+                      show={show_password}
+                      setShow={setShowPassword}
+                    />
+                  </InputAdornment>
+                ),
+              },
+            }}
           />
           <TextField
             fullWidth
-            type="password"
+            type={show_password2 ? "text" : "password"}
             name="password2"
             label="Confirm new password"
             variant="outlined"
@@ -121,6 +138,18 @@ const ForgetPasswordContent = () => {
             helperText={formik.errors.password2}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end" sx={{ mr: -1.5 }}>
+                    <PasswordVisibilityToggle
+                      show={show_password2}
+                      setShow={setShowPassword2}
+                    />
+                  </InputAdornment>
+                ),
+              },
+            }}
           />
           <Button
             type="submit"

@@ -1,7 +1,7 @@
-import "@fontsource/inter/300.css"; // Light
-import "@fontsource/inter/400.css"; // Regular
-import "@fontsource/inter/500.css"; // Medium
-import "@fontsource/inter/700.css"; // Bold
+import "@fontsource-variable/inter"; // Light
+// import "@fontsource/inter/400.css"; // Regular
+// import "@fontsource/inter/500.css"; // Medium
+// import "@fontsource/inter/700.css"; // Bold
 
 import { createTheme, alpha } from "@mui/material/styles";
 
@@ -15,7 +15,7 @@ export const brand = {
   200: "hsl(265, 85%, 80%)",
   300: "hsl(265, 80%, 70%)",
   400: "hsl(265, 75%, 60%)",
-  500: "hsl(265, 70%, 50%)", // główny kolor (np. przycisk)
+  500: "hsl(265, 70%, 50%)",
   600: "hsl(265, 65%, 40%)",
   700: "hsl(265, 60%, 30%)",
   800: "hsl(265, 55%, 22%)",
@@ -181,7 +181,7 @@ export const getDesignTokens = (mode) => {
       },
     },
     typography: {
-      fontFamily: "Inter, sans-serif",
+      fontFamily: "Inter Variable, sans-serif",
       h1: {
         fontSize: defaultTheme.typography.pxToRem(48),
         fontWeight: 600,
@@ -339,7 +339,7 @@ export const colorSchemes = {
 };
 
 export const typography = {
-  fontFamily: "Inter, sans-serif",
+  fontFamily: "Inter Variable, sans-serif",
   h1: {
     fontSize: defaultTheme.typography.pxToRem(48),
     fontWeight: 600,

@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Menu from "@mui/material/Menu";
+import Avatar from "@mui/material/Avatar";
 import { styled } from "@mui/material/styles";
 import MuiMenuItem from "@mui/material/MenuItem";
+
 import { listClasses } from "@mui/material/List";
 import { paperClasses } from "@mui/material/Paper";
 import ListItemText from "@mui/material/ListItemText";
@@ -20,7 +22,7 @@ const MenuItem = styled(MuiMenuItem)({
 });
 
 export default function OptionsMenu() {
-  const { handleLogout } = useAuth();
+  const { user, handleLogout } = useAuth();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -36,7 +38,11 @@ export default function OptionsMenu() {
         aria-label="Open menu"
         onClick={(e) => setAnchorEl(e.currentTarget)}
       >
-        <MoreVertRoundedIcon />
+        <Avatar
+          sizes="small"
+          src={user?.photo?.url}
+          sx={{ width: 22, height: 22, borderRadius: 50 }}
+        />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -44,8 +50,8 @@ export default function OptionsMenu() {
         open={open}
         onClose={handleClose}
         onClick={handleClose}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        transformOrigin={{ horizontal: "left", vertical: "top" }}
+        anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
         sx={{
           [`& .${listClasses.root}`]: {
             padding: "4px",

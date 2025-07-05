@@ -9,8 +9,8 @@ const login = async ({ email, password }) =>
         .where({
           email: email,
           status: "active",
-          type: "admin",
         })
+        .whereIn("type", ["superadmin", "admin"])
         .first();
 
       if (!!!result) {

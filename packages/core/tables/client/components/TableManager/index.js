@@ -27,6 +27,7 @@ const TableManagerContent = ({
   hiddenColumns,
   appendColumns,
   onEntrySubmit,
+  isRowSelectable,
 }) => {
   const actionSlot = useSlot("tables.actions");
 
@@ -138,6 +139,7 @@ const TableManagerContent = ({
         setColumnSizes={setColumnSizes}
         filters={filters}
         setFilters={setFilters}
+        isRowSelectable={isRowSelectable}
         columnVisibility={columnVisibility}
         setColumnVisibility={setColumnVisibility}
         rows={data?.entries}
@@ -176,6 +178,7 @@ const TableManager = ({
   onEntrySubmit,
   onNewClick,
   onRowClick,
+  isRowSelectable,
 }) => {
   return (
     <TableProvider id={table}>
@@ -188,6 +191,7 @@ const TableManager = ({
         onEntrySubmit={onEntrySubmit}
         hiddenColumns={hiddenColumns}
         appendColumns={appendColumns}
+        isRowSelectable={isRowSelectable}
       />
     </TableProvider>
   );

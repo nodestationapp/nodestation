@@ -1,6 +1,10 @@
 import passport from "passport";
 
 const authMiddleware = (roles) => {
+  if (roles.includes("admin")) {
+    roles.push("superadmin");
+  }
+
   return (req, res, next) => {
     passport.authenticate("jwt", { session: false }, async (err, user) => {
       if (roles?.length > 0 && !roles?.includes("public")) {

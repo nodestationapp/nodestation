@@ -16,7 +16,7 @@ import ProjectName from "./ProjectName.js";
 
 import { useAuth } from "@nstation/auth/client/contexts/authMiddleware.js";
 
-const drawerWidth = 255;
+const drawerWidth = 270;
 
 const Drawer = styled(MuiDrawer)({
   width: drawerWidth,
@@ -58,11 +58,12 @@ const Sidebar = ({ open, onClose }) => {
         sx={{
           display: "flex",
           p: 1.75,
+          pb: 1,
         }}
       >
         <ProjectName />
       </Box>
-      <Divider />
+      {/* <Divider /> */}
       <Box
         sx={{
           overflow: "auto",
@@ -73,54 +74,6 @@ const Sidebar = ({ open, onClose }) => {
       >
         <MenuContent />
       </Box>
-      <Stack
-        direction="row"
-        sx={{
-          px: 1,
-          gap: 1,
-          height: 35,
-          alignItems: "center",
-          borderTop: "1px solid",
-          borderColor: "divider",
-          overflow: "hidden",
-          flexShrink: 0,
-        }}
-      >
-        <Avatar
-          sizes="small"
-          src={user?.photo?.url}
-          sx={{ width: 22, height: 22, borderRadius: 50 }}
-        />
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Box sx={{ display: "flex", flexDirection: "column", width: 135 }}>
-            <Typography
-              variant="body2"
-              noWrap
-              sx={{
-                fontWeight: 500,
-                lineHeight: "16px",
-              }}
-            >
-              {user?.first_name} {user?.last_name}
-            </Typography>
-            {/* <Typography
-              variant="caption"
-              sx={{ color: "text.secondary" }}
-              noWrap
-            >
-              {user?.email}
-            </Typography> */}
-          </Box>
-          <OptionsMenu />
-        </Box>
-      </Stack>
     </Drawer>
   );
 };

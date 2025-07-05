@@ -29,6 +29,7 @@ const MuiTable = ({
   hideToolbar,
   columnSizes,
   setColumnSizes,
+  isRowSelectable,
   columnVisibility,
   setColumnVisibility,
   tableHeight = "100%",
@@ -141,6 +142,7 @@ const MuiTable = ({
           checkboxSelection
           loading={loading}
           columns={columns}
+          isRowSelectable={isRowSelectable}
           getRowClassName={(params) =>
             params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
           }

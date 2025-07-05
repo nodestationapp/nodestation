@@ -94,7 +94,7 @@ export const dataDisplayCustomizations = {
     styleOverrides: {
       primary: ({ theme }) => ({
         fontSize: theme.typography.body2.fontSize,
-        fontWeight: 500,
+        fontWeight: 400,
         lineHeight: theme.typography.body2.lineHeight,
       }),
       secondary: ({ theme }) => ({

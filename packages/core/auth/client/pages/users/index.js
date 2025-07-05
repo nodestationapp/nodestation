@@ -27,6 +27,7 @@ const Users = () => {
           origin: "system",
         },
       ]}
+      isRowSelectable={(params) => params.row.type !== "superadmin"}
       hiddenColumns={["password", "first_name", "last_name", "photo"]}
     />
   );
