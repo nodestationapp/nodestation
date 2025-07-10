@@ -5,6 +5,12 @@
   height: 100vh;
   width: 100vw;
 
+  &--full-container {
+    height: 100%;
+    width: 100%;
+    flex: 1;
+  }
+
   &__dots{
     width: 7px;
     height: 7px;

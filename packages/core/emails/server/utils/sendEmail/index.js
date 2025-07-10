@@ -49,9 +49,17 @@ const sendEmail = async (template, options, metadata) => {
       emails.push(email);
     }
 
-    const current_template = emails?.find(
+    let current_template = emails?.find(
       (item) => item?.id?.toString() === template?.toString()
     );
+
+    if (template !== null && typeof template === "object") {
+      current_template = template;
+    } else {
+      current_template = emails?.find(
+        (item) => item?.id?.toString() === template?.toString()
+      );
+    }
 
     template = {
       ...current_template,

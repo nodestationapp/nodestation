@@ -4,9 +4,13 @@ import classnames from "classnames";
 
 const mainClass = "page-loader";
 
-const PageLoader = ({ size, center, color }) => {
+const PageLoader = ({ size, center, color, fullContainer }) => {
   return (
-    <div className={mainClass}>
+    <div
+      className={classnames(mainClass, {
+        [`${mainClass}--full-container`]: !!fullContainer,
+      })}
+    >
       <span
         className={classnames(`${mainClass}__dots`, {
           [`${mainClass}__dots--${size}`]: !!size,

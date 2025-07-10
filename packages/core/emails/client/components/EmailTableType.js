@@ -13,7 +13,7 @@ const EmailTableType = ({ data }) => {
       variant="body2"
       sx={{ height: "100%", display: "flex", alignItems: "center", gap: 1 }}
     >
-      <IconifyIcon icon="lucide:send-horizontal" />
+      <IconifyIcon icon="lucide:send-horizontal" style={{ flexShrink: 0 }} />
       {label}
     </Typography>
   );

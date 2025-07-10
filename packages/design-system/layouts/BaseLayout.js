@@ -3,11 +3,13 @@ import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@nstation/tables/client/components/MuiTable/components/Toolbar/index.js";
+import PageLoader from "../components/PageLoader/index.js";
 
 const BaseLayout = ({
   tabs,
   title,
   action,
+  loading,
   subtitle,
   children,
   selectedRows,
@@ -15,7 +17,7 @@ const BaseLayout = ({
   backButtonLink,
 }) => {
   return (
-    <Box>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100%" }}>
       {!!tabs && (
         <Toolbar
           noAddTab
@@ -38,7 +40,7 @@ const BaseLayout = ({
           <Divider sx={{ mb: 3 }} />
         </>
       )}
-      <Box>{children}</Box>
+      {!!loading ? <PageLoader fullContainer /> : <Box>{children}</Box>}
     </Box>
   );
 };

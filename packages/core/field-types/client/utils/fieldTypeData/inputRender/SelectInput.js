@@ -1,6 +1,7 @@
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import ColorfulChip from "../components/ColorfulChip.js";
 
 const SelectInput = ({ data, formik }) => {
   return (
@@ -40,17 +41,19 @@ const SelectInput = ({ data, formik }) => {
         if (!!!formik.values[data?.slug]) return undefined;
         return tagValue.map((option, index) => {
           const { key, ...tagProps } = getTagProps({ index });
-          return (
-            <Chip
+          const color = data?.options?.find(
+            (item) => item?.value?.toString() === option?.toString()
+          )?.color;
+
+          return color === "superadmin" ? (
+            <ColorfulChip
               key={key}
               {...tagProps}
-              color={
-                data?.options?.find(
-                  (item) => item?.value?.toString() === option?.toString()
-                )?.color
-              }
+              color={color}
               label={option}
             />
+          ) : (
+            <Chip key={key} {...tagProps} color={color} label={option} />
           );
         });
       }}

@@ -1,9 +1,15 @@
 import { useState } from "react";
 
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
+import Settings from "@mui/icons-material/Settings";
+
 import MessageColumn from "../components/MessageColumn.js";
 import EndpointStatus from "../components/EndpointStatus.js";
 import LogDetailsModal from "../components/logDetailsModal.js";
 import TableManager from "@nstation/tables/client/components/TableManager/index.js";
+import { useNavigate } from "react-router-dom";
 
 const columnsToShow = [
   {
@@ -41,6 +47,7 @@ const columnsToShow = [
 ];
 
 const LoggerIndex = () => {
+  const navigate = useNavigate();
   const [logDetailsModal, setLogDetailsModal] = useState(null);
 
   return (
@@ -50,6 +57,13 @@ const LoggerIndex = () => {
         table="nodestation_logger"
         appendColumns={columnsToShow}
         onRowClick={(row) => setLogDetailsModal(row)}
+        action={() => (
+          <>
+            <IconButton size="micro" onClick={() => navigate(`/logs/settings`)}>
+              <Settings />
+            </IconButton>
+          </>
+        )}
       />
       {!!logDetailsModal && (
         <LogDetailsModal

@@ -1,10 +1,10 @@
 import fs from "fs";
 import path from "path";
 import morgan from "morgan";
-import { knex } from "@nstation/db";
 import micromatch from "micromatch";
 import { rootPath } from "@nstation/utils";
 import requireFromString from "require-from-string";
+import log from "./log.js";
 
 const configExists = fs.existsSync(
   path.join(rootPath, "nodestation.config.js")
@@ -75,9 +75,7 @@ const logger = morgan((tokens, req, res) => {
     micromatch.isMatch(data.message?.url, allow) &&
     !micromatch.isMatch(data.message?.url, ignore)
   ) {
-    knex("nodestation_logger")
-      .insert(data)
-      .catch((err) => console.error(err));
+    log(data);
   }
 
   return [
@@ -87,8 +85,6 @@ const logger = morgan((tokens, req, res) => {
     data.message?.url,
     data.response_time,
   ].join(" ");
-
-  return "LOG";
 });
 
 export default logger;

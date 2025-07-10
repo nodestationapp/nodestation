@@ -28,6 +28,7 @@ const TableManagerContent = ({
   appendColumns,
   onEntrySubmit,
   isRowSelectable,
+  customAction,
 }) => {
   const actionSlot = useSlot("tables.actions");
 
@@ -128,7 +129,7 @@ const TableManagerContent = ({
       <MuiTable
         page={pagination_page}
         setPage={setPaginationPage}
-        action={!hideActions ? action : null}
+        action={!hideActions && !customAction ? action : customAction || null}
         columns={columns}
         loading={loading}
         rowHeight={rowHeight}
@@ -179,6 +180,7 @@ const TableManager = ({
   onNewClick,
   onRowClick,
   isRowSelectable,
+  action,
 }) => {
   return (
     <TableProvider id={table}>
@@ -192,6 +194,7 @@ const TableManager = ({
         hiddenColumns={hiddenColumns}
         appendColumns={appendColumns}
         isRowSelectable={isRowSelectable}
+        customAction={action}
       />
     </TableProvider>
   );

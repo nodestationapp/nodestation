@@ -1,0 +1,33 @@
+{
+  "tableName": "nodestation_logger_settings",
+  "fields": [
+    {
+      "name": "ID",
+      "slug": "id",
+      "type": "id",
+      "primary_key": true,
+      "default": "generate_id()"
+    },
+    {
+      "name": "Key",
+      "slug": "key",
+      "type": "text"
+    },
+    {
+      "name": "Active",
+      "slug": "active",
+      "type": "boolean"
+    },
+    {
+      "name": "Body",
+      "slug": "body",
+      "type": "text"
+    },
+    {
+      "name": "Created at",
+      "slug": "created_at",
+      "type": "date",
+      "default": "now()"
+    }
+  ]
+}

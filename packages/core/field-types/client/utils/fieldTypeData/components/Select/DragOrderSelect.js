@@ -11,6 +11,7 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
+import { useState } from "react";
 
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
@@ -19,10 +20,10 @@ import Popover from "@mui/material/Popover";
 import IconButton from "@mui/material/IconButton";
 
 import { CSS } from "@dnd-kit/utilities";
+import ColorfulChip from "../ColorfulChip.js";
 
 import CloseIcon from "@mui/icons-material/Close";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useState } from "react";
 
 const DragOrderSelectContent = ({ data = [], onChange }) => {
   const removeItem = (item) => {
@@ -123,11 +124,19 @@ const DragOrderSelectItem = ({ id, data, removeItem, onChangeColor }) => {
             aria-describedby={popover_id}
             onClick={(e) => setAnchorEl(e.currentTarget)}
           >
-            <Chip
-              label={data?.label}
-              color={data?.color}
-              sx={{ cursor: "pointer" }}
-            />
+            {data?.value === "superadmin" ? (
+              <ColorfulChip
+                label={data?.label}
+                color={data?.color}
+                sx={{ cursor: "pointer" }}
+              />
+            ) : (
+              <Chip
+                label={data?.label}
+                color={data?.color}
+                sx={{ cursor: "pointer" }}
+              />
+            )}
           </Box>
           <ColorPickerPopover
             open={open}
