@@ -1,26 +1,30 @@
 import { useState } from "react";
 
+import MessageColumn from "../components/MessageColumn.js";
+import EndpointStatus from "../components/EndpointStatus.js";
 import LogDetailsModal from "../components/logDetailsModal.js";
 import TableManager from "@nstation/tables/client/components/TableManager/index.js";
-import moment from "moment";
 
 const columnsToShow = [
   {
-    slug: "status",
+    slug: "level",
     name: "Status",
-    type: "logger:endpoint-status",
-  },
-  {
-    slug: "method",
-    name: "Method",
-    type: "logger:endpoint-method",
+    type: "select",
+    renderCell: (row) => <EndpointStatus data={row} />,
+    columnType: "singleSelect",
+    options: [
+      { value: "success", label: "Success" },
+      { value: "info", label: "Info" },
+      { value: "warning", label: "Warning" },
+      { value: "error", label: "Error" },
+    ],
   },
   {
     flex: 1,
     minWidth: 250,
-    slug: "url",
-    name: "Source",
-    type: "endpoint",
+    slug: "message",
+    name: "Message",
+    renderCell: (row) => <MessageColumn data={row?.row} />,
   },
   {
     width: 240,

@@ -9,54 +9,29 @@
       "default": "generate_id()"
     },
     {
+      "name": "Label",
+      "slug": "label",
+      "type": "text"
+    },
+    {
       "name": "Level",
       "slug": "level",
       "type": "text"
     },
     {
-      "name": "Method",
-      "slug": "method",
-      "type": "logger:endpoint-method"
-    },
-    {
-      "name": "Url",
-      "slug": "url",
+      "name": "Source",
+      "slug": "source",
       "type": "text"
     },
     {
-      "name": "Status",
-      "slug": "status",
-      "type": "logger:endpoint-status"
-    },
-    {
-      "name": "Res",
-      "slug": "res",
-      "type": "json"
-    },
-    {
-      "name": "IP",
-      "slug": "ip",
+      "name": "Message",
+      "slug": "message",
       "type": "text"
-    },
-    {
-      "name": "Headers",
-      "slug": "headers",
-      "type": "json"
-    },
-    {
-      "name": "Body",
-      "slug": "body",
-      "type": "json"
     },
     {
       "name": "Is read",
       "slug": "is_read",
       "type": "numeric"
-    },
-    {
-      "name": "Response time",
-      "slug": "response_time",
-      "type": "text"
     },
     {
       "slug": "user",

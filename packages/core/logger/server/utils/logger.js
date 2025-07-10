@@ -52,14 +52,17 @@ const logger = morgan((tokens, req, res) => {
 
   const data = {
     level,
-    ip: req.ip,
     user: req?.user?.id,
-    url: tokens.url(req, res),
-    method: tokens.method(req, res),
-    status: tokens.status(req, res),
-    body: sanitizeSensitiveData(req.body),
-    headers: sanitizeSensitiveData(req.headers),
-    response_time: tokens["response-time"](req, res),
+    source: "api",
+    message: {
+      ip: req.ip,
+      url: tokens.url(req, res),
+      method: tokens.method(req, res),
+      status: tokens.status(req, res),
+      body: sanitizeSensitiveData(req.body),
+      headers: sanitizeSensitiveData(req.headers),
+      response_time: tokens["response-time"](req, res),
+    },
   };
 
   const timestamp = tokens.date(req, res, "iso");
@@ -69,8 +72,8 @@ const logger = morgan((tokens, req, res) => {
   allow = [...allow, "/api/**"];
 
   if (
-    micromatch.isMatch(data.url, allow) &&
-    !micromatch.isMatch(data.url, ignore)
+    micromatch.isMatch(data.message?.url, allow) &&
+    !micromatch.isMatch(data.message?.url, ignore)
   ) {
     knex("nodestation_logger")
       .insert(data)
@@ -79,11 +82,13 @@ const logger = morgan((tokens, req, res) => {
 
   return [
     timestamp.padEnd(24),
-    data.method.padEnd(3),
-    String(data.status).padStart(1),
-    data.url,
+    data.message?.method.padEnd(3),
+    String(data.message?.status).padStart(1),
+    data.message?.url,
     data.response_time,
   ].join(" ");
+
+  return "LOG";
 });
 
 export default logger;

@@ -18,8 +18,6 @@ const SettingTemplates = () => {
     queryFn: () => api.get("/admin-api/emails?per_page=10000"),
   });
 
-  console.log(emails);
-
   const formatted_emails = emails?.data?.map((item) => ({
     label: item?.name,
     value: item?.id,

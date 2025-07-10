@@ -1,13 +1,11 @@
-import moment from "moment";
-
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { AsideModal } from "@nstation/design-system";
 import ReactJsonViewRaw from "@microlink/react-json-view";
 
-import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
-import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+// import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
+// import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+// import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import { useColorScheme } from "@mui/material";
 
 const ReactJsonView = ReactJsonViewRaw.default;
@@ -28,9 +26,9 @@ const value_render = ({ label, type, value, theme_mode }) => {
           enableClipboard={false}
           displayDataTypes={false}
           style={{ width: "100%" }}
-          shouldCollapse={({ src }) => {
-            return typeof src === "object" && Object.keys(src).length > 6;
-          }}
+          // shouldCollapse={({ src }) => {
+          //   return typeof src === "object" && Object.keys(src).length > 6;
+          // }}
         />
       );
     default:
@@ -42,51 +40,54 @@ const LogDetailsModal = ({ data, onClose }) => {
   const { mode } = useColorScheme();
 
   const details_data = [
+    // {
+    //   label: "General",
+    //   icon: <InfoOutlineIcon sx={{ height: 20, width: 20 }} />,
+    //   items: [
+    //     {
+    //       type: "short_text",
+    //       label: "Request URL",
+    //       value: data?.url,
+    //     },
+    //     {
+    //       type: "short_text",
+    //       label: "Method",
+    //       value: data?.method,
+    //     },
+    //     {
+    //       type: "short_text",
+    //       label: "Status Code",
+    //       value: data?.status,
+    //     },
+    //     {
+    //       type: "short_text",
+    //       label: "Response Time",
+    //       value: `${data?.response_time} ms`,
+    //     },
+    //     {
+    //       type: "short_text",
+    //       label: "Date",
+    //       value: moment?.unix(data?.created_at)?.format("DD MMM YYYY, hh:mm A"),
+    //     },
+    //   ],
+    // },
     {
-      label: "General",
-      icon: <InfoOutlineIcon sx={{ height: 20, width: 20 }} />,
-      items: [
-        {
-          type: "short_text",
-          label: "Request URL",
-          value: data?.url,
-        },
-        {
-          type: "short_text",
-          label: "Method",
-          value: data?.method,
-        },
-        {
-          type: "short_text",
-          label: "Status Code",
-          value: data?.status,
-        },
-        {
-          type: "short_text",
-          label: "Response Time",
-          value: `${data?.response_time} ms`,
-        },
-        {
-          type: "short_text",
-          label: "Date",
-          value: moment?.unix(data?.created_at)?.format("DD MMM YYYY, hh:mm A"),
-        },
-      ],
-    },
-    {
-      label: "Request",
-      icon: <TrendingDownIcon />,
+      // label: "Request",
+      // icon: <TrendingDownIcon />,
       items: [
         {
           type: "json",
           label: "Body",
-          value: data?.body,
+          value:
+            typeof data?.message === "object" && data?.message !== null
+              ? data?.message
+              : { message: data?.message },
         },
-        {
-          type: "json",
-          label: "Headers",
-          value: data?.headers,
-        },
+        // {
+        //   type: "json",
+        //   label: "Headers",
+        //   value: data?.headers,
+        // },
       ],
     },
     // {

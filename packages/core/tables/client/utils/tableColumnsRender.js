@@ -49,7 +49,7 @@ const tableColumnsRender = ({ columns, columnSizes }) => {
               : true,
           valueOptions: !!columnInfo?.filterValueOptions
             ? columnInfo?.filterValueOptions(column?.options)
-            : undefined,
+            : column?.options || undefined,
           valueGetter: column?.valueGetter || undefined,
           valueFormatter: valueFormatter || undefined,
           filterOperators: !!columnInfo?.filterOperators

@@ -1,6 +1,5 @@
 import Logger from "./pages/index.js";
-import EndpointMethod from "./components/EndpointMethod.js";
-import EndpointStatus from "./components/EndpointStatus.js";
+import LoggerTableType from "./components/LoggerTableType.js";
 
 export default {
   register(app) {
@@ -12,26 +11,10 @@ export default {
       icon: "lucide:list",
     });
 
-    app.addHook("field-types.add", [
+    app.addHook("logger.table.types", [
       {
-        columnType: "number",
-        label: "Endpoint Status",
-        key: "logger:endpoint-status",
-        hiddenInfieldTypeSelect: true,
-        columnRender: (props) => <EndpointStatus {...props} />,
-      },
-      {
-        label: "Endpoint Method",
-        columnType: "singleSelect",
-        key: "logger:endpoint-method",
-        hiddenInfieldTypeSelect: true,
-        columnRender: (props) => <EndpointMethod {...props} />,
-        filterValueOptions: () => [
-          { value: "GET", label: "GET" },
-          { value: "POST", label: "POST" },
-          { value: "PUT", label: "PUT" },
-          { value: "DELETE", label: "DELETE" },
-        ],
+        type: "api",
+        Component: (props) => <LoggerTableType {...props} />,
       },
     ]);
   },

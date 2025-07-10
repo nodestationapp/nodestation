@@ -94,7 +94,7 @@ const Emails = () => {
         page={1}
         views={[
           {
-            name: "Entries",
+            name: "Emails",
             href: "/emails",
           },
         ]}

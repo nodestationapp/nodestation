@@ -40,7 +40,7 @@ const MuiTable = ({
   const tabs = !!views?.length
     ? views?.map((view) => ({
         title: view.name,
-        href: `${pathname}${view.id ? `?v=${view.id}` : ""}`,
+        href: view?.href || `${pathname}${view.id ? `?v=${view.id}` : ""}`,
         last_viewed: view.last_viewed,
       }))
     : [];

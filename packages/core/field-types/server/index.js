@@ -2,7 +2,7 @@ export default {
   register(app) {
     app.addFieldTypes({
       id: "string",
-      text: "string",
+      text: "text",
       boolean: "integer",
       select: "string",
       numeric: "integer",

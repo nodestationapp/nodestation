@@ -2,13 +2,14 @@ import fs from "fs";
 import path from "path";
 import { glob } from "glob";
 import { knex } from "@nstation/db";
+import { log } from "@nstation/logger";
 import { rootPath } from "@nstation/utils";
 
 import aws from "./aws.js";
+import local from "./local.js";
 import elastic from "./elastic.js";
 import mailgun from "./mailgun.js";
 import mailchimp from "./mailchimp.js";
-import local from "./local.js";
 
 const emailProvider = (data) => {
   switch (data?.settings?.active) {
@@ -34,56 +35,77 @@ function replaceTemplateVariables(template, data) {
   });
 }
 
-const sendEmail = async (template, options) => {
-  const settings = await knex("nodestation_email_settings").first();
+const sendEmail = async (template, options, metadata) => {
+  try {
+    const settings = await knex("nodestation_email_settings").first();
 
-  let emails = [];
-  const emailFiles = glob.sync(path.join(rootPath, "src", "emails", "*.json"));
-
-  for (const file of emailFiles) {
-    const email = JSON.parse(fs.readFileSync(file, "utf8"));
-    emails.push(email);
-  }
-
-  const current_template = emails?.find(
-    (item) => item?.id?.toString() === template?.toString()
-  );
-
-  template = {
-    ...current_template,
-    subject: replaceTemplateVariables(
-      current_template?.subject,
-      options?.context
-    ),
-    content: replaceTemplateVariables(
-      current_template?.content,
-      options?.context
-    ),
-  };
-
-  if (!!!settings?.active) {
-    console.error(
-      "Failed to send the email. The email provider is not configured."
+    let emails = [];
+    const emailFiles = glob.sync(
+      path.join(rootPath, "src", "emails", "*.json")
     );
-    return;
+
+    for (const file of emailFiles) {
+      const email = JSON.parse(fs.readFileSync(file, "utf8"));
+      emails.push(email);
+    }
+
+    const current_template = emails?.find(
+      (item) => item?.id?.toString() === template?.toString()
+    );
+
+    template = {
+      ...current_template,
+      subject: replaceTemplateVariables(
+        current_template?.subject,
+        options?.context
+      ),
+      content: replaceTemplateVariables(
+        current_template?.content,
+        options?.context
+      ),
+    };
+
+    if (!!!settings?.active) {
+      console.error(
+        "Failed to send the email – the email provider is not configured."
+      );
+
+      await log({
+        level: "error",
+        source: "email",
+        user: metadata?.user || null,
+        message:
+          "Failed to send the email – the email provider is not configured.",
+      });
+
+      return false;
+    }
+
+    const send = await emailProvider({ template, options, settings });
+
+    await log({
+      level: "success",
+      source: "email",
+      user: metadata?.user || null,
+      label: `Email sent to ${options?.recipients?.join(", ")}`,
+      message: {
+        template,
+        options,
+        response: send?.data || send,
+      },
+    });
+
+    return send;
+  } catch (err) {
+    console.error(err);
+
+    await log({
+      level: "error",
+      source: "email",
+      label: `Unable to send email to ${options?.recipients?.join(", ")}`,
+      message: err?.response?.data || err,
+    });
   }
-
-  await emailProvider({ template, options, settings });
-
-  // TODO: add logger
-
-  // await logger({
-  //   level: "success",
-  //   source: {
-  //     type: "emails",
-  //     name: template?.name,
-  //   },
-  //   message: `email_message_sent`,
-  //   responseBody: {
-  //     template,
-  //     recipients: options?.recipients,
-  //   },
-  // });
 };
 
 export default sendEmail;

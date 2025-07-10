@@ -45,6 +45,11 @@ export default async (req, res) => {
             type: "select",
           },
           {
+            name: "Label",
+            slug: "label",
+            type: "text",
+          },
+          {
             name: "Status",
             slug: "status",
             type: "text",
