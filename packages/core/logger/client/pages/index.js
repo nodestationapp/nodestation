@@ -1,8 +1,6 @@
 import { useState } from "react";
 
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import AddIcon from "@mui/icons-material/Add";
 import Settings from "@mui/icons-material/Settings";
 
 import MessageColumn from "../components/MessageColumn.js";
@@ -15,15 +13,7 @@ const columnsToShow = [
   {
     slug: "level",
     name: "Status",
-    type: "select",
     renderCell: (row) => <EndpointStatus data={row} />,
-    columnType: "singleSelect",
-    options: [
-      { value: "success", label: "Success" },
-      { value: "info", label: "Info" },
-      { value: "warning", label: "Warning" },
-      { value: "error", label: "Error" },
-    ],
   },
   {
     flex: 1,
