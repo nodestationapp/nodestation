@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import IconButton from "@mui/material/IconButton";
 import Settings from "@mui/icons-material/Settings";
@@ -7,7 +8,6 @@ import MessageColumn from "../components/MessageColumn.js";
 import EndpointStatus from "../components/EndpointStatus.js";
 import LogDetailsModal from "../components/logDetailsModal.js";
 import TableManager from "@nstation/tables/client/components/TableManager/index.js";
-import { useNavigate } from "react-router-dom";
 
 const columnsToShow = [
   {
@@ -17,10 +17,17 @@ const columnsToShow = [
   },
   {
     flex: 1,
-    minWidth: 250,
+    minWidth: 340,
     slug: "message",
     name: "Message",
     renderCell: (row) => <MessageColumn data={row?.row} />,
+  },
+  {
+    width: 200,
+    slug: "source",
+    name: "Source",
+    type: "select",
+    options: [],
   },
   {
     width: 240,
