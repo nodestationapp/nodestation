@@ -7,7 +7,7 @@
   </a>
 </p>
 
-<h3 align="center">Open-source framework to build and manage a Node.js backend.</h3>
+<h3 align="center">Open-source framework to build and manage a Node.js application.</h3>
 <p align="center">Quickly bootstrap, manage, and extend your backend — no boilerplate, just productivity.</p>
 
 <p align="center">
