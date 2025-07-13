@@ -7,9 +7,8 @@
   </a>
 </p>
 
-<h3 align="center">Open-source GUI for creating and managing your Node.js backend.</h3>
-<p align="center">Build your backend quickly with a simple Graphic User Interface.<br />
-Endpoints, Crons, Forms, Authentication, Media, Logs, Tables — <strong>everything in one place</strong>.</p>
+<h3 align="center">An open-source framework for building and managing Node.js backends with a powerful GUI</h3>
+<p align="center">Quickly bootstrap, manage, and extend your backend — no boilerplate, just productivity.</p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/nodestation">
@@ -31,15 +30,15 @@ Endpoints, Crons, Forms, Authentication, Media, Logs, Tables — <strong>everyth
 
 ---
 
-This open-source framework based on Express.js is designed to help you quickly build and manage your backend through a GUI. Whether you're building an API, handling authentication, or managing media files, this framework provides all the tools you need to make backend development easier.
+Nodestation is an extensible, plugin-ready backend framework designed to simplify the process of building, managing, and scaling your Node.js applications. Whether you're working on APIs, handling authentication, managing media, or sending transactional emails — everything is available out-of-the-box and easily configurable through a graphical interface.
 
 - 💻 **Endpoints** – Create and manage your own API endpoints.
-- ⏰ **Crons** – Set up tasks to run at specific times.
-- 🖼️ **Media** – Manage files locally or integrate with cloud storage providers like S3 or DigitalOcean Spaces.
-- ✉️ **Emails** – Send emails and integrate with services like SMTP, Mailgun, Elastic Email and more.
-- 🔑 **Authentication** – Manage users and handle authentication.
-- 🗃️ **Tables** – Create custom database tables and interact with them via API.
-- 📊 **Logs** – Keep track of all incoming and outgoing requests.
+- 🔑 **Authentication** – Built-in user management and login flows.
+- 🗃️ **Database Tables** – Create custom database tables and interact with them via API.
+- 🖼️ **Media** – Upload and manage files locally or via cloud providers (AWS S3, DigitalOcean Spaces).
+- ✉️ **Emails** – Send emails using providers like SMTP, Mailgun, Amazon SES, Elastic Email, and Mailchimp.
+- 📊 **Logs** – Monitor all system activity, requests, and email deliveries.
+- 🔌 **Plugin System** – Easily extend Nodestation with your own features and third-party integrations.
 
 **Supported Databases:**
 
