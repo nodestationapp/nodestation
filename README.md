@@ -1,5 +1,10 @@
 <p align="center">
-  <img src="https://nodestation-assets.s3.ap-southeast-1.amazonaws.com/nodestation-logo.svg" width="260px" alt="Nodestation logo" />
+  <a href="https://nodestation.app/#gh-light-mode-only">
+    <img src="https://nodestation-assets.s3.ap-southeast-1.amazonaws.com/nodestation-logo-dark.svg" width="260px" alt="Nodestation logo" />
+  </a>
+  <a href="https://nodestation.app/#gh-dark-mode-only">
+    <img src="https://nodestation-assets.s3.ap-southeast-1.amazonaws.com/nodestation-logo.svg" width="260px" alt="Nodestation logo" />
+  </a>
 </p>
 
 <h3 align="center">Open-source GUI for creating and managing your Node.js backend.</h3>
