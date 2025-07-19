@@ -1,5 +1,5 @@
 import express from "express";
-
+import checkApiToken from "@nstation/auth/utils/checkApiToken.js";
 function removeExistingRoute(router, method, path) {
   router.stack = router.stack.filter(
     (layer) =>
@@ -30,6 +30,7 @@ const loadRoute = async (router, routes, type) => {
       route?.parser === "raw"
         ? express.raw({ type: "application/json" })
         : express.json(),
+      checkApiToken,
       ...(route?.middlewares || []),
       route?.handler
     );

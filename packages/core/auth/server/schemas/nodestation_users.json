@@ -93,7 +93,6 @@
       "slug": "created_at",
       "type": "date",
       "origin": "system",
-      "required": true,
       "default": "now()"
     }
   ]

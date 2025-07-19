@@ -6,7 +6,6 @@ import { rootPath } from "@nstation/utils";
 import requireFromString from "require-from-string";
 
 import loadRoute from "./loadRoute.js";
-import { addFieldTypes } from "./loadFieldType.js";
 
 let core = [
   {
@@ -35,11 +34,7 @@ let core = [
   },
 ];
 
-const app = {
-  addFieldTypes: (fieldTypes) => addFieldTypes(fieldTypes),
-};
-
-const loadPlugins = async (router) => {
+const loadPlugins = async (app) => {
   let config = fs_sys.readFileSync(
     path.join(rootPath, "nodestation.config.js"),
     "utf-8"
@@ -71,9 +66,15 @@ const loadPlugins = async (router) => {
   );
 
   for await (const plugin of core) {
-    const isServerFile = fs_sys.existsSync(
-      path.join(rootPath, "node_modules", plugin?.name, "index.js")
-    );
+    let isServerFile = false;
+
+    if (plugin?.name.startsWith("/")) {
+      isServerFile = fs_sys.existsSync(path.join(plugin?.name, "index.js"));
+    } else {
+      isServerFile = fs_sys.existsSync(
+        path.join(rootPath, "node_modules", plugin?.name, "index.js")
+      );
+    }
 
     if (isServerFile) {
       const { default: server } = await import(`${plugin?.name}/index.js`);
@@ -82,7 +83,7 @@ const loadPlugins = async (router) => {
 
     //ROUTES
     const { default: routes } = await import(`${plugin?.name}/api/index.js`);
-    await loadRoute(router, routes, plugin?.type);
+    await loadRoute(app.router, routes, plugin?.type);
 
     //SCHEMAS
     let resolved = import.meta.resolve(plugin?.name);

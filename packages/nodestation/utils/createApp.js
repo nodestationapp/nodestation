@@ -9,6 +9,8 @@ import { rootPath, cors } from "@nstation/utils";
 import initRoute from "./system-routes/init.js";
 import healthRoute from "./system-routes/health.js";
 
+import { addFieldTypes } from "./loadFieldType.js";
+
 const clientPath = path.join(rootPath, "build");
 
 function createApp() {
@@ -19,6 +21,7 @@ function createApp() {
     router,
     express: expressApp,
     port: process.env.PORT,
+    addFieldTypes: (fieldTypes) => addFieldTypes(fieldTypes),
   };
 
   app.init = async () => {
@@ -27,6 +30,7 @@ function createApp() {
     app.express.use(cors);
     app.express.use(logger);
     app.express.use(bodyParser.urlencoded({ extended: true }));
+
     app.express.use((req, res, next) => {
       app.router(req, res, next);
     });
@@ -41,7 +45,7 @@ function createApp() {
       "/uploads",
       express.static(path.join(rootPath, "public", "uploads"))
     );
-    await loadPlugins(app.router);
+    await loadPlugins(app);
 
     app.express.use("/api", (_, res) => {
       res.status(404).json({ error: "Not found" });

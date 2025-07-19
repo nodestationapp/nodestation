@@ -8,6 +8,7 @@ const AppContext = createContext();
 const AppProvider = ({ children, app }) => {
   const registerSlot = useRegisterSlot();
   const [site, setSite] = useState(null);
+  const [is_admin, setIsAdmin] = useState(false);
   const [initLoading, setInitLoading] = useState(true);
 
   const menuLinks = app.getMenuLinks();
@@ -22,7 +23,8 @@ const AppProvider = ({ children, app }) => {
 
   useEffect(() => {
     api.get(`/admin-api/init`).then((data) => {
-      setSite(data);
+      setSite(data.site);
+      setIsAdmin(data.is_admin);
       setInitLoading(false);
     });
   }, []);
@@ -30,11 +32,12 @@ const AppProvider = ({ children, app }) => {
   const value = useMemo(() => {
     return {
       site,
+      is_admin,
       menuLinks,
       middlewares,
     };
     // eslint-disable-next-line
-  }, [menuLinks, middlewares, site]);
+  }, [menuLinks, middlewares, site, is_admin]);
 
   if (!!!middlewares?.length && !initLoading) return <PageLoader />;
 

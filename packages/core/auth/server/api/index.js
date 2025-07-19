@@ -5,7 +5,6 @@ import login from "./login.js";
 import addUser from "./addUser.js";
 import register from "./register.js";
 import updateMe from "./updateMe.js";
-import checkAdmin from "./check-admin.js";
 import refreshToken from "./refreshToken.js";
 import changePassword from "./changePassword.js";
 import updateTemplates from "./updateTemplates.js";
@@ -37,12 +36,6 @@ export default [
           }),
       }),
     ],
-  },
-  {
-    method: "GET",
-    path: "/admin-api/auth/check-admin",
-    handler: checkAdmin,
-    middlewares: [],
   },
   {
     method: "POST",

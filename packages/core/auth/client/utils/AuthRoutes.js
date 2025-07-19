@@ -13,8 +13,8 @@ import { useSlot } from "contexts/slots.js";
 import { useApp } from "contexts/app.js";
 
 const AuthRoutes = () => {
-  const { site } = useApp();
-  const { user, is_admin } = useAuth();
+  const { site, is_admin } = useApp();
+  const { user } = useAuth();
   const slot = useSlot("auth.public-routes.add");
 
   return (
@@ -22,7 +22,7 @@ const AuthRoutes = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>{site?.title || "Nodestation"}</title>
-        {!!site.favicon && <link rel="icon" href={site.favicon} />}
+        {!!site?.favicon && <link rel="icon" href={site.favicon} />}
       </Helmet>
       <Routes>
         {is_admin ? (

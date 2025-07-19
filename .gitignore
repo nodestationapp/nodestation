@@ -3,6 +3,7 @@
 /build/
 /public/
 nodestation.config.js
+/.cursor/
 
 # DATABASE
 /.db/

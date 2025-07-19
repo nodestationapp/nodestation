@@ -15,6 +15,11 @@ const SettingsLayout = () => {
       href: "/settings/security",
       subtitle: "Manage your security settings",
     },
+    {
+      title: "API Tokens",
+      href: "/settings/api-tokens",
+      subtitle: "Manage your API tokens",
+    },
   ];
 
   const currentTab = tabs.find((tab) => tab.href === pathname);

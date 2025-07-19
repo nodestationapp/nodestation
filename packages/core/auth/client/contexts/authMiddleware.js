@@ -21,13 +21,9 @@ const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [is_admin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     (async function () {
-      const { is_admin } = await api.get("/admin-api/auth/check-admin");
-      setIsAdmin(is_admin);
-
       await getUserData(cookies?.access_token);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,11 +115,9 @@ const AuthProvider = ({ children }) => {
       userUpdate,
       handleLogout,
       getUserData,
-      is_admin,
-      setIsAdmin,
     };
     // eslint-disable-next-line
-  }, [user, is_admin]);
+  }, [user]);
 
   if (!!loading) return <PageLoader />;
 

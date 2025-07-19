@@ -7,16 +7,29 @@ export default async (req, res) => {
   let body = req?.body;
 
   try {
-    const user = await knex("nodestation_users")
-      .where({
-        id: body?.id,
-      })
-      .first();
+    let user;
 
-    if (user?.password !== body?.password) {
+    if (body?.id) {
+      user = await knex("nodestation_users")
+        .where({
+          id: body?.id,
+        })
+        .first();
+    } else {
+      const userExist = await knex("nodestation_users")
+        .where({
+          email: body?.email,
+        })
+        .first();
+
+      if (!!userExist) {
+        return res.status(400).json({ error: "User already exists" });
+      }
+    }
+
+    if (!body?.id || user?.password !== body?.password) {
       const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(body?.password, salt);
-      body.password = hashedPassword;
+      body.password = await bcrypt.hash(body?.password, salt);
     }
 
     await upsertEntry({
