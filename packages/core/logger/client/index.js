@@ -7,6 +7,7 @@ export default {
       to: `/logs`,
       label: "Logs",
       placement: "bottom",
+      order: 2,
       Component: Logger,
       icon: "lucide:list",
     });

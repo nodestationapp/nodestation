@@ -14,6 +14,7 @@ export default {
     });
 
     app.addMenuLink({
+      order: 3,
       icon: "lucide:settings",
       to: `/settings`,
       label: "Settings",

@@ -12,12 +12,9 @@ function removeExistingRoute(router, method, path) {
 }
 
 const loadRoute = async (router, routes, type) => {
-  let prefix = type === "system" ? "" : "/api";
-
   for await (const route of routes) {
-    if (route?.type === "admin") {
-      prefix = "/admin-api";
-    }
+    let prefix =
+      type === "system" || route?.path?.startsWith("/admin-api") ? "" : "/api";
 
     removeExistingRoute(
       router,

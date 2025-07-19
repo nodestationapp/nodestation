@@ -13,7 +13,12 @@ const ListItemComponent = ({ item }) => {
 
   return (
     <ListItem disablePadding sx={{ display: "block" }}>
-      <ListItemButton to={item.to} LinkComponent={Link} selected={isActive}>
+      <ListItemButton
+        to={item.to}
+        LinkComponent={Link}
+        selected={isActive}
+        target={item.target}
+      >
         <ListItemIcon>
           <IconifyIcon icon={item?.icon} />
         </ListItemIcon>
