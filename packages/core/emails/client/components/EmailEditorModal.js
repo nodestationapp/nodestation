@@ -1,5 +1,4 @@
 import { useFormik } from "formik";
-
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -53,6 +52,7 @@ const EmailEditorModal = ({ open, onClose }) => {
         "& .MuiDialog-paper": {
           maxWidth: 830,
           width: "100%",
+          height: "100%",
           ...(fullScreen && {
             borderRadius: 0,
           }),
