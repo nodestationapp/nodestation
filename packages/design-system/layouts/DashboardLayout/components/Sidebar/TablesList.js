@@ -67,12 +67,14 @@ const TablesList = () => {
   const id = open ? "simple-popover" : undefined;
 
   const tableLinks = !!tables?.length
-    ? tables?.map((table) => ({
-        ...table,
-        icon: "lucide:table",
-        label: table?.name,
-        to: `/tables/${table?.tableName}`,
-      }))
+    ? tables
+        ?.map((table) => ({
+          ...table,
+          icon: "lucide:table",
+          label: table?.name,
+          to: `/tables/${table?.tableName}`,
+        }))
+        ?.filter((item) => !item?.hidden)
     : [];
 
   return (

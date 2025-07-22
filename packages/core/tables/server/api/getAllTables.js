@@ -24,6 +24,10 @@ export default async (req, res) => {
       const table = fs.getSchema(schema?.tableName);
       table.id = table.tableName;
 
+      if (schema?.tableName === "nodestation_users") {
+        table.hidden = true;
+      }
+
       tables.push(table);
     }
 

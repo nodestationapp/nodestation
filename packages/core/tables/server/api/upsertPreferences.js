@@ -67,9 +67,3 @@ export default async (req, res) => {
 };
 
 //TODO: Add order to the preferences
-
-// ...(!!body?.hasOwnProperty("order")
-// ? {
-//     order: singleJsonStringify(body?.order),
-//   }
-// : {}),

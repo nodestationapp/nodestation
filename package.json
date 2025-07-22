@@ -21,7 +21,8 @@
     "release": "release-it",
     "dev": "nodestation dev",
     "start": "nodestation start",
-    "build": "nodestation build"
+    "build": "nodestation build",
+    "docs": "nodestation-docs generate"
   },
   "devDependencies": {
     "@release-it-plugins/workspaces": "^4.2.0",

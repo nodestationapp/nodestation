@@ -3,39 +3,50 @@ import getMedia from "./getMedia.js";
 import deleteMedia from "./deleteMedia.js";
 import getMediaSettings from "./getMediaSettings.js";
 import updateMediaSettings from "./updateMediaSettings.js";
-import authMiddleware from "@nstation/auth/utils/authMiddleware.js";
 
 import uploader from "../utils/uploader/index.js";
+
+import getMediaSchema from "../docs/get-media.js";
+import addMediaSchema from "../docs/post-media.js";
+import deleteMediaSchema from "../docs/delete-media.js";
+import updateMediaSettingsSchema from "../docs/put-media-settings.js";
+import getMediaSettingsSchema from "../docs/get-media-settings.js";
 
 export default [
   {
     method: "GET",
     path: "/admin-api/media",
     handler: getMedia,
-    middlewares: [authMiddleware(["admin"])],
+    auth: ["admin"],
+    validation: getMediaSchema,
   },
   {
     method: "POST",
     path: "/admin-api/media",
     handler: addMedia,
-    middlewares: [authMiddleware(["admin"]), uploader],
+    auth: ["admin"],
+    middlewares: [uploader],
+    validation: addMediaSchema,
   },
   {
     method: "DELETE",
     path: "/admin-api/media/:id",
     handler: deleteMedia,
-    middlewares: [authMiddleware(["admin"])],
+    auth: ["admin"],
+    validation: deleteMediaSchema,
   },
   {
     method: "PUT",
     path: "/admin-api/media/settings",
     handler: updateMediaSettings,
-    middlewares: [authMiddleware(["admin"])],
+    auth: ["admin"],
+    validation: updateMediaSettingsSchema,
   },
   {
     method: "GET",
     path: "/admin-api/media/settings",
     handler: getMediaSettings,
-    middlewares: [authMiddleware(["admin"])],
+    auth: ["admin"],
+    validation: getMediaSettingsSchema,
   },
 ];

@@ -16,18 +16,30 @@ import resetPasswordConfirm from "./resetPasswordConfirm.js";
 import validate from "@nstation/tables/server/utils/validate.js";
 import addTableEntrySchema from "@nstation/tables/server/utils/addTableEntrySchema.js";
 
-import authMiddleware from "../../utils/authMiddleware.js";
-import loginSchema from "../utils/validations/loginSchema.js";
-import resetPasswordSchema from "../utils/validations/resetPasswordSchema.js";
-import resetPasswordConfirmSchema from "../utils/validations/resetPasswordConfirmSchema.js";
+import loginSchema from "../docs/login.js";
+import registerSchema from "../utils/validations/registerSchema.js";
+// import resetPasswordSchema from "../utils/validations/resetPasswordSchema.js";
+// import resetPasswordConfirmSchema from "../utils/validations/resetPasswordConfirmSchema.js";
+
+import meSchema from "../docs/get-me.js";
+import updateMeSchema from "../docs/update-me.js";
+import changePasswordSchema from "../docs/update-change-password.js";
+import updateTemplatesSchema from "../docs/update-templates.js";
+import addUserSchema from "../docs/add-user.js";
+import emailActivationSchema from "../docs/post-activation.js";
+import checkResetPasswordSchema from "../docs/get-reset-password.js";
+import refreshTokenSchema from "../docs/post-refresh-token.js";
+import resetPasswordSchema from "../docs/post-reset-password.js";
+import resetPasswordConfirmSchema from "../docs/post-reset-password-confirm.js";
 
 export default [
   {
     method: "POST",
     path: "/admin-api/auth/user",
     handler: addUser,
+    auth: ["admin"],
+    validation: addUserSchema,
     middlewares: [
-      authMiddleware(["admin"]),
       validate({
         getValidationSchema: (req) =>
           addTableEntrySchema({
@@ -39,68 +51,72 @@ export default [
   },
   {
     method: "POST",
-    path: "/admin-api/auth/login",
     handler: login,
-    middlewares: [validate({ schema: loginSchema })],
+    validation: loginSchema,
+    path: "/admin-api/auth/login",
   },
   {
     method: "POST",
     path: "/admin-api/auth/register",
     handler: register,
-    middlewares: [],
+    hidden: true,
   },
   {
     method: "GET",
     path: "/admin-api/auth/me",
     handler: me,
-    middlewares: [authMiddleware(["admin"])],
+    auth: ["admin"],
+    validation: meSchema,
   },
   {
     method: "PUT",
     path: "/admin-api/auth/me",
     handler: updateMe,
-    middlewares: [authMiddleware(["admin"])],
+    auth: ["admin"],
+    validation: updateMeSchema,
   },
   {
     method: "PUT",
     path: "/admin-api/auth/change-password",
     handler: changePassword,
-    middlewares: [authMiddleware(["admin"])],
+    auth: ["admin"],
+    validation: changePasswordSchema,
   },
   {
     method: "PUT",
     path: "/admin-api/auth/templates",
     handler: updateTemplates,
-    middlewares: [authMiddleware(["admin"])],
+    auth: ["admin"],
+    validation: updateTemplatesSchema,
   },
   {
     method: "POST",
     path: "/admin-api/auth/activation",
     handler: emailActivation,
-    middlewares: [],
+    validation: emailActivationSchema,
   },
   {
     method: "POST",
     path: "/admin-api/auth/reset-password",
     handler: resetPassword,
-    middlewares: [validate({ schema: resetPasswordSchema })],
+    validation: resetPasswordSchema,
   },
   {
     method: "GET",
     path: "/admin-api/auth/reset-password",
     handler: checkResetPassword,
-    middlewares: [],
+    validation: checkResetPasswordSchema,
   },
   {
     method: "POST",
     path: "/admin-api/auth/reset-password/confirm",
     handler: resetPasswordConfirm,
-    middlewares: [validate({ schema: resetPasswordConfirmSchema })],
+    validation: resetPasswordConfirmSchema,
   },
   {
     method: "POST",
     path: "/admin-api/auth/refresh-token",
     handler: refreshToken,
-    middlewares: [],
+    validation: refreshTokenSchema,
   },
 ];

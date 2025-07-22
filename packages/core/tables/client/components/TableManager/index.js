@@ -64,6 +64,8 @@ const TableManagerContent = ({
   );
   columnsToShow = [...appendColumns, ...columnsToShow];
 
+  console.log(table);
+
   const columns = tableColumnsRender({
     columns: columnsToShow,
     columnSizes,

@@ -9,7 +9,7 @@ const TablesContext = createContext();
 const TablesProvider = ({ children }) => {
   const { isLoading: loading, data: tables } = useQuery({
     queryKey: ["client_tables"],
-    queryFn: () => api.get("/admin-api/tables/all"),
+    queryFn: () => api.get("/admin-api/tables"),
   });
 
   const {

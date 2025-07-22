@@ -38,10 +38,9 @@ const ToolbarTabs = ({ tabs, noAddTab, backButtonLink }) => {
       let create;
 
       if (!!!values?.id) {
-        create = await api.post("/admin-api/preferences/create", {
+        create = await api.post("/admin-api/preferences", {
           name: values?.name,
-          table: table?.id,
-          view: table?.preferences?.id,
+          table_id: table?.id,
         });
 
         await queryClient.refetchQueries("tables");

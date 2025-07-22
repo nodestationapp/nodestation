@@ -27,6 +27,8 @@ const TableProvider = ({ id, extendable = false, children }) => {
     !!view ? item?.id === view : !!item?.last_viewed
   );
 
+  console.log(tables);
+
   const [init, setInit] = useState(false);
   const [currentView, setView] = useState(table_preferences?.id);
   const [sort, setSort] = useState(table_preferences?.sort || []);
@@ -78,7 +80,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
       api.get(
         `/admin-api/tables/${id}?${queryString.stringify({
           view,
-          page,
+          page: page || 0,
           sort: !!sort?.[0]
             ? `${sort?.[0]?.field}:${sort?.[0]?.sort}`
             : undefined,
@@ -165,9 +167,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
     });
 
   const saveTableTransaction = (values) => {
-    api.post("/admin-api/preferences", {
-      view,
-      table_id: id,
+    api.put(`/admin-api/preferences/${view}`, {
       ...values,
     });
 
