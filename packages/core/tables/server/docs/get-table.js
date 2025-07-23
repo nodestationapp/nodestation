@@ -1,4 +1,4 @@
-import { object, string, array, number } from "yup";
+import { object, string, array, number, boolean } from "yup";
 
 export default object({
   params: object({
@@ -23,20 +23,52 @@ export default object({
   }),
   response: object({
     200: object({
-      data: array().of(
+      table: object({
+        id: string().meta({
+          example: "users",
+        }),
+        name: string().meta({
+          example: "Users",
+        }),
+        tableName: string().meta({
+          example: "users",
+        }),
+        displayName: string().meta({
+          example: "name",
+        }),
+        fields: array().of(
+          object({
+            name: string().meta({
+              example: "ID",
+            }),
+            slug: string().meta({
+              example: "id",
+            }),
+            type: string().meta({
+              example: "id",
+            }),
+            required: boolean().meta({
+              example: true,
+            }),
+            read_only: boolean().meta({
+              example: true,
+            }),
+            origin: string().meta({
+              example: "system",
+            }),
+            primary_key: boolean().meta({
+              example: true,
+            }),
+            default: string().meta({
+              example: "generate_id()",
+            }),
+          })
+        ),
+      }),
+      entries: array().of(
         object({
           id: string().meta({
-            example: "343182",
-          }),
-          name: string().meta({
-            example: "Welcome Email",
-          }),
-          subject: string().meta({
-            example: "Welcome New User",
-          }),
-          content: string().meta({
-            example:
-              "Hello {{first_name}},<br/><br/>\\n\\nWelcome to our platform!<br/>\\nWe're excited to have you on board.<br/><br/>\\n\\nBest regards,\\nThe Team",
+            example: "81b1aae5-4a40-495c-a1ac-e6b9b00ecef7",
           }),
         })
       ),
@@ -52,7 +84,7 @@ export default object({
         }),
       }),
     }).meta({
-      description: "Email templates retrieved successfully",
+      description: "Table retrieved successfully",
     }),
     500: object({
       error: string().meta({
@@ -65,5 +97,5 @@ export default object({
 }).meta({
   tags: ["Tables"],
   summary: "Get table",
-  description: "Get a table by id",
+  description: "Get a table by id with pagination and sorting",
 });

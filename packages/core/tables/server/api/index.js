@@ -26,6 +26,9 @@ import upsertPreferencesSchema from "../docs/post-preferences.js";
 import updateTableViewSchema from "../docs/put-preferences.js";
 import removeTableViewSchema from "../docs/delete-preferences.js";
 import updatePreferencesSchema from "../docs/put-preferences.js";
+import postTableEntrySchema from "../docs/post-table-entry.js";
+import putTableEntrySchema from "../docs/put-table-entry.js";
+import deleteTableEntrySchema from "../docs/delete-table-entry.js";
 
 export default [
   // {
@@ -54,19 +57,21 @@ export default [
     path: "/admin-api/tables/:id/entry/:entry_id",
     handler: removeTableEntries,
     auth: ["admin"],
+    validation: deleteTableEntrySchema,
   },
   {
     method: "PUT",
     path: "/admin-api/tables/:id/entry/:entry_id",
     handler: updateTableEntry,
     auth: ["admin"],
+    validation: putTableEntrySchema,
   },
   {
     method: "POST",
     path: "/admin-api/tables/:id/entry",
     handler: createTableEntry,
     auth: ["admin"],
-    validation: addTableEntrySchema,
+    validation: postTableEntrySchema,
   },
   {
     method: "POST",

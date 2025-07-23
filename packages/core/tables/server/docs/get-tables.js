@@ -1,6 +1,21 @@
-import { object, string, array, boolean } from "yup";
+import { object, string, array, boolean, number } from "yup";
 
 export default object({
+  query: object({
+    page: number().meta({
+      example: 0,
+      minimum: 0,
+    }),
+    pageSize: number().meta({
+      example: 20,
+      minimum: 1,
+      maximum: 1000,
+    }),
+    sort: string().meta({
+      example: "created_at:asc",
+      pattern: "^[a-zA-Z_]+:(asc|desc)$",
+    }),
+  }),
   response: object({
     200: array()
       .of(

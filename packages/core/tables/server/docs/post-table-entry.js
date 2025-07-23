@@ -1,9 +1,17 @@
 import { object, string } from "yup";
 
 export default object({
+  params: object({
+    id: string().meta({
+      example: "123e4567-e89b-12d3-a456-426614174000",
+    }),
+  }),
   body: object({
-    name: string().required().meta({
-      example: "Products",
+    first_name: string().meta({
+      example: "John",
+    }),
+    last_name: string().meta({
+      example: "Doe",
     }),
   }),
   response: object({
@@ -12,7 +20,7 @@ export default object({
         example: "ok",
       }),
     }).meta({
-      description: "Table created successfully",
+      description: "Table entry created successfully",
     }),
     500: object({
       error: string().meta({
@@ -24,6 +32,6 @@ export default object({
   }),
 }).meta({
   tags: ["Tables"],
-  summary: "Create table",
-  description: "Create a table with a name",
+  summary: "Add table entry",
+  description: "Add a table entry with data",
 });
