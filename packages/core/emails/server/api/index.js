@@ -37,13 +37,13 @@ export default [
     path: "/admin-api/emails/settings",
     handler: getEmailSettings,
     auth: ["admin"],
-    validation: getEmailSettingsSchema,
+    // validation: getEmailSettingsSchema,
   },
   {
     method: "PUT",
     path: "/admin-api/emails/settings",
     handler: updateEmailSettings,
     auth: ["admin"],
-    validation: updateEmailSettingsSchema,
+    // validation: updateEmailSettingsSchema,
   },
 ];

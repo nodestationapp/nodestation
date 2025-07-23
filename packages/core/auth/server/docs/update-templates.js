@@ -2,43 +2,33 @@ import { object, string } from "yup";
 
 let loginSchema = object({
   body: object({
-    email: string()
-      .required("Field is required.")
-      .email("The email is not a valid email address.")
-      .meta({
-        format: "email",
-        example: "john.doe@example.com",
-      }),
-    password: string().required("Field is required.").meta({
-      example: "qwerty",
+    email_verification_template: string().meta({
+      example: "email_verification_template",
+    }),
+    forget_password_template: string().meta({
+      example: "forget_password_template",
     }),
   }),
   response: object({
     200: object({
-      access_token: string().meta({
-        format: "string",
-        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-      }),
-      refresh_token: string().meta({
-        format: "string",
-        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      status: string().meta({
+        example: "ok",
       }),
     }).meta({
-      description: "Login successful",
+      description: "Templates updated successfully",
     }),
     500: object({
-      errors: string().meta({
-        format: "string",
-        example: "Invalid credentials or validation error",
+      error: string().meta({
+        example: "Something went wrong",
       }),
     }).meta({
-      description: "Invalid credentials or validation error",
+      description: "Something went wrong",
     }),
   }),
 }).meta({
   tags: ["Authentication"],
-  summary: "User login",
-  description: "Authenticate user with email and password",
+  summary: "Update templates",
+  description: "Update templates for email verification and forget password",
 });
 
 export default loginSchema;

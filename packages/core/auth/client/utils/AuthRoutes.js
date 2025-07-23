@@ -37,19 +37,14 @@ const AuthRoutes = () => {
               path="/forget-password/reset"
               element={<ForgetPasswordReset />}
             />
+            <Route
+              path="*"
+              element={<Navigate to={!!user?.id ? "/" : "/login"} replace />}
+            />
           </>
         ) : (
           <Route path="/register" element={<Register />} />
         )}
-        <Route
-          path="*"
-          element={
-            <Navigate
-              to={!!user?.id ? "/" : is_admin ? "/login" : "/register"}
-              replace
-            />
-          }
-        />
       </Routes>
     </>
   );

@@ -2,43 +2,52 @@ import { object, string } from "yup";
 
 let loginSchema = object({
   body: object({
-    email: string()
-      .required("Field is required.")
-      .email("The email is not a valid email address.")
-      .meta({
-        format: "email",
-        example: "john.doe@example.com",
-      }),
-    password: string().required("Field is required.").meta({
-      example: "qwerty",
+    first_name: string().required("Field is required.").meta({
+      example: "John",
     }),
+    last_name: string().required("Field is required.").meta({
+      example: "Doe",
+    }),
+    email: string().required("Field is required.").meta({
+      format: "email",
+      example: "john.doe@example.com",
+    }),
+    password: string().required("Field is required.").meta({
+      example: "password123",
+    }),
+    status: string()
+      .required("Field is required.")
+      .meta({
+        enum: ["active", "inactive"],
+        example: "active",
+      }),
+    type: string()
+      .required("Field is required.")
+      .meta({
+        enum: ["superadmin", "admin", "client"],
+        example: "admin",
+      }),
   }),
   response: object({
     200: object({
-      access_token: string().meta({
-        format: "string",
-        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-      }),
-      refresh_token: string().meta({
-        format: "string",
-        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      status: string().meta({
+        example: "ok",
       }),
     }).meta({
-      description: "Login successful",
+      description: "User created successfully",
     }),
     500: object({
-      errors: string().meta({
-        format: "string",
-        example: "Invalid credentials or validation error",
+      error: string().meta({
+        example: "Something went wrong",
       }),
     }).meta({
-      description: "Invalid credentials or validation error",
+      description: "Something went wrong",
     }),
   }),
 }).meta({
   tags: ["Authentication"],
-  summary: "User login",
-  description: "Authenticate user with email and password",
+  summary: "Add new user",
+  description: "Create a new user account",
 });
 
 export default loginSchema;

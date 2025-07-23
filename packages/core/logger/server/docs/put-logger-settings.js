@@ -1,30 +1,27 @@
-import { object, string } from "yup";
+import { number, object, string } from "yup";
 
-let loginSchema = object({
+export default object({
   body: object({
-    email: string()
-      .required("Field is required.")
-      .email("The email is not a valid email address.")
-      .meta({
-        format: "email",
+    key: string().required("Field is required.").meta({
+      example: "errors_notification",
+    }),
+    body: object({
+      send_to: string().meta({
         example: "john.doe@example.com",
       }),
-    password: string().required("Field is required.").meta({
-      example: "qwerty",
+    }).required("Field is required."),
+    active: number().meta({
+      example: 1,
+      pattern: "1|0",
     }),
   }),
   response: object({
     200: object({
-      access_token: string().meta({
-        format: "string",
-        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-      }),
-      refresh_token: string().meta({
-        format: "string",
-        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      status: string().meta({
+        example: "ok",
       }),
     }).meta({
-      description: "Login successful",
+      description: "Settings updated successfully",
     }),
     500: object({
       error: string().meta({
@@ -36,8 +33,6 @@ let loginSchema = object({
   }),
 }).meta({
   tags: ["Logs"],
-  summary: "User login",
-  description: "Authenticate user with email and password",
+  summary: "Update logs settings",
+  description: "Update logs settings by key",
 });
-
-export default loginSchema;

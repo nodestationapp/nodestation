@@ -94,6 +94,7 @@ export default [
     path: "/admin-api/auth/activation",
     handler: emailActivation,
     validation: emailActivationSchema,
+    hidden: true,
   },
   {
     method: "POST",
