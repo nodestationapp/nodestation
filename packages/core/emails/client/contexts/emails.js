@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { api } from "@nstation/design-system/utils";
 import { useSearchParams } from "react-router-dom";
@@ -7,6 +7,8 @@ import queryString from "query-string";
 const EmailsContext = createContext();
 
 const EmailsProvider = ({ children }) => {
+  const queryClient = useQueryClient();
+
   const [archive_modal, setArchiveModal] = useState(null);
 
   const [searchParams] = useSearchParams();
@@ -78,6 +80,32 @@ const EmailsProvider = ({ children }) => {
       }
     });
 
+  const addEmailProvider = (values) =>
+    new Promise(async (resolve, reject) => {
+      try {
+        await api.post(`/admin-api/emails/providers`, { ...values });
+
+        queryClient.refetchQueries(["tables", "nodestation_email_providers"]);
+
+        resolve();
+      } catch (err) {
+        reject(err);
+      }
+    });
+
+  const updateEmailProvider = (id, values) =>
+    new Promise(async (resolve, reject) => {
+      try {
+        await api.put(`/admin-api/emails/providers/${id}`, { ...values });
+
+        queryClient.refetchQueries(["tables", "nodestation_email_providers"]);
+
+        resolve();
+      } catch (err) {
+        reject(err);
+      }
+    });
+
   const value = useMemo(() => {
     return {
       emails,
@@ -92,6 +120,8 @@ const EmailsProvider = ({ children }) => {
       addEmail,
       deleteEmail,
       sort,
+      addEmailProvider,
+      updateEmailProvider,
     };
     // eslint-disable-next-line
   }, [emails, email_settings, loading, archive_modal, settings_loading, sort]);

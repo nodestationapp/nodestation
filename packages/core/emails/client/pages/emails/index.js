@@ -73,7 +73,7 @@ const Emails = () => {
 
   return (
     <>
-      {!!email_settings && !email_settings?.active && (
+      {!!email_settings && !email_settings?.providers_count && (
         <Alert
           severity="info"
           sx={{ mb: 2 }}

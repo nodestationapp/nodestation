@@ -119,16 +119,15 @@ const MuiTable = ({
         flex: 1,
       }}
     >
-      {!hideToolbar && (
-        <Toolbar
-          tabs={tabs}
-          action={action}
-          loading={loading}
-          noAddTab={noAddTab}
-          selectedRows={selectedRows}
-          selectActions={selectActions}
-        />
-      )}
+      <Toolbar
+        tabs={tabs}
+        action={action}
+        loading={loading}
+        noAddTab={noAddTab}
+        hidden={hideToolbar}
+        selectedRows={selectedRows}
+        selectActions={selectActions}
+      />
       <Box
         sx={{
           width: "100%",

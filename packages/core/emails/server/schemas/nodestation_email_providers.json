@@ -1,0 +1,45 @@
+{
+  "tableName": "nodestation_email_providers",
+  "fields": [
+    {
+      "name": "ID",
+      "slug": "id",
+      "type": "id",
+      "required": true,
+      "origin": "system",
+      "primary_key": true,
+      "default": "generate_id()"
+    },
+    {
+      "name": "Provider",
+      "slug": "provider",
+      "type": "text",
+      "origin": "system"
+    },
+    {
+      "name": "Email",
+      "slug": "email",
+      "type": "text",
+      "origin": "system"
+    },
+    {
+      "name": "Content",
+      "slug": "content",
+      "type": "json",
+      "origin": "system"
+    },
+    {
+      "name": "Is default",
+      "slug": "is_default",
+      "type": "boolean",
+      "origin": "system"
+    },
+    {
+      "name": "Created At",
+      "slug": "created_at",
+      "type": "date",
+      "origin": "system",
+      "default": "now()"
+    }
+  ]
+}

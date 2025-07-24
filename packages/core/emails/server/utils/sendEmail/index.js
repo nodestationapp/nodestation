@@ -12,7 +12,7 @@ import mailgun from "./mailgun.js";
 import mailchimp from "./mailchimp.js";
 
 const emailProvider = (data) => {
-  switch (data?.settings?.active) {
+  switch (data?.provider?.provider) {
     case "elastic":
       return elastic(data);
     case "mailchimp":
@@ -37,7 +37,17 @@ function replaceTemplateVariables(template, data) {
 
 const sendEmail = async (template, options, metadata) => {
   try {
-    const settings = await knex("nodestation_email_settings").first();
+    let provider = null;
+
+    if (options?.sender) {
+      provider = await knex("nodestation_email_providers")
+        .where("email", options?.sender)
+        .first();
+    } else {
+      provider = await knex("nodestation_email_providers")
+        .where("is_default", 1)
+        .first();
+    }
 
     let emails = [];
     const emailFiles = glob.sync(
@@ -73,7 +83,7 @@ const sendEmail = async (template, options, metadata) => {
       ),
     };
 
-    if (!!!settings?.active) {
+    if (!!!provider) {
       console.error(
         "Failed to send the email – the email provider is not configured."
       );
@@ -89,7 +99,7 @@ const sendEmail = async (template, options, metadata) => {
       return false;
     }
 
-    const send = await emailProvider({ template, options, settings });
+    const send = await emailProvider({ template, options, provider });
 
     await log({
       level: "success",

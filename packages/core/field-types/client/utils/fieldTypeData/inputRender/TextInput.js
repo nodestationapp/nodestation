@@ -1,5 +1,9 @@
 import TextField from "@mui/material/TextField";
 
+const getNestedValue = (obj, path) => {
+  return path.split(".").reduce((current, key) => current?.[key], obj);
+};
+
 const TextInput = ({ data, formik, type }) => {
   return (
     <TextField
@@ -12,7 +16,7 @@ const TextInput = ({ data, formik, type }) => {
       type={type || data?.type || "text"}
       disabled={!!data?.read_only}
       onChange={formik.handleChange}
-      value={formik.values[data?.slug]}
+      value={getNestedValue(formik.values, data?.slug) || ""}
       error={!!formik?.errors?.[data?.slug]}
       helperText={formik?.errors?.[data?.slug]}
     />

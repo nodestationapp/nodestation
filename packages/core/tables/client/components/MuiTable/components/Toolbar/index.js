@@ -2,6 +2,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import ToolbarTabs from "./Tabs.js";
+import { Box } from "@mui/material";
 
 const Toolbar = ({
   tabs,
@@ -11,6 +12,7 @@ const Toolbar = ({
   selectedRows,
   noAddTab,
   backButtonLink,
+  hidden,
 }) => {
   return (
     <Stack
@@ -26,13 +28,15 @@ const Toolbar = ({
           </Typography>
           {selectActions(selectedRows)}
         </Stack>
-      ) : (
+      ) : !hidden ? (
         <ToolbarTabs
           tabs={tabs}
           loading={loading}
           noAddTab={noAddTab}
           backButtonLink={backButtonLink}
         />
+      ) : (
+        <Box></Box>
       )}
 
       <Stack direction="row" gap={1} alignItems="center">

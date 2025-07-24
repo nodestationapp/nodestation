@@ -2,7 +2,7 @@ import axios from "axios";
 
 const elastic = async (data) =>
   new Promise(async (resolve, reject) => {
-    const settings = data?.settings?.elastic;
+    const provider = data?.provider;
 
     const url = "https://api.elasticemail.com/v4/emails/transactional";
 
@@ -11,7 +11,7 @@ const elastic = async (data) =>
         To: data?.options?.recipients,
       },
       Content: {
-        From: `${settings?.header} <${settings?.email}>`,
+        From: `${provider?.content?.header} <${provider?.email}>`,
         Subject: data?.template?.subject,
         Body: [
           {
@@ -27,7 +27,7 @@ const elastic = async (data) =>
       const send = await axios.post(url, body, {
         headers: {
           "Content-Type": "application/json",
-          "X-ElasticEmail-ApiKey": settings?.api_key,
+          "X-ElasticEmail-ApiKey": provider?.content?.api_key,
         },
       });
 

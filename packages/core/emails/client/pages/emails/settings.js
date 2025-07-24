@@ -1,14 +1,20 @@
 import { SettingsForm } from "@nstation/design-system";
 import { BaseLayout } from "@nstation/design-system/Layouts";
 
-import EmailProviders from "../../components/EmailProviders.js";
+// import EmailProviders from "../../components/EmailProviders.js";
+import EmailGatewayTable from "#client/components/EmailGatewayTable.js";
+
 import EmailProvider from "../../contexts/emails.js";
 
 const EmailSettingsContent = () => {
   const settings_data = [
+    // {
+    //   label: "Provider",
+    //   component: <EmailProviders />,
+    // },
     {
       label: "Provider",
-      component: <EmailProviders />,
+      component: <EmailGatewayTable />,
     },
   ];
 

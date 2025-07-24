@@ -73,7 +73,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
     isLoading: loading,
     refetch: tableRefetch,
   } = useQuery({
-    queryKey: ["tables", currentView, sort, filters, page],
+    queryKey: ["tables", id, currentView, sort, filters, page],
     queryFn: () =>
       api.get(
         `/admin-api/tables/${id}?${queryString.stringify({

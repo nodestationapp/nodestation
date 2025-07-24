@@ -2,16 +2,16 @@ import nodemailer from "nodemailer";
 
 const local = async (data) =>
   new Promise(async (resolve, reject) => {
-    const settings = data?.settings?.smtp;
+    const provider = data?.provider;
 
     const config = {
-      header: settings?.header,
-      host: settings?.host,
-      port: settings?.port,
-      secure: settings?.tls === "ssl" ? true : false,
+      header: provider?.content?.header,
+      host: provider?.content?.host,
+      port: provider?.content?.port,
+      secure: provider?.content?.tls === "ssl" ? true : false,
       auth: {
-        user: settings?.email,
-        pass: settings?.password,
+        user: provider?.email,
+        pass: provider?.content?.password,
       },
     };
 
