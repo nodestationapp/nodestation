@@ -1,8 +1,10 @@
 import axios from "axios";
+import { decrypt } from "@nstation/utils";
 
 const elastic = async (data) =>
   new Promise(async (resolve, reject) => {
     const provider = data?.provider;
+    const key = decrypt(provider?.content?.api_key);
 
     const url = "https://api.elasticemail.com/v4/emails/transactional";
 
@@ -27,7 +29,7 @@ const elastic = async (data) =>
       const send = await axios.post(url, body, {
         headers: {
           "Content-Type": "application/json",
-          "X-ElasticEmail-ApiKey": provider?.content?.api_key,
+          "X-ElasticEmail-ApiKey": key,
         },
       });
 

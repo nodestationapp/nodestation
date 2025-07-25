@@ -1,24 +1,26 @@
 import nodemailer from "nodemailer";
+import { decrypt } from "@nstation/utils";
 
 const mailgun = async (data) =>
   new Promise(async (resolve, reject) => {
-    const settings = data?.settings?.mailgun;
+    const provider = data?.provider;
+    const key = decrypt(provider?.content?.api_key);
 
     try {
       const config = {
-        header: settings?.header,
+        header: provider?.content?.header,
         host: "smtp.mailgun.org",
         port: 587,
         secure: false,
         auth: {
-          user: settings?.email,
-          pass: settings?.api_key,
+          user: provider?.email,
+          pass: key,
         },
       };
 
       const transporter = nodemailer.createTransport(config);
       const send = await transporter.sendMail({
-        from: `${settings?.header} <${settings?.email}>`,
+        from: `${config?.header} <${config?.auth?.user}>`,
         to: data?.options?.recipients,
         subject: data?.template?.subject,
         html: data?.template?.content,

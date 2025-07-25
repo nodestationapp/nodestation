@@ -15,7 +15,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
 
   const { tables, preferences } = useTables();
 
-  const view = searchParams.get("v");
+  let view = searchParams.get("v");
   const page = searchParams.get("page");
 
   let type = pathname?.split("/")?.[1];
@@ -26,6 +26,10 @@ const TableProvider = ({ id, extendable = false, children }) => {
   const table_preferences = table_views?.find((item) =>
     !!view ? item?.id === view : !!item?.last_viewed
   );
+
+  if (!view) {
+    view = table_preferences?.id;
+  }
 
   const [init, setInit] = useState(false);
   const [currentView, setView] = useState(table_preferences?.id);

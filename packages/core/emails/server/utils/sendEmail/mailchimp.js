@@ -1,8 +1,10 @@
 import nodemailer from "nodemailer";
+import { decrypt } from "@nstation/utils";
 
 const mailchimp = async (data) =>
   new Promise(async (resolve, reject) => {
     const provider = data?.provider;
+    const key = decrypt(provider?.content?.api_key);
 
     try {
       const user = provider?.email?.split("@")?.[0];
@@ -14,7 +16,7 @@ const mailchimp = async (data) =>
         secure: true,
         auth: {
           user: user,
-          pass: provider?.content?.api_key,
+          pass: key,
         },
       };
 

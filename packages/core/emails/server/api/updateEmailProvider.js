@@ -1,4 +1,5 @@
 import { knex } from "@nstation/db";
+import { encrypt } from "@nstation/utils";
 import upsertEntry from "@nstation/tables/server/utils/upsertEntry.js";
 
 export default async (req, res) => {
@@ -16,6 +17,23 @@ export default async (req, res) => {
   }
 
   if (body.hasOwnProperty("content")) {
+    const encryptedFields = ["password", "api_key"];
+
+    let provider = await knex("nodestation_email_providers")
+      .where({
+        id,
+      })
+      .first()
+      .jsonParser();
+
+    encryptedFields.forEach((field) => {
+      if (body.content.hasOwnProperty(field)) {
+        if (provider?.content?.[field] !== body.content[field]) {
+          body.content[field] = encrypt(body.content[field]);
+        }
+      }
+    });
+
     dataToUpdate.content = body.content;
   }
 

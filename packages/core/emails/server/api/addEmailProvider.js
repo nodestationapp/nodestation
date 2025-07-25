@@ -1,9 +1,20 @@
 import upsertEntry from "@nstation/tables/server/utils/upsertEntry.js";
+import { encrypt } from "@nstation/utils";
 
 export default async (req, res) => {
   let body = req?.body;
 
   try {
+    if (body.hasOwnProperty("content")) {
+      const encryptedFields = ["password", "api_key"];
+
+      encryptedFields.forEach((field) => {
+        if (body.content.hasOwnProperty(field)) {
+          body.content[field] = encrypt(body.content[field]);
+        }
+      });
+    }
+
     await upsertEntry({
       id: "nodestation_email_providers",
       body,

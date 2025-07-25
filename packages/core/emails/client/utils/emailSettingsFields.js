@@ -27,6 +27,7 @@ const emailSettingsFields = (type, settings) => {
           type: "password",
           slug: "password",
           name: "Password",
+          type: "password",
           value: settings?.smtp?.password,
         },
         {
@@ -57,6 +58,7 @@ const emailSettingsFields = (type, settings) => {
         {
           slug: "api_key",
           name: "API key",
+          type: "password",
           value: settings?.sendgrid?.api_key,
         },
       ];

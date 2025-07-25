@@ -1,8 +1,10 @@
 import nodemailer from "nodemailer";
+import { decrypt } from "@nstation/utils";
 
 const aws = async (data) =>
   new Promise(async (resolve, reject) => {
     const provider = data?.provider;
+    const key = decrypt(provider?.content?.password);
 
     try {
       const config = {
@@ -12,7 +14,7 @@ const aws = async (data) =>
         secure: true,
         auth: {
           user: provider?.content?.username,
-          pass: provider?.content?.password,
+          pass: key,
         },
       };
 

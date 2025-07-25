@@ -1,8 +1,10 @@
 import nodemailer from "nodemailer";
+import { decrypt } from "@nstation/utils";
 
 const local = async (data) =>
   new Promise(async (resolve, reject) => {
     const provider = data?.provider;
+    const key = decrypt(provider?.content?.password);
 
     const config = {
       header: provider?.content?.header,
@@ -11,7 +13,7 @@ const local = async (data) =>
       secure: provider?.content?.tls === "ssl" ? true : false,
       auth: {
         user: provider?.email,
-        pass: provider?.content?.password,
+        pass: key,
       },
     };
 
