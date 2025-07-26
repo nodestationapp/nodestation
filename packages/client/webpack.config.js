@@ -16,6 +16,8 @@ module.exports = (env) => {
       return env;
     }, {});
 
+  console.log(`ENVS: ${publicEnvVars}`);
+
   return {
     entry: "./src/index.js",
     mode: env.NODE_ENV === "production" ? "production" : "development",
