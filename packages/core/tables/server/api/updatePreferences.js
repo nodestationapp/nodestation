@@ -20,6 +20,18 @@ export default async (req, res) => {
 
     if (body?.hasOwnProperty("content")) {
       dataToUpdate.content = singleJsonStringify(body.content);
+
+      const current_preference = await knex("nodestation_preferences")
+        .where({
+          id: req?.params?.id,
+        })
+        .first();
+
+      await knex("nodestation_preferences")
+        .where("table_id", current_preference?.table_id)
+        .update({
+          content: body.content,
+        });
     }
 
     if (body?.hasOwnProperty("visibility")) {
