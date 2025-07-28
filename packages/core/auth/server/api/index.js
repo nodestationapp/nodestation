@@ -10,6 +10,7 @@ import changePassword from "./changePassword.js";
 import updateTemplates from "./updateTemplates.js";
 import emailActivation from "./emailActivation.js";
 import resetPassword from "./resetPassword.js";
+import createAccessToken from "./createAccessToken.js";
 import checkResetPassword from "./checkResetPassword.js";
 import resetPasswordConfirm from "./resetPasswordConfirm.js";
 
@@ -31,6 +32,7 @@ import checkResetPasswordSchema from "../docs/get-reset-password.js";
 import refreshTokenSchema from "../docs/post-refresh-token.js";
 import resetPasswordSchema from "../docs/post-reset-password.js";
 import resetPasswordConfirmSchema from "../docs/post-reset-password-confirm.js";
+import postApiKeySchema from "../docs/post-api-key.js";
 
 export default [
   {
@@ -119,5 +121,11 @@ export default [
     path: "/admin-api/auth/refresh-token",
     handler: refreshToken,
     validation: refreshTokenSchema,
+  },
+  {
+    method: "POST",
+    path: "/admin-api/auth/api-key",
+    handler: createAccessToken,
+    validation: postApiKeySchema,
   },
 ];

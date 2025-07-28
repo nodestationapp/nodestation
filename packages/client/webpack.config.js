@@ -16,7 +16,7 @@ module.exports = (env) => {
       return env;
     }, {});
 
-  console.log(`ENVS: ${publicEnvVars}`);
+  console.log(`ENVS`, publicEnvVars);
 
   return {
     entry: "./src/index.js",

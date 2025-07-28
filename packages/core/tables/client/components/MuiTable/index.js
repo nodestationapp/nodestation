@@ -12,11 +12,11 @@ let timer;
 
 const MuiTable = ({
   sort,
-  rows,
+  rows = [],
   views,
   action,
   filters,
-  columns,
+  columns = [],
   loading,
   pagination,
   saveTransaction,
