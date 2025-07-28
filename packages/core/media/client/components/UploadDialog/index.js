@@ -61,6 +61,7 @@ const UploadDialog = ({ open, onClose }) => {
           ...(fullScreen && {
             borderRadius: 0,
             display: "flex",
+            maxWidth: "unset",
             flexDirection: "column",
             flex: 1,
           }),

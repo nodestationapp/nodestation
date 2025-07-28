@@ -52,11 +52,13 @@ const ApiTokenModal = ({ open, onClose }) => {
   return (
     <Dialog
       open={open}
+      fullScreen={fullScreen}
       sx={{
         "& .MuiDialog-paper": {
           maxWidth: 520,
           width: "100%",
           ...(fullScreen && {
+            maxWidth: "unset",
             borderRadius: 0,
           }),
         },

@@ -43,6 +43,7 @@ const MediaDialog = ({ open, onClose, onSubmit, value, loading }) => {
           width: "100%",
           maxWidth: 1100,
           ...(fullScreen && {
+            maxWidth: "unset",
             borderRadius: 0,
           }),
         },

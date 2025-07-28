@@ -54,6 +54,7 @@ const EmailEditorModal = ({ open, onClose }) => {
           width: "100%",
           height: "100%",
           ...(fullScreen && {
+            maxWidth: "unset",
             borderRadius: 0,
           }),
         },

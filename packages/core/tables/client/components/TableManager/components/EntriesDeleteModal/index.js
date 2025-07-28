@@ -47,6 +47,7 @@ const EntriesDeleteModal = ({ open, onClose }) => {
           maxWidth: 420,
           width: "100%",
           ...(fullScreen && {
+            maxWidth: "unset",
             borderRadius: 0,
           }),
         },
