@@ -50,7 +50,7 @@ export default [
     path: "/admin-api/tables/:id",
     handler: updateTable,
     auth: ["admin"],
-    validation: updateTableSchema,
+    // validation: updateTableSchema,
   },
   {
     method: "DELETE",
