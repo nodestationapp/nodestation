@@ -11,11 +11,14 @@ const ApiKeysProvider = ({ children }) => {
   const addApiKey = (values) =>
     new Promise(async (resolve, reject) => {
       try {
-        await api.post(`/admin-api/auth/api-key`, values);
+        const { access_token } = await api.post(
+          `/admin-api/auth/api-key`,
+          values
+        );
 
         queryClient.refetchQueries(["tables", "nodestation_users_api_tokens"]);
 
-        resolve();
+        resolve(access_token);
       } catch (err) {
         reject(err);
       }

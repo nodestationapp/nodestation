@@ -26,6 +26,12 @@
       "required": true
     },
     {
+      "name": "Expires at",
+      "slug": "expires_at",
+      "type": "date",
+      "origin": "system"
+    },
+    {
       "name": "Created at",
       "slug": "created_at",
       "type": "date",

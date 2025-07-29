@@ -21,6 +21,12 @@ const ApiTokensTable = () => {
     },
     {
       width: 200,
+      type: "date",
+      name: "Expires at",
+      slug: "expires_at",
+    },
+    {
+      width: 200,
       name: "Created at",
       type: "date",
       slug: "created_at",

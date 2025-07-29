@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { knex } from "@nstation/db";
+import moment from "moment";
 
 const getExpiration = (expiration) => {
   switch (expiration) {
@@ -31,9 +32,15 @@ export default async (req, res) => {
       expiration ? { expiresIn: expiration } : {}
     );
 
+    const expires_at =
+      !!body?.expiration && body?.expiration !== "unlimited"
+        ? moment().add(parseInt(body?.expiration), "days").unix()
+        : undefined;
+
     await knex("nodestation_users_api_tokens").insert({
       name: body?.name,
       token: access_token,
+      expires_at: expires_at,
     });
 
     return res.status(200).json({ access_token });
