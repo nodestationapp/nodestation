@@ -35,6 +35,7 @@ const AppProvider = ({ children, app }) => {
       is_admin,
       menuLinks,
       middlewares,
+      setIsAdmin,
     };
     // eslint-disable-next-line
   }, [menuLinks, middlewares, site, is_admin]);

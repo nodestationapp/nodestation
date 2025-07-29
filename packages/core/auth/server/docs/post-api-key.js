@@ -28,6 +28,6 @@ export default object({
   }),
 }).meta({
   tags: ["Authentication"],
-  summary: "Create api key",
-  description: "Create new api key",
+  summary: "Create api token",
+  description: "Create new api token",
 });

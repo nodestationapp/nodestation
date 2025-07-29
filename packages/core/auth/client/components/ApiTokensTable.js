@@ -51,7 +51,7 @@ const ApiTokensTable = () => {
                 variant="outlined"
                 size="small"
               >
-                Add API key
+                Add API token
               </Button>
             </>
           )}

@@ -43,7 +43,10 @@ const AuthRoutes = () => {
             />
           </>
         ) : (
-          <Route path="/register" element={<Register />} />
+          <>
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<Navigate to={"/register"} replace />} />
+          </>
         )}
       </Routes>
     </>

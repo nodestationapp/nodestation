@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -9,13 +9,12 @@ import Typography from "@mui/material/Typography";
 import { api } from "@nstation/design-system/utils";
 import { ColorModeDropdown } from "@nstation/design-system";
 
-import { useAuth } from "../../contexts/authMiddleware.js";
-
 import LogoIcon from "icons/logo-sygnet.svg";
+import { useApp } from "contexts/app.js";
 
 const RegisterContent = () => {
-  const { setIsAdmin } = useAuth();
-  const navigate = useLocation();
+  const { setIsAdmin } = useApp();
+  const navigate = useNavigate();
 
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
@@ -88,9 +87,9 @@ const RegisterContent = () => {
             label="First name"
             variant="outlined"
             autoComplete="first_name"
-            error={formik.errors.first_name}
+            error={formik.errors?.first_name}
             value={formik.values.first_name}
-            helperText={formik.errors.first_name}
+            helperText={formik.errors?.first_name}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
@@ -101,9 +100,9 @@ const RegisterContent = () => {
             label="Last name"
             variant="outlined"
             autoComplete="last_name"
-            error={formik.errors.last_name}
+            error={formik.errors?.last_name}
             value={formik.values.last_name}
-            helperText={formik.errors.last_name}
+            helperText={formik.errors?.last_name}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
@@ -114,9 +113,9 @@ const RegisterContent = () => {
             label="Email"
             variant="outlined"
             autoComplete="email"
-            error={formik.errors.email}
+            error={formik.errors?.email}
             value={formik.values.email}
-            helperText={formik.errors.email}
+            helperText={formik.errors?.email}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
@@ -126,10 +125,10 @@ const RegisterContent = () => {
             type="password"
             label="Password"
             variant="outlined"
-            error={formik.errors.password}
+            error={formik.errors?.password}
             value={formik.values.password}
             autoComplete="current-password"
-            helperText={formik.errors.password}
+            helperText={formik.errors?.password}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />

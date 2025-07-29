@@ -28,7 +28,7 @@ const register = async (body) =>
         })
         .returning("id");
 
-      if (body?.type !== "admin") {
+      if (body?.type !== "superadmin") {
         const activation_token = await knex("nodestation_users_activation")
           .insert({
             uid: newUser?.[0]?.id,

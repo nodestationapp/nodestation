@@ -70,7 +70,7 @@ const ApiTokenModal = ({ open, onClose }) => {
       }}
       onClose={onClose}
     >
-      <DialogTitle>Create API key</DialogTitle>
+      <DialogTitle>Create API token</DialogTitle>
       <DialogContent sx={{ paddingBottom: 0 }}>
         {submitted ? (
           <Stack gap={1.5} direction="column">
