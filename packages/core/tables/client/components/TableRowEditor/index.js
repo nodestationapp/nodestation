@@ -13,6 +13,8 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
   const { data: table_data, addTableEntry, tableRefetch } = useTable();
   const [editMode, setEditMode] = useState(false);
 
+  const edit_mode_view = !!editMode || !open?.id;
+
   const onSubmit = async (values, { setSubmitting, setErrors, resetForm }) => {
     try {
       table_data?.table?.fields?.forEach((item) => {
@@ -51,14 +53,14 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
       <AsideModal
         open={open}
         onClose={editMode ? () => setEditMode(false) : onClose}
-        preventOnClose={!!editMode}
-        onSubmit={editMode ? formik.handleSubmit : null}
+        preventOnClose={!!edit_mode_view}
+        onSubmit={edit_mode_view ? formik.handleSubmit : null}
         submitLoading={formik.isSubmitting}
         header={"Details" || "Add entry"}
-        removeActions={!editMode}
+        removeActions={!edit_mode_view}
       >
         <Stack gap={1.5} direction="column">
-          {editMode ? (
+          {!!edit_mode_view ? (
             <>
               {table_data?.table?.fields?.map((data) => {
                 if (!!!open?.id) {
