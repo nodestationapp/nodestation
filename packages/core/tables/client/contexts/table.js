@@ -106,7 +106,7 @@ const TableProvider = ({ id, extendable = false, children }) => {
 
         await api.put(`/admin-api/tables/${id}?extendable=${extendable}`, temp);
 
-        tableRefetch();
+        // tableRefetch();
 
         resolve();
       } catch (err) {

@@ -26,24 +26,26 @@ export default object({
         }),
       })
     ),
-    filters: array().of(
-      object({
-        field: string().meta({
-          example: "status",
-          description: "Field name",
-        }),
-        operator: string().meta({
-          example: "is",
-          description: "Operator",
-          pattern:
-            "^(is|is_not|contains|not_contains|starts_with|ends_with|greater_than|less_than|between|in|not_in|equals|not_equals)$",
-        }),
-        value: string().meta({
-          example: "active",
-          description: "Value",
-        }),
-      })
-    ),
+    filters: array()
+      .of(
+        object({
+          field: string().meta({
+            example: "status",
+            description: "Field name",
+          }),
+          operator: string().meta({
+            example: "is",
+            description: "Operator",
+            pattern:
+              "^(is|is_not|contains|not_contains|starts_with|ends_with|greater_than|less_than|between|in|not_in|equals|not_equals)$",
+          }),
+          value: string().meta({
+            example: "active",
+            description: "Value",
+          }),
+        })
+      )
+      .nullable(),
     content: object({
       id: number().meta({
         example: 160,

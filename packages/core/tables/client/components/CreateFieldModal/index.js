@@ -60,7 +60,6 @@ const CreateFieldModal = ({ index, form, onClose, formik: mainFormik }) => {
     }
 
     mainFormik.setFieldValue("fields", temp);
-    mainFormik.submitForm();
     onClose();
   };
 

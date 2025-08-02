@@ -21,10 +21,6 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
         if (item?.type === "media") {
           values[item?.slug] = values[item?.slug]?.id || null;
         }
-
-        if (item?.type === "relation") {
-          values[item?.slug] = values[item?.slug]?.id || null;
-        }
       });
 
       if (!!onEntrySubmit) {
