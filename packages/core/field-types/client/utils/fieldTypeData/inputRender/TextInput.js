@@ -8,6 +8,9 @@ const TextInput = ({ data, formik, type }) => {
   return (
     <TextField
       fullWidth
+      multiline={data?.variant === "long" ? true : false}
+      minRows={data?.variant === "long" ? 5 : null}
+      maxRows={data?.variant === "long" ? 10 : null}
       name={data?.slug}
       label={data?.name}
       variant="standard"

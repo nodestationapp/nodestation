@@ -431,6 +431,9 @@ export const inputsCustomizations = {
             },
           }),
         },
+        ".MuiInputBase-inputMultiline": {
+          padding: "4px 0 5px",
+        },
         "&:before": {
           display: "none",
         },
