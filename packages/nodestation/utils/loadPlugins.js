@@ -78,7 +78,7 @@ const loadPlugins = async (app) => {
 
     if (isServerFile) {
       const { default: server } = await import(`${plugin?.name}/index.js`);
-      server.register(app);
+      await server.register(app);
     }
 
     //ROUTES
