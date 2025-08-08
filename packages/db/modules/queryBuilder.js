@@ -4,6 +4,7 @@ import mediaParser from "./utils/mediaParser.js";
 import applyFilters from "./utils/applyFilters.js";
 import populateRelations from "./utils/populateRelations.js";
 import transformRelations from "./utils/transformRelations.js";
+import relationFieldPopulate from "./utils/relationFieldPopulate.js";
 
 export default async ({ table, filters, sort, pagination }) => {
   const countQuery = knex(table?.tableName);
@@ -39,6 +40,11 @@ export default async ({ table, filters, sort, pagination }) => {
   const items = await query;
   let formatted_items = transformRelations(items, settings);
   formatted_items = mediaParser(table?.fields, formatted_items, settings);
+  formatted_items = await relationFieldPopulate(
+    table?.fields,
+    formatted_items,
+    settings
+  );
 
   return {
     items: formatted_items,

@@ -40,21 +40,21 @@ const populateRelations = (query, table) => {
         );
     }
 
-    if (item?.type === "relation") {
-      const schema = fs.getSchema(item?.relation?.table);
+    // if (item?.type === "relation") {
+    //   const schema = fs.getSchema(item?.relation?.table);
 
-      query = query
-        .leftJoin(
-          schema?.tableName,
-          `${table?.tableName}.${item?.slug}`,
-          `${schema?.tableName}.id`
-        )
-        .select(
-          `${table?.tableName}.*`,
-          `${schema?.tableName}.id as ${item?.slug}.id`,
-          `${schema?.tableName}.${schema?.displayName} as ${item?.slug}.${schema?.displayName}`
-        );
-    }
+    //   query = query
+    //     .leftJoin(
+    //       schema?.tableName,
+    //       `${table?.tableName}.${item?.slug}`,
+    //       `${schema?.tableName}.id`
+    //     )
+    //     .select(
+    //       `${table?.tableName}.*`,
+    //       `${schema?.tableName}.id as ${item?.slug}.id`,
+    //       `${schema?.tableName}.${schema?.displayName} as ${item?.slug}.${schema?.displayName}`
+    //     );
+    // }
   });
 
   return query;

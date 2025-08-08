@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { api } from "@nstation/design-system/utils";
@@ -7,36 +7,15 @@ const RelationInput = ({ data, formik, size }) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [inputValue, setInputValue] = useState(null);
 
   const value = formik.values[data?.slug];
-
-  useEffect(() => {
-    if (value?.id) {
-      setInputValue(value);
-    } else {
-      if (!value) return;
-
-      (async () => {
-        const { entries } = await api.get(
-          `/admin-api/tables/${data?.relation?.table}?filters=id:equals:${value}`
-        );
-
-        setInputValue({
-          id: entries[0]?.id,
-          [data?.relation?.displayName]:
-            entries[0]?.[data?.relation?.displayName],
-        });
-      })();
-    }
-  }, []);
 
   const handleOpen = async () => {
     setOpen(true);
 
     setLoading(true);
     const { entries } = await api.get(
-      `/admin-api/tables/${data?.relation?.table}?page=0`
+      `/admin-api/tables/${data?.relation?.table}?page=0&pageSize=1000`
     );
     setLoading(false);
 
@@ -49,25 +28,27 @@ const RelationInput = ({ data, formik, size }) => {
   };
 
   const onChange = (_, newValue) => {
-    const value = {
-      id: newValue?.id,
-      [data?.relation?.displayName]: newValue?.[data?.relation?.displayName],
-    };
+    if (data?.variant !== "multi") {
+      if (newValue?.length > 1) {
+        newValue = [newValue?.[newValue?.length - 1]];
+      }
+    }
 
-    setInputValue(value);
-    formik?.setFieldValue(data?.slug, value?.id);
+    formik.setFieldValue(data?.slug, newValue || []);
   };
 
   return (
     <Autocomplete
       open={open}
+      multiple={true}
       options={options}
       loading={loading}
       onOpen={handleOpen}
       onClose={handleClose}
-      value={inputValue}
-      getOptionLabel={(option) => option?.[data?.relation?.displayName]}
-      isOptionEqualToValue={(option, value) => option.id === value.id}
+      // value={inputValue}
+      value={value || []}
+      getOptionLabel={(option) => option?.name}
+      isOptionEqualToValue={(option, value) => option.id === value?.id}
       onChange={onChange}
       renderInput={(params) => (
         <TextField

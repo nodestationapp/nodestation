@@ -23,7 +23,9 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
         }
         if (item?.type === "relation") {
           values[item?.slug] =
-            values[item?.slug]?.id || values[item?.slug] || null;
+            values[item?.slug]?.map((item) => item?.id)?.join(",") ||
+            values[item?.slug] ||
+            null;
         }
       });
 

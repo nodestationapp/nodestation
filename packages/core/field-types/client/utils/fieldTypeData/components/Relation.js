@@ -14,10 +14,21 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import { api } from "@nstation/design-system/utils";
 
-const variant_options = [
+const default_variant_options = [
   {
     label: "generate_id()",
     value: "generate_id()",
+  },
+];
+
+const variant_options = [
+  {
+    label: "Single",
+    value: "single",
+  },
+  {
+    label: "Multi",
+    value: "multi",
   },
 ];
 
@@ -39,6 +50,26 @@ const Relation = ({ locked }) => {
   return (
     <>
       <FormControl fullWidth variant="standard">
+        <InputLabel id="variant-select-label">Variant</InputLabel>
+        <Select
+          key={values?.variant}
+          name="multi"
+          label="Variant"
+          disabled={locked}
+          variant="standard"
+          labelId="variant-select-label"
+          value={values.variant}
+          onChange={(e) => setFieldValue("variant", e.target.value)}
+          onBlur={handleBlur}
+          error={errors.variant}
+          helperText={errors.variant}
+        >
+          {variant_options?.map((item) => (
+            <MenuItem value={item?.value}>{item?.label}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl fullWidth variant="standard">
         <InputLabel id="default-select-label">Default</InputLabel>
         <Select
           key={values?.default}
@@ -52,7 +83,7 @@ const Relation = ({ locked }) => {
           error={errors.default}
           helperText={errors.default}
         >
-          {variant_options?.map((item) => (
+          {default_variant_options?.map((item) => (
             <MenuItem value={item?.value}>{item?.label}</MenuItem>
           ))}
         </Select>
