@@ -1,6 +1,6 @@
 {
   "name": "@nstation/emails",
-  "version": "1.21.0-beta.23",
+  "version": "1.21.0-beta.28",
   "type": "module",
   "license": "MIT",
   "description": "Nodestation's emails plugin",
@@ -16,7 +16,7 @@
   "dependencies": {
     "glob": "^11.0.1",
     "nodemailer": "^7.0.3",
-    "@nstation/design-system": "1.21.0-beta.23",
+    "@nstation/design-system": "1.21.0-beta.28",
     "@uiw/react-codemirror": "^4.23.14",
     "@codemirror/lang-html": "^6.4.9",
     "@uiw/codemirror-theme-basic": "4.23.14"

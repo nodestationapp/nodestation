@@ -39,6 +39,7 @@ import UserFilter from "./customFilters/User.js";
 import RelationFilter from "./customFilters/Relation.js";
 
 import { useSlot } from "contexts/slots.js";
+import WysiwygInput from "./inputRender/WysiwygInput.js";
 
 export default () => {
   const slot = useSlot("field-types.add");
@@ -131,6 +132,13 @@ export default () => {
       inputRender: (props) => <DateInput {...props} />,
       extraFields: (props) => <DateExtraFields {...props} />,
       columnRender: (props) => <DateColumn {...props} />,
+    },
+    {
+      key: "wysiwyg",
+      label: "WYSIWYG",
+      icon: <ShortTextIcon />,
+      inputRender: (props) => <WysiwygInput {...props} />,
+      // extraFields: (props) => <TextExtraFields {...props} />,
     },
     ...(slot?.[0] || []),
   ];

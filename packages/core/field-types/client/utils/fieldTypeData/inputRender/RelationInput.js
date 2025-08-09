@@ -10,6 +10,8 @@ const RelationInput = ({ data, formik, size }) => {
 
   const value = formik.values[data?.slug];
 
+  console.log(data);
+
   const handleOpen = async () => {
     setOpen(true);
 

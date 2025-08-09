@@ -5,6 +5,7 @@ import applyFilters from "./utils/applyFilters.js";
 import populateRelations from "./utils/populateRelations.js";
 import transformRelations from "./utils/transformRelations.js";
 import relationFieldPopulate from "./utils/relationFieldPopulate.js";
+import wysiwygParser from "./utils/wysiwygParser.js";
 
 export default async ({ table, filters, sort, pagination }) => {
   const countQuery = knex(table?.tableName);
@@ -40,6 +41,7 @@ export default async ({ table, filters, sort, pagination }) => {
   const items = await query;
   let formatted_items = transformRelations(items, settings);
   formatted_items = mediaParser(table?.fields, formatted_items, settings);
+  formatted_items = wysiwygParser(table?.fields, formatted_items);
   formatted_items = await relationFieldPopulate(
     table?.fields,
     formatted_items,

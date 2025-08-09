@@ -22,10 +22,10 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
           values[item?.slug] = values[item?.slug]?.id || null;
         }
         if (item?.type === "relation") {
+          const array = values[item?.slug]?.map((item) => item?.id)?.join(",");
+
           values[item?.slug] =
-            values[item?.slug]?.map((item) => item?.id)?.join(",") ||
-            values[item?.slug] ||
-            null;
+            array?.length > 0 ? array : "null" || values[item?.slug] || "null";
         }
       });
 
@@ -54,6 +54,7 @@ const TableRowEditor = ({ open, onClose, onEntrySubmit }) => {
     <form onSubmit={formik.handleSubmit}>
       <AsideModal
         open={open}
+        width={700}
         onClose={editMode ? () => setEditMode(false) : onClose}
         preventOnClose={!!edit_mode_view}
         onSubmit={edit_mode_view ? formik.handleSubmit : null}
