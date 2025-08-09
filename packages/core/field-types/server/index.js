@@ -10,6 +10,7 @@ export default {
       user: "string",
       json: "json",
       date: "bigInteger",
+      wysiwyg: "json",
     });
   },
 };
