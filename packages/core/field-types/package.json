@@ -1,6 +1,6 @@
 {
   "name": "@nstation/field-types",
-  "version": "1.21.0-beta.29",
+  "version": "1.21.0-beta.30",
   "type": "module",
   "license": "MIT",
   "description": "Nodestation's field-types plugin",
@@ -21,7 +21,7 @@
     "slugify": "^1.6.6",
     "glob": "^11.0.1",
     "react-collapse": "^5.1.1",
-    "@nstation/design-system": "1.21.0-beta.29",
+    "@nstation/design-system": "1.21.0-beta.30",
     "@editorjs/editorjs": "^2.30.8",
     "@editorjs/header": "^2.8.8",
     "editorjs-html": "^4.0.5"

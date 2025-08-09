@@ -7,6 +7,8 @@ const WysiwygInput = ({ data, formik, type }) => {
 
   const value = formik.values[data?.slug];
 
+  console.log(value);
+
   useEffect(() => {
     if (!editorRef.current) {
       editorRef.current = new EditorJS({

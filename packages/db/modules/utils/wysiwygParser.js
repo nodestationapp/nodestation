@@ -10,7 +10,10 @@ const wysiwygParser = (fields, objects) => {
 
         const html = value ? edjsParser.parse(value) : "";
 
-        object[field?.slug] = html;
+        object[field?.slug] = {
+          ...object[field?.slug],
+          html,
+        };
       }
     }
   }

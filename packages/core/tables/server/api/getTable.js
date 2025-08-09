@@ -94,6 +94,7 @@ export default async (req, res) => {
       table,
       filters,
       sort,
+      environment: "admin",
       pagination: { page, pageSize },
     });
 

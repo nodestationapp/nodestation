@@ -1,6 +1,6 @@
 {
   "name": "@nstation/tables",
-  "version": "1.21.0-beta.29",
+  "version": "1.21.0-beta.30",
   "type": "module",
   "license": "MIT",
   "description": "Nodestation's tables plugin",
@@ -21,8 +21,8 @@
     "slugify": "^1.6.6",
     "glob": "^11.0.1",
     "react-collapse": "^5.1.1",
-    "@nstation/design-system": "1.21.0-beta.29",
-    "@nstation/field-types": "1.21.0-beta.29"
+    "@nstation/design-system": "1.21.0-beta.30",
+    "@nstation/field-types": "1.21.0-beta.30"
   },
   "files": [
     "./client",

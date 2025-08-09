@@ -7,7 +7,7 @@ import transformRelations from "./utils/transformRelations.js";
 import relationFieldPopulate from "./utils/relationFieldPopulate.js";
 import wysiwygParser from "./utils/wysiwygParser.js";
 
-export default async ({ table, filters, sort, pagination }) => {
+export default async ({ table, filters, sort, pagination, environment }) => {
   const countQuery = knex(table?.tableName);
   if (!!filters) {
     countQuery.modify(applyFilters, filters, table);
