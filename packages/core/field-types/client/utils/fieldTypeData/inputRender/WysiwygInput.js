@@ -2,12 +2,10 @@ import Header from "@editorjs/header";
 import EditorJS from "@editorjs/editorjs";
 import { useEffect, useRef } from "react";
 
-const WysiwygInput = ({ data, formik, type }) => {
+const WysiwygInput = ({ data, formik }) => {
   const editorRef = useRef(null);
 
   const value = formik.values[data?.slug];
-
-  console.log(value);
 
   useEffect(() => {
     if (!editorRef.current) {

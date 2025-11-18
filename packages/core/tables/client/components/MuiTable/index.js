@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 
 import Toolbar from "./components/Toolbar/index.js";
+import tableColumnsRender from "#client/utils/tableColumnsRender.js";
 
 let timer;
 
@@ -44,6 +45,11 @@ const MuiTable = ({
         last_viewed: view.last_viewed,
       }))
     : [];
+
+  const columnsToShow = tableColumnsRender({
+    columns,
+    columnSizes,
+  });
 
   const [selectedRows, setSelectedRows] = useState([]);
 
@@ -140,7 +146,7 @@ const MuiTable = ({
           rows={rows || []}
           checkboxSelection
           loading={loading}
-          columns={columns}
+          columns={columnsToShow}
           isRowSelectable={isRowSelectable}
           getRowClassName={(params) =>
             params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"

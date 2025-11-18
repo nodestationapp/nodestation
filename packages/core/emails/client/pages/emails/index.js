@@ -115,7 +115,8 @@ const Emails = () => {
         columns={[
           {
             flex: 1,
-            field: "name",
+            name: "Name",
+            slug: "name",
             headerName: "Name",
             renderCell: (params) => params?.value,
           },

@@ -59,16 +59,9 @@ const TableManagerContent = ({
   const [content_editor, setContentEditor] = useState(null);
   const [entriesDeleteModal, setEntriesDeleteModal] = useState(false);
 
-  let columnsToShow = table?.fields || [];
-  columnsToShow = columnsToShow?.filter(
-    (item) => !hiddenColumns.includes(item?.slug)
-  );
-  columnsToShow = [...appendColumns, ...columnsToShow];
-
-  const columns = tableColumnsRender({
-    columns: columnsToShow,
-    columnSizes,
-  });
+  let columns = table?.fields || [];
+  columns = columns?.filter((item) => !hiddenColumns.includes(item?.slug));
+  columns = [...appendColumns, ...columns];
 
   const action = () => (
     <>

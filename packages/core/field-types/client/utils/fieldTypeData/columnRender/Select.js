@@ -14,13 +14,21 @@ const Select = ({ data, column }) => {
 
   return (
     <Stack direction="row" spacing={0.5} alignItems="center" height="100%">
-      {values?.map((value) =>
-        value === "superadmin" ? (
-          <ColorfulChip label={value} color={colors[value]} size="small" />
+      {values?.map((value) => {
+        const label = column?.options?.find(
+          (item) => item?.value?.toString() === value?.toString()
+        )?.label;
+
+        return value === "superadmin" ? (
+          <ColorfulChip
+            label={label || value}
+            color={colors[value]}
+            size="small"
+          />
         ) : (
-          <Chip label={value} color={colors[value]} size="small" />
-        )
-      )}
+          <Chip label={label || value} color={colors[value]} size="small" />
+        );
+      })}
     </Stack>
   );
 };
